@@ -1,0 +1,15 @@
+@use '../../styles/functions';
+@use '../../styles/mixins';
+
+.root {
+  background-color: var(--primaryBg);
+  border-bottom: functions.calcRem(1) solid var(--primaryBorder);
+}
+
+.container {
+  @include mixins.container;
+}
+
+.logo {
+  width: 7.9375rem;
+}

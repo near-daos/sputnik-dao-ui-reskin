@@ -1,0 +1,7 @@
+@use 'breakpoints';
+@use 'functions';
+
+@mixin container {
+  width: functions.calcRem(breakpoints.$md);
+  margin: 0 auto;
+}

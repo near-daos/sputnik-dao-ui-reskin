@@ -1,0 +1,34 @@
+html {
+  // --primaryBg: #fff;
+  --primaryBg: #E5E5E5;
+  --primaryBorder: #C5C5C5;
+  --logoMajorLine: #161515;
+  --logoMinorLine: #686767;
+
+  /* global colors */
+  // --primaryTheme: #e52863;
+  // --primaryBg: #fff;
+  // --primaryText: #212121;
+  // --secondaryText: #7b7b7b;
+  // --primaryButtonText: #fff;
+  // --primaryBorderBg: #efefef;
+  // --activeSelectionBg: rgba(162, 162, 162, 0.1);
+  // --primaryShadowBg: rgba(204, 204, 204, 0.7);
+}
+
+html[data-theme="dark"] {
+  --primaryBg: #161515;
+  --primaryBorder: #393838;
+  --logoMajorLine: #FFFFFF;
+  --logoMinorLine: #969696;
+
+  /* global colors */
+  // --primaryTheme: #e52863;
+  // --primaryBg: #1a1a1d;
+  // --primaryText: rgba(255, 255, 255, 0.8);
+  // --secondaryText: rgba(255, 255, 255, 0.6);
+  // --primaryButtonText: #fff;
+  // --primaryBorderBg: #292929;
+  // --activeSelectionBg: rgba(0, 0, 0, 0.18);
+  // --primaryShadowBg: rgba(8, 8, 8, 0.7);
+}

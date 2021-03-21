@@ -1,0 +1,11 @@
+@use '../../styles/functions';
+@use '../../styles/mixins';
+
+.root {
+  background-color: var(--primaryBg);
+  border-top: functions.calcRem(1) solid var(--primaryBorder);
+}
+
+.container {
+  @include mixins.container;
+}
