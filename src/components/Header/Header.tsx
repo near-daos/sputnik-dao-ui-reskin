@@ -1,8 +1,8 @@
-import React from 'react';
-import classnames from 'classnames';
-import { SputnikDaoLogo } from '../SputnikDaoLogo/SputnikDaoLogo';
+import React from "react";
+import classnames from "classnames";
+import { SputnikDaoLogo } from "../SputnikDaoLogo/SputnikDaoLogo";
 
-import s from './Header.module.scss';
+import s from "./Header.module.scss";
 
 interface HeaderProps {
   className: string;

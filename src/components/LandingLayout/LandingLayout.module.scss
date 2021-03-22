@@ -1,0 +1,41 @@
+@use '../../styles/functions';
+@use '../../styles/variables';
+
+.root {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  background-color: var(--primaryBg);
+}
+
+.header,
+.footer {
+  flex: 0 0 auto;
+}
+
+.content {
+  flex: 1 1 auto;
+  background-color: var(--primaryBg);
+}
+
+.logo {
+  display: inline-block;
+  font-family: variables.$secondaryFont;
+  text-decoration: none;
+}
+
+.logoIcon {
+  height: functions.calcRem(63);
+  vertical-align: middle;
+}
+
+.logoText {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: functions.calcRem(6);
+  margin-left: functions.calcRem(10);
+  color: var(--textColor);
+}

@@ -1,78 +1,84 @@
-import React, { useState } from 'react';
-import { Router, Switch, Route } from 'react-router-dom';
-import { Header, Footer } from './components';
-import { Landing } from './pages/Landing/Landing';
-import { createBrowserHistory } from 'history';
-import { SelectProposals } from './pages/SelectProposal/SelectProposal';
-import { Proposals } from './pages/Proposals/Proposals';
-import { DaoDetails } from './pages/DaoDetails/DaoDetails';
-import { CreateDao } from './pages/CreateDao/CreateDao';
-import { CreateProposal } from './pages/CreateProposal/CreateProposal';
+import React from "react";
+import { BrowserRouter, Route, RouteProps } from "react-router-dom";
+import { LandingLayout, MainLayout } from "./components";
+import { Landing } from "./pages/Landing/Landing";
+import { SelectProposals } from "./pages/SelectProposal/SelectProposal";
+import { Proposals } from "./pages/Proposals/Proposals";
+import { DaoDetails } from "./pages/DaoDetails/DaoDetails";
+import { CreateDao } from "./pages/CreateDao/CreateDao";
+import { CreateProposal } from "./pages/CreateProposal/CreateProposal";
 
-import 'normalize.css/normalize.css';
-import './styles/theme.scss';
-import './styles/main.scss';
+import "normalize.css/normalize.css";
+import "./styles/theme.scss";
+import "./styles/main.scss";
 
-import s from './App.module.scss';
+interface LayoutProps {
+  layout: React.FC<any>;
+  routes: Array<RouteInfo>;
+}
 
-const history = createBrowserHistory();
+interface RouteInfo extends RouteProps {
+  path: string;
+}
 
-const routes = [
+const routes: LayoutProps[] = [
   {
-    path: '/',
-    component: Landing,
-    exact: true,
+    layout: LandingLayout,
+    routes: [
+      {
+        path: "/",
+        exact: true,
+        component: Landing,
+      },
+    ],
   },
   {
-    path: '/select-proposal',
-    component: SelectProposals,
-  },
-  {
-    path: '/proposals',
-    component: Proposals,
-  },
-  {
-    path: '/details',
-    component: DaoDetails,
-  },
-  {
-    path: '/create-dao',
-    component: CreateDao,
-  },
-  {
-    path: '/create-proposal',
-    component: CreateProposal,
+    layout: MainLayout,
+    routes: [
+      {
+        path: "/select-proposal",
+        component: SelectProposals,
+      },
+      {
+        path: "/proposals",
+        component: Proposals,
+      },
+      {
+        path: "/details",
+        component: DaoDetails,
+      },
+      {
+        path: "/create-dao",
+        component: CreateDao,
+      },
+      {
+        path: "/create-proposal",
+        component: CreateProposal,
+      },
+    ],
   },
 ];
 
-function App() {
-  const [theme, setTheme] = useState(document.documentElement.dataset['theme']);
-
-  const toggleTheme = () => {
-    const updatedTheme = theme === 'light' ? 'dark' : 'light';
-    document.documentElement.classList.add('color-theme-in-transition');
-    setTheme(updatedTheme);
-    document.documentElement.setAttribute('data-theme', updatedTheme);
-    window.setTimeout(() => {
-      document.documentElement.classList.remove('color-theme-in-transition');
-    }, 1000);
-  };
-
-  return (
-    <Router history={history}>
-      <div className={s.root}>
-        <Header className={s.header} toggleTheme={toggleTheme} />
-        <section className={s.content}>
-          <Switch>
-            {routes.map((route) => (
-              <Route {...route} />
-            ))}
-          </Switch>
-        </section>
-        <Footer className={s.footer} />
-      </div>
-    </Router>
+const Layout: React.FC<LayoutProps> = ({ layout: LayoutComponent, routes }) => {
+  const paths = routes.map((route) => route.path);
+  const layout = (
+    <LayoutComponent
+      children={routes.map((route) => (
+        <Route key={route.path} {...route} />
+      ))}
+    />
   );
-}
+  return <Route exact path={paths} children={layout} />;
+};
+
+const App: React.FC = () => {
+  return (
+    <BrowserRouter>
+      {routes.map((layoutProps, i) => (
+        <Layout key={i} {...layoutProps} />
+      ))}
+    </BrowserRouter>
+  );
+};
 
 export default App;
