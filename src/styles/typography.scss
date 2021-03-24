@@ -1,0 +1,255 @@
+@import './_variables.scss';
+
+@mixin display {
+  font-family: $secondaryFont;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 156px;
+  line-height: 208px;
+}
+
+@mixin heading-1 {
+  font-family: $secondaryFont;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 76px;
+  line-height: 104px;
+}
+
+@mixin heading-2 {
+  font-family: $secondaryFont;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 60px;
+  line-height: 72px;
+}
+
+@mixin heading-3 {
+  font-family: $secondaryFont;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 42px;
+  line-height: 56px;
+  letter-spacing: 0.04em;
+}
+
+@mixin heading-4 {
+  font-family: $secondaryFont;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 48px;
+  letter-spacing: 0.04em;
+}
+
+@mixin heading-5 {
+  font-family: $secondaryFont;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: 0.04em;
+}
+
+@mixin body-1 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+}
+
+@mixin body-2 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+
+
+@mixin paragraph-1 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 48px;
+}
+
+@mixin paragraph-2 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+@mixin paragraph-3 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+@mixin caption {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.05em;
+}
+
+
+@mixin title-1 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 48px;
+}
+
+@mixin title-2 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+@mixin title-3 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+@mixin title-4 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+
+@mixin tagline-1 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+@mixin tagline-2 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0.05em;
+}
+
+@mixin tagline-3 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.05em;
+}
+
+@mixin tagline-4 {
+  font-family: $mainFont;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+}
+
+
+.display {
+  @include display;
+}
+
+.heading-1 {
+  @include heading-1;
+}
+
+.heading-2 {
+  @include heading-2;
+}
+
+.heading-3 {
+  @include heading-3;
+}
+
+.heading-4 {
+  @include heading-4;
+}
+
+.heading-5 {
+  @include heading-5;
+}
+
+.body-1 {
+  @include body-1;
+}
+
+.body-2 {
+  @include body-2;
+}
+
+
+.paragraph-1 {
+  @include paragraph-1;
+}
+
+.paragraph-2 {
+  @include paragraph-2;
+}
+
+.paragraph-3 {
+  @include paragraph-2;
+}
+
+.caption{
+  @include caption;
+}
+
+.title-1{
+  @include title-1;
+}
+
+.title-2{
+  @include title-2;
+}
+
+.title-3{
+  @include title-3;
+}
+
+.title-4{
+  @include title-4;
+}
+
+.tagline-1 {
+  @include tagline-1;
+}
+
+.tagline-2 {
+  @include tagline-2;
+}
+
+.tagline-3 {
+  @include tagline-3;
+}
+
+.tagline-4 {
+  @include tagline-4;
+}
+

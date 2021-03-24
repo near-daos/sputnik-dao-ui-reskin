@@ -1,8 +1,105 @@
 $base-font-size: 16;
 
-$mainFont: "aileron", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+$mainFont: aileron, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
   Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", Arial, Helvetica,
   sans-serif;
-$secondaryFont: "furore", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+$secondaryFont: furore, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
   Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", Arial, Helvetica,
   sans-serif;
+
+:root {
+
+  --color-brand-black: #161515;
+
+  --color-grey-10: #E8E8E8;
+  --color-grey-20: #DCDCDC;
+  --color-grey-30: #C5C5C5;
+  --color-grey-40: #ADADAD;
+  --color-grey-50: #969696;
+  --color-grey-60: #7F7E7E;
+  --color-grey-70: #686767;
+  --color-grey-80: #505050;
+  --color-grey-90: #393838;
+  --color-grey-100: #222121;
+
+  --color-error-10: #FFCCCC;
+  --color-error-20: #FF9999;
+  --color-error-30: #FF6666;
+  --color-error-40: #FF3333;
+  --color-error-50: #FF0000;
+  --color-error-60: #CC0000;
+  --color-error-70: #990000;
+  --color-error-80: #660000;
+  --color-error-90: #330000;
+
+  --color-warning-10: #FFF2CC;
+  --color-warning-20: #FFE699;
+  --color-warning-30: #FFD966;
+  --color-warning-40: #FFCD33;
+  --color-warning-50: #FFC000;
+  --color-warning-60: #CC9A00;
+  --color-warning-70: #CC9A00;
+  --color-warning-80: #664D00;
+  --color-warning-90: #332600;
+
+  --color-success-10: #DFFFCC;
+  --color-success-20: #C0FF99;
+  --color-success-30: #A0FF66;
+  --color-success-40: #81FF33;
+  --color-success-50: #61FF00;
+  --color-success-60: #4ECC00;
+  --color-success-70: #3A9900;
+  --color-success-80: #276600;
+  --color-success-90: #133300;
+
+  --color-pink-10: #FFCCE3;
+  --color-pink-20: #FF99C8;
+  --color-pink-30: #FF66AC;
+  --color-pink-40: #FF3391;
+  --color-pink-50: #FF0075;
+  --color-pink-60: #CC005E;
+  --color-pink-70: #990046;
+  --color-pink-80: #66002F;
+  --color-pink-90: #330017;
+
+  --color-magenta-10: #FFCCF8;
+  --color-magenta-20: #FF99F0;
+  --color-magenta-30: #FF66E9;
+  --color-magenta-40: #FF33E1;
+  --color-magenta-50: #FF00DA;
+  --color-magenta-60: #CC00AE;
+  --color-magenta-70: #990083;
+  --color-magenta-80: #660057;
+  --color-magenta-90: #33002C;
+
+  --color-purple-10: #E4CCFF;
+  --color-purple-20: #C899FF;
+  --color-purple-30: #AD66FF;
+  --color-purple-40: #9133FF;
+  --color-purple-50: #7600FF;
+  --color-purple-60: #5E00CC;
+  --color-purple-70: #470099;
+  --color-purple-80: #2F0066;
+  --color-purple-90: #180033;
+
+  --color-blue-10: #CFCCFF;
+  --color-blue-20: #9F99FF;
+  --color-blue-30: #6E66FF;
+  --color-blue-40: #3E33FF;
+  --color-blue-50: #0E00FF;
+  --color-blue-60: #0B00CC;
+  --color-blue-70: #080099;
+  --color-blue-80: #060066;
+  --color-blue-90: #030033;
+
+  --color-cyan-10: #CCF9FF;
+  --color-cyan-20: #99F4FF;
+  --color-cyan-30: #67EEFE;
+  --color-cyan-40: #34E9FE;
+  --color-cyan-50: #01E3FE;
+  --color-cyan-60: #01B6CB;
+  --color-cyan-70: #018898;
+  --color-cyan-80: #005B66;
+  --color-cyan-90: #002D33;
+
+}
