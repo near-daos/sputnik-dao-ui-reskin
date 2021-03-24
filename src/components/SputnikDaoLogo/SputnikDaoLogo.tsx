@@ -1,8 +1,14 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import s from './SputnikDaoLogo.module.scss';
 
 export const SputnikDaoLogo = ({ ...props }) => (
-  <svg viewBox="0 0 127 32" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg
+    viewBox="0 0 127 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
     <path
       d="M10.2149 12.7915L11.4758 11.5306V6.39576L10.2149 5.11661H2.55831V2.55831H8.93579V3.83746H11.4758V1.29743L10.2149 0H1.26088L0 1.29743V6.77951L1.26088 7.69319H8.93579V10.2332H2.55831V8.97234H0V11.5306L1.26088 12.7915H10.2149Z"
       className={s.major}
