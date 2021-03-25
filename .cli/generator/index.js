@@ -4,8 +4,8 @@ const { camelize, templateEngine } = require('../utils');
 const templates = {
   component: 'component',
   c: 'component',
-  screen: 'screen',
-  s: 'screen',
+  page: 'page',
+  p: 'page',
   atom: 'atom',
   a: 'atom',
 };
@@ -29,8 +29,8 @@ module.exports = (template, name) => {
     case 'component':
       generateComponent('component', camelizedName, 'components');
       break;
-    case 'screen':
-      generateComponent('component', `${camelizedName}Screen`, 'screens');
+    case 'page':
+      generateComponent('component', `${camelizedName}Page`, 'pages');
       break;
     default:
       throw new Error(`Template '${template}' is not found`);
