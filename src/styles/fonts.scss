@@ -1,25 +1,17 @@
-// Furore
-
-@font-face {
-  font-family: 'furore';
-  src: url('../fonts/furore/Furore-webfont.eot');
-  src: url('../fonts/furore/Furore-webfont.eot?#iefix') format('embedded-opentype'),
-       url('../fonts/furore/Furore-webfont.woff') format('woff'),
-       url('../fonts/furore/Furore-webfont.ttf') format('truetype'),
-       url('../fonts/furore/Furore-webfont.svg#furoreregular') format('svg');
-  font-weight: normal;
-  font-style: normal;
+@mixin font-face($font-family, $file-path, $weight: normal, $style: normal) {
+  @font-face {
+    font-family: $font-family;
+    font-weight: $weight;
+    font-style: $style;
+    src: url('#{$file-path}.eot');
+    src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'),
+    url('#{$file-path}.woff') format('woff'),
+    url('#{$file-path}.ttf') format('truetype');
+  }
 }
 
-// Aileron
+@include font-face(furore, '../fonts/furore/Furore-webfont', 400);
 
-@font-face {
-  font-family: 'aileron';
-  src: url('../fonts/aileron/regular/Aileron-Regular-webfont.eot');
-  src: url('../fonts/aileron/regular/Aileron-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-       url('../fonts/aileron/regular/Aileron-Regular-webfont.woff') format('woff'),
-       url('../fonts/aileron/regular/Aileron-Regular-webfont.ttf') format('truetype'),
-       url('../fonts/aileron/regular/Aileron-Regular-webfont.svg#furoreregular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
+@include font-face(aileron, '../fonts/aileron/regular/Aileron-Regular-webfont', 400);
+@include font-face(aileron, '../fonts/aileron/semibold/Aileron-SemiBold-webfont', 600);
+
