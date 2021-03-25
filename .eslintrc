@@ -63,19 +63,25 @@
       // Always require blank lines before return statements
       { "blankLine": "always", "prev": "*", "next": "return" }
     ],
+
     // prettier
     "prettier/prettier": ["error"],
+
     // TypeScript
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/no-object-literal-type-assertion": "off",
+
     // React
     "react/require-default-props": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
     "react/prop-types": ["off", {}],
-    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/button-has-type": "off",
+
     // import
+    "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": [
       "error",
       {

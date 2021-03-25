@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+const generator = require('./generator');
+
+var args = process.argv.slice(-3);
+
+try {
+  switch (args[0]) {
+    case 'g':
+      generator(args[1], args[2]);
+      break;
+    default:
+      throw new Error(`Comand '${args[0]}' not found`);
+  }
+} catch (e) {
+  console.log(`Error: ${e.message}`);
+}

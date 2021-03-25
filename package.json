@@ -19,7 +19,8 @@
     "eject": "react-scripts eject",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
     "watch-icons": "watch 'yarn build-svg-sprite' src/icons/",
-    "build-svg-sprite": "svg-sprite -s --symbol-sprite=sprite-icons.svg --symbol-dest= --dest=public src/icons/*.svg"
+    "build-svg-sprite": "svg-sprite -s --symbol-sprite=sprite-icons.svg --symbol-dest= --dest=public src/icons/*.svg",
+    "g": "./.cli/cli g ${1} ${2}"
   },
   "browserslist": {
     "production": [
