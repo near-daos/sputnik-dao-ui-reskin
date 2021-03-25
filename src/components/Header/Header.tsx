@@ -1,5 +1,5 @@
 import React from 'react';
-import classnames from 'classnames';
+import cn from 'classnames';
 import { SputnikDaoLogo } from '../SputnikDaoLogo/SputnikDaoLogo';
 
 import s from './Header.module.scss';
@@ -10,7 +10,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ className, toggleTheme }) => (
-  <header className={classnames(s.root, className)}>
+  <header className={cn(s.root, className)}>
     <div className={s.container}>
       <SputnikDaoLogo className={s.logo} />
       Discover DAO

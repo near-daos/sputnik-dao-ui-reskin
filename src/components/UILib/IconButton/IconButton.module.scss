@@ -1,0 +1,47 @@
+@use '../../../styles/functions';
+
+.icon {
+  display: block;
+}
+
+.button {
+  > span {
+    display: block;
+  }
+
+  &[data-size='xs'] {
+    padding: functions.calcRem(5);
+
+    .icon {
+      width: functions.calcRem(18);
+      height: functions.calcRem(18);
+    }
+  }
+
+  &[data-size='sm'] {
+    padding: functions.calcRem(7);
+
+    .icon {
+      width: functions.calcRem(18);
+      height: functions.calcRem(18);
+    }
+  }
+
+  &[data-size='md'] {
+    padding: functions.calcRem(6);
+
+    .icon {
+      width: functions.calcRem(24);
+      height: functions.calcRem(24);
+    }
+  }
+
+  &[data-size='lg'] {
+    padding: functions.calcRem(10);
+
+    .icon {
+      width: functions.calcRem(18);
+      height: functions.calcRem(18);
+    }
+  }
+}

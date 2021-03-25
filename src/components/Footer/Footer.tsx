@@ -1,5 +1,5 @@
 import React from 'react';
-import classnames from 'classnames';
+import cn from 'classnames';
 
 import s from './Footer.module.scss';
 
@@ -8,7 +8,7 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ className }) => (
-  <footer className={classnames(s.root, className)}>
+  <footer className={cn(s.root, className)}>
     <div className={s.container}>
       SputnikDAO 2021. The software is an open source and provided “as is”,
       without warranty of any kind.

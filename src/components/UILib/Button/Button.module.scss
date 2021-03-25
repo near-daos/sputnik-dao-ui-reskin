@@ -1,3 +1,152 @@
+@use '../../../styles/functions';
+@import 'styles/typography.scss';
+
 .root {
-  border: 1px solid black;
+  border-radius: 1px;
+  border-width: 2px;
+  border-style: solid;
+  color: var(--btnTextColor);
+  line-height: functions.calcRem(24);
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+
+  // color && variant
+
+  &[data-color='primary'] {
+    border-color: var(--btnPrimary);
+    background-color: var(--btnPrimary);
+
+    &:hover {
+      border-color: var(--btnPrimaryHover);
+      background-color: var(--btnPrimaryHover);
+    }
+
+    &:active {
+      border-color: var(--btnPrimaryActive);
+      background-color: var(--btnPrimaryActive);
+    }
+
+    &[data-variant='outline'] {
+      background-color: transparent;
+
+      &:hover {
+        background-color: var(--btnPrimaryHover);
+        border-color: var(--btnPrimary);
+      }
+
+      &:active {
+        background-color: var(--btnPrimaryActive);
+        border-color: var(--btnPrimary);
+      }
+    }
+
+    &[data-variant='monochrome'] {
+      border-color: var(--btnMonochrome);
+      background-color: transparent;
+
+      &:hover {
+        background-color: var(--btnMonochromeHover);
+        border-color: var(--btnMonochrome);
+      }
+
+      &:active {
+        background-color: var(--btnMonochrome);
+        border-color: var(--btnMonochrome);
+      }
+    }
+  }
+
+  &[data-color='danger'] {
+    border-color: var(--btnDanger);
+    background-color: var(--btnDanger);
+
+    &:hover {
+      border-color: var(--btnDangerHover);
+      background-color: var(--btnDangerHover);
+    }
+
+    &:active {
+      border-color: var(--btnDangerActive);
+      background-color: var(--btnDangerActive);
+    }
+
+    &[data-variant='outline'] {
+      background-color: transparent;
+
+      &:hover {
+        border-color: var(--btnDanger);
+        background-color: var(--btnDangerHover);
+      }
+
+      &:active {
+        border-color: var(--btnDanger);
+        background-color: var(--btnDangerActive);
+      }
+    }
+  }
+
+  // size
+
+  &[data-size='xs'] {
+    @extend .title-6;
+    padding: functions.calcRem(2) functions.calcRem(22);
+  }
+
+  &[data-size='sm'] {
+    @extend .title-6;
+    padding: functions.calcRem(4) functions.calcRem(22);
+  }
+
+  &[data-size='md'] {
+    @extend .title-5;
+    padding: functions.calcRem(6) functions.calcRem(22);
+  }
+
+  &[data-size='lg'] {
+    @extend .title-5;
+    padding: functions.calcRem(10) functions.calcRem(22);
+  }
+
+  %textStyle {
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .content {
+    @extend %textStyle;
+  }
+
+  .leftElement,
+  .rightElement {
+    display: inline-block;
+    @extend %textStyle;
+
+    svg {
+      vertical-align: middle;
+      display: inline-block;
+    }
+  }
+
+  .leftElement svg {
+    margin-right: functions.calcRem(7);
+  }
+
+  .rightElement svg {
+    margin-left: functions.calcRem(7);
+  }
+
+  &[data-variant='outline'],
+  &[data-variant='monochrome'] {
+    .leftElement,
+    .rightElement {
+      color: var(--btnTextGrey);
+
+      svg {
+        color: var(--white);
+      }
+    }
+  }
 }

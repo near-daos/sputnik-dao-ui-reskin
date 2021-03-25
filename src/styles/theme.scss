@@ -1,43 +1,19 @@
-html {
-  // no theme
-  --textColor: white;
-  --primaryBg: black;
+#themed {
+  &[data-theme='dark'] {
+    --primaryBg: var(--color-brand-black);
+    --primaryBorder: var(--color-grey-90);
+    --logoMajorLine: var(--white);
+    --logoMinorLine: var(--color-grey-50);
 
-  #themed {
-    &[data-theme="dark"] {
-      --primaryBg: #161515;
-      --primaryBorder: #807171;
-      --logoMajorLine: #ffffff;
-      --logoMinorLine: #969696;
+    --textColor: var(--white);
+  }
 
-      /* global colors */
-      // --primaryTheme: #e52863;
-      // --primaryBg: #fff;
-      // --primaryText: #212121;
-      // --secondaryText: #7b7b7b;
-      // --primaryButtonText: #fff;
-      // --primaryBorderBg: #efefef;
-      // --activeSelectionBg: rgba(162, 162, 162, 0.1);
-      // --primaryShadowBg: rgba(204, 204, 204, 0.7);
-    }
+  &[data-theme='light'] {
+    --primaryBg: var(--color-grey-05);
+    --primaryBorder: var(--color-grey-30);
+    --logoMajorLine: var(--color-brand-black);
+    --logoMinorLine: var(--color-grey-70);
 
-    &[data-theme="light"] {
-      --primaryBg: #e5e5e5;
-      --primaryBorder: #c5c5c5;
-      --logoMajorLine: #161515;
-      --logoMinorLine: #686767;
-
-      --textColor: black;
-
-      /* global colors */
-      // --primaryTheme: #e52863;
-      // --primaryBg: #1a1a1d;
-      // --primaryText: rgba(255, 255, 255, 0.8);
-      // --secondaryText: rgba(255, 255, 255, 0.6);
-      // --primaryButtonText: #fff;
-      // --primaryBorderBg: #292929;
-      // --activeSelectionBg: rgba(0, 0, 0, 0.18);
-      // --primaryShadowBg: rgba(8, 8, 8, 0.7);
-    }
+    --textColor: var(--black);
   }
 }

@@ -5,13 +5,20 @@
     font-style: $style;
     src: url('#{$file-path}.eot');
     src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'),
-    url('#{$file-path}.woff') format('woff'),
-    url('#{$file-path}.ttf') format('truetype');
+      url('#{$file-path}.woff') format('woff'),
+      url('#{$file-path}.ttf') format('truetype');
   }
 }
 
 @include font-face(furore, '../fonts/furore/Furore-webfont', 400);
 
-@include font-face(aileron, '../fonts/aileron/regular/Aileron-Regular-webfont', 400);
-@include font-face(aileron, '../fonts/aileron/semibold/Aileron-SemiBold-webfont', 600);
-
+@include font-face(
+  aileron,
+  '../fonts/aileron/regular/Aileron-Regular-webfont',
+  400
+);
+@include font-face(
+  aileron,
+  '../fonts/aileron/semibold/Aileron-SemiBold-webfont',
+  600
+);

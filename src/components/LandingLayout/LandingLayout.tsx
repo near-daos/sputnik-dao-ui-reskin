@@ -1,14 +1,17 @@
 import React from 'react';
+import { Button } from '../UILib';
 import { MothershipLogo } from '../MothershipLogo/MothershipLogo';
 
 import s from './LandingLayout.module.scss';
+
+const DEFAULT_LANDING_THEME = 'dark';
 
 interface LandingLayoutProps {
   children: React.ReactNode;
 }
 
 export const LandingLayout: React.FC<LandingLayoutProps> = ({ children }) => (
-  <div className={s.root}>
+  <div className={s.root} id="themed" data-theme={DEFAULT_LANDING_THEME}>
     <header className={s.header}>
       <a href="/" className={s.logo}>
         <MothershipLogo className={s.logoIcon} />
@@ -28,7 +31,7 @@ export const LandingLayout: React.FC<LandingLayoutProps> = ({ children }) => (
           <a href="/">Community</a>
         </li>
       </nav>
-      <button type="button">Connect to Mothership</button>
+      <Button>Connect to Mothership</Button>
     </header>
     <main className={s.content}>{children}</main>
     <footer className={s.footer}>
