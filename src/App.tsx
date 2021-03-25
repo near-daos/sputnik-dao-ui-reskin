@@ -1,16 +1,25 @@
-import React from "react";
-import { BrowserRouter, Route, RouteProps } from "react-router-dom";
-import { LandingLayout, MainLayout } from "./components";
-import { Landing } from "./pages/Landing/Landing";
-import { SelectProposals } from "./pages/SelectProposal/SelectProposal";
-import { Proposals } from "./pages/Proposals/Proposals";
-import { DaoDetails } from "./pages/DaoDetails/DaoDetails";
-import { CreateDao } from "./pages/CreateDao/CreateDao";
-import { CreateProposal } from "./pages/CreateProposal/CreateProposal";
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable react/no-children-prop */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable padding-line-between-statements */
+/* eslint-disable react/no-children-prop */
+/* eslint-disable arrow-body-style */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/jsx-props-no-spreading */
 
-import "normalize.css/normalize.css";
-import "./styles/theme.scss";
-import "./styles/main.scss";
+import React from 'react';
+import { BrowserRouter, Route, RouteProps } from 'react-router-dom';
+import { LandingLayout, MainLayout } from './components';
+import { Landing } from './pages/Landing/Landing';
+import { SelectProposals } from './pages/SelectProposal/SelectProposal';
+import { Proposals } from './pages/Proposals/Proposals';
+import { DaoDetails } from './pages/DaoDetails/DaoDetails';
+import { CreateDao } from './pages/CreateDao/CreateDao';
+import { CreateProposal } from './pages/CreateProposal/CreateProposal';
+
+import 'normalize.css/normalize.css';
+import './styles/theme.scss';
+import './styles/main.scss';
 
 interface LayoutProps {
   layout: React.FC<any>;
@@ -26,7 +35,7 @@ const routes: LayoutProps[] = [
     layout: LandingLayout,
     routes: [
       {
-        path: "/",
+        path: '/',
         exact: true,
         component: Landing,
       },
@@ -36,23 +45,23 @@ const routes: LayoutProps[] = [
     layout: MainLayout,
     routes: [
       {
-        path: "/select-proposal",
+        path: '/select-proposal',
         component: SelectProposals,
       },
       {
-        path: "/proposals",
+        path: '/proposals',
         component: Proposals,
       },
       {
-        path: "/details",
+        path: '/details',
         component: DaoDetails,
       },
       {
-        path: "/create-dao",
+        path: '/create-dao',
         component: CreateDao,
       },
       {
-        path: "/create-proposal",
+        path: '/create-proposal',
         component: CreateProposal,
       },
     ],

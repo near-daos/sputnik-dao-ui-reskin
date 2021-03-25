@@ -1,3 +1,7 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable import/prefer-default-export */
+
 export const MothershipLogo = ({ ...props }) => (
   <svg
     viewBox="0 0 701 528"
@@ -700,17 +704,17 @@ export const MothershipLogo = ({ ...props }) => (
     <path
       d="M326.233 158.965L318.561 238.295L339.859 453.413L301.521 238.295L321.565 164.566L326.233 158.965Z"
       fill="white"
-      fill-opacity="0.98"
+      fillOpacity="0.98"
     />
     <path
       d="M286.611 238.283L306.217 192.563L312.169 206.335L303.65 238.283L339.858 453.401L286.611 238.283Z"
       fill="white"
-      fill-opacity="0.9"
+      fillOpacity="0.9"
     />
     <path
       d="M322.819 219.118L335.307 144.018C356.968 152.981 365.728 163.644 365.416 168.001L369.676 210.598L322.819 219.118Z"
       fill="white"
-      fill-opacity="0.8"
+      fillOpacity="0.8"
     />
     <g filter="url(#filter1_d)">
       <path
@@ -721,7 +725,7 @@ export const MothershipLogo = ({ ...props }) => (
     <path
       d="M360.25 126.276L364.918 117.873L414.401 238.284L350.505 500.26L386.713 238.284L360.25 126.276Z"
       fill="white"
-      fill-opacity="0.98"
+      fillOpacity="0.98"
     />
     <path
       d="M346.242 270.992L350.502 21.0374L353.712 270.992H346.242Z"
@@ -2003,9 +2007,9 @@ export const MothershipLogo = ({ ...props }) => (
         width="36.0759"
         height="261.081"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend
           mode="normal"
           in="SourceGraphic"
@@ -2024,9 +2028,9 @@ export const MothershipLogo = ({ ...props }) => (
         width="134.693"
         height="362.59"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"

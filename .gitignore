@@ -48,3 +48,6 @@ Thumbs.db
 *.mov
 *.wmv
 
+# generated assets
+public/sprite-icons.svg
+

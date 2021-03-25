@@ -1,8 +1,8 @@
-import React from "react";
-import classnames from "classnames";
-import { SputnikDaoLogo } from "../SputnikDaoLogo/SputnikDaoLogo";
+import React from 'react';
+import classnames from 'classnames';
+import { SputnikDaoLogo } from '../SputnikDaoLogo/SputnikDaoLogo';
 
-import s from "./Header.module.scss";
+import s from './Header.module.scss';
 
 interface HeaderProps {
   className: string;
@@ -16,13 +16,15 @@ export const Header: React.FC<HeaderProps> = ({ className, toggleTheme }) => (
       Discover DAO
       <form>
         <fieldset>
-          <button>search</button>
+          <button type="button">search</button>
           <input placeholder="Search for DAO or proposal" type="search" />
         </fieldset>
       </form>
-      <button>Create new DAO</button>
-      <button>Sign In</button>
-      <button onClick={toggleTheme}>Toggle theme</button>
+      <button type="button">Create new DAO</button>
+      <button type="button">Sign In</button>
+      <button type="button" onClick={toggleTheme}>
+        Toggle theme
+      </button>
     </div>
   </header>
 );
