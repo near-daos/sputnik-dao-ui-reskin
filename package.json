@@ -20,7 +20,8 @@
     "lint": "tsc --noEmit && eslint --cache --max-warnings=0 src/**/*.ts{,x} && stylelint --fix --cache -f verbose \"**/*.scss\"",
     "watch-icons": "watch 'yarn build-svg-sprite' src/icons/",
     "build-svg-sprite": "svg-sprite -s --symbol-sprite=sprite-icons.svg --symbol-dest= --dest=public src/icons/*.svg",
-    "g": "./.cli/cli g ${1} ${2}"
+    "g": "./.cli/cli g ${1} ${2}",
+    "postinstall": "husky install .config/husky"
   },
   "browserslist": {
     "production": [

@@ -1,7 +1,26 @@
-@use 'breakpoints';
+@use 'variables';
 @use 'functions';
+
+@mixin font-face($font-family, $file-path, $weight: normal, $style: normal) {
+  @font-face {
+    font-family: $font-family;
+    font-style: $style;
+    font-weight: $weight;
+    src: url('#{$file-path}.eot');
+    src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'),
+      url('#{$file-path}.woff') format('woff'),
+      url('#{$file-path}.ttf') format('truetype');
+  }
+}
 
 @mixin container {
   margin: 0 auto;
-  width: functions.calc-rem(breakpoints.$md);
+  width: functions.calc-rem(variables.$breakpoint-md);
 }
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
