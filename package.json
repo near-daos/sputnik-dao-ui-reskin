@@ -13,7 +13,6 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "postinstall": "husky install",
     "start": "yarn watch-icons & react-scripts start",
     "build": "yarn build-svg-sprite & react-scripts build",
     "test": "react-scripts test",
