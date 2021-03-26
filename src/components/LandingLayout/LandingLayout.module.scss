@@ -3,7 +3,7 @@
 
 .root {
   align-items: stretch;
-  background-color: var(--primaryBg);
+  background-color: var(--theme-primary-bg);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -17,7 +17,7 @@
 }
 
 .content {
-  background-color: var(--primaryBg);
+  background-color: var(--theme-primary-bg);
   flex: 1 1 auto;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .logoText {
-  color: var(--textColor);
+  color: var(--theme-text-color);
   display: inline-block;
   margin-left: functions.calc-rem(10);
   margin-top: functions.calc-rem(6);

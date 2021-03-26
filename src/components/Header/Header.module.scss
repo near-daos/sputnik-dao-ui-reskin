@@ -2,8 +2,8 @@
 @use '../../styles/mixins';
 
 .root {
-  background-color: var(--primaryBg);
-  border-bottom: functions.calc-rem(1) solid var(--primaryBorder);
+  background-color: var(--theme-primary-bg);
+  border-bottom: functions.calc-rem(1) solid var(--theme-primary-border);
 }
 
 .container {

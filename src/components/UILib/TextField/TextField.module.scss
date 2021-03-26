@@ -2,7 +2,7 @@
 @import 'styles/typography';
 
 .root {
-  --input-color: var(--inputText);
+  --input-color: var(--theme-input-text);
   --input-border-color: var(--color-grey-30);
   --input-border-width: 1px;
   
@@ -51,7 +51,7 @@
 }
 
 .input::placeholder {
-  color: var(--inputPlaceholder);
+  color: var(--theme-input-placeholder);
 }
 
 .container {
@@ -61,7 +61,7 @@
   width: 100%;
 
   &:not(.withError):not(.disabled):hover:not(.focus) {
-    --input-border-color: var(--inputHoverBorder);
+    --input-border-color: var(--theme-input-hover-border);
     --input-border-width: 2px;
   }
 }
@@ -155,7 +155,7 @@
 .error {
   @extend %caption-1;
   align-items: center;
-  color: var(--inputErrorBorder);
+  color: var(--theme-input-error-border);
   display: flex;
   left: 0;
   margin: functions.calc-rem(8) 0 0;
@@ -165,18 +165,18 @@
 
 .errorIcon {
   align-self: flex-start;
-  color: var(--inputErrorBorder);
+  color: var(--theme-input-error-border);
   display: block;
   margin-right: functions.calc-rem(5);
 }
 
 .withError {
-  --input-border-color: var(--inputErrorBorder);
+  --input-border-color: var(--theme-input-error-border);
   --input-border-width: 2px;
 }
 
 .success {
-  --input-border-color: var(--inputSucccessBorder);
+  --input-border-color: var(--theme-input-succcess-border);
 }
 
 .disabled {
@@ -185,7 +185,7 @@
 }
 
 .focus:not(.withError) {
-  --input-border-color: var(--inputFocusBorder);
+  --input-border-color: var(--theme-input-focus-border);
   --input-border-width: 2px;
 }
 
@@ -204,7 +204,7 @@
 
 .helperText {
   @extend %caption-1;
-  color: var(--inputHelperText);
+  color: var(--theme-input-helper-text);
   left: 0;
   margin-top: functions.calc-rem(8);
   position: absolute;
