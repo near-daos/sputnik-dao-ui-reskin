@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes, useState } from 'react';
 import cn from 'classnames';
-import SvgIcon from 'components/UILib/SvgIcon';
+import SvgIcon from '../SvgIcon/SvgIcon';
 
 import styles from './TextField.module.scss';
 

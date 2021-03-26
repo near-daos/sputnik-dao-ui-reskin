@@ -5,7 +5,7 @@
   --input-color: var(--theme-input-text);
   --input-border-color: var(--color-grey-30);
   --input-border-width: 1px;
-  
+
   position: relative;
   width: 100%;
 }
@@ -65,7 +65,6 @@
     --input-border-width: 2px;
   }
 }
-
 
 .inputContainer {
   display: flex;
@@ -176,7 +175,7 @@
 }
 
 .success {
-  --input-border-color: var(--theme-input-succcess-border);
+  --input-border-color: var(--theme-input-success-border);
 }
 
 .disabled {

@@ -13,6 +13,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#themed {
+  color: var(--theme-text-color);
+}
+
 *,
 *::before,
 *::after {

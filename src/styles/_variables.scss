@@ -8,7 +8,6 @@ $secondary-font: furore, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
   sans-serif;
 
 :root {
-
   --color-brand-black: #161515;
 
   --color-grey-10: #e8e8e8;
@@ -104,17 +103,4 @@ $secondary-font: furore, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 
   --white: #fff;
   --black: #000;
-
-  // UILib
-
-  --btnTextColor: var(--white);
-  --btnPrimary: var(--color-purple-50);
-  --btnPrimaryHover: var(--color-purple-80);
-  --btnPrimaryActive: var(--color-purple-70);
-  --btnMonochrome: var(--color-grey-90);
-  --btnTextGrey: var(--color-grey-80);
-  --btnMonochromeHover: var(--color-grey-100);
-  --btnDanger: var(--color-error-60);
-  --btnDangerHover: var(--color-error-80);
-  --btnDangerActive: var(--color-error-70);
 }

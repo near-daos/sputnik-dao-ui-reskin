@@ -10,17 +10,17 @@ import s from './IconButton.module.scss';
 export interface IconButtonProps
   extends Omit<ButtonProps, 'children' | 'leftElement' | 'rightElement'> {
   iconClassName?: string;
-  iconName: keyof typeof icons;
+  icon: keyof typeof icons;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
   iconClassName,
-  iconName,
+  icon,
   className,
   ...props
 }: IconButtonProps) => (
   <Button className={cn(s.button, className)} {...props}>
-    <SvgIcon className={cn(s.icon, iconClassName)} icon={iconName} />
+    <SvgIcon className={cn(s.icon, iconClassName)} icon={icon} />
   </Button>
 );
 
