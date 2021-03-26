@@ -3,15 +3,15 @@
 @import 'styles/typography';
 
 .root {
+  background-color: var(--theme-primary-bg);
   border-radius: 1px;
   border-style: solid;
   border-width: 2px;
+  color: var(--theme-btn-text);
   cursor: pointer;
   line-height: functions.calc-rem(24);
   outline: none;
   transition: all 0.2s;
-  color: var(--theme-btn-text);
-  background-color: var(--theme-primary-bg);
 
   // color && variant
   &[data-color='primary'] {
@@ -74,8 +74,8 @@
 
   &[data-variant='outline'],
   &[data-variant='monochrome'] {
-    color: var(--theme-btn-text-outline);
     background-color: var(--theme-primary-bg);
+    color: var(--theme-btn-text-outline);
 
     .leftElement,
     .rightElement {
@@ -139,9 +139,9 @@
   display: inline-block;
 
   svg {
+    color: var(--theme-btn-text);
     display: inline-block;
     vertical-align: middle;
-    color: var(--theme-btn-text);
   }
 }
 

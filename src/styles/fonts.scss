@@ -1,14 +1,14 @@
+@use 'mixins';
 
+@include mixins.font-face(furore, '../fonts/furore/Furore-webfont', 400);
 
-@include font-face(furore, '../fonts/furore/Furore-webfont', 400);
-
-@include font-face(
+@include mixins.font-face(
   aileron,
   '../fonts/aileron/regular/Aileron-Regular-webfont',
   400
 );
 
-@include font-face(
+@include mixins.font-face(
   aileron,
   '../fonts/aileron/semibold/Aileron-SemiBold-webfont',
   600
