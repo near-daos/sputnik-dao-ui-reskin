@@ -6,83 +6,96 @@
   border-radius: 1px;
   border-style: solid;
   border-width: 2px;
-  color: var(--btnTextColor);
   cursor: pointer;
   line-height: functions.calc-rem(24);
   outline: none;
   transition: all 0.2s;
+  color: var(--theme-btn-text);
+  background-color: var(--theme-primary-bg);
 
   // color && variant
   &[data-color='primary'] {
-    background-color: var(--btnPrimary);
-    border-color: var(--btnPrimary);
+    background-color: var(--theme-btn-primary);
+    border-color: var(--theme-btn-primary);
 
-    &:hover {
-      background-color: var(--btnPrimaryHover);
-      border-color: var(--btnPrimaryHover);
-    }
+    &[data-variant='regular'] {
+      &:hover {
+        background-color: var(--theme-btn-primary-hover);
+        border-color: var(--theme-btn-primary-hover);
+      }
 
-    &:active {
-      background-color: var(--btnPrimaryActive);
-      border-color: var(--btnPrimaryActive);
+      &:active {
+        background-color: var(--theme-btn-primary-active);
+        border-color: var(--theme-btn-primary-active);
+      }
     }
 
     &[data-variant='outline'] {
-      background-color: transparent;
+      border-color: var(--theme-btn-outline-border);
 
       &:hover {
-        background-color: var(--btnPrimaryHover);
-        border-color: var(--btnPrimary);
+        background-color: var(--theme-btn-outline-hover);
       }
 
       &:active {
-        background-color: var(--btnPrimaryActive);
-        border-color: var(--btnPrimary);
-      }
-    }
-
-    &[data-variant='monochrome'] {
-      background-color: transparent;
-      border-color: var(--btnMonochrome);
-
-      &:hover {
-        background-color: var(--btnMonochromeHover);
-        border-color: var(--btnMonochrome);
-      }
-
-      &:active {
-        background-color: var(--btnMonochrome);
-        border-color: var(--btnMonochrome);
+        background-color: var(--theme-btn-outline-active);
       }
     }
   }
 
   &[data-color='danger'] {
-    background-color: var(--btnDanger);
-    border-color: var(--btnDanger);
+    background-color: var(--theme-btn-danger);
+    border-color: var(--theme-btn-danger);
 
-    &:hover {
-      background-color: var(--btnDangerHover);
-      border-color: var(--btnDangerHover);
-    }
-
-    &:active {
-      background-color: var(--btnDangerActive);
-      border-color: var(--btnDangerActive);
-    }
-
-    &[data-variant='outline'] {
-      background-color: transparent;
-
+    &[data-variant='regular'] {
       &:hover {
-        background-color: var(--btnDangerHover);
-        border-color: var(--btnDanger);
+        background-color: var(--theme-btn-danger-hover);
+        border-color: var(--theme-btn-danger-hover);
       }
 
       &:active {
-        background-color: var(--btnDangerActive);
-        border-color: var(--btnDanger);
+        background-color: var(--theme-btn-danger-active);
+        border-color: var(--theme-btn-danger-active);
       }
+    }
+
+    &[data-variant='outline'] {
+      border-color: var(--theme-btn-danger-outline-border);
+
+      &:hover {
+        background-color: var(--theme-btn-danger-outline-hover);
+      }
+
+      &:active {
+        background-color: var(--theme-btn-danger-outline-active);
+      }
+    }
+  }
+
+  &[data-variant='outline'],
+  &[data-variant='monochrome'] {
+    color: var(--theme-btn-text-outline);
+    background-color: var(--theme-primary-bg);
+
+    .leftElement,
+    .rightElement {
+      color: var(--theme-btn-text-secondary-color);
+
+      svg {
+        color: var(--theme-btn-text-outline);
+      }
+    }
+  }
+
+  &[data-variant='monochrome'] {
+    border-color: var(--theme-btn-monochrome-border);
+
+    &:hover {
+      background-color: var(--theme-btn-monochrome-hover);
+    }
+
+    &:active {
+      background-color: var(--theme-btn-monochrome-active);
     }
   }
 
@@ -106,18 +119,6 @@
     @extend %title-5;
     padding: functions.calc-rem(10) functions.calc-rem(22);
   }
-
-  &[data-variant='outline'],
-  &[data-variant='monochrome'] {
-    .leftElement,
-    .rightElement {
-      color: var(--btnTextGrey);
-
-      svg {
-        color: var(--white);
-      }
-    }
-  }
 }
 
 %text-style {
@@ -134,11 +135,13 @@
 .leftElement,
 .rightElement {
   @extend %text-style;
+  @extend %body-2;
   display: inline-block;
 
   svg {
     display: inline-block;
     vertical-align: middle;
+    color: var(--theme-btn-text);
   }
 }
 

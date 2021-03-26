@@ -15,6 +15,7 @@ export interface ButtonProps {
   onClick?: EventHandler<React.MouseEvent<HTMLButtonElement>>;
   leftElement?: ReactChild;
   rightElement?: ReactChild;
+  type?: 'submit' | 'reset' | 'button';
 }
 
 interface DataAttrs {
@@ -30,6 +31,7 @@ const Button: React.FC<ButtonProps> = ({
   leftElement,
   rightElement,
   onClick,
+  type = 'button',
   ...other
 }) => {
   const styleAttrs: DataAttrs = {
@@ -51,6 +53,7 @@ const Button: React.FC<ButtonProps> = ({
     <button
       className={cn(s.root, className)}
       onClick={handleClick}
+      type={type}
       {...styleAttrs}
       {...other}
     >
