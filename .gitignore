@@ -51,3 +51,6 @@ Thumbs.db
 # generated assets
 public/sprite-icons.svg
 
+# eslint
+.eslintcache
+.stylelintcache

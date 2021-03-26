@@ -1,6 +1,6 @@
-@use "variables";
+@use 'variables';
 
-@function calcRem($size) {
-  $remSize: $size / variables.$base-font-size;
-  @return #{$remSize}rem;
+@function calc-rem($size) {
+  $rem-size: $size / variables.$base-font-size;
+  @return #{$rem-size}rem;
 }

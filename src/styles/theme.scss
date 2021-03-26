@@ -1,41 +1,38 @@
-html {
-  #themed {
-    &[data-theme="dark"] {
-      --textColor: var(--white);
-      
-      --primaryBg: var(--color-brand-black);
-      --primaryBorder: var(--color-grey-90);
-      --logoMajorLine: var(--white);
-      --logoMinorLine: var(--color-grey-50);
+#themed {
+  &[data-theme='dark'] {
+    --textColor: var(--white);
 
-      --inputText: white;
-      --inputPlaceholder: var(--color-grey-70);
-      --inputBorder: var(--color-grey-90);
-      --inputHoverBorder: white;
-      --inputFocusBorder: var(--color-purple-50);
-      --inputSucccessBorder: var(--color-success-50);
-      --inputErrorBorder: var(--color-error-40);
-      --inputHelperText: var(--color-grey-50);
+    --primaryBg: var(--color-brand-black);
+    --primaryBorder: var(--color-grey-90);
+    --logoMajorLine: var(--white);
+    --logoMinorLine: var(--color-grey-50);
 
-    }
+    --inputText: #fff;
+    --inputPlaceholder: var(--color-grey-70);
+    --inputBorder: var(--color-grey-90);
+    --inputHoverBorder: #fff;
+    --inputFocusBorder: var(--color-purple-50);
+    --inputSucccessBorder: var(--color-success-50);
+    --inputErrorBorder: var(--color-error-40);
+    --inputHelperText: var(--color-grey-50);
+  }
 
-    &[data-theme='light'] {
-      --textColor: var(--color-brand-black);
-      
-      --primaryBg: var(--color-grey-05);
-      --primaryBorder: var(--color-grey-30);
-      --logoMajorLine: var(--color-brand-black);
-      --logoMinorLine: var(--color-grey-70);
+  &[data-theme='light'] {
+    --textColor: var(--color-brand-black);
 
+    --primaryBg: var(--color-grey-05);
+    --primaryBorder: var(--color-grey-30);
+    --logoMajorLine: var(--color-brand-black);
+    --logoMinorLine: var(--color-grey-70);
 
-      --inputText: var(--color-brand-black);
-      --inputPlaceholder: var(--color-grey-70);
-      --inputBorder: var(--color-grey-30);
-      --inputHoverBorder: var(--color-brand-black);
-      --inputFocusBorder: var(--color-purple-60);
-      --inputSucccessBorder: var(--color-success-80);
-      --inputErrorBorder: var(--color-error-60);
-      --inputHelperText: var(--color-grey-70);
-    }
+    --inputText: var(--color-brand-black);
+    --inputPlaceholder: var(--color-grey-70);
+    --inputBorder: var(--color-grey-30);
+    --inputHoverBorder: var(--color-brand-black);
+    --inputFocusBorder: var(--color-purple-60);
+    --inputSucccessBorder: var(--color-success-80);
+    --inputErrorBorder: var(--color-error-60);
+    --inputHelperText: var(--color-grey-70);
   }
 }
+

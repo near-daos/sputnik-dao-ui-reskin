@@ -6,6 +6,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React from 'react';
 import { BrowserRouter, Route, RouteProps } from 'react-router-dom';

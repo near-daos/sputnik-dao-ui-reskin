@@ -1,6 +1,6 @@
-@use "variables";
-@import "fonts";
-@import "typography";
+@use 'variables';
+@import 'fonts';
+@import 'typography';
 
 html {
   box-sizing: border-box;
@@ -8,14 +8,14 @@ html {
 }
 
 body {
-  font-family: variables.$mainFont;
+  font-family: variables.$main-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: inherit;
   font-family: inherit;
   font-size: inherit;
@@ -25,8 +25,8 @@ body {
 
 html.color-theme-in-transition,
 html.color-theme-in-transition *,
-html.color-theme-in-transition *:before,
-html.color-theme-in-transition *:after {
+html.color-theme-in-transition *::before,
+html.color-theme-in-transition *::after {
   transition: all 750ms;
   transition-delay: 0;
 }

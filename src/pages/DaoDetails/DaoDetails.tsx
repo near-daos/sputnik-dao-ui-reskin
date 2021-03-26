@@ -1,3 +1,3 @@
 import React from 'react';
 
-export const DaoDetails = () => <section>DaoDetails</section>;
+export const DaoDetails: React.FC = () => <section>DaoDetails</section>;

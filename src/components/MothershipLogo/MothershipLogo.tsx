@@ -2,7 +2,9 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable import/prefer-default-export */
 
-export const MothershipLogo = ({ ...props }) => (
+export const MothershipLogo: React.FC<{ className: string }> = ({
+  ...props
+}) => (
   <svg
     viewBox="0 0 701 528"
     fill="none"

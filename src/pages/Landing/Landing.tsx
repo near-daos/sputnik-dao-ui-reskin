@@ -1,3 +1,3 @@
 import React from 'react';
 
-export const Landing = () => <section>Landing</section>;
+export const Landing: React.FC = () => <section>Landing</section>;

@@ -1,3 +1,3 @@
 import React from 'react';
 
-export const CreateProposal = () => <section>CreateProposal</section>;
+export const CreateProposal: React.FC = () => <section>CreateProposal</section>;

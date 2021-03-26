@@ -1,4 +1,5 @@
-@use '../../../styles/functions';
+/* stylelint-disable max-nesting-depth */
+@use 'styles/functions';
 
 .icon {
   display: block;
@@ -10,38 +11,38 @@
   }
 
   &[data-size='xs'] {
-    padding: functions.calcRem(5);
+    padding: functions.calc-rem(5);
 
     .icon {
-      width: functions.calcRem(18);
-      height: functions.calcRem(18);
+      height: functions.calc-rem(18);
+      width: functions.calc-rem(18);
     }
   }
 
   &[data-size='sm'] {
-    padding: functions.calcRem(7);
+    padding: functions.calc-rem(7);
 
     .icon {
-      width: functions.calcRem(18);
-      height: functions.calcRem(18);
+      height: functions.calc-rem(18);
+      width: functions.calc-rem(18);
     }
   }
 
   &[data-size='md'] {
-    padding: functions.calcRem(6);
+    padding: functions.calc-rem(6);
 
     .icon {
-      width: functions.calcRem(24);
-      height: functions.calcRem(24);
+      height: functions.calc-rem(24);
+      width: functions.calc-rem(24);
     }
   }
 
   &[data-size='lg'] {
-    padding: functions.calcRem(10);
+    padding: functions.calc-rem(10);
 
     .icon {
-      width: functions.calcRem(18);
-      height: functions.calcRem(18);
+      height: functions.calc-rem(18);
+      width: functions.calc-rem(18);
     }
   }
 }

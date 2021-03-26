@@ -7,8 +7,6 @@ import Button, { ButtonProps } from '../Button/Button';
 
 import s from './IconButton.module.scss';
 
-/* eslint-disable react/jsx-props-no-spreading */
-
 export interface IconButtonProps
   extends Omit<ButtonProps, 'children' | 'leftElement' | 'rightElement'> {
   iconClassName?: string;

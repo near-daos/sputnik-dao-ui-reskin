@@ -1,30 +1,30 @@
-@use '../../../styles/functions';
-@import 'styles/typography.scss';
+/* stylelint-disable max-nesting-depth */
+@use 'styles/functions';
+@import 'styles/typography';
 
 .root {
   border-radius: 1px;
-  border-width: 2px;
   border-style: solid;
+  border-width: 2px;
   color: var(--btnTextColor);
-  line-height: functions.calcRem(24);
   cursor: pointer;
-  transition: all 0.2s;
+  line-height: functions.calc-rem(24);
   outline: none;
+  transition: all 0.2s;
 
   // color && variant
-
   &[data-color='primary'] {
-    border-color: var(--btnPrimary);
     background-color: var(--btnPrimary);
+    border-color: var(--btnPrimary);
 
     &:hover {
-      border-color: var(--btnPrimaryHover);
       background-color: var(--btnPrimaryHover);
+      border-color: var(--btnPrimaryHover);
     }
 
     &:active {
-      border-color: var(--btnPrimaryActive);
       background-color: var(--btnPrimaryActive);
+      border-color: var(--btnPrimaryActive);
     }
 
     &[data-variant='outline'] {
@@ -42,8 +42,8 @@
     }
 
     &[data-variant='monochrome'] {
-      border-color: var(--btnMonochrome);
       background-color: transparent;
+      border-color: var(--btnMonochrome);
 
       &:hover {
         background-color: var(--btnMonochromeHover);
@@ -58,84 +58,53 @@
   }
 
   &[data-color='danger'] {
-    border-color: var(--btnDanger);
     background-color: var(--btnDanger);
+    border-color: var(--btnDanger);
 
     &:hover {
-      border-color: var(--btnDangerHover);
       background-color: var(--btnDangerHover);
+      border-color: var(--btnDangerHover);
     }
 
     &:active {
-      border-color: var(--btnDangerActive);
       background-color: var(--btnDangerActive);
+      border-color: var(--btnDangerActive);
     }
 
     &[data-variant='outline'] {
       background-color: transparent;
 
       &:hover {
-        border-color: var(--btnDanger);
         background-color: var(--btnDangerHover);
+        border-color: var(--btnDanger);
       }
 
       &:active {
-        border-color: var(--btnDanger);
         background-color: var(--btnDangerActive);
+        border-color: var(--btnDanger);
       }
     }
   }
 
   // size
-
   &[data-size='xs'] {
-    @extend .title-6;
+    @extend %title-6;
     padding: functions.calcRem(2) functions.calcRem(22);
   }
 
   &[data-size='sm'] {
-    @extend .title-6;
+    @extend %title-6;
     padding: functions.calcRem(4) functions.calcRem(22);
   }
 
   &[data-size='md'] {
-    @extend .title-5;
+    @extend %title-5;
     padding: functions.calcRem(6) functions.calcRem(22);
   }
 
   &[data-size='lg'] {
-    @extend .title-5;
+    @extend %title-5;
     padding: functions.calcRem(10) functions.calcRem(22);
-  }
-
-  %textStyle {
-    vertical-align: middle;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .content {
-    @extend %textStyle;
-  }
-
-  .leftElement,
-  .rightElement {
-    display: inline-block;
-    @extend %textStyle;
-
-    svg {
-      vertical-align: middle;
-      display: inline-block;
-    }
-  }
-
-  .leftElement svg {
-    margin-right: functions.calcRem(7);
-  }
-
-  .rightElement svg {
-    margin-left: functions.calcRem(7);
   }
 
   &[data-variant='outline'],
@@ -149,4 +118,34 @@
       }
     }
   }
+}
+
+%text-style {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.content {
+  @extend %text-style;
+}
+
+.leftElement,
+.rightElement {
+  @extend %text-style;
+  display: inline-block;
+
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.leftElement svg {
+  margin-right: functions.calcRem(7);
+}
+
+.rightElement svg {
+  margin-left: functions.calcRem(7);
 }

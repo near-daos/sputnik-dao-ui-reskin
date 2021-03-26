@@ -1,11 +1,11 @@
 .root {
-  min-width: 100vw;
-  min-height: 100vh;
+  align-items: stretch;
+  background-color: var(--primaryBg);
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   justify-content: space-between;
-  background-color: var(--primaryBg);
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 .header,

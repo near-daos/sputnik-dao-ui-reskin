@@ -1,3 +1,3 @@
 import React from 'react';
 
-export const CreateDao = () => <section>CreateDao</section>;
+export const CreateDao: React.FC = () => <section>CreateDao</section>;

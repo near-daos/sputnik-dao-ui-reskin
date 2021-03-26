@@ -3,7 +3,7 @@
 
 .root {
   background-color: var(--primaryBg);
-  border-top: functions.calcRem(1) solid var(--primaryBorder);
+  border-top: functions.calc-rem(1) solid var(--primaryBorder);
 }
 
 .container {

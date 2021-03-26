@@ -2,6 +2,6 @@
 @use 'functions';
 
 @mixin container {
-  width: functions.calcRem(breakpoints.$md);
   margin: 0 auto;
+  width: functions.calc-rem(breakpoints.$md);
 }

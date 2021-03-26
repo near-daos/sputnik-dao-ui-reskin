@@ -1,8 +1,8 @@
 @mixin font-face($font-family, $file-path, $weight: normal, $style: normal) {
   @font-face {
     font-family: $font-family;
-    font-weight: $weight;
     font-style: $style;
+    font-weight: $weight;
     src: url('#{$file-path}.eot');
     src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'),
       url('#{$file-path}.woff') format('woff'),
@@ -17,6 +17,7 @@
   '../fonts/aileron/regular/Aileron-Regular-webfont',
   400
 );
+
 @include font-face(
   aileron,
   '../fonts/aileron/semibold/Aileron-SemiBold-webfont',

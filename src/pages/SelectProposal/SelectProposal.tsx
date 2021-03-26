@@ -1,3 +1,5 @@
 import React from 'react';
 
-export const SelectProposals = () => <section>SelectProposals</section>;
+export const SelectProposals: React.FC = () => (
+  <section>SelectProposals</section>
+);

@@ -1,14 +1,14 @@
-@use '../../styles/functions';
-@use '../../styles/variables';
+@use 'styles/functions';
+@use 'styles/variables';
 
 .root {
-  min-width: 100vw;
-  min-height: 100vh;
+  align-items: stretch;
+  background-color: var(--primaryBg);
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   justify-content: space-between;
-  background-color: var(--primaryBg);
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 .header,
@@ -17,25 +17,25 @@
 }
 
 .content {
-  flex: 1 1 auto;
   background-color: var(--primaryBg);
+  flex: 1 1 auto;
 }
 
 .logo {
   display: inline-block;
-  font-family: variables.$secondaryFont;
+  font-family: variables.$secondary-font;
   text-decoration: none;
 }
 
 .logoIcon {
-  height: functions.calcRem(63);
+  height: functions.calc-rem(63);
   vertical-align: middle;
 }
 
 .logoText {
-  display: inline-block;
-  vertical-align: middle;
-  margin-top: functions.calcRem(6);
-  margin-left: functions.calcRem(10);
   color: var(--textColor);
+  display: inline-block;
+  margin-left: functions.calc-rem(10);
+  margin-top: functions.calc-rem(6);
+  vertical-align: middle;
 }

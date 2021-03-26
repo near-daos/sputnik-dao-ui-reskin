@@ -2,7 +2,9 @@
 import React from 'react';
 import s from './SputnikDaoLogo.module.scss';
 
-export const SputnikDaoLogo = ({ ...props }) => (
+export const SputnikDaoLogo: React.FC<{ className?: string }> = ({
+  ...props
+}) => (
   <svg
     viewBox="0 0 127 32"
     fill="none"
