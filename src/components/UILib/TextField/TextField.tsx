@@ -10,7 +10,9 @@ export interface TextFieldProps
   inputClassName?: string;
   inputContainerClassName?: string;
   leftElement?: JSX.Element;
+  leftElementClassName?: string;
   rightElement?: JSX.Element;
+  rightElementClassName?: string;
   labelClassName?: string;
   placeholder?: string;
   multiline?: boolean;
@@ -31,7 +33,9 @@ const TextField: React.FC<TextFieldProps> = ({
   className,
   inputContainerClassName,
   leftElement,
+  leftElementClassName,
   rightElement,
+  rightElementClassName,
   inputClassName,
   labelClassName,
   placeholder,
@@ -61,7 +65,11 @@ const TextField: React.FC<TextFieldProps> = ({
           [styles.filled]: value,
         })}
       >
-        {leftElement && <div className={styles.leftElement}>{leftElement}</div>}
+        {leftElement && (
+          <div className={cn(styles.leftElement, leftElementClassName)}>
+            {leftElement}
+          </div>
+        )}
         <div className={cn(styles.inputContainer, inputContainerClassName)}>
           {multiline ? (
             <textarea
@@ -101,11 +109,13 @@ const TextField: React.FC<TextFieldProps> = ({
           </label>
           <fieldset className={styles.border} aria-hidden="true">
             <legend className={styles.legend}>
-              <span>{label}</span>
+              {label && <span>{label}</span>}
             </legend>
           </fieldset>
           {rightElement && (
-            <div className={styles.rightElement}>{rightElement}</div>
+            <div className={cn(styles.rightElement, rightElementClassName)}>
+              {rightElement}
+            </div>
           )}
         </div>
       </div>

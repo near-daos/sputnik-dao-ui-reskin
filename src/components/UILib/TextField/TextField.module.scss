@@ -3,7 +3,7 @@
 
 .root {
   --input-color: var(--theme-input-text);
-  --input-border-color: var(--color-grey-30);
+  --input-border-color: var(--theme-input-border);
   --input-border-width: 1px;
 
   position: relative;
@@ -14,7 +14,7 @@
   @extend %body-2;
   background-color: transparent;
   border: none;
-  color: #000;
+  caret-color: var(--theme-input-focus-border);
   color: var(--input-color);
   flex: 1;
   outline: none;
@@ -28,7 +28,7 @@
   &.sm {
     @extend %body-2;
     height: functions.calc-rem(36);
-    padding: functions.calc-rem(12) functions.calc-rem(6);
+    padding: functions.calc-rem(6) functions.calc-rem(12);
   }
 
   &.md {
@@ -40,7 +40,7 @@
   &.lg {
     @extend %body-1;
     height: functions.calc-rem(56);
-    padding: functions.calc-rem(12) functions.calc-rem(14);
+    padding: functions.calc-rem(14) functions.calc-rem(12);
   }
 }
 
@@ -132,8 +132,8 @@
   top: 0;
   transform-origin: top left;
   transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
-    font-size 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
-    transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  font-size 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+  transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 
   &.sm {
     @extend %body-2;

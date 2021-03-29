@@ -1,0 +1,37 @@
+@use 'styles/functions';
+@import 'styles/typography';
+@import 'styles/helpers';
+
+.root {
+  display: block;
+}
+
+.button {
+  @extend %button-reset;
+  color: var(--color-grey-50);
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  z-index: 2;
+
+  &:hover {
+    color: var(--color-purple-50);
+  }
+
+  &.left {
+    left: functions.calc-rem(12);
+  }
+
+  &.right {
+    right: functions.calc-rem(12);
+  }
+}
+
+.buttonWrapper {
+  margin: 0;
+}
+
+.input {
+  padding-left: functions.calc-rem(38) !important;
+}
+
