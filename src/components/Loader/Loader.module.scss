@@ -1,0 +1,48 @@
+@import 'styles/typography';
+
+.root {
+  display: block;
+  height: 129px;
+  position: relative;
+  width: 129px;
+}
+
+.center {
+  background-color: var(--theme-text-color);
+  border-radius: 50%;
+  height: 24px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+
+}
+
+.image {
+  animation-direction: alternate;
+  animation-duration: 0.7s;
+  animation-iteration-count: infinite;
+  animation-name: test;
+  animation-timing-function: ease-in-out;
+  color: var(--theme-text-color);
+  height: 100%;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  width: 100%;
+}
+
+@keyframes test {
+  from {
+    height: 100%;
+    width: 100%;
+  }
+
+  to {
+    height: 10%;
+    width: 10%;
+  }
+}
