@@ -1,7 +1,14 @@
 @use 'styles/functions';
 @use 'styles/variables';
+@use 'styles/media';
+
+/* stylelint-disable function-parentheses-space-inside */
 
 .root {
+  --gradient-grey: var(--landing-gradient-light);
+  --gradient-dark-grey: var(--landing-gradient-dark);
+  --gradient-black: var(--black);
+
   align-items: stretch;
   background-color: var(--theme-primary-bg);
   display: flex;
@@ -11,14 +18,24 @@
   min-width: 100vw;
 }
 
-.header,
-.footer {
-  flex: 0 0 auto;
+.background {
+  background: url('../../images/stars-background.svg') no-repeat,
+    linear-gradient(
+      212.5deg,
+      var(--gradient-grey) 1.85%,
+      var(--gradient-dark-grey) 49.7%,
+      var(--gradient-black) 100%
+    );
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
 }
 
 .content {
-  background-color: var(--theme-primary-bg);
   flex: 1 1 auto;
+  position: relative;
 }
 
 .logo {
@@ -33,9 +50,14 @@
 }
 
 .logoText {
-  color: var(--theme-text-color);
   display: inline-block;
   margin-left: functions.calc-rem(10);
   margin-top: functions.calc-rem(6);
   vertical-align: middle;
+}
+
+.footer {
+  @include media.mobile-only {
+    display: none;
+  }
 }

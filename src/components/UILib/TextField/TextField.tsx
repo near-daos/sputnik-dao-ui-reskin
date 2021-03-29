@@ -27,6 +27,7 @@ export interface TextFieldProps
   variant?: 'sm' | 'md' | 'lg';
   maxLength?: number;
   onChange: (value: string, name: string) => void;
+  id?: string;
 }
 
 const TextField: React.FC<TextFieldProps> = ({
@@ -51,6 +52,7 @@ const TextField: React.FC<TextFieldProps> = ({
   maxLength,
   helperText,
   onChange,
+  id = `input-${name}`,
 }: TextFieldProps) => {
   const [focus, setFocus] = useState<boolean>(false);
 
@@ -73,7 +75,7 @@ const TextField: React.FC<TextFieldProps> = ({
         <div className={cn(styles.inputContainer, inputContainerClassName)}>
           {multiline ? (
             <textarea
-              id={`input-${name}`}
+              id={id}
               className={cn(styles.input, styles.textarea, inputClassName)}
               value={value}
               placeholder={placeholder}
@@ -85,7 +87,7 @@ const TextField: React.FC<TextFieldProps> = ({
             />
           ) : (
             <input
-              id={`input-${name}`}
+              id={id}
               type={type}
               className={cn(styles.input, styles[variant], inputClassName)}
               value={value}
@@ -103,7 +105,7 @@ const TextField: React.FC<TextFieldProps> = ({
               styles.floatingLabel,
               labelClassName,
             )}
-            htmlFor={`input-${name}`}
+            htmlFor={id}
           >
             {label}
           </label>

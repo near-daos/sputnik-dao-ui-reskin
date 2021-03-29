@@ -6,10 +6,6 @@
 }
 
 .button {
-  > span {
-    display: block;
-  }
-
   &[data-size='xs'] {
     padding: functions.calc-rem(5);
 

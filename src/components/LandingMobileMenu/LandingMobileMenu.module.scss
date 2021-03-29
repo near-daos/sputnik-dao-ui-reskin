@@ -1,0 +1,93 @@
+@use 'styles/theme';
+@use 'styles/functions';
+@use 'styles/mixins';
+@import 'styles/typography';
+@import 'styles/helpers';
+
+.root {
+  align-items: stretch;
+  background: var(--theme-primary-bg);
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  overflow: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.header {
+  @include mixins.container;
+
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  padding-bottom: functions.calc-rem(14);
+  padding-top: functions.calc-rem(14);
+}
+
+.closeButton {
+  @extend %button-reset;
+
+  display: block;
+  margin-left: -(functions.calc-rem(8));
+  margin-right: functions.calc-rem(10);
+  padding: functions.calc-rem(5);
+}
+
+.closeIcon {
+  display: block;
+}
+
+.logo {
+  @extend %heading-6;
+
+  display: inline-block;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logoIcon {
+  height: functions.calc-rem(32);
+  margin-bottom: functions.calc-rem(4);
+  vertical-align: middle;
+  width: auto;
+}
+
+.logoText {
+  color: var(--textColor);
+  display: inline-block;
+  font-size: functions.calc-rem(10);
+  margin-left: functions.calc-rem(10);
+  vertical-align: middle;
+}
+
+.content {
+  @include mixins.container;
+
+  flex: 1 1 auto;
+}
+
+.menu {
+  list-style: none;
+}
+
+.menuLink {
+  @extend %title-5;
+
+  display: block;
+  line-height: functions.calc-rem(48);
+  text-decoration: none;
+}
+
+.connectButton {
+  margin-top: functions.calc-rem(28);
+  width: 100%;
+}
+
+.footer {
+  flex: 0 0 auto;
+}

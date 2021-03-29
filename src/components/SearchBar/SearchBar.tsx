@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import cn from 'classnames';
 
-import TextField from 'components/UILib/TextField';
+import { TextField } from 'components/UILib/TextField';
 import { SvgIcon } from 'components/UILib/SvgIcon';
 import styles from './SearchBar.module.scss';
 

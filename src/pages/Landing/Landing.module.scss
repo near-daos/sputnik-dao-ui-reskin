@@ -1,0 +1,39 @@
+@use 'styles/functions';
+@use 'styles/mixins';
+
+.root {
+  @include mixins.container;
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.logoHolder {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+.logo {
+  display: block;
+  height: 95%;
+  padding-bottom: 5%;
+}
+
+.scrollTip {
+  display: inline-block;
+  flex: 0 0 auto;
+  font-size: functions.calc-rem(16);
+  font-weight: 600;
+  line-height: functions.calc-rem(24);
+  margin: functions.calc-rem(24) 0;
+}

@@ -8,7 +8,7 @@ import s from './Button.module.scss';
 
 export interface ButtonProps {
   children: ReactChild;
-  variant?: 'regular' | 'outline' | 'monochrome';
+  variant?: 'regular' | 'outline' | 'monochrome' | 'clear';
   size?: 'xs' | 'sm' | 'md' | 'lg';
   color?: 'primary' | 'danger';
   className?: string;
@@ -59,15 +59,15 @@ const Button: React.FC<ButtonProps> = ({
     >
       {leftElement && (
         <>
-          <span className={s.leftElement}>{leftElement}</span>
+          <div className={s.leftElement}>{leftElement}</div>
           &nbsp;
         </>
       )}
-      <span className={s.content}>{children}</span>
+      <div className={s.content}>{children}</div>
       {rightElement && (
         <>
           &nbsp;
-          <span className={s.rightElement}>{rightElement}</span>
+          <div className={s.rightElement}>{rightElement}</div>
         </>
       )}
     </button>

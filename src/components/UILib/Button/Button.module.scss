@@ -1,17 +1,22 @@
 /* stylelint-disable max-nesting-depth */
+
 @use 'styles/functions';
 @import 'styles/typography';
 
 .root {
+  align-items: center;
   background-color: var(--theme-primary-bg);
   border-radius: 1px;
   border-style: solid;
   border-width: 2px;
   color: var(--theme-btn-text);
   cursor: pointer;
+  display: flex;
+  justify-content: center;
   line-height: functions.calc-rem(24);
   outline: none;
   transition: all 0.2s;
+  white-space: nowrap;
 
   // color && variant
   &[data-color='primary'] {
@@ -73,7 +78,8 @@
   }
 
   &[data-variant='outline'],
-  &[data-variant='monochrome'] {
+  &[data-variant='monochrome'],
+  &[data-variant='clear'] {
     background-color: var(--theme-primary-bg);
     color: var(--theme-btn-text-outline);
 
@@ -96,6 +102,21 @@
 
     &:active {
       background-color: var(--theme-btn-monochrome-active);
+    }
+  }
+
+  &[data-variant='clear'] {
+    background-color: transparent;
+    border-color: transparent;
+
+    &:hover {
+      background-color: var(--theme-btn-monochrome-hover);
+      border-color: var(--theme-btn-monochrome-hover);
+    }
+
+    &:active {
+      background-color: var(--theme-btn-monochrome-active);
+      border-color: var(--theme-btn-monochrome-active);
     }
   }
 

@@ -4,6 +4,7 @@
 
 html {
   box-sizing: border-box;
+  color: var(--white);
   font-size: #{variables.$base-font-size}px;
 }
 
@@ -21,6 +22,7 @@ body {
 *::before,
 *::after {
   box-sizing: inherit;
+  color: inherit;
   font-family: inherit;
   font-size: inherit;
 }

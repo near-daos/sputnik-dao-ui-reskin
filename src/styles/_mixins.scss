@@ -1,5 +1,6 @@
 @use 'variables';
 @use 'functions';
+@use 'media';
 
 @mixin font-face($font-family, $file-path, $weight: normal, $style: normal) {
   @font-face {
@@ -15,7 +16,12 @@
 
 @mixin container {
   margin: 0 auto;
-  width: functions.calc-rem(variables.$breakpoint-md);
+  padding: 0 functions.calc-rem(24);
+  width: 100%;
+
+  @include media.desktop {
+    width: functions.calc-rem(variables.$breakpoint-md);
+  }
 }
 
 @mixin truncate {
@@ -23,4 +29,3 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-

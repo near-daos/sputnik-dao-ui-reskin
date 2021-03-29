@@ -1,0 +1,75 @@
+@use 'styles/mixins';
+@use 'styles/functions';
+@use 'styles/media';
+@import 'styles/helpers';
+@import 'styles/typography';
+
+.root {
+  @include mixins.container;
+
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: space-between;
+  padding-bottom: functions.calc-rem(14);
+  padding-top: functions.calc-rem(14);
+}
+
+.logo {
+  @extend %heading-6;
+
+  display: inline-block;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logoIcon {
+  height: functions.calc-rem(63);
+  margin-bottom: functions.calc-rem(15);
+  vertical-align: middle;
+  width: auto;
+
+  @include media.mobile-only {
+    height: functions.calc-rem(32);
+    margin-bottom: functions.calc-rem(8);
+  }
+}
+
+.logoText {
+  color: var(--textColor);
+  display: inline-block;
+  margin-bottom: functions.calc-rem(6);
+  margin-left: functions.calc-rem(10);
+  vertical-align: middle;
+
+  @include media.mobile-only {
+    display: none;
+  }
+}
+
+.menu {
+  display: flex;
+  list-style: none;
+  white-space: nowrap;
+
+  @include media.mobile-only {
+    display: none;
+  }
+}
+
+.menuLink {
+  padding: functions.calc-rem(5) functions.calc-rem(24);
+  text-decoration: none;
+}
+
+.mobileMenuButton {
+  @extend %button-reset;
+
+  display: none;
+  margin-left: -(functions.calc-rem(8));
+  padding: functions.calc-rem(5);
+
+  @include media.mobile-only {
+    display: block;
+  }
+}
