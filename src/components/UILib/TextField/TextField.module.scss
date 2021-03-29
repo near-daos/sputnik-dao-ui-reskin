@@ -132,8 +132,8 @@
   top: 0;
   transform-origin: top left;
   transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
-  font-size 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
-  transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+    font-size 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+    transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 
   &.sm {
     @extend %body-2;
