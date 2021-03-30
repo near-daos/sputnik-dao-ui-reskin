@@ -10,6 +10,7 @@ const icons = {
   search: import('./search.svg'),
   close: import('./close.svg'),
   'dd-arrow': import('./dd-arrow.svg'),
+  step: import('./step.svg'),
 };
 
 export default icons;

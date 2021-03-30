@@ -36,6 +36,11 @@
     --theme-btn-danger-outline-active: var(--color-error-70);
     --theme-btn-danger-outline-border: var(--color-error-60);
     
+    --theme-step-progress-border: var(--color-grey-70);
+    --theme-step-progress-bg-active: var(--color-cyan-80);
+    --theme-step-progress-border-active: var(--color-cyan-50);
+    --theme-step-color: var(--color-grey-50);
+    
     --theme-nav-tab-hover: var(--color-purple-50);
     --theme-nav-tab-selected: var(--color-purple-70);
   }
@@ -76,6 +81,11 @@
     --theme-btn-danger-outline-active: var(--color-error-10);
     --theme-btn-danger-outline-border: var(--color-error-60);
 
+    --theme-step-progress-border: var(--color-grey-30);
+    --theme-step-progress-bg-active: var(--color-grey-10);
+    --theme-step-progress-border-active: var(--color-cyan-60);
+    --theme-step-color: var(--color-grey-70);
+    
     --theme-nav-tab-hover: var(--color-purple-20);
     --theme-nav-tab-selected: var(--color-purple-50);
   }
