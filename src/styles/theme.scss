@@ -35,6 +35,9 @@
     --theme-btn-danger-outline-hover: var(--color-error-80);
     --theme-btn-danger-outline-active: var(--color-error-70);
     --theme-btn-danger-outline-border: var(--color-error-60);
+    
+    --theme-nav-tab-hover: var(--color-purple-50);
+    --theme-nav-tab-selected: var(--color-purple-70);
   }
 
   &[data-theme='light'] {
@@ -72,5 +75,8 @@
     --theme-btn-danger-outline-hover: var(--color-error-20);
     --theme-btn-danger-outline-active: var(--color-error-10);
     --theme-btn-danger-outline-border: var(--color-error-60);
+
+    --theme-nav-tab-hover: var(--color-purple-20);
+    --theme-nav-tab-selected: var(--color-purple-50);
   }
 }

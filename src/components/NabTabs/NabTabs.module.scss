@@ -1,0 +1,33 @@
+@import 'styles/typography';
+
+.root {
+  display: flex;
+  flex-direction: row;
+}
+
+.link {
+  @extend %title-4;
+  border-bottom: solid 3px transparent;
+  color: var(--theme-text-color);
+  margin-bottom: 4px;
+  margin-right: 24px;
+  text-decoration: none;
+  
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    border-color: var(--theme-nav-tab-hover);
+  }
+  
+  .count {
+    @extend %body-2;
+    color: var(--color-grey-70);
+    margin-left: 3px;
+  }
+}
+
+.active {
+  border-color: var(--theme-nav-tab-selected);
+}
