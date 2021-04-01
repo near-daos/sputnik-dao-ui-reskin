@@ -27,7 +27,11 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   return (
     <div className={s.root} id="themed" data-theme={theme}>
-      <Header className={s.header} toggleTheme={toggleTheme} />
+      <Header
+        className={s.header}
+        toggleTheme={toggleTheme}
+        theme={theme === 'light'}
+      />
       <main className={s.content}>{children}</main>
       <Footer className={s.footer} />
     </div>

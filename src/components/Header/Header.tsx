@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 import { Button, IconButton } from 'components/UILib';
+import ThemeSwitcher from 'components/ThemeSwitcher';
 import { SputnikDaoLogo } from '../SputnikDaoLogo';
 import { MobileMenu } from '../MobileMenu';
 import { SearchAutoComplete } from '../SearchAutoComplete';
@@ -9,10 +10,11 @@ import s from './Header.module.scss';
 
 interface HeaderProps {
   className: string;
+  theme: boolean;
   toggleTheme: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ className, toggleTheme }) => {
+const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
   const [isMenuOpen, setOpenMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -58,14 +60,11 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme }) => {
             >
               Sign In
             </Button>
-            <Button
-              className={cn(s.control, s.themeBtn)}
-              size="sm"
-              variant="clear"
-              onClick={toggleTheme}
-            >
-              theme
-            </Button>
+            <ThemeSwitcher
+              value={theme}
+              onChange={toggleTheme}
+              className={s.themeSwitcher}
+            />
           </div>
         </div>
       </header>

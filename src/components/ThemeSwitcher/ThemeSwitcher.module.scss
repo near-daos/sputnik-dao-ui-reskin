@@ -1,0 +1,79 @@
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  display: inline-flex;
+}
+
+.input {
+  height: 0;
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+  z-index: 0;
+}
+
+.label {
+  align-items: center;
+  background-color: var(--color-purple-50);
+  border-radius: functions.calc-rem(27);
+  cursor: pointer;
+  display: flex;
+  height: functions.calc-rem(36);
+  justify-content: space-between;
+  position: relative;
+  transition: background-color 0.2s;
+  width: functions.calc-rem(18);
+}
+
+.label .button {
+  background-color: var(--color-warning-50);
+  border-radius: functions.calc-rem(6);
+  content: '';
+  height: functions.calc-rem(12);
+  left: 50%;
+  position: absolute;
+  top: 3px;
+  transform: translate(-50%, 0);
+  transition: 0.2s;
+  width: functions.calc-rem(12);
+}
+
+.input:checked ~ .button {
+  background-color: var(--white);
+  top: calc(100% - 3px);
+  transform: translate(-50%, -100%);
+}
+
+
+.label:active .button {
+  height: functions.calc-rem(18);
+}
+
+.dark {
+  bottom: functions.calc-rem(4);
+  height: functions.calc-rem(15);
+  width: functions.calc-rem(13);
+}
+
+.light {
+  height: functions.calc-rem(12);
+  top: functions.calc-rem(6);
+  width: functions.calc-rem(12);
+
+}
+
+.dark,
+.light {
+  left: 50%;
+  object-fit: contain;
+  opacity: 0;
+  position: absolute;
+  transform: translate(-50%, 0);
+  transition: opacity 0.2s;
+
+  &.show {
+    opacity: 1;
+  }
+}
+

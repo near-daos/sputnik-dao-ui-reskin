@@ -105,7 +105,6 @@
 }
 
 .authBtn,
-.themeBtn,
 .link {
   display: none;
 
@@ -116,4 +115,8 @@
 
 .search {
   flex: 1;
+}
+
+.themeSwitcher {
+  margin-left: functions.calc-rem(24);
 }
