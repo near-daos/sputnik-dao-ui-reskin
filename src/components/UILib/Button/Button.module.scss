@@ -36,6 +36,7 @@
     }
 
     &[data-variant='outline'] {
+      background-color: transparent;
       border-color: var(--theme-btn-outline-border);
 
       &:hover {

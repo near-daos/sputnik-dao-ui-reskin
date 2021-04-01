@@ -1,0 +1,108 @@
+@use 'styles/functions';
+@import 'styles/typography';
+@import 'styles/helpers';
+@import 'styles/media';
+
+.root {
+  align-items: center;
+  display: flex;
+  height: 100vH;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vW;
+  z-index: 100;
+}
+
+.overlay {
+  @extend %button-reset;
+  background-color: var(--theme-overlay);
+  cursor: default;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.wrapper {
+  background-color: var(--theme-popup-bg);
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+
+  @include desktop {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-height: functions.calc-rem(590);
+    width: functions.calc-rem(476);
+  }
+}
+
+.close {
+  position: absolute;
+  right: functions.calc-rem(16);
+  top: functions.calc-rem(16);
+}
+
+.daoName {
+  @extend %caption-1;
+  padding: functions.calc-rem(24) functions.calc-rem(24) 0;
+}
+
+.titleWrapper {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  margin-top: functions.calc-rem(2);
+  padding: 0 functions.calc-rem(24);
+}
+
+.title {
+  @extend %heading-5;
+}
+
+.number {
+  @extend %body-1;
+  color: var(--theme-popup-number);
+  margin-left: functions.calc-rem(8);
+}
+
+.border {
+  background-color: var(--theme-popup-border);
+  height: functions.calc-rem(1);
+  margin-top: functions.calc-rem(16);
+  width: 100%;
+}
+
+.membersWrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  padding: functions.calc-rem(24) 0 functions.calc-rem(4);
+}
+
+.searchBar {
+  padding: 0 functions.calc-rem(48);
+}
+
+.container {
+  flex: 1;
+  margin-top: 24px;
+  overflow-y: scroll;
+  padding: 0 functions.calc-rem(48);
+}
+
+.member {
+  @extend %title-5;
+  color: var(--theme-popup-member);
+  margin-bottom: functions.calc-rem(12);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

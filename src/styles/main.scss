@@ -18,6 +18,10 @@ body {
   color: var(--theme-text-color);
 }
 
+p {
+  margin: 0;
+}
+
 *,
 *::before,
 *::after {
