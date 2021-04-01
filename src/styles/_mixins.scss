@@ -29,3 +29,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+@mixin truncate-multiline($lineCount) {
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-box-orient: vertical;
+  /* stylelint-disable-next-line value-no-vendor-prefix */
+  display: -webkit-box;
+  -webkit-line-clamp: $lineCount;
+  overflow: hidden;
+}

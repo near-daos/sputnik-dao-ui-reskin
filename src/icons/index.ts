@@ -11,6 +11,7 @@ const icons = {
   close: import('./close.svg'),
   'dd-arrow': import('./dd-arrow.svg'),
   step: import('./step.svg'),
+  token: import('./token.svg'),
 };
 
 export default icons;

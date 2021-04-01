@@ -1,0 +1,170 @@
+@import 'styles/typography';
+@import 'styles/mixins';
+@import 'styles/media';
+
+.root {
+  background-color: var(--theme-proposal-card-bg);
+  display: flex;
+  filter: var(--theme-proposal-card-filter-shadow);
+  flex-direction: column;
+  padding: 32px;
+  width: 488px;
+
+  @include tablet-portrait {
+    padding: 40px;
+  }
+
+  @include desktop {
+    padding: 48px;
+  }
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.statusText {
+  @extend %title-7;
+
+  @include desktop {
+    @include title-6;
+  }
+
+  &.delayed {
+    color: var(--theme-status-delayed);
+  }
+
+  &.inProgress {
+    color: var(--theme-status-in-progress);
+
+  }
+
+  &.rejected {
+    color: var(--theme-status-rejected);
+  }
+
+  &.approved {
+    color: var(--theme-status-approved);
+  }
+}
+
+.name {
+  @extend %body-3;
+  color: var(--theme-proposal-card-edditional-text);
+  @include desktop {
+    @include body-3;
+  }
+}
+
+.value {
+  @extend %title-7;
+  color: var(--theme-text-color);
+
+  @include desktop {
+    @include title-6;
+  }
+}
+
+.daoName {
+  @extend %caption-2;
+  color: var(--theme-proposal-card-dao-name);
+
+  @include desktop {
+    @include caption-1;
+  }
+}
+
+.title {
+  @extend %title-5;
+
+  @include desktop {
+    @include title-3;
+  }
+}
+
+.target {
+  margin-top: 4px;
+}
+
+.aboutWrapper {
+  margin-top: 24px;
+
+  @include desktop {
+    margin-top: 32px;
+  }
+}
+
+
+.aboutText {
+  @extend %body-3;
+  @include truncate-multiline(5);
+
+  @include desktop {
+    @include body-2;
+  }
+}
+
+.footer {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.root.sm,
+.root.md {
+  .footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.payoutWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+  width: 100px;
+}
+
+.payoutName {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.tokenIcon {
+  color: var(--theme-proposal-card-dao-name);
+  margin-left: 4px;
+}
+
+.proposerWrapper {
+  margin-bottom: 24px;
+  width: 260px;
+}
+
+.buttonWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.button {
+  flex: 1;
+  margin-right: 24px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.buttonTextCunt {
+  @extend %body-1;
+  color: var(--theme-proposal-card-edditional-text);
+}

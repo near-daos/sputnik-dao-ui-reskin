@@ -42,7 +42,6 @@
     --theme-step-progress-border-active: var(--color-cyan-50);
     --theme-step-color: var(--color-grey-50);
     
-
     --theme-nav-tab-hover: var(--color-purple-50);
     --theme-nav-tab-selected: var(--color-purple-70);
 
@@ -58,6 +57,18 @@
     --theme-autocomplete-link: var(--color-cyan-50);
     --theme-autocomplete-border: var(--color-grey-90);
     --theme-autocomplete-hover-item-bg: var(--color-grey-80);
+
+    --theme-status-delayed: var(--color-warning-50);
+    --theme-status-approved: var(--color-success-50);
+    --theme-status-rejected: var(--color-error-50);
+    --theme-status-in-progress: var(--color-pink-50);
+    
+    --theme-proposal-card-bg: var(--color-grey-100);
+    --theme-proposal-card-filter-shadow: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
+    --theme-proposal-card-edditional-text: var(--color-grey-50);
+    --theme-proposal-card-dao-name: var(--color-cyan-50);
+    
+    
   }
 
   &[data-theme='light'] {
@@ -117,5 +128,16 @@
     --theme-autocomplete-link: var(--color-cyan-70);
     --theme-autocomplete-border: var(--color-grey-20);
     --theme-autocomplete-hover-item-bg: var(--color-grey-10);
+
+    --theme-status-delayed: var(--color-warning-60);
+    --theme-status-approved: var(--color-success-70);
+    --theme-status-rejected: var(--color-error-60);
+    --theme-status-in-progress: var(--color-pink-60);
+
+    --theme-proposal-card-bg: var(--white);
+    --theme-proposal-card-filter-shadow: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
+    --theme-proposal-card-edditional-text: var(--color-grey-70);
+    --theme-proposal-card-dao-name: var(--color-cyan-70);
+    
   }
 }
