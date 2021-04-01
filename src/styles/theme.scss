@@ -67,8 +67,9 @@
     --theme-proposal-card-filter-shadow: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
     --theme-proposal-card-edditional-text: var(--color-grey-50);
     --theme-proposal-card-dao-name: var(--color-cyan-50);
-    
-    
+
+    --theme-dao-card-mini-bg: var(--color-grey-100);
+    --theme-dao-card-mini-active-filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
   }
 
   &[data-theme='light'] {
@@ -138,6 +139,8 @@
     --theme-proposal-card-filter-shadow: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
     --theme-proposal-card-edditional-text: var(--color-grey-70);
     --theme-proposal-card-dao-name: var(--color-cyan-70);
-    
+
+    --theme-dao-card-mini-bg: var(--color-grey-10);
+    --theme-dao-card-mini-active-filter: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
   }
 }

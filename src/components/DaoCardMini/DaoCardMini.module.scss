@@ -1,0 +1,58 @@
+@use 'styles/functions';
+@import 'styles/typography';
+@import 'styles/mixins';
+
+.root {
+  align-items: center;
+  border-radius: 1px;
+  display: flex;
+  height: functions.calc-rem(56);
+  justify-content: center;
+  overflow: hidden;
+  padding: functions.calc-rem(4) functions.calc-rem(16);
+  position: relative;
+  text-decoration: none;
+  width: functions.calc-rem(176);
+
+  &.active {
+    filter: var(--theme-dao-card-mini-active-filter);
+  }
+}
+
+.imageWrapper {
+  align-items: center;
+  display: flex;
+  height: functions.calc-rem(80);
+  justify-content: center;
+  left: functions.calc-rem(8);
+  position: absolute;
+  top: functions.calc-rem(4);
+  width: functions.calc-rem(80);
+  z-index: 0;
+}
+
+.image {
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.overlay {
+  background-color: var(--theme-dao-card-mini-bg);
+  height: 100%;
+  left: 0;
+  mask-image: url('/images/dao-card-mini-mask.svg');
+  opacity: 0.9;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+
+.name {
+  @extend %title-6;
+  @include truncate-multiline(2);
+  position: relative;
+  z-index: 2;
+}
