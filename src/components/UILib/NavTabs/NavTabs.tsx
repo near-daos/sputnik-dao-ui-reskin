@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { NavLink } from 'react-router-dom';
 
-import styles from './NabTabs.module.scss';
+import s from './NavTabs.module.scss';
 
 export type NavItem = {
   name: string;
@@ -10,25 +10,25 @@ export type NavItem = {
   count?: number;
 };
 
-export interface NabTabsProps {
+export interface NavTabsProps {
   className?: string;
   options: NavItem[];
 }
 
-const NabTabs: React.FC<NabTabsProps> = ({ className, options }) => (
-  <div className={cn(styles.root, className)}>
+const NavTabs: React.FC<NavTabsProps> = ({ className, options }) => (
+  <div className={cn(s.root, className)}>
     {options.map((item) => (
       <NavLink
         to={item.route}
-        className={styles.link}
-        activeClassName={styles.active}
+        className={s.link}
+        activeClassName={s.active}
         key={`nav-tab-${item.name}`}
       >
         {item.name}
-        {item.count && <span className={styles.count}>({item.count})</span>}
+        {item.count && <span className={s.count}>({item.count})</span>}
       </NavLink>
     ))}
   </div>
 );
 
-export default NabTabs;
+export default NavTabs;

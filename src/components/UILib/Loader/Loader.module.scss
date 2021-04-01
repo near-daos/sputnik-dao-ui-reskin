@@ -16,15 +16,14 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: 24px;
-
 }
 
 .image {
-  animation-direction: alternate;
-  animation-duration: 0.7s;
+  animation-direction: alternate, normal;
+  animation-duration: 1.5s, 1.5s; // TODO: calibration required
   animation-iteration-count: infinite;
-  animation-name: test;
-  animation-timing-function: ease-in-out;
+  animation-name: resize, rotate;
+  animation-timing-function: ease-in-out, linear;
   color: var(--theme-text-color);
   height: 100%;
   left: 50%;
@@ -35,7 +34,7 @@
   width: 100%;
 }
 
-@keyframes test {
+@keyframes resize {
   from {
     height: 100%;
     width: 100%;
@@ -44,5 +43,15 @@
   to {
     height: 10%;
     width: 10%;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
