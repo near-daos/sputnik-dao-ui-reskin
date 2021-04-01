@@ -7,19 +7,23 @@ interface FooterProps {
   className: string;
 }
 
-export const Footer: React.FC<FooterProps> = ({ className }) => (
+const Footer: React.FC<FooterProps> = ({ className }) => (
   <footer className={cn(s.root, className)}>
     <div className={s.container}>
-      SputnikDAO 2021. The software is an open source and provided “as is”,
-      without warranty of any kind.
-      <ul>
-        <li>
-          <a href="/">Privacy Policy</a>
-        </li>
-        <li>
-          <a href="/">Terms of Use</a>
-        </li>
-      </ul>
+      <p className={s.disclaimer}>
+        SputnikDAO 2021. The software is an <mark>open source</mark> and
+        provided “as is”, without warranty of any kind.
+      </p>
+      <nav className={s.navLinks}>
+        <a href="/" className={s.navLink}>
+          Privacy Policy
+        </a>
+        <a href="/" className={s.navLink}>
+          Terms of Use
+        </a>
+      </nav>
     </div>
   </footer>
 );
+
+export default Footer;

@@ -1,6 +1,7 @@
 @use 'styles/theme';
 @use 'styles/functions';
 @use 'styles/mixins';
+@use 'styles/media';
 @import 'styles/typography';
 @import 'styles/helpers';
 
@@ -15,7 +16,11 @@
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 1;
+  z-index: 3;
+
+  @include media.desktop {
+    display: none;
+  }
 }
 
 .header {

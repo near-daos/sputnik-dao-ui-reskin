@@ -81,7 +81,7 @@
   &[data-variant='outline'],
   &[data-variant='monochrome'],
   &[data-variant='clear'] {
-    background-color: var(--theme-primary-bg);
+    background-color: transparent;
     color: var(--theme-btn-text-outline);
 
     .leftElement,

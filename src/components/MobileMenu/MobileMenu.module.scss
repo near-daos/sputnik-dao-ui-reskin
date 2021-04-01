@@ -1,0 +1,82 @@
+@use 'styles/mixins';
+@use 'styles/functions';
+@use 'styles/media';
+@import 'styles/typography';
+
+.root {
+  background: var(--theme-primary-bg);
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  overflow: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 3;
+
+  @include media.desktop {
+    display: none;
+  }
+}
+
+.header {
+  @include mixins.container;
+
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: space-between;
+  padding-bottom: functions.calc-rem(20);
+  padding-top: functions.calc-rem(20);
+}
+
+.headerLeft {
+  align-items: center;
+  column-gap: functions.calc-rem(10);
+  display: flex;
+  justify-items: flex-start;
+}
+
+.closeBtn {
+  margin-left: -(functions.calc-rem(9));
+}
+
+.logo {
+  display: block;
+  max-width: functions.calc-rem(127);
+  min-width: functions.calc-rem(81);
+  width: auto;
+}
+
+.logoIcon {
+  display: block;
+  width: 100%;
+}
+
+.controls {
+  margin-left: functions.calc-rem(10);
+}
+
+.control + .control {
+  margin-left: functions.calc-rem(24);
+}
+
+.content {
+  @include mixins.container;
+}
+
+.menuList {
+  margin: functions.calc-rem(18) 0;
+}
+
+.menuLink {
+  @extend %title-5;
+
+  display: block;
+  line-height: functions.calc-rem(48);
+  text-decoration: none;
+}
+
+.footer {
+  border: none;
+}

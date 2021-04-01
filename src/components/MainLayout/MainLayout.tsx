@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import React, { useState } from 'react';
-import { Header, Footer } from '..';
+import { Header } from 'components/Header';
+import { Footer } from 'components/Footer';
 
 import s from './MainLayout.module.scss';
 

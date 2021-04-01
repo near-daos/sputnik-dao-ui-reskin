@@ -1,11 +1,56 @@
-@use '../../styles/functions';
-@use '../../styles/mixins';
+@use 'styles/functions';
+@use 'styles/mixins';
+@use 'styles/typography';
+@use 'styles/variables';
+@use 'styles/media';
 
 .root {
-  background-color: var(--theme-primary-bg);
   border-top: functions.calc-rem(1) solid var(--theme-primary-border);
+  padding: functions.calc-rem(15) 0;
 }
 
 .container {
   @include mixins.container;
+
+  display: grid;
+  grid-template-columns: auto;
+
+  @include media.desktop {
+    grid-template-columns: auto auto;
+  }
+}
+
+.disclaimer {
+  @extend %caption-1;
+
+  color: var(--color-grey-50);
+  margin: 0;
+  padding: 0;
+
+  mark {
+    background: none;
+    color: var(--white);
+  }
+}
+
+.navLinks {
+  margin-top: functions.calc-rem(16);
+  text-align: left;
+
+  @include media.desktop {
+    margin-left: functions.calc-rem(32);
+    margin-top: 0;
+    text-align: right;
+  }
+}
+
+.navLink {
+  @extend %caption-1;
+
+  color: var(--white);
+  text-decoration: none;
+
+  + .navLink {
+    margin-left: functions.calc-rem(32);
+  }
 }
