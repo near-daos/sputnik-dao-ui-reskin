@@ -42,8 +42,17 @@
     --theme-step-progress-border-active: var(--color-cyan-50);
     --theme-step-color: var(--color-grey-50);
     
+
     --theme-nav-tab-hover: var(--color-purple-50);
     --theme-nav-tab-selected: var(--color-purple-70);
+
+    --theme-overlay: rgba(22, 21, 21, 0.8);
+    --theme-autocomplete-bg: var(--color-grey-100);
+    --theme-autocomplete-shadow: 0 16px 40px rgba(0, 0, 0, 0.64);
+    --theme-autocomplete-title: var(--color-grey-50);
+    --theme-autocomplete-link: var(--color-cyan-50);
+    --theme-autocomplete-border: var(--color-grey-90);
+    --theme-autocomplete-hover-item-bg: var(--color-grey-80);
   }
 
   &[data-theme='light'] {
@@ -90,5 +99,13 @@
     
     --theme-nav-tab-hover: var(--color-purple-20);
     --theme-nav-tab-selected: var(--color-purple-50);
+    
+    --theme-overlay: rgba(22, 21, 21, 0.4);
+    --theme-autocomplete-bg: var(--white);
+    --theme-autocomplete-shadow: 0 16px 40px rgba(22, 21, 21, 0.15);
+    --theme-autocomplete-title: var(--color-grey-70);
+    --theme-autocomplete-link: var(--color-cyan-70);
+    --theme-autocomplete-border: var(--color-grey-20);
+    --theme-autocomplete-hover-item-bg: var(--color-grey-10);
   }
 }

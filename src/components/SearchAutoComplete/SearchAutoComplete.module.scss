@@ -1,0 +1,101 @@
+@import 'styles/typography';
+@import 'styles/helpers';
+
+.root {
+  display: block;
+  position: relative;
+}
+
+.overlay {
+  @extend %button-reset;
+  background-color: var(--theme-overlay);
+  cursor: default;
+  height: 100vH;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vW;
+  z-index: 1;
+}
+
+.search {
+  background-color: var(--theme-autocomplete-bg);
+  position: relative;
+  z-index: 2;
+}
+
+.resultWrapper {
+  background-color: var(--theme-autocomplete-bg);
+  box-shadow: var(--theme-autocomplete-shadow);
+  margin-top: 8px;
+  padding: 18px 0;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 2;
+}
+
+.titleWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 18px;
+}
+
+.title {
+  @extend %title-7;
+  color: var(--theme-autocomplete-title);
+}
+
+.link {
+  @extend %caption-1;
+  color: var(--theme-autocomplete-link);
+  text-decoration: none;
+
+  .count {
+    color: var(--theme-autocomplete-title);
+    margin-left: 2px;
+  }
+
+  &.all {
+    display: block;
+    margin-left: 18px;
+    margin-top: 16px;
+  }
+}
+
+.border {
+  background-color: var(--theme-autocomplete-border);
+  height: 1px;
+  margin: 16px 0;
+  width: 100%;
+}
+
+.emptyText {
+  @extend %body-2;
+  color: var(--theme-autocomplete-title);
+  padding: 0 18px;
+}
+
+.item {
+  display: block;
+  padding: 8px 18px;
+  text-decoration: none;
+
+  &:hover {
+    background-color: var(--theme-autocomplete-hover-item-bg);
+  }
+
+  p {
+    @extend %body-2;
+    color: var(--theme-autocomplete-title);
+    margin: 0;
+  }
+
+
+  bold {
+    @extend %title-6;
+    color: var(--theme-text-color);
+  }
+}

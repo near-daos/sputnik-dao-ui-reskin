@@ -8,8 +8,15 @@
 
 .container {
   @include mixins.container;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
 }
 
 .logo {
   width: 7.9375rem;
+}
+
+.search {
+  flex: 1;
 }
