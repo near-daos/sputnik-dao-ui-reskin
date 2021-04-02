@@ -1,0 +1,89 @@
+@import 'styles/typography';
+@import 'styles/helpers';
+
+.root {
+  --icon-color: var(--theme-chip-icon);
+  --text-color: var(--theme-text-color);
+  @extend %button-reset;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.root.default {
+  --text-color: var(--theme-chip-icon-active-default);
+
+  &:hover {
+    --icon-color: var(--theme-chip-icon-hover-default);
+  }
+
+  &.active {
+    --icon-color: var(--theme-chip-icon-active-default);
+  }
+}
+
+.root.warning {
+  --text-color: var(--theme-chip-icon-active-warning);
+
+  &:hover {
+    --icon-color: var(--theme-chip-icon-hover-warning);
+  }
+
+  &.active {
+    --icon-color: var(--theme-chip-icon-active-warning);
+  }
+}
+
+.root.success {
+  --text-color: var(--theme-chip-icon-active-success);
+
+  &:hover {
+    --icon-color: var(--theme-chip-icon-hover-success);
+  }
+
+  &.active {
+    --icon-color: var(--theme-chip-icon-active-success);
+  }
+}
+
+.root.error {
+  --text-color: var(--theme-chip-icon-active-error);
+
+  &:hover {
+    --icon-color: var(--theme-chip-icon-hover-error);
+  }
+
+  &.active {
+    --icon-color: var(--theme-chip-icon-active-error);
+  }
+}
+
+.root.inProgress {
+  --text-color: var(--theme-chip-icon-active-in-progress);
+
+  &:hover {
+    --icon-color: var(--theme-chip-icon-hover-in-progress);
+  }
+
+  &.active {
+    --icon-color: var(--theme-chip-icon-active-in-progress);
+  }
+}
+
+.icon {
+  color: var(--icon-color);
+}
+
+.label {
+  color: var(--text-color);
+
+  &.sm {
+    @extend %title-7;
+    margin-left: 14px;
+  }
+
+  &.lg {
+    @extend %title-6;
+    margin-left: 18px;
+  }
+}

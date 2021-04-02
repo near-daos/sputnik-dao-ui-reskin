@@ -12,6 +12,7 @@ const icons = {
   'dd-arrow': import('./dd-arrow.svg'),
   step: import('./step.svg'),
   token: import('./token.svg'),
+  'chip-rect': import('./chip-rect.svg'),
 };
 
 export default icons;

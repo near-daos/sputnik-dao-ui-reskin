@@ -70,6 +70,18 @@
 
     --theme-dao-card-mini-bg: var(--color-grey-100);
     --theme-dao-card-mini-active-filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
+    
+    --theme-chip-icon: var(--color-grey-80);
+    --theme-chip-icon-hover-default: var(--color-cyan-20);
+    --theme-chip-icon-active-default: var(--color-cyan-50);
+    --theme-chip-icon-hover-warning: var(--color-warning-20);
+    --theme-chip-icon-active-warning: var(--color-warning-50);
+    --theme-chip-icon-hover-success: var(--color-success-20);
+    --theme-chip-icon-active-success: var(--color-success-50);
+    --theme-chip-icon-hover-error: var(--color-error-20);
+    --theme-chip-icon-active-error: var(--color-error-50);
+    --theme-chip-icon-hover-in-progress: var(--color-pink-20);
+    --theme-chip-icon-active-in-progress: var(--color-pink-50);
 
     --theme-tooltip-bg: var(--color-grey-90);
     --theme-tooltip-filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
@@ -146,6 +158,18 @@
     --theme-dao-card-mini-bg: var(--color-grey-10);
     --theme-dao-card-mini-active-filter: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
 
+    --theme-chip-icon: var(--color-grey-20);
+    --theme-chip-icon-hover-default: var(--color-cyan-30);
+    --theme-chip-icon-active-default: var(--color-cyan-70);
+    --theme-chip-icon-hover-warning: var(--color-warning-30);
+    --theme-chip-icon-active-warning: var(--color-warning-70);
+    --theme-chip-icon-hover-success: var(--color-success-30);
+    --theme-chip-icon-active-success: var(--color-success-70);
+    --theme-chip-icon-hover-error: var(--color-error-30);
+    --theme-chip-icon-active-error: var(--color-error-70);
+    --theme-chip-icon-hover-in-progress: var(--color-pink-30);
+    --theme-chip-icon-active-in-progress: var(--color-pink-70);
+    
     --theme-tooltip-bg: var(--white);
     --theme-tooltip-filter: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
   }
