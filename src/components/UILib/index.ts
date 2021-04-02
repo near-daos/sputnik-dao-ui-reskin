@@ -5,3 +5,4 @@ export * from './TextField';
 export * from './Loader';
 export * from './NavTabs';
 export * from './StepProgressBar';
+export * from './Tooltip';
