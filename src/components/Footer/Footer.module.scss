@@ -29,7 +29,7 @@
 
   mark {
     background: none;
-    color: var(--white);
+    color: var(--theme-text-color);
   }
 }
 
@@ -47,7 +47,7 @@
 .navLink {
   @extend %caption-1;
 
-  color: var(--white);
+  color: var(--theme-text-color);
   text-decoration: none;
 
   + .navLink {

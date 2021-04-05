@@ -24,7 +24,8 @@
     border-color: var(--theme-btn-primary);
 
     &[data-variant='regular'] {
-      &:hover {
+      &:hover,
+      &[data-active] {
         background-color: var(--theme-btn-primary-hover);
         border-color: var(--theme-btn-primary-hover);
       }
@@ -39,7 +40,8 @@
       background-color: transparent;
       border-color: var(--theme-btn-outline-border);
 
-      &:hover {
+      &:hover,
+      &[data-active] {
         background-color: var(--theme-btn-outline-hover);
       }
 
@@ -54,7 +56,8 @@
     border-color: var(--theme-btn-danger);
 
     &[data-variant='regular'] {
-      &:hover {
+      &:hover,
+      &[data-active] {
         background-color: var(--theme-btn-danger-hover);
         border-color: var(--theme-btn-danger-hover);
       }
@@ -68,7 +71,8 @@
     &[data-variant='outline'] {
       border-color: var(--theme-btn-danger-outline-border);
 
-      &:hover {
+      &:hover,
+      &[data-active] {
         background-color: var(--theme-btn-danger-outline-hover);
       }
 
@@ -97,7 +101,8 @@
   &[data-variant='monochrome'] {
     border-color: var(--theme-btn-monochrome-border);
 
-    &:hover {
+    &:hover,
+    &[data-active] {
       background-color: var(--theme-btn-monochrome-hover);
     }
 
@@ -110,7 +115,8 @@
     background-color: transparent;
     border-color: transparent;
 
-    &:hover {
+    &:hover,
+    &[data-active] {
       background-color: var(--theme-btn-monochrome-hover);
       border-color: var(--theme-btn-monochrome-hover);
     }
@@ -162,15 +168,6 @@
 
   svg {
     color: var(--theme-btn-text);
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
   }
-}
-
-.leftElement svg {
-  margin-right: functions.calc-rem(7);
-}
-
-.rightElement svg {
-  margin-left: functions.calc-rem(7);
 }

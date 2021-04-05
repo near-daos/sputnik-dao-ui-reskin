@@ -24,6 +24,16 @@
   }
 }
 
+@mixin narrow-container {
+  margin: 0 auto;
+  padding: 0 functions.calc-rem(24);
+  width: 100%;
+
+  @include media.desktop {
+    width: functions.calc-rem(variables.$breakpoint-lg - 224);
+  }
+}
+
 @mixin truncate {
   overflow: hidden;
   text-overflow: ellipsis;

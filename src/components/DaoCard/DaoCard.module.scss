@@ -9,7 +9,6 @@
   filter: var(--theme-dao-card-filter-shadow);
   flex-direction: column;
   position: relative;
-  //width: 488px;
   width: 100%;
 
   @include tablet-portrait {
@@ -41,7 +40,8 @@
 
   &.md,
   &.sm {
-    padding: functions.calc-rem(24) functions.calc-rem(32) functions.calc-rem(32);
+    padding: functions.calc-rem(24) functions.calc-rem(32)
+      functions.calc-rem(32);
   }
 }
 
@@ -81,6 +81,8 @@
 .image {
   height: 100%;
   object-fit: contain;
+  pointer-events: none;
+  user-select: none;
   width: 100%;
 }
 
@@ -148,7 +150,6 @@
 
 .container {
   margin-bottom: functions.calc-rem(24);
-  //margin-right: functions.calc-rem(16);
   width: 50%;
 
   &:last-child {
@@ -170,7 +171,6 @@
 .numberOfProposal,
 .bond,
 .amountOfMember {
-
   @include desktop {
     &.lg,
     &.md {
@@ -184,14 +184,6 @@
   &.lg {
     width: 100%;
   }
-}
-
-.bond {
-  //width: functions.calc-rem(80);
-}
-
-.amountOfMember {
-  //width: functions.calc-rem(140);
 }
 
 .button {

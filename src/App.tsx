@@ -12,6 +12,7 @@ import React from 'react';
 import { BrowserRouter, Route, RouteProps } from 'react-router-dom';
 import { LandingLayout, MainLayout } from './components';
 import { Landing } from './pages/Landing/Landing';
+import { SelectDao } from './pages/SelectDao/SelectDao';
 import { SelectProposals } from './pages/SelectProposal/SelectProposal';
 import { Proposals } from './pages/Proposals/Proposals';
 import { DaoDetails } from './pages/DaoDetails/DaoDetails';
@@ -19,6 +20,7 @@ import { CreateDao } from './pages/CreateDao/CreateDao';
 import { CreateProposal } from './pages/CreateProposal/CreateProposal';
 
 import 'normalize.css/normalize.css';
+import 'slick-carousel/slick/slick.css';
 import './styles/theme.scss';
 import './styles/main.scss';
 
@@ -45,6 +47,10 @@ const routes: LayoutProps[] = [
   {
     layout: MainLayout,
     routes: [
+      {
+        path: '/select-dao',
+        component: SelectDao,
+      },
       {
         path: '/select-proposal',
         component: SelectProposals,

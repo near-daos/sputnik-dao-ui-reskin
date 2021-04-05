@@ -1,13 +1,16 @@
 import React from 'react';
 import cn from 'classnames';
+import { Theme } from 'types/theme';
 
 import light from 'images/light-switch-icons.svg';
 import dark from 'images/dark-switch-icons.svg';
 import s from './ThemeSwitcher.module.scss';
 
+const CHECKED_THEME = Theme.Dark;
+
 type ThemeSwitcherProps = {
   className?: string;
-  value: boolean;
+  value: Theme;
   onChange: (value: boolean) => void;
 };
 
@@ -22,7 +25,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
         id="theme-switcher"
         className={s.input}
         type="checkbox"
-        checked={value}
+        checked={value === CHECKED_THEME}
         onChange={(): void => onChange(!value)}
       />
       <img

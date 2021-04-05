@@ -13,6 +13,7 @@ const icons = {
   step: import('./step.svg'),
   token: import('./token.svg'),
   'chip-rect': import('./chip-rect.svg'),
+  carousel: import('./carousel.svg'),
 };
 
 export default icons;

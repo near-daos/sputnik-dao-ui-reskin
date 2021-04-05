@@ -16,6 +16,7 @@ export interface ButtonProps {
   leftElement?: ReactChild;
   rightElement?: ReactChild;
   type?: 'submit' | 'reset' | 'button';
+  active?: boolean;
 }
 
 interface DataAttrs {
@@ -32,6 +33,7 @@ const Button: React.FC<ButtonProps> = ({
   rightElement,
   onClick,
   type = 'button',
+  active,
   ...other
 }) => {
   const styleAttrs: DataAttrs = {
@@ -39,6 +41,10 @@ const Button: React.FC<ButtonProps> = ({
     'data-variant': variant,
     'data-size': size,
   };
+
+  if (active) {
+    styleAttrs['data-active'] = '';
+  }
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();

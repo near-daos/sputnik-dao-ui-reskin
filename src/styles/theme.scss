@@ -77,14 +77,11 @@
     --theme-create-dao-popup-bar-bg: var(--color-grey-100);
     --theme-create-dao-popup-bar-border: var(--color-grey-100);
 
-    
-    
-    
     --theme-dao-card-bg: var(--color-grey-100);
     --theme-dao-card-filter-shadow: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
     --theme-dao-card-edditional-text: var(--color-grey-50);
     --theme-dao-card-token: var(--color-cyan-50);
-    
+
     --theme-chip-icon: var(--color-grey-80);
     --theme-chip-icon-hover-default: var(--color-cyan-20);
     --theme-chip-icon-active-default: var(--color-cyan-50);
@@ -99,6 +96,8 @@
 
     --theme-tooltip-bg: var(--color-grey-90);
     --theme-tooltip-filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
+
+    --theme-select-dao-number: var(--color-grey-50);
 
     --theme-create-proposal-dao-name: var(--color-grey-50);
   }
@@ -186,12 +185,12 @@
     --theme-chip-icon-active-error: var(--color-error-70);
     --theme-chip-icon-hover-in-progress: var(--color-pink-30);
     --theme-chip-icon-active-in-progress: var(--color-pink-70);
-    
+
     --theme-dao-card-bg: var(--white);
     --theme-dao-card-filter-shadow: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
     --theme-dao-card-edditional-text: var(--color-grey-70);
     --theme-dao-card-token: var(--color-cyan-70);
-    
+
     --theme-tooltip-bg: var(--white);
     --theme-tooltip-filter: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
 
@@ -199,7 +198,9 @@
 
     --theme-create-dao-popup-bar-bg: var(--white);
     --theme-create-dao-popup-bar-border: var(--color-grey-100);
-    
+
+    --theme-select-dao-number: var(--color-grey-70);
+
     --theme-create-proposal-dao-name: var(--color-grey-70);
   }
 }

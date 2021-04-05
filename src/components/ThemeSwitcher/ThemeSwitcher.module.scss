@@ -3,6 +3,7 @@
 
 .root {
   display: inline-flex;
+  user-select: none;
 }
 
 .input {
@@ -45,7 +46,6 @@
   transform: translate(-50%, -100%);
 }
 
-
 .label:active .button {
   height: functions.calc-rem(18);
 }
@@ -60,7 +60,6 @@
   height: functions.calc-rem(12);
   top: functions.calc-rem(6);
   width: functions.calc-rem(12);
-
 }
 
 .dark,
@@ -76,4 +75,3 @@
     opacity: 1;
   }
 }
-

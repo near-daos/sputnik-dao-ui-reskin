@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import cn from 'classnames';
 import { Button, IconButton } from 'components/UILib';
 import ThemeSwitcher from 'components/ThemeSwitcher';
+import { Theme } from 'types/theme';
 import { SputnikDaoLogo } from '../SputnikDaoLogo';
 import { MobileMenu } from '../MobileMenu';
 import { SearchAutoComplete } from '../SearchAutoComplete';
@@ -10,7 +11,7 @@ import s from './Header.module.scss';
 
 interface HeaderProps {
   className: string;
-  theme: boolean;
+  theme: Theme;
   toggleTheme: () => void;
 }
 
@@ -68,7 +69,13 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
           </div>
         </div>
       </header>
-      {isMenuOpen && <MobileMenu onClose={toggleMenu} />}
+      {isMenuOpen && (
+        <MobileMenu
+          onClose={toggleMenu}
+          theme={theme}
+          toggleTheme={toggleTheme}
+        />
+      )}
     </>
   );
 };

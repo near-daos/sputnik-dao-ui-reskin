@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import SearchBar from 'components/SearchBar';
+import SearchBar, { SearchBarProps } from 'components/SearchBar/SearchBar';
 import { highlightSubstring } from 'utils/highlightSubstring';
 import s from './SearchAutoComplete.module.scss';
 
@@ -17,10 +17,12 @@ export type Proposal = {
 
 export interface SearchAutoCompleteProps {
   className?: string;
+  searchBarSize?: SearchBarProps['size'];
 }
 
 const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
   className,
+  searchBarSize = 'sm',
 }) => {
   const [searchText, setSearchText] = useState('');
   const [isShowResult, setIsShowResult] = useState(false);
@@ -50,6 +52,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
         name="search"
         className={s.search}
         onSubmit={handleSearch}
+        size={searchBarSize}
       />
       {isShowResult && (
         <>

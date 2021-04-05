@@ -23,11 +23,11 @@
 .header {
   @include mixins.container;
 
+  align-items: center;
   display: flex;
   flex: 0 0 auto;
+  height: functions.calc-rem(64);
   justify-content: space-between;
-  padding-bottom: functions.calc-rem(20);
-  padding-top: functions.calc-rem(20);
 }
 
 .headerLeft {
@@ -54,11 +54,17 @@
 }
 
 .controls {
+  display: grid;
+  grid-template-columns: auto auto;
   margin-left: functions.calc-rem(10);
 }
 
 .control + .control {
   margin-left: functions.calc-rem(24);
+
+  @include media.mobile-only {
+    margin-left: functions.calc-rem(12);
+  }
 }
 
 .content {

@@ -4,6 +4,7 @@ export enum ProposalStatus {
   Rejected = 'Rejected',
   InProgress = 'Voting is in progress',
 }
+
 export type Proposal = {
   id: string;
   name: string;

@@ -5,11 +5,11 @@
 .root {
   background-color: var(--theme-primary-bg);
   display: block;
-  height: 100vH;
+  height: 100vh;
   left: 0;
   position: fixed;
   top: 0;
-  width: 100vW;
+  width: 100vw;
   z-index: 100;
 }
 
@@ -19,7 +19,6 @@
   height: 100%;
   overflow-y: auto;
   width: 100%;
-
 
   @include tablet-landscape {
     align-items: stretch;
@@ -79,7 +78,6 @@
     display: block;
     right: functions.calc-rem(60);
     top: functions.calc-rem(60);
-
   }
 
   @include desktop {
