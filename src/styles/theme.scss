@@ -4,6 +4,7 @@
 
     --theme-primary-bg: var(--color-brand-black);
     --theme-primary-border: var(--color-grey-90);
+    --theme-primari-shadow-filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
     --theme-logo-major-line: var(--white);
     --theme-logo-minor-line: var(--color-grey-50);
 
@@ -70,6 +71,12 @@
 
     --theme-dao-card-mini-bg: var(--color-grey-100);
     --theme-dao-card-mini-active-filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
+
+    --theme-banner-bg: var(--color-grey-100);
+
+    --theme-create-dao-popup-bar-bg: var(--color-grey-100);
+    --theme-create-dao-popup-bar-border: var(--color-grey-100);
+
     
     
     
@@ -92,6 +99,8 @@
 
     --theme-tooltip-bg: var(--color-grey-90);
     --theme-tooltip-filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
+
+    --theme-create-proposal-dao-name: var(--color-grey-50);
   }
 
   &[data-theme='light'] {
@@ -99,6 +108,7 @@
 
     --theme-primary-bg: var(--white);
     --theme-primary-border: var(--color-grey-30);
+    --theme-primari-shadow-filter: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
     --theme-logo-major-line: var(--color-brand-black);
     --theme-logo-minor-line: var(--color-grey-70);
 
@@ -184,5 +194,12 @@
     
     --theme-tooltip-bg: var(--white);
     --theme-tooltip-filter: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
+
+    --theme-banner-bg: var(--white);
+
+    --theme-create-dao-popup-bar-bg: var(--white);
+    --theme-create-dao-popup-bar-border: var(--color-grey-100);
+    
+    --theme-create-proposal-dao-name: var(--color-grey-70);
   }
 }

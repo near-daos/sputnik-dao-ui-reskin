@@ -27,9 +27,8 @@ const StepProgressBar: React.FC<StepProgressBarProps> = ({
   return (
     <div className={cn(s.root, s[size], className)}>
       {steps.map((item, index) => [
-        <div className={cn(s.step, s[size])}>
+        <div key={item} className={cn(s.step, s[size])}>
           <div
-            key={item}
             className={cn(s.numberWrapper, s[size], {
               [s.done]: index + 2 <= current,
             })}
@@ -54,6 +53,7 @@ const StepProgressBar: React.FC<StepProgressBarProps> = ({
         </div>,
         index < steps.length - 1 && (
           <div
+            key={`${item}-border`}
             className={cn(s.border, s[size], {
               [s.active]: index + 2 <= current,
             })}

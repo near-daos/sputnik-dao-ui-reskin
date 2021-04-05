@@ -1,0 +1,229 @@
+@use 'styles/functions';
+@import 'styles/typography';
+@import 'styles/media';
+
+.root {
+  background-color: var(--theme-primary-bg);
+  display: block;
+  height: 100vH;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vW;
+  z-index: 100;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  width: 100%;
+
+
+  @include tablet-landscape {
+    align-items: stretch;
+    flex-direction: row;
+  }
+}
+
+.header {
+  padding: 0 functions.calc-rem(24);
+  position: relative;
+
+  @include tablet-portrait {
+    padding: 0 functions.calc-rem(64);
+  }
+
+  @include tablet-landscape {
+    align-items: center;
+    background-color: var(--theme-create-dao-popup-bar-bg);
+    border-right: solid 1px var(--theme-create-dao-popup-bar-border);
+    display: flex;
+    padding: 0;
+    width: functions.calc-rem(361);
+  }
+}
+
+.logo {
+  height: functions.calc-rem(29);
+  left: functions.calc-rem(24);
+  position: absolute;
+  top: functions.calc-rem(24);
+  width: functions.calc-rem(117);
+
+  @include tablet-portrait {
+    left: functions.calc-rem(16);
+  }
+
+  @include tablet-landscape {
+    left: functions.calc-rem(112);
+    top: functions.calc-rem(20);
+  }
+}
+
+.mobileClose {
+  position: absolute;
+  right: functions.calc-rem(16);
+  top: functions.calc-rem(16);
+  @include tablet-landscape {
+    display: none;
+  }
+}
+
+.desktopClose {
+  display: none;
+  position: absolute;
+
+  @include tablet-landscape {
+    display: block;
+    right: functions.calc-rem(60);
+    top: functions.calc-rem(60);
+
+  }
+
+  @include desktop {
+    display: block;
+    right: functions.calc-rem(112);
+    top: functions.calc-rem(144);
+  }
+}
+
+.mobileTitle {
+  @extend %heading-5;
+  margin-top: functions.calc-rem(104);
+  text-align: center;
+  width: 100%;
+
+  @include tablet-portrait {
+    @include heading-4;
+    margin-top: functions.calc-rem(80);
+  }
+
+  @include tablet-landscape {
+    display: none;
+  }
+}
+
+.mobileDaoName {
+  @extend %tagline-4;
+  color: var(--theme-create-proposal-dao-name);
+  margin-top: functions.calc-rem(4);
+  text-align: center;
+  width: 100%;
+
+  @include tablet-landscape {
+    display: none;
+  }
+}
+
+
+.desktopTitle {
+  @extend %heading-3;
+  display: none;
+  text-align: center;
+  width: 100%;
+  @include tablet-landscape {
+    display: block;
+  }
+}
+
+.desktopDaoName {
+  @extend %tagline-4;
+  color: var(--theme-create-proposal-dao-name);
+  display: none;
+  margin-top: functions.calc-rem(8);
+  text-align: center;
+  width: 100%;
+
+  @include tablet-landscape {
+    display: block;
+  }
+}
+
+.stepProgressBar {
+  margin-top: functions.calc-rem(32);
+
+  @include tablet-portrait {
+    margin: functions.calc-rem(40) auto;
+    width: functions.calc-rem(480);
+  }
+
+  @include tablet-landscape {
+    height: functions.calc-rem(362);
+    margin-left: functions.calc-rem(112);
+  }
+}
+
+.formWrapper {
+  display: flex;
+  flex: 1;
+  padding-bottom: functions.calc-rem(24);
+
+  @include tablet-portrait {
+    margin: functions.calc-rem(48) auto 0;
+    padding-bottom: functions.calc-rem(64);
+    width: functions.calc-rem(608);
+  }
+
+  @include tablet-landscape {
+    flex-direction: column;
+    margin: functions.calc-rem(110) auto 0;
+    overflow-y: auto;
+  }
+}
+
+.form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 functions.calc-rem(24);
+
+  @include tablet-portrait {
+    padding: 0 functions.calc-rem(64);
+  }
+
+  @include tablet-landscape {
+    margin: functions.calc-rem(48) auto 0;
+    padding: 0 functions.calc-rem(56);
+    width: functions.calc-rem(600);
+  }
+}
+
+.input {
+  margin-bottom: functions.calc-rem(24);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.texArea {
+  margin-bottom: functions.calc-rem(50);
+}
+
+.singleButton {
+  margin-top: functions.calc-rem(100);
+  width: 100%;
+}
+
+.buttonsWrapper {
+  display: flex;
+  flex-direction: row;
+  margin-top: functions.calc-rem(100);
+}
+
+.button {
+  flex: 1;
+  margin-right: functions.calc-rem(24);
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.arrowIcon {
+  transform: rotate(90deg);
+}
+

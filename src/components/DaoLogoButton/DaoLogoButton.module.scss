@@ -1,0 +1,37 @@
+@use 'styles/functions';
+@import 'styles/typography';
+@import 'styles/helpers';
+
+.root {
+  @extend %button-reset;
+  align-items: flex-start;
+  background-color: var(--theme-banner-bg);
+  display: flex;
+  filter: var(--theme-primari-shadow-filter);
+  flex-direction: column;
+  height: functions.calc-rem(408);
+  padding: functions.calc-rem(32) functions.calc-rem(24);
+  position: relative;
+  width: functions.calc-rem(232);
+}
+
+.backgroundImage {
+  height: 100%;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.title {
+  @extend %title-3;
+  text-align: start;
+}
+
+.description {
+  @extend %body-2;
+  margin-top: functions.calc-rem(24);
+  text-align: start;
+}
