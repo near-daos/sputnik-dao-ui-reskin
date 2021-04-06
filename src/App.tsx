@@ -15,7 +15,6 @@ import { Landing } from './pages/Landing/Landing';
 import { SelectDao } from './pages/SelectDao/SelectDao';
 import { SelectProposals } from './pages/SelectProposal/SelectProposal';
 import { Proposals } from './pages/Proposals/Proposals';
-import { DaoDetailsPage } from './pages/DaoDetailsPage';
 import { CreateDao } from './pages/CreateDao/CreateDao';
 import { CreateProposal } from './pages/CreateProposal/CreateProposal';
 
@@ -58,10 +57,6 @@ const routes: LayoutProps[] = [
       {
         path: '/proposals',
         component: Proposals,
-      },
-      {
-        path: '/details',
-        component: DaoDetailsPage,
       },
       {
         path: '/create-dao',

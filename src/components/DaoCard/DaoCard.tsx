@@ -7,7 +7,7 @@ import s from './DaoCard.module.scss';
 
 export interface DaoCardProps {
   className?: string;
-  dao: Dao;
+  dao: Omit<Dao, 'members' | 'network' | 'votePeriod'>; // TODO: fix or create a new interface when real data arrived
   size?: 'sm' | 'md' | 'lg';
 }
 

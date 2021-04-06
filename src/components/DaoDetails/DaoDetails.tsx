@@ -3,12 +3,12 @@ import cn from 'classnames';
 
 import { Button, SvgIcon } from 'components/UILib';
 import { Dao } from 'types/dao';
-import getVotePeriod, { Period } from 'utils/getVotePeriod';
-import s from './DaoDetailsPage.module.scss';
-import { MembersPopup } from '../../components/MembersPopup';
-import { CreateDaoPopup } from '../../components/CreateDaoPopup';
+import getVotePeriod from 'utils/getVotePeriod';
+import { MembersPopup } from '../MembersPopup';
 
-export interface DaoDetailsPageProps {
+import s from './DaoDetails.module.scss';
+
+export interface DaoDetailsProps {
   className?: string;
 }
 
@@ -51,7 +51,7 @@ const dao: Dao = {
   votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
 };
 
-const DaoDetailsPage: React.FC<DaoDetailsPageProps> = ({ className }) => {
+const DaoDetails: React.FC<DaoDetailsProps> = ({ className }) => {
   const [firstTenMembers] = useState<string[]>(dao.members.slice(0, 10));
   const [isOpenProposal, setIsOpenProposal] = useState(false);
   const [isShowMembersPopup, setIsShowMembersPopup] = useState(false);
@@ -164,4 +164,4 @@ const DaoDetailsPage: React.FC<DaoDetailsPageProps> = ({ className }) => {
   );
 };
 
-export default DaoDetailsPage;
+export default DaoDetails;
