@@ -41,7 +41,6 @@
   &.short {
     @include truncate-multiline(8);
   }
-
 }
 
 .membersWrapper {
@@ -86,7 +85,7 @@
 
 .subTitle {
   @extend %caption-2;
-  color: var(--theme-dao-card-edditional-text);
+  color: var(--theme-dao-card-additional-text);
 
   @include tablet-portrait {
     @include caption-1;
@@ -108,7 +107,7 @@
 
 .date {
   @extend %title-7;
-  color: var(--theme-dao-card-edditional-text);
+  color: var(--theme-dao-card-additional-text);
 
   @include tablet-portrait {
     @include title-5;
