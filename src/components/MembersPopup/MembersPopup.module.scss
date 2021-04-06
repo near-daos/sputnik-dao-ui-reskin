@@ -28,6 +28,8 @@
 
 .wrapper {
   background-color: var(--theme-popup-bg);
+  display: flex;
+  flex-direction: column;
   height: 100%;
   position: relative;
   width: 100%;
@@ -83,6 +85,7 @@
   flex: 1;
   flex-direction: column;
   overflow: hidden;
+  overflow-y: scroll;
   padding: functions.calc-rem(24) 0 functions.calc-rem(4);
 }
 

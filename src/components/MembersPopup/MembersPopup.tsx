@@ -63,6 +63,7 @@ const MembersPopup: React.FC<MembersPopupProps> = ({
           size="lg"
           variant="outline"
           className={s.close}
+          onClick={onClose}
         />
         <p className={s.daoName}>{name}</p>
         <div className={s.titleWrapper}>

@@ -7,4 +7,7 @@ export type Dao = {
   amountMembers: number;
   daoFunds: number;
   image: string;
+  members: string[];
+  network: string;
+  votePeriod: Date;
 };
