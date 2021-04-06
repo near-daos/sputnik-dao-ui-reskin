@@ -15,5 +15,5 @@ export type Proposal = {
   payout: number;
   proposer: string;
   approveCount: number;
-  rejectCunt: number;
+  rejectCount: number;
 };

@@ -1,21 +1,23 @@
+@use 'styles/mixins';
+@use 'styles/media';
+@use 'styles/functions';
 @import 'styles/typography';
-@import 'styles/mixins';
-@import 'styles/media';
 
 .root {
   background-color: var(--theme-proposal-card-bg);
   display: flex;
   filter: var(--theme-proposal-card-filter-shadow);
   flex-direction: column;
-  padding: 32px;
-  width: 488px;
+  overflow: hidden;
+  padding: functions.calc-rem(32);
+  width: auto;
 
-  @include tablet-portrait {
-    padding: 40px;
+  @include media.tablet-portrait {
+    padding: functions.calc-rem(40);
   }
 
-  @include desktop {
-    padding: 48px;
+  @include media.desktop {
+    padding: functions.calc-rem(48);
   }
 }
 
@@ -24,13 +26,13 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: functions.calc-rem(24);
 }
 
 .statusText {
   @extend %title-7;
 
-  @include desktop {
+  @include media.desktop {
     @include title-6;
   }
 
@@ -40,7 +42,6 @@
 
   &.inProgress {
     color: var(--theme-status-in-progress);
-
   }
 
   &.rejected {
@@ -54,8 +55,8 @@
 
 .name {
   @extend %body-3;
-  color: var(--theme-proposal-card-edditional-text);
-  @include desktop {
+  color: var(--theme-proposal-card-additional-text);
+  @include media.desktop {
     @include body-3;
   }
 }
@@ -64,7 +65,7 @@
   @extend %title-7;
   color: var(--theme-text-color);
 
-  @include desktop {
+  @include media.desktop {
     @include title-6;
   }
 }
@@ -73,7 +74,7 @@
   @extend %caption-2;
   color: var(--theme-proposal-card-dao-name);
 
-  @include desktop {
+  @include media.desktop {
     @include caption-1;
   }
 }
@@ -81,29 +82,28 @@
 .title {
   @extend %title-5;
 
-  @include desktop {
+  @include media.desktop {
     @include title-3;
   }
 }
 
 .target {
-  margin-top: 4px;
+  margin-top: functions.calc-rem(4);
 }
 
 .aboutWrapper {
-  margin-top: 24px;
+  margin-top: functions.calc-rem(24);
 
-  @include desktop {
-    margin-top: 32px;
+  @include media.desktop {
+    margin-top: functions.calc-rem(32);
   }
 }
 
-
 .aboutText {
   @extend %body-3;
-  @include truncate-multiline(5);
+  @include mixins.truncate-multiline(5);
 
-  @include desktop {
+  @include media.desktop {
     @include body-2;
   }
 }
@@ -113,7 +113,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-top: 24px;
+  margin-top: functions.calc-rem(24);
 }
 
 .root.sm,
@@ -127,8 +127,8 @@
 .payoutWrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: 24px;
-  width: 100px;
+  margin-bottom: functions.calc-rem(24);
+  width: functions.calc-rem(100);
 }
 
 .payoutName {
@@ -139,32 +139,38 @@
 
 .tokenIcon {
   color: var(--theme-proposal-card-dao-name);
-  margin-left: 4px;
+  margin-left: functions.calc-rem(4);
 }
 
 .proposerWrapper {
-  margin-bottom: 24px;
-  width: 260px;
+  margin-bottom: functions.calc-rem(24);
+  width: functions.calc-rem(260);
 }
 
 .buttonWrapper {
   align-items: center;
+  column-gap: functions.calc-rem(24);
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 16px;
+  margin-top: functions.calc-rem(16);
+  row-gap: functions.calc-rem(12);
+
+  @include media.mobile-only {
+    column-gap: functions.calc-rem(16);
+  }
 }
 
 .button {
   flex: 1;
-  margin-right: 24px;
 
   &:last-child {
     margin-right: 0;
   }
 }
 
-.buttonTextCunt {
+.buttonTextCount {
   @extend %body-1;
-  color: var(--theme-proposal-card-edditional-text);
+  color: var(--theme-proposal-card-additional-text);
 }

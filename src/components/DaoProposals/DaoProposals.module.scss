@@ -1,0 +1,45 @@
+@use 'styles/functions';
+@use 'styles/media';
+
+.root {
+  display: block;
+}
+
+.proposalList {
+  display: grid;
+  gap: functions.calc-rem(32);
+  grid-auto-rows: auto;
+  grid-template-columns: 1fr 1fr;
+
+  @include media.mobile-only {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  padding: functions.calc-rem(36) 0 functions.calc-rem(48);
+
+  @include media.mobile-only {
+    flex-direction: column;
+  }
+}
+
+.filters {
+  align-items: center;
+  column-gap: functions.calc-rem(24);
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: functions.calc-rem(12);
+}
+
+.sort {
+  width: functions.calc-rem(208);
+
+  @include media.mobile-only {
+    margin-top: functions.calc-rem(32);
+    width: 100%;
+  }
+}

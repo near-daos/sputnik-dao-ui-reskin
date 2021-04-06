@@ -6,3 +6,5 @@ export * from './Loader';
 export * from './NavTabs';
 export * from './Chip';
 export * from './Tooltip';
+export * from './Dropdown';
+export * from './Select';

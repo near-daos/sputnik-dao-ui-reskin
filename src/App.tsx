@@ -15,6 +15,7 @@ import { Landing } from './pages/Landing/Landing';
 import { SelectDao } from './pages/SelectDao/SelectDao';
 import { SelectProposals } from './pages/SelectProposal/SelectProposal';
 import { Proposals } from './pages/Proposals/Proposals';
+import { DaoPage } from './pages/DaoPage/DaoPage';
 import { CreateDao } from './pages/CreateDao/CreateDao';
 import { CreateProposal } from './pages/CreateProposal/CreateProposal';
 
@@ -23,71 +24,55 @@ import 'slick-carousel/slick/slick.css';
 import './styles/theme.scss';
 import './styles/main.scss';
 
-interface LayoutProps {
-  layout: React.FC<any>;
-  routes: Array<RouteInfo>;
-}
-
 interface RouteInfo extends RouteProps {
   path: string;
+  component: React.FC<any>;
 }
 
-const routes: LayoutProps[] = [
+const routes: RouteInfo[] = [
   {
-    layout: LandingLayout,
-    routes: [
-      {
-        path: '/',
-        exact: true,
-        component: Landing,
-      },
-    ],
+    path: '/select-dao',
+    component: SelectDao,
   },
   {
-    layout: MainLayout,
-    routes: [
-      {
-        path: '/select-dao',
-        component: SelectDao,
-      },
-      {
-        path: '/select-proposal',
-        component: SelectProposals,
-      },
-      {
-        path: '/proposals',
-        component: Proposals,
-      },
-      {
-        path: '/create-dao',
-        component: CreateDao,
-      },
-      {
-        path: '/create-proposal',
-        component: CreateProposal,
-      },
-    ],
+    path: '/select-proposal',
+    component: SelectProposals,
+  },
+  {
+    path: '/proposals',
+    component: Proposals,
+  },
+  {
+    path: '/dao',
+    component: DaoPage,
+  },
+  {
+    path: '/create-dao',
+    component: CreateDao,
+  },
+  {
+    path: '/create-proposal',
+    component: CreateProposal,
   },
 ];
 
-const Layout: React.FC<LayoutProps> = ({ layout: LayoutComponent, routes }) => {
-  const paths = routes.map((route) => route.path);
-  const layout = (
-    <LayoutComponent
-      children={routes.map((route) => (
-        <Route key={route.path} {...route} />
-      ))}
-    />
-  );
-  return <Route exact path={paths} children={layout} />;
-};
-
 const App: React.FC = () => {
+  const mainLayoutPaths = routes.map((route) => route.path);
+
   return (
     <BrowserRouter>
-      {routes.map((layoutProps, i) => (
-        <Layout key={i} {...layoutProps} />
-      ))}
+      <Route exact path="/">
+        <LandingLayout>
+          <Landing />
+        </LandingLayout>
+      </Route>
+      <Route path={mainLayoutPaths}>
+        <MainLayout>
+          {routes.map((route, i) => (
+            <Route key={i} {...route} />
+          ))}
+        </MainLayout>
+      </Route>
     </BrowserRouter>
   );
 };

@@ -7,14 +7,14 @@ import s from './DaoCardMini.module.scss';
 
 export interface DaoCardMiniProps {
   className?: string;
-  dao: Dao;
+  dao: Omit<Dao, 'members' | 'network' | 'votePeriod'>; // TODO: fix or create a new interface when real data arrived
   active?: boolean;
 }
 
 const DaoCardMini: React.FC<DaoCardMiniProps> = ({
   className,
   dao,
-  active = true,
+  active = false,
 }) => (
   <Link
     to="/dao"

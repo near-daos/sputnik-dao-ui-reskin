@@ -103,7 +103,7 @@
 
 .label {
   @extend %caption-2;
-  color: var(--theme-dao-card-edditional-text);
+  color: var(--theme-dao-card-additional-text);
 
   @include tablet-portrait {
     @include caption-1;

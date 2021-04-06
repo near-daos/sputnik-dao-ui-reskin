@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import cn from 'classnames';
 import Slider from 'react-slick';
-import { useMediaQuery } from 'react-responsive';
+import useMedia from 'hooks/use-media';
 
 import { Button, IconButton, SvgIcon } from 'components/UILib';
 import { SearchAutoComplete } from 'components/SearchAutoComplete';
@@ -23,10 +23,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   const [mode, setMode] = useState(Mode.Carousel);
   const [activeSlide, setActiveSlide] = useState(0);
   const carousel = useRef<Slider>(null);
-
-  const isMobile = useMediaQuery({
-    query: '(max-device-width: 767px)', // TODO: need to think about better approach
-  });
+  const media = useMedia();
 
   const carouselSettings = {
     infinite: true,
@@ -111,7 +108,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
       <section
         className={cn(s.controls, { [s.hidden]: mode !== Mode.Carousel })}
       >
-        {isMobile ? (
+        {media.mobile ? (
           <IconButton
             icon="dd-arrow"
             className={s.slideButton}
@@ -134,7 +131,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
           </Button>
         )}
         <Button size="lg">Select DAO</Button>
-        {isMobile ? (
+        {media.mobile ? (
           <IconButton
             icon="dd-arrow"
             className={s.slideButton}
