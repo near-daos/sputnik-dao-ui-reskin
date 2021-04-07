@@ -1,9 +1,10 @@
 import { Proposal, ProposalStatus } from 'types/proposal';
+import { Dao } from '../../types/dao';
 
 const purpose =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dui faucibus ac amet, scelerisque ultricies nunc pellentesque eget tempor. Sit mi ornare nisl senectus. Aenean nunc condimentum sit bibendum mi. Eu magna adipiscing odiom...';
 
-export const mockDaos = [
+export const mockDaos: Dao[] = [
   {
     id: '1',
     name: 'DAO name 1',
@@ -13,6 +14,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '2',
@@ -23,6 +27,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '3',
@@ -33,6 +40,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '4',
@@ -43,6 +53,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '5',
@@ -53,6 +66,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '6',
@@ -63,6 +79,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '7',
@@ -73,6 +92,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '8',
@@ -83,6 +105,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '9',
@@ -93,6 +118,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '10',
@@ -103,6 +131,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '11',
@@ -113,6 +144,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '12',
@@ -123,6 +157,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '13',
@@ -133,6 +170,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '14',
@@ -143,6 +183,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '15',
@@ -153,6 +196,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '16',
@@ -163,6 +209,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '17',
@@ -173,6 +222,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '18',
@@ -183,6 +235,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '19',
@@ -193,6 +248,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
   {
     id: '20',
@@ -203,6 +261,9 @@ export const mockDaos = [
     amountMembers: 57,
     daoFunds: 123,
     image: 'https://reactjs.org/logo-og.png',
+    members: ['member1', 'member2', 'member3'],
+    network: 'test.network',
+    votePeriod: new Date('Mon May 17 2021 22:11:10 GMT+0300'),
   },
 ];
 

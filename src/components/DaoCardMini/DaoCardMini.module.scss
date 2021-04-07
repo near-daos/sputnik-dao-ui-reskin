@@ -2,9 +2,11 @@
 @import 'styles/typography';
 @import 'styles/mixins';
 
+
 .root {
   align-items: center;
   border-radius: 1px;
+  cursor: pointer;
   display: flex;
   height: functions.calc-rem(56);
   justify-content: center;
