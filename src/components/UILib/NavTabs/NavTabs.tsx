@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import s from './NavTabs.module.scss';
 
@@ -15,20 +15,24 @@ export interface NavTabsProps {
   options: NavItem[];
 }
 
-const NavTabs: React.FC<NavTabsProps> = ({ className, options }) => (
-  <div className={cn(s.root, className)}>
-    {options.map((item) => (
-      <NavLink
-        to={item.route}
-        className={s.link}
-        activeClassName={s.active}
-        key={`nav-tab-${item.name}`}
-      >
-        {item.name}
-        {!!item.count && <span className={s.count}>({item.count})</span>}
-      </NavLink>
-    ))}
-  </div>
-);
+const NavTabs: React.FC<NavTabsProps> = ({ className, options }) => {
+  const location = useLocation();
+
+  return (
+    <div className={cn(s.root, className)}>
+      {options.map((item) => (
+        <NavLink
+          to={item.route + location.search}
+          className={s.link}
+          activeClassName={s.active}
+          key={`nav-tab-${item.name}`}
+        >
+          {item.name}
+          {!!item.count && <span className={s.count}>({item.count})</span>}
+        </NavLink>
+      ))}
+    </div>
+  );
+};
 
 export default NavTabs;

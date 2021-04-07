@@ -3,6 +3,7 @@ import cn from 'classnames';
 
 import { ReactComponent as MothershipLogo } from 'images/mothership-logo-small.svg';
 import { LandingMobileMenu } from 'components/LandingMobileMenu';
+import { Link, useHistory } from 'react-router-dom';
 import { Button, IconButton } from '../UILib';
 
 import s from './LandingHeader.module.scss';
@@ -13,6 +14,7 @@ interface LandingHeaderProps {
 
 const LandingHeader: React.FC<LandingHeaderProps> = ({ className }) => {
   const [isMenuOpen, setOpenMenu] = useState(false);
+  const history = useHistory();
 
   const toggleMenu = () => {
     setOpenMenu(!isMenuOpen);
@@ -32,20 +34,29 @@ const LandingHeader: React.FC<LandingHeaderProps> = ({ className }) => {
           <span className={s.logoText}>Mothership</span>
         </a>
         <nav className={s.menu}>
-          <a className={s.menuLink} href="/">
+          <Link className={s.menuLink} to="/">
             Home
-          </a>
-          <a className={s.menuLink} href="/">
+          </Link>
+          <Link className={s.menuLink} to="/">
             How it works
-          </a>
-          <a className={s.menuLink} href="/">
+          </Link>
+          <Link className={s.menuLink} to="/">
             Developers
-          </a>
-          <a className={s.menuLink} href="/">
+          </Link>
+          <Link className={s.menuLink} to="/">
             Community
-          </a>
+          </Link>
+          <Link className={s.menuLink} to="/select-dao?create-dao-popup=true">
+            Create DAO
+          </Link>
         </nav>
-        <Button>Connect to Mothership</Button>
+        <Button
+          onClick={() => {
+            history.push('/select-dao');
+          }}
+        >
+          Connect to Mothership
+        </Button>
       </header>
       {isMenuOpen && <LandingMobileMenu onClose={toggleMenu} />}
     </>
