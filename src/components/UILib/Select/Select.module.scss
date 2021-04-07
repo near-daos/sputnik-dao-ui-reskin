@@ -78,10 +78,11 @@
 }
 
 .legend {
+  @extend %caption-2;
   display: block;
   height: functions.calc-rem(12);
   max-width: 0;
-  padding: 0;
+  padding: 0 functions.calc-rem(12) 0 0;
   text-align: left;
   visibility: hidden;
 

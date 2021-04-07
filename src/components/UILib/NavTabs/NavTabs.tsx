@@ -25,7 +25,7 @@ const NavTabs: React.FC<NavTabsProps> = ({ className, options }) => (
         key={`nav-tab-${item.name}`}
       >
         {item.name}
-        {item.count && <span className={s.count}>({item.count})</span>}
+        {!!item.count && <span className={s.count}>({item.count})</span>}
       </NavLink>
     ))}
   </div>

@@ -18,6 +18,7 @@ import { Proposals } from './pages/Proposals/Proposals';
 import { DaoPage } from './pages/DaoPage/DaoPage';
 import { CreateDao } from './pages/CreateDao/CreateDao';
 import { CreateProposal } from './pages/CreateProposal/CreateProposal';
+import { SearchPage } from './pages/SearchPage';
 
 import 'normalize.css/normalize.css';
 import 'slick-carousel/slick/slick.css';
@@ -53,6 +54,10 @@ const routes: RouteInfo[] = [
   {
     path: '/create-proposal',
     component: CreateProposal,
+  },
+  {
+    path: '/search',
+    component: SearchPage,
   },
 ];
 

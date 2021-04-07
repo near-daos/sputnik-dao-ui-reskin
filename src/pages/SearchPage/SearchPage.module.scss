@@ -1,0 +1,43 @@
+@use 'styles/functions';
+@import 'styles/typography';
+@import 'styles/media';
+
+.root {
+  display: block;
+
+  padding: functions.calc-rem(40) functions.calc-rem(24) functions.calc-rem(56);
+}
+
+.tabs {
+  margin-top: functions.calc-rem(24);
+
+  @include desktop {
+    margin-top: functions.calc-rem(32);
+  }
+}
+
+.sortWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: functions.calc-rem(40);
+  width: 100%;
+
+  @include tablet-portrait {
+    margin-top: functions.calc-rem(24);
+  }
+}
+
+.sortSelect {
+  width: 100%;
+  @include tablet-portrait {
+    width: functions.calc-rem(210);
+  }
+}
+
+.resultWrapper {
+  margin-top: functions.calc-rem(40);
+
+  @include tablet-portrait {
+    margin-top: functions.calc-rem(24);
+  }
+}

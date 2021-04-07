@@ -1,0 +1,23 @@
+@use 'styles/functions';
+@import 'styles/typography';
+@import 'styles/media';
+
+.root {
+  display: grid;
+  grid-template-columns: 1fr;
+
+
+  @include tablet-portrait {
+    gap: functions.calc-rem(32);
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include desktop {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  
+}
+
+.dao {
+  margin-bottom: functions.calc-rem(24);
+}
