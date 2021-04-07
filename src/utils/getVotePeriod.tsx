@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 export type Period = {
   months: number;
   days: number;
@@ -7,10 +5,10 @@ export type Period = {
 };
 
 function getVotePeriod(date: Date): Period {
-  const now = moment();
-  const lastDate = moment(date);
-  const duration = moment.duration(lastDate.diff(now));
-  const totalHours = Math.floor(duration.asHours());
+  const now = Date.now();
+  const lastDate = new Date(date).getTime();
+  const duration = lastDate - now;
+  const totalHours = Math.floor(duration / (1000 * 60 * 60));
   const totalDays = Math.floor(totalHours / 24);
   const months = Math.floor(totalDays / 30);
   const days = totalDays % 30;
