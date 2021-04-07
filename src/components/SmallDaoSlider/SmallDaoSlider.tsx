@@ -68,8 +68,9 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
       },
     ],
     ref: carousel,
-    beforeChange: (oldIndex: number, newIndex: number) => {
+    afterChange: (newIndex: number) => {
       history.push(`/dao/${newIndex}`);
+      setActiveSlide(newIndex);
     },
   };
 
@@ -81,7 +82,7 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
             key={dao.id}
             className={s.daoCard}
             dao={dao}
-            active={dao.id === '7'}
+            active={dao.id === daos[activeSlide].id}
           />
         ))}
       </Slider>
