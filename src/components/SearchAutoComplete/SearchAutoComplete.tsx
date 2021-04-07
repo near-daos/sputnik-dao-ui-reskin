@@ -13,6 +13,7 @@ export type Dao = {
 export type Proposal = {
   name: string;
   id: string;
+  daoId: string;
 };
 
 export interface SearchAutoCompleteProps {
@@ -31,9 +32,8 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSearch = (value: string) => {
-    setIsShowResult(true);
     setDaoResult([{ name: 'testDao', id: '1' }]);
-    setProposalResult([{ name: 'testProposal', id: '2' }]);
+    setProposalResult([{ name: 'testProposal', id: '2', daoId: '12' }]);
   };
 
   const renderName = (name: string) => {
@@ -43,15 +43,27 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
     return <p dangerouslySetInnerHTML={{ __html: string.result }} />;
   };
 
+  const closeResults = () => {
+    setIsShowResult(false);
+  };
+
+  const onChangeSearch = (value: string) => {
+    if (!isShowResult) {
+      setIsShowResult(true);
+    }
+
+    handleSearch(value);
+    setSearchText(value);
+  };
+
   return (
     <div className={cn(s.root, className)}>
       <SearchBar
         value={searchText}
-        onChange={setSearchText}
+        onChange={onChangeSearch}
         placeholder="Search for DAO or proposal"
         name="search"
         className={s.search}
-        onSubmit={handleSearch}
         size={searchBarSize}
       />
       {isShowResult && (
@@ -61,17 +73,19 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
             role="button"
             tabIndex={0}
             className={s.overlay}
-            onKeyPress={() => {
-              setIsShowResult(false);
-            }}
-            onClick={() => {
-              setIsShowResult(false);
-            }}
+            onKeyPress={closeResults}
+            onClick={closeResults}
           />
-          <div className={s.resultWrapper}>
+          <div
+            className={s.resultWrapper}
+            role="button"
+            tabIndex={0}
+            onKeyPress={closeResults}
+            onClick={closeResults}
+          >
             <div className={s.titleWrapper}>
               <p className={s.title}>DAOs</p>
-              <Link to="/" className={s.link}>
+              <Link to={`/search/dao/?query=${searchText}`} className={s.link}>
                 See All
                 <span className={s.count}>({daoResult.length})</span>
               </Link>
@@ -79,7 +93,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
             {daoResult.length > 0 ? (
               <>
                 {daoResult.map((item) => (
-                  <Link to="/" className={s.item} key={item.id}>
+                  <Link to={`/dao/${item.id}`} className={s.item} key={item.id}>
                     {renderName(item.name)}
                   </Link>
                 ))}
@@ -90,7 +104,10 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
             <div className={s.border} />
             <div className={s.titleWrapper}>
               <p className={s.title}>Proposals</p>
-              <Link to={`/query=${searchText}`} className={s.link}>
+              <Link
+                to={`/search/proposal/?query=${searchText}`}
+                className={s.link}
+              >
                 See All
                 <span className={s.count}>({proposalResult.length})</span>
               </Link>
@@ -99,7 +116,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
               <>
                 {proposalResult.map((item) => (
                   <Link
-                    to={`/query=${searchText}`}
+                    to={`/dao/${item.daoId}/proposals?proposal=${item.name}`}
                     className={s.item}
                     key={item.id}
                   >
@@ -110,7 +127,10 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
             ) : (
               <p className={s.emptyText}>proposal not found</p>
             )}
-            <Link to="/" className={cn(s.link, s.all)}>
+            <Link
+              to={`/search/dao/?query=${searchText}`}
+              className={cn(s.link, s.all)}
+            >
               Show all results
               <span className={s.count}>
                 ({daoResult.length + proposalResult.length})

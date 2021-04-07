@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import { SputnikDaoLogo } from 'components/SputnikDaoLogo';
@@ -45,6 +45,20 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
   } else if (media.desktop || media.tabletLandscape) {
     progressBarSize = 'lg';
   }
+
+  useEffect(() => {
+    const handleGoBack = () => {
+      if (onClose) {
+        onClose();
+      }
+    };
+
+    window.addEventListener('popstate', handleGoBack, false);
+
+    return () => {
+      window.removeEventListener('popstate', handleGoBack);
+    };
+  }, [onClose]);
 
   return (
     <div className={cn(s.root, className)}>

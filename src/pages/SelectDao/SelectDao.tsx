@@ -4,8 +4,9 @@ import Slider from 'react-slick';
 import useMedia from 'hooks/use-media';
 
 import { Button, IconButton, SvgIcon } from 'components/UILib';
-import { SearchAutoComplete } from 'components/SearchAutoComplete';
 import { DaoCard } from 'components/DaoCard';
+import SearchBar from 'components/SearchBar';
+import { useHistory } from 'react-router-dom';
 import { mockDaos } from './mockData';
 
 import s from './SelectDao.module.scss';
@@ -24,6 +25,8 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const carousel = useRef<Slider>(null);
   const media = useMedia();
+  const [searchText, setSearchText] = useState('');
+  const history = useHistory();
 
   const carouselSettings = {
     infinite: true,
@@ -46,6 +49,10 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
 
   const handleGridMode = () => {
     setMode(Mode.Grid);
+  };
+
+  const handleSelectDao = () => {
+    history.push(`/dao/${mockDaos[activeSlide].id}`);
   };
 
   return (
@@ -76,7 +83,13 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
               size="lg"
             />
           </div>
-          <SearchAutoComplete className={s.search} searchBarSize="md" />
+          <SearchBar
+            className={s.search}
+            placeholder="DAO search"
+            value={searchText}
+            onChange={setSearchText}
+            name="search"
+          />
         </div>
       </section>
       <section className={cn(s.grid, { [s.hidden]: mode !== Mode.Grid })}>
@@ -130,7 +143,9 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
             Previous DAO
           </Button>
         )}
-        <Button size="lg">Select DAO</Button>
+        <Button size="lg" onClick={handleSelectDao}>
+          Select DAO
+        </Button>
         {media.mobile ? (
           <IconButton
             icon="dd-arrow"

@@ -16,8 +16,6 @@ import { SelectDao } from './pages/SelectDao/SelectDao';
 import { SelectProposals } from './pages/SelectProposal/SelectProposal';
 import { Proposals } from './pages/Proposals/Proposals';
 import { DaoPage } from './pages/DaoPage/DaoPage';
-import { CreateDao } from './pages/CreateDao/CreateDao';
-import { CreateProposal } from './pages/CreateProposal/CreateProposal';
 import { SearchPage } from './pages/SearchPage';
 
 import 'normalize.css/normalize.css';
@@ -44,16 +42,8 @@ const routes: RouteInfo[] = [
     component: Proposals,
   },
   {
-    path: '/dao',
+    path: '/dao/:id',
     component: DaoPage,
-  },
-  {
-    path: '/create-dao',
-    component: CreateDao,
-  },
-  {
-    path: '/create-proposal',
-    component: CreateProposal,
   },
   {
     path: '/search',
