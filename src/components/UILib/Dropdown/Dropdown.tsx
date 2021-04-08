@@ -55,11 +55,15 @@ const Dropdown: React.FC<DropdownProps> = ({
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
 
-    setIsOpen(!isOpen);
-
-    if (onOpen) {
+    if (!isOpen && onOpen) {
       onOpen();
     }
+
+    if (isOpen && onClose) {
+      onClose();
+    }
+
+    setIsOpen(!isOpen);
   };
 
   return (

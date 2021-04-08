@@ -2,6 +2,7 @@
 @use 'styles/functions';
 @use 'styles/media';
 @import 'styles/typography';
+@import 'styles/helpers';
 
 .root {
   background: var(--theme-primary-bg);
@@ -79,10 +80,72 @@
   @extend %title-5;
 
   display: block;
-  line-height: functions.calc-rem(48);
+  //line-height: functions.calc-rem(48);
   text-decoration: none;
+
+  @include media.tablet-portrait {
+    @include title-3;
+  }
 }
 
 .footer {
   border: none;
+}
+
+.accountWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  margin-top: functions.calc-rem(48);
+
+  @include media.tablet-portrait {
+    margin-top: functions.calc-rem(32);
+  }
+}
+
+.iconWrapper {
+  align-items: center;
+  border: solid 2px var(--theme-btn-outline-border);
+  border-radius: 1px;
+  display: flex;
+  height: functions.calc-rem(36);
+  justify-content: center;
+  width: functions.calc-rem(36);
+}
+
+.icon {
+  background-image: var(--theme-avatar);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: functions.calc-rem(18);
+  width: functions.calc-rem(18);
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: functions.calc-rem(16);
+}
+
+.title {
+  @extend %caption-2;
+
+}
+
+.accountText {
+  @extend %title-6;
+}
+
+.signOut {
+  @extend %button-reset;
+  @extend %title-5;
+  color: var(--theme-sign-out-text);
+  margin-top: functions.calc-rem(24);
+  padding: functions.calc-rem(8) 0;
+  @include media.tablet-portrait {
+    @include title-3;
+    margin-top: functions.calc-rem(16);
+  }
 }

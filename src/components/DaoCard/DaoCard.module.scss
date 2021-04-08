@@ -11,6 +11,17 @@
   position: relative;
   width: 100%;
 
+  &.lg {
+    padding: functions.calc-rem(32);
+  }
+
+  &.md,
+  &.sm {
+    padding: functions.calc-rem(24) functions.calc-rem(32) functions.calc-rem(32);
+  }
+}
+
+.root {
   @include tablet-portrait {
     &.lg,
     &.md,
@@ -33,16 +44,18 @@
       padding: functions.calc-rem(32) functions.calc-rem(40);
     }
   }
+}
 
-  &.lg {
-    padding: functions.calc-rem(32);
-  }
-
-  &.md,
-  &.sm {
-    padding: functions.calc-rem(24) functions.calc-rem(32)
-      functions.calc-rem(32);
-  }
+.corner {
+  background-image: var(--theme-corner-grey);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: functions.calc-rem(56);
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: functions.calc-rem(80);
 }
 
 .content {

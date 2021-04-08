@@ -18,6 +18,14 @@ const ProposalCard: React.FC<ProposalCardProps> = ({ className, proposal }) => {
 
   return (
     <div className={cn(s.root, className)}>
+      <div
+        className={cn(s.corner, {
+          [s.approved]: proposal.status === ProposalStatus.Approved,
+          [s.rejected]: proposal.status === ProposalStatus.Rejected,
+          [s.inProgress]: proposal.status === ProposalStatus.InProgress,
+          [s.delayed]: proposal.status === ProposalStatus.Delayed,
+        })}
+      />
       <div className={s.header}>
         <p
           className={cn(s.statusText, {

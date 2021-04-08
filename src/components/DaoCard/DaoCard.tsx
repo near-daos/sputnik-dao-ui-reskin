@@ -20,6 +20,7 @@ const DaoCard: React.FC<DaoCardProps> = ({ className, dao, size = 'lg' }) => {
 
   return (
     <div className={cn(s.root, className, s[size])}>
+      <div className={s.corner} />
       <div className={cn(s.imageWrapper, s[size])}>
         <img src={dao.image} className={s.image} alt="dao-logo" />
       </div>

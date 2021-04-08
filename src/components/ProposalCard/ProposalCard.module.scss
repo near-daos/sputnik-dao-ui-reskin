@@ -10,6 +10,7 @@
   flex-direction: column;
   overflow: hidden;
   padding: functions.calc-rem(32);
+  position: relative;
   width: auto;
 
   @include media.tablet-portrait {
@@ -18,6 +19,33 @@
 
   @include media.desktop {
     padding: functions.calc-rem(48);
+  }
+}
+
+.corner {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: functions.calc-rem(56);
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: functions.calc-rem(80);
+
+  &.delayed {
+    background-image: var(--theme-corner-yellow);
+  }
+
+  &.inProgress {
+    background-image: var(--theme-corner-pink);
+  }
+
+  &.rejected {
+    background-image: var(--theme-corner-red);
+  }
+
+  &.approved {
+    background-image: var(--theme-corner-green);
   }
 }
 

@@ -12,15 +12,23 @@ import s from './MobileMenu.module.scss';
 export interface MobileMenuProps {
   className?: string;
   theme: Theme;
+  accountName: string;
+  isAuth: boolean;
   onClose: () => void;
   toggleTheme: () => void;
+  onSingOut: () => void;
+  onSingIn: () => void;
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({
   onClose,
   toggleTheme,
+  isAuth,
+  accountName,
   className,
   theme,
+  onSingOut,
+  onSingIn,
 }) => {
   useEffect(() => {
     // page scroll lock
@@ -51,13 +59,16 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           </a>
         </div>
         <div className={s.controls}>
-          <Button
-            className={cn(s.control, s.authBtn)}
-            size="sm"
-            variant="outline"
-          >
-            Sign In
-          </Button>
+          {!isAuth && (
+            <Button
+              className={cn(s.control, s.authBtn)}
+              size="sm"
+              variant="outline"
+              onClick={onSingIn}
+            >
+              Sign In
+            </Button>
+          )}
           <ThemeSwitcher
             value={theme}
             onChange={toggleTheme}
@@ -71,6 +82,22 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             Discover DAO
           </a>
         </nav>
+        {isAuth && (
+          <>
+            <div className={s.accountWrapper}>
+              <div className={s.iconWrapper}>
+                <div className={s.icon} />
+              </div>
+              <div className={s.textWrapper}>
+                <p className={s.title}>Signed in as</p>
+                <p className={s.accountText}>{accountName}</p>
+              </div>
+            </div>
+            <button className={s.signOut} onClick={onSingOut}>
+              Sing Out
+            </button>
+          </>
+        )}
       </section>
       <Footer className={s.footer} />
     </div>

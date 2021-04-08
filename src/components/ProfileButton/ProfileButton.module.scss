@@ -1,0 +1,77 @@
+@use 'styles/functions';
+@import 'styles/typography';
+@import 'styles/helpers';
+
+.root {
+  display: block;
+}
+
+.button {
+  align-items: center;
+  border: solid 2px var(--theme-btn-outline-border);
+  border-radius: 1px;
+  cursor: pointer;
+  display: flex;
+  height: functions.calc-rem(36);
+  justify-content: center;
+  width: functions.calc-rem(36);
+}
+
+.icon {
+  background-image: var(--theme-avatar);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: functions.calc-rem(18);
+  width: functions.calc-rem(18);
+}
+
+.button:hover,
+.button.active {
+  background-color: var(--theme-btn-outline-hover);
+
+  .icon {
+    background-image: var(--theme-avatar-hover);
+  }
+}
+
+.ddWrapper {
+  padding: functions.calc-rem(18) 0 functions.calc-rem(10);
+  width: functions.calc-rem(240);
+}
+
+.title {
+  @extend %caption-1;
+  color: var(--theme-input-helper-text);
+  padding: 0 functions.calc-rem(18);
+}
+
+.account {
+  @extend %button-reset;
+  @extend %title-6;
+  padding: 0 functions.calc-rem(18);
+}
+
+.border {
+  background-color: var(--theme-primary-border);
+  height: 1px;
+  margin-top: functions.calc-rem(12);
+  width: 100%;
+}
+
+.signOut {
+  @extend %button-reset;
+  @extend %title-6;
+  color: var(--theme-sign-out-text);
+  margin-top: functions.calc-rem(4);
+  padding: functions.calc-rem(8) functions.calc-rem(18);
+
+  &:hover {
+    background-color: var(--theme-sign-out-hover-bg);
+  }
+}
+
+.tooltipText {
+  @extend %caption-1;
+  text-align: center;
+}
