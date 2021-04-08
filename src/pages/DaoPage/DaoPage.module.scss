@@ -8,13 +8,8 @@
 }
 
 .slider {
-  overflow-y: auto;
+  margin-top: functions.calc-rem(16);
   width: 100vw;
-}
-
-.sliderContainer {
-  display: flex;
-  flex-wrap: nowrap;
 }
 
 .daoCard {
@@ -91,6 +86,4 @@
 
 .content {
   @include mixins.narrow-container;
-
-  padding-top: functions.calc-rem(24);
 }

@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { Button, NavTabs } from 'components/UILib';
-import { DaoCardMini } from 'components/DaoCardMini';
 import { DaoDetails } from 'components/DaoDetails';
 import { DaoProposals } from 'components/DaoProposals';
 
+import { SmallDaoSlider } from 'components/SmallDaoSlider';
 import { mockDaos, proposals } from './mockData';
 
 import s from './DaoPage.module.scss';
 import CreateProposalPopup from '../../components/CreateProposalPopup/CreateProposalPopup';
 import { Dao } from '../../types/dao';
-
-const CURRENT_DAO_ID = '7'; // TODO: remove after integration
 
 export const DaoPage: React.FC = () => {
   const [isShowCreateProposal, setIsShowCreateProposal] = useState(false);
@@ -47,16 +45,7 @@ export const DaoPage: React.FC = () => {
   return (
     <section className={s.root}>
       <section className={s.slider}>
-        <div className={s.sliderContainer}>
-          {mockDaos.map((dao) => (
-            <DaoCardMini
-              key={dao.id}
-              className={s.daoCard}
-              dao={dao}
-              active={dao.id === CURRENT_DAO_ID}
-            />
-          ))}
-        </div>
+        <SmallDaoSlider daos={mockDaos} activeDaoId={mockDaos[0].id} />
       </section>
       <div className={s.content}>
         <section className={s.header}>

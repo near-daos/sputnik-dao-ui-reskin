@@ -1,7 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { Link } from 'react-router-dom';
 import { Dao } from 'types/dao';
 import s from './DaoCardMini.module.scss';
 
@@ -16,8 +15,7 @@ const DaoCardMini: React.FC<DaoCardMiniProps> = ({
   dao,
   active = false,
 }) => (
-  <Link
-    to="/dao"
+  <div
     className={cn(s.root, className, {
       [s.active]: active,
     })}
@@ -27,7 +25,7 @@ const DaoCardMini: React.FC<DaoCardMiniProps> = ({
     </div>
     <div className={s.overlay} />
     <p className={s.name}>{dao.name}</p>
-  </Link>
+  </div>
 );
 
 export default DaoCardMini;

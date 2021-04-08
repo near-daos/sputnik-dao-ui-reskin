@@ -1,0 +1,12 @@
+@use 'styles/functions';
+@import 'styles/typography';
+@import 'styles/media';
+
+.root {
+  width: 100%;
+}
+
+.daoCard {
+  margin: 0 auto functions.calc-rem(24);
+}
+
