@@ -1,4 +1,10 @@
-import { fetchDaoList, fetchProposals, login } from 'redux/actions';
+import {
+  fetchDaoList,
+  fetchProposals,
+  login,
+  logout,
+  fetchAccount,
+} from 'redux/actions';
 import { AuthState, DaoState, ProposalState } from 'types/store';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 
@@ -9,13 +15,17 @@ const initialState = {
 };
 
 export const auth = reducerWithInitialState<AuthState>({ accountId: null })
-  .case(login.started, (state) => ({
+  .case(fetchAccount.done, (state, { result }) => ({
     ...state,
-    loading: true,
+    accountId: result,
   }))
   .case(login.done, (state, { result }) => ({
     ...state,
     accountId: result,
+  }))
+  .case(logout.done, (state) => ({
+    ...state,
+    accountId: null,
   }))
   .build();
 

@@ -8,6 +8,10 @@ export const login = actionCreator.async<void, string, Error>('LOGIN');
 
 export const logout = actionCreator.async<void, void, Error>('LOGOUT');
 
+export const fetchAccount = actionCreator.async<void, string, Error>(
+  'FETCH_ACCOUNT',
+);
+
 export const fetchDaoList = actionCreator.async<void, DaoItem[], Error>(
   'FETCH_DAO_LIST',
 );

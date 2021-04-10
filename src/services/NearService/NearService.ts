@@ -65,7 +65,7 @@ class NearService {
     return this.walletConnection.isSignedIn();
   }
 
-  public getAccount() {
+  public async getAccount() {
     return this.walletConnection.getAccountId();
   }
 
@@ -88,7 +88,7 @@ class NearService {
         name: params.name,
         args,
       },
-      new Decimal('45000000000000').toString(),
+      new Decimal('45000000000000').toString(), // todo move to constant
       amountYokto.toString(),
     );
   }
@@ -96,7 +96,7 @@ class NearService {
   public async getDaoList(): Promise<DaoItem[]> {
     const list: string[] = await this.factoryContract.get_dao_list();
     const filteredList = list.filter(
-      (daoId: string) => daoId !== 'daotest9.dev-1610115292586-3217148',
+      (daoId: string) => daoId !== 'daotest9.dev-1610115292586-3217148', // todo - remove
     );
 
     const details = await Promise.all(

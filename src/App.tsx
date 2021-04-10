@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, RouteProps } from 'react-router-dom';
 import { NearService } from 'services/NearService';
 import { useDispatch } from 'react-redux';
-import { fetchDaoList } from 'redux/actions';
+import { fetchAccount, fetchDaoList } from 'redux/actions';
 import { LandingLayout, MainLayout } from './components';
 import { Landing } from './pages/Landing/Landing';
 import { SelectDao } from './pages/SelectDao/SelectDao';
@@ -62,13 +62,15 @@ const App: React.FC = () => {
 
   useEffect(() => {
     NearService.init().then(() => {
-      setIsInitialized(true);
+      console.log('near init');
+      dispatch(fetchAccount.started());
       dispatch(fetchDaoList.started());
+      setIsInitialized(true);
     });
   }, [dispatch]);
 
   if (!isInitialized) {
-    return null;
+    return null; // todo add loader
   }
 
   return (

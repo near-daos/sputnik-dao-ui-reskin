@@ -75,7 +75,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
             onClick={onClose}
           />
           <p className={s.mobileTitle}>Add New proposal</p>
-          <p className={s.desktopDaoName}>{daoName}</p>
+          <p className={s.mobileDaoName}>{daoName}</p>
           <StepProgressBar
             steps={STEPS}
             current={activeStep}

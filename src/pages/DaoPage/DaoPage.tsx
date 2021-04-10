@@ -25,6 +25,7 @@ import { Proposal } from 'types/proposal';
 import { DaoItem } from 'types/dao';
 
 import { fetchProposals } from 'redux/actions';
+import imgPlaceholder from 'images/placeholder.png';
 import s from './DaoPage.module.scss';
 
 export const DaoPage: React.FC = () => {
@@ -52,7 +53,7 @@ export const DaoPage: React.FC = () => {
       </section>
       <div className={s.content}>
         <section className={s.header}>
-          <img className={s.picture} src="{currentDao.image}" alt="" />
+          <img className={s.picture} src={imgPlaceholder} alt="" />
           <h1 className={s.heading}>DAO {dao?.id}</h1>
           <div className={s.nav}>
             <NavTabs

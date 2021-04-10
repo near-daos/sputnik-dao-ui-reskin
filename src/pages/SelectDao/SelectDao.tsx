@@ -62,7 +62,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
       <section className={s.panel}>
         <div>
           <h1 className={s.title}>Select DAO</h1>
-          <span className={s.number}>(701984)</span>
+          <span className={s.number}>({daoList.length})</span>
         </div>
         <div className={s.view}>
           <div className={s.viewModes}>

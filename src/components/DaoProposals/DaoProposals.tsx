@@ -78,11 +78,11 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
         <Select
           className={s.sort}
           label="Sorting"
-          options={['test']}
-          value="test"
-          pickLabel={() => 'test'}
-          pickValue={() => 'test'}
-          onChange={() => 'test'}
+          options={['Oldest', 'Newest']}
+          value="Oldest"
+          pickLabel={(item) => item}
+          pickValue={(item) => item}
+          onChange={() => 'Oldest'}
         />
       </div>
       <div className={s.proposalList}>

@@ -20,7 +20,7 @@ const ProfileButton: React.FC<ProfileButtonProps> = ({
 
   const handleClickOnAccountName = () => {
     navigator.clipboard.writeText(accountName);
-    setTooltipText('username copied');
+    setTooltipText('Username copied');
     setTimeout(() => {
       setTooltipText('Click to copy username');
     }, 1000);

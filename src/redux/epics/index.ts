@@ -3,7 +3,13 @@ import { combineEpics, Epic } from 'redux-observable';
 
 import { StoreState } from 'types/store';
 import { ofAsyncAction } from 'redux/utils/operators';
-import { fetchDaoList, fetchProposals, login, logout } from 'redux/actions';
+import {
+  fetchAccount,
+  fetchDaoList,
+  fetchProposals,
+  login,
+  logout,
+} from 'redux/actions';
 import { NearService } from 'services/NearService';
 
 const loginEpic = ofAsyncAction(login, async () => {
@@ -14,6 +20,10 @@ const loginEpic = ofAsyncAction(login, async () => {
 
 const logoutEpic = ofAsyncAction(logout, () => NearService.logout());
 
+const fetchAccountEpic = ofAsyncAction(fetchAccount, () =>
+  NearService.getAccount(),
+);
+
 const fetchDaoListEpic = ofAsyncAction(fetchDaoList, () =>
   NearService.getDaoList(),
 );
@@ -23,8 +33,9 @@ const fetchProposalsEpic = ofAsyncAction(fetchProposals, (contractId: string) =>
 );
 
 export const sputnikEpic: Epic<AnyAction, AnyAction, StoreState> = combineEpics(
-  logoutEpic,
   loginEpic,
+  logoutEpic,
+  fetchAccountEpic,
   fetchDaoListEpic,
   fetchProposalsEpic,
 );

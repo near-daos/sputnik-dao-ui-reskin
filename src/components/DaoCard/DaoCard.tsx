@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { DaoItem } from 'types/dao';
 import { Button, SvgIcon } from 'components/UILib';
 import { useHistory } from 'react-router-dom';
+import imgPlaceholder from 'images/placeholder.png';
 import s from './DaoCard.module.scss';
 
 export interface DaoCardProps {
@@ -22,11 +23,7 @@ const DaoCard: React.FC<DaoCardProps> = ({ className, dao, size = 'lg' }) => {
     <div className={cn(s.root, className, s[size])}>
       <div className={s.corner} />
       <div className={cn(s.imageWrapper, s[size])}>
-        <img
-          src="https://reactjs.org/logo-og.png"
-          className={s.image}
-          alt="dao-logo"
-        />
+        <img src={imgPlaceholder} className={s.image} alt="dao-logo" />
       </div>
       <div className={s.content}>
         <p className={cn(s.title, s[size])}>{dao.id}</p>
