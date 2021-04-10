@@ -3,13 +3,13 @@ import cn from 'classnames';
 
 import Slider from 'react-slick';
 import { DaoCardMini } from 'components/DaoCardMini';
-import { Dao } from 'types/dao';
+import { DaoItem } from 'types/dao';
 import { useHistory } from 'react-router-dom';
 import s from './SmallDaoSlider.module.scss';
 
 export interface SmallDaoSliderProps {
   className?: string;
-  daos: Dao[];
+  daos: DaoItem[];
   activeDaoId: string;
 }
 

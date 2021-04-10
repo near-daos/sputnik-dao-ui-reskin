@@ -7,7 +7,10 @@ import { ProfileButton } from 'components/ProfileButton';
 import { SputnikDaoLogo } from 'components/SputnikDaoLogo';
 import { MobileMenu } from 'components/MobileMenu';
 import { SearchAutoComplete } from 'components/SearchAutoComplete';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { login, logout } from 'redux/actions';
+import { accountSelector } from 'redux/selectors';
 import s from './Header.module.scss';
 
 interface HeaderProps {
@@ -18,19 +21,19 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
   const [isMenuOpen, setOpenMenu] = useState(false);
-  const [login, setLogin] = useState(false);
-  const accountName = 'test.account.name';
+  const account = useSelector(accountSelector);
+  const dispatch = useDispatch();
 
   const toggleMenu = () => {
     setOpenMenu(!isMenuOpen);
   };
 
   const handleSingIn = () => {
-    setLogin(true);
+    dispatch(login.started());
   };
 
   const handleSingOut = () => {
-    setLogin(false);
+    dispatch(logout.started());
   };
 
   return (
@@ -65,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
             <Button className={s.control} size="sm">
               Create new DAO
             </Button>
-            {!login && (
+            {!account && (
               <Button
                 className={cn(s.control, s.authBtn)}
                 size="sm"
@@ -75,10 +78,10 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
                 Sign In
               </Button>
             )}
-            {login && (
+            {account && (
               <ProfileButton
                 className={cn(s.control, s.authBtn)}
-                accountName={accountName}
+                accountName={account}
                 onSingOut={handleSingOut}
               />
             )}
@@ -94,9 +97,9 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
         <MobileMenu
           onClose={toggleMenu}
           theme={theme}
-          isAuth={login}
+          isAuth={!!account}
           toggleTheme={toggleTheme}
-          accountName={accountName}
+          accountName={account || ''}
           onSingIn={handleSingIn}
           onSingOut={handleSingOut}
         />

@@ -15,7 +15,7 @@ import { NavItem } from 'components/UILib/NavTabs/NavTabs';
 
 import { SearchDaoPage } from 'pages/SearchDaoPage';
 import { SearchProposalPage } from 'pages/SearchProposalPage';
-import { Dao } from 'types/dao';
+import { DaoItem } from 'types/dao';
 import { Proposal } from 'types/proposal';
 import s from './SearchPage.module.scss';
 
@@ -45,7 +45,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
   const history = useHistory();
   const urlParams = new URLSearchParams(location.search);
   const [searchQuery, setSearchQuery] = useState(urlParams.get('query') || '');
-  const [daos, setDaos] = useState<Dao[]>([]);
+  const [daos, setDaos] = useState<DaoItem[]>([]);
   const [proposals, setProposals] = useState<Proposal[]>([]);
 
   const [tabsOptions, setTabOptions] = useState<NavItem[]>([
@@ -68,7 +68,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
     console.log(value);
 
     const newProposals: Proposal[] = []; // TODO здесь получение новых Proposals
-    const newDaos: Dao[] = []; // TODO здесь получение новых Dao
+    const newDaos: DaoItem[] = []; // TODO здесь получение новых Dao
 
     setProposals(newProposals);
     setDaos(newDaos);

@@ -8,8 +8,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, RouteProps } from 'react-router-dom';
+import { NearService } from 'services/NearService';
+import { useDispatch } from 'react-redux';
+import { fetchDaoList } from 'redux/actions';
 import { LandingLayout, MainLayout } from './components';
 import { Landing } from './pages/Landing/Landing';
 import { SelectDao } from './pages/SelectDao/SelectDao';
@@ -52,7 +55,20 @@ const routes: RouteInfo[] = [
 ];
 
 const App: React.FC = () => {
+  const [isInitialized, setIsInitialized] = useState(false);
   const mainLayoutPaths = routes.map((route) => route.path);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    NearService.init().then(() => {
+      setIsInitialized(true);
+      dispatch(fetchDaoList.started());
+    });
+  }, [dispatch]);
+
+  if (!isInitialized) {
+    return null;
+  }
 
   return (
     <BrowserRouter>
