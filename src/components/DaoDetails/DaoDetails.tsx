@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import cn from 'classnames';
 
 import { Button, SvgIcon } from 'components/UILib';
-import { Dao } from 'types/dao';
+import { DaoItem } from 'types/dao';
 import getVotePeriod from 'utils/getVotePeriod';
 import { MembersPopup } from '../MembersPopup';
 
@@ -10,13 +10,14 @@ import s from './DaoDetails.module.scss';
 
 export interface DaoDetailsProps {
   className?: string;
-  dao: Dao;
+  dao: DaoItem;
 }
 const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
-  const [firstTenMembers] = useState<string[]>(dao.members.slice(0, 10));
+  const [firstTenMembers] = useState<string[]>([]);
   const [isOpenProposal, setIsOpenProposal] = useState(false);
   const [isShowMembersPopup, setIsShowMembersPopup] = useState(false);
-  const { days, months, hours } = getVotePeriod(dao.votePeriod);
+  const { days, months, hours } = getVotePeriod(new Date());
+  const members: string[] = [];
 
   return (
     <div className={cn(s.root, className)}>
@@ -55,10 +56,10 @@ const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
               {item}
             </p>
           ))}
-          {dao.members.length > 10 && (
+          {members.length > 10 && (
             <Button
               variant="outline"
-              rightElement={<span>({dao.members.length})</span>}
+              rightElement={<span>({members.length})</span>}
               size="sm"
               className={s.button}
               onClick={() => {
@@ -76,11 +77,11 @@ const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
             <p className={s.subTitle}>DAO Funds</p>
             <SvgIcon icon="token" size={10} className={s.tokenIcon} />
           </div>
-          <p className={s.value}>{dao.daoFunds}</p>
+          <p className={s.value}>{dao.amount}</p>
         </div>
         <div className={s.row}>
           <p className={s.subTitle}>Network</p>
-          <p className={s.value}>{dao.network}</p>
+          <p className={s.value}>dao.network</p>
         </div>
         <div className={s.row}>
           <div className={s.subTitleWrapper}>
@@ -115,9 +116,9 @@ const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
       </div>
       {isShowMembersPopup && (
         <MembersPopup
-          name={dao.name}
-          membersNumber={dao.members.length}
-          members={dao.members}
+          name={dao.id}
+          membersNumber={members.length}
+          members={members}
           onClose={() => {
             setIsShowMembersPopup(false);
           }}

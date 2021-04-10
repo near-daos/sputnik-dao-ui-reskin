@@ -1,13 +1,13 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { Dao } from 'types/dao';
+import { DaoItem } from 'types/dao';
 import { DaoCard } from 'components/DaoCard';
 import s from './SearchDaoPage.module.scss';
 
 export interface SearchDaoPageProps {
   className?: string;
-  daos: Dao[];
+  daos: DaoItem[];
 }
 
 const SearchDaoPage: React.FC<SearchDaoPageProps> = ({ className, daos }) => (

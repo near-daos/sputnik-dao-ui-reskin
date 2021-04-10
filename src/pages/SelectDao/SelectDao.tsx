@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import Slider from 'react-slick';
 import useMedia from 'hooks/use-media';
@@ -7,7 +8,7 @@ import { Button, IconButton, SvgIcon } from 'components/UILib';
 import { DaoCard } from 'components/DaoCard';
 import SearchBar from 'components/SearchBar';
 import { useHistory } from 'react-router-dom';
-import { mockDaos } from './mockData';
+import { daoListSelector } from 'redux/selectors';
 
 import s from './SelectDao.module.scss';
 
@@ -27,6 +28,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   const media = useMedia();
   const [searchText, setSearchText] = useState('');
   const history = useHistory();
+  const daoList = useSelector(daoListSelector);
 
   const carouselSettings = {
     infinite: true,
@@ -52,7 +54,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   };
 
   const handleSelectDao = () => {
-    history.push(`/dao/${mockDaos[activeSlide].id}`);
+    history.push(`/dao/${daoList[activeSlide].id}`);
   };
 
   return (
@@ -93,7 +95,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
         </div>
       </section>
       <section className={cn(s.grid, { [s.hidden]: mode !== Mode.Grid })}>
-        {mockDaos.map((dao) => (
+        {daoList.map((dao) => (
           <DaoCard key={dao.id} className={s.card} dao={dao} size="md" />
         ))}
       </section>
@@ -103,7 +105,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
         <div className={s.carouselContainer}>
           <div className={s.carouselList}>
             <Slider {...carouselSettings}>
-              {mockDaos.map((dao, index) => (
+              {daoList.map((dao, index) => (
                 <div className={s.cardHolder} key={dao.id}>
                   <DaoCard
                     className={cn(s.card, {

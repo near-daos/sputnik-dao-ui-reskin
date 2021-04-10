@@ -1,1 +1,1 @@
-export { default as CreateDaoPopup } from './CreateProposalPopup';
+export { default as CreateProposalPopup } from './CreateProposalPopup';

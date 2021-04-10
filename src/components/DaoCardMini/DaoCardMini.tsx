@@ -1,12 +1,12 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { Dao } from 'types/dao';
+import { DaoItem } from 'types/dao';
 import s from './DaoCardMini.module.scss';
 
 export interface DaoCardMiniProps {
   className?: string;
-  dao: Omit<Dao, 'members' | 'network' | 'votePeriod'>; // TODO: fix or create a new interface when real data arrived
+  dao: DaoItem;
   active?: boolean;
 }
 
@@ -21,10 +21,10 @@ const DaoCardMini: React.FC<DaoCardMiniProps> = ({
     })}
   >
     <div className={s.imageWrapper}>
-      <img src={dao.image} alt="dao-logo" className={s.image} />
+      <img src="{dao.image}" alt="dao-logo" className={s.image} />
     </div>
     <div className={s.overlay} />
-    <p className={s.name}>{dao.name}</p>
+    <p className={s.name}>{dao.id}</p>
   </div>
 );
 

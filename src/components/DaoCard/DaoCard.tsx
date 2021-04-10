@@ -1,14 +1,14 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { Dao } from 'types/dao';
+import { DaoItem } from 'types/dao';
 import { Button, SvgIcon } from 'components/UILib';
 import { useHistory } from 'react-router-dom';
 import s from './DaoCard.module.scss';
 
 export interface DaoCardProps {
   className?: string;
-  dao: Omit<Dao, 'members' | 'network' | 'votePeriod'>; // TODO: fix or create a new interface when real data arrived
+  dao: DaoItem;
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -22,10 +22,14 @@ const DaoCard: React.FC<DaoCardProps> = ({ className, dao, size = 'lg' }) => {
     <div className={cn(s.root, className, s[size])}>
       <div className={s.corner} />
       <div className={cn(s.imageWrapper, s[size])}>
-        <img src={dao.image} className={s.image} alt="dao-logo" />
+        <img
+          src="https://reactjs.org/logo-og.png"
+          className={s.image}
+          alt="dao-logo"
+        />
       </div>
       <div className={s.content}>
-        <p className={cn(s.title, s[size])}>{dao.name}</p>
+        <p className={cn(s.title, s[size])}>{dao.id}</p>
         <p className={s.label}>Purpose</p>
         <p className={s.purpose}>{dao.purpose}</p>
         <div className={s.wrapper}>
@@ -42,14 +46,14 @@ const DaoCard: React.FC<DaoCardProps> = ({ className, dao, size = 'lg' }) => {
           </div>
           <div className={cn(s.container, s.amountOfMember, s[size])}>
             <p className={s.label}>Amount of members</p>
-            <p className={s.value}>{dao.amountMembers}</p>
+            <p className={s.value}>{dao.numberOfMembers}</p>
           </div>
           <div className={cn(s.container, s.funds, s[size])}>
             <div className={s.nameWrapper}>
               <p className={s.label}>DAO Funds</p>
               <SvgIcon icon="token" size={10} className={s.tokenIcon} />
             </div>
-            <p className={cn(s.value, s[size])}>{dao.daoFunds.toFixed(2)}</p>
+            <p className={cn(s.value, s[size])}>{dao.amount}</p>
           </div>
         </div>
       </div>
