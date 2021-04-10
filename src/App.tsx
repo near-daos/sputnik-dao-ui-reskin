@@ -25,6 +25,7 @@ import 'normalize.css/normalize.css';
 import 'slick-carousel/slick/slick.css';
 import './styles/theme.scss';
 import './styles/main.scss';
+import 'swiper/swiper.scss';
 
 interface RouteInfo extends RouteProps {
   path: string;

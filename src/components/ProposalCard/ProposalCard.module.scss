@@ -22,6 +22,12 @@
   }
 }
 
+.wrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
 .corner {
   background-position: center;
   background-repeat: no-repeat;
@@ -40,7 +46,8 @@
     background-image: var(--theme-corner-pink);
   }
 
-  &.rejected {
+  &.rejected,
+  &.fail {
     background-image: var(--theme-corner-red);
   }
 
@@ -72,7 +79,8 @@
     color: var(--theme-status-in-progress);
   }
 
-  &.rejected {
+  &.rejected,
+  &.fail {
     color: var(--theme-status-rejected);
   }
 

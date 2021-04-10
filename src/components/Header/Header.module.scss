@@ -46,7 +46,7 @@
   flex: 0 0 auto;
   margin-left: -(functions.calc-rem(9));
 
-  @include media.desktop {
+  @include media.tablet-landscape {
     display: none;
   }
 }
@@ -115,7 +115,7 @@
 .link {
   display: none;
 
-  @include media.desktop {
+  @include media.tablet-landscape {
     display: block;
   }
 }

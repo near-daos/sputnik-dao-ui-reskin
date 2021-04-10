@@ -3,7 +3,6 @@ import cn from 'classnames';
 
 import { Button, SvgIcon } from 'components/UILib';
 import { DaoItem } from 'types/dao';
-import getVotePeriod from 'utils/getVotePeriod';
 import { MembersPopup } from '../MembersPopup';
 
 import s from './DaoDetails.module.scss';
@@ -14,9 +13,9 @@ export interface DaoDetailsProps {
 }
 const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
   const [firstTenMembers] = useState<string[]>([]);
-  const [isOpenProposal, setIsOpenProposal] = useState(false);
+  // const [isOpenProposal, setIsOpenProposal] = useState(false);
   const [isShowMembersPopup, setIsShowMembersPopup] = useState(false);
-  const { days, months, hours } = getVotePeriod(new Date());
+  // const { days, months, hours } = getVotePeriod(Number(dao.votePeriod));
   const members: string[] = [];
 
   return (
@@ -25,30 +24,30 @@ const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
         <p className={s.title}>Purpose</p>
         <div
           className={cn(s.purposeWrapper, {
-            [s.short]: !isOpenProposal,
+            // [s.short]: !isOpenProposal,
           })}
         >
           {dao.purpose}
         </div>
-        <Button
-          variant="outline"
-          rightElement={
-            <SvgIcon
-              icon="dd-arrow"
-              size={18}
-              className={cn({
-                [s.close]: isOpenProposal,
-              })}
-            />
-          }
-          size="sm"
-          className={s.button}
-          onClick={() => {
-            setIsOpenProposal(!isOpenProposal);
-          }}
-        >
-          {!isOpenProposal ? 'Read more' : 'Show Less'}
-        </Button>
+        {/* <Button */}
+        {/*  variant="outline" */}
+        {/*  rightElement={ */}
+        {/*    <SvgIcon */}
+        {/*      icon="dd-arrow" */}
+        {/*      size={18} */}
+        {/*      className={cn({ */}
+        {/*        [s.close]: isOpenProposal, */}
+        {/*      })} */}
+        {/*    /> */}
+        {/*  } */}
+        {/*  size="sm" */}
+        {/*  className={s.button} */}
+        {/*  onClick={() => { */}
+        {/*    setIsOpenProposal(!isOpenProposal); */}
+        {/*  }} */}
+        {/* > */}
+        {/*  {!isOpenProposal ? 'Read more' : 'Show Less'} */}
+        {/* </Button> */}
         <div className={s.membersWrapper}>
           <p className={s.title}>Members</p>
           {firstTenMembers.map((item, index) => (
@@ -92,26 +91,7 @@ const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
         </div>
         <div className={s.row}>
           <p className={s.subTitle}>Vote Period</p>
-          <p className={s.value}>
-            {months > 0 && (
-              <>
-                <span>{months}</span>
-                <span className={s.date}>m </span>
-              </>
-            )}
-            {days > 0 && (
-              <>
-                <span>{days}</span>
-                <span className={s.date}>d </span>
-              </>
-            )}
-            {hours > 0 && (
-              <>
-                <span>{hours}</span>
-                <span className={s.date}>h</span>
-              </>
-            )}
-          </p>
+          <p className={s.value}>{dao.votePeriod}</p>
         </div>
       </div>
       {isShowMembersPopup && (

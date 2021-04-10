@@ -4,11 +4,8 @@ export type Period = {
   hours: number;
 };
 
-function getVotePeriod(date: Date): Period {
-  const now = Date.now();
-  const lastDate = new Date(date).getTime();
-  const duration = lastDate - now;
-  const totalHours = Math.floor(duration / (1000 * 60 * 60));
+export const getVotePeriod = (timeStamp: number): Period => {
+  const totalHours = Math.floor(timeStamp / (1000 * 60 * 60));
   const totalDays = Math.floor(totalHours / 24);
   const months = Math.floor(totalDays / 30);
   const days = totalDays % 30;
@@ -19,9 +16,15 @@ function getVotePeriod(date: Date): Period {
     days,
     hours,
   };
-}
+};
 
-export default getVotePeriod;
+export const getRemainingVotePeriod = (date: Date): Period => {
+  const now = Date.now();
+  const lastDate = new Date(date).getTime();
+  const duration = lastDate - now;
+
+  return getVotePeriod(duration);
+};
 
 export const timestampToReadable = (timestamp: number): string => {
   const seconds = Number(timestamp / 1e9);

@@ -48,7 +48,7 @@ export const DaoPage: React.FC = () => {
   return (
     <section className={s.root}>
       <section className={s.slider}>
-        <SmallDaoSlider daos={daoList} activeDaoId={daoList[0].id} />
+        <SmallDaoSlider daos={daoList} activeDaoId={params.id} />
       </section>
       <div className={s.content}>
         <section className={s.header}>

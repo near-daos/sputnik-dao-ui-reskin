@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import { Button, IconButton } from 'components/UILib';
 import ThemeSwitcher from 'components/ThemeSwitcher';
 import { Theme } from 'types/theme';
+import { CreateDaoPopup } from 'components/CreateDaoPopup';
 import { ProfileButton } from 'components/ProfileButton';
 import { SputnikDaoLogo } from 'components/SputnikDaoLogo';
 import { MobileMenu } from 'components/MobileMenu';
 import { SearchAutoComplete } from 'components/SearchAutoComplete';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { login, logout } from 'redux/actions';
 import { accountSelector } from 'redux/selectors';
@@ -21,6 +23,10 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
   const [isMenuOpen, setOpenMenu] = useState(false);
+  const [isShowCreateDaoPopup, setIsShowCreateDaoPopup] = useState(false);
+  const location = useLocation();
+  const history = useHistory();
+  const showSearchBar = !location.pathname.includes('search');
   const account = useSelector(accountSelector);
   const dispatch = useDispatch();
 
@@ -35,6 +41,26 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
   const handleSingOut = () => {
     dispatch(logout.started());
   };
+
+  const showCreateDaoPopup = () => {
+    setIsShowCreateDaoPopup(true);
+  };
+
+  const hideCreateDaoPopup = () => {
+    const params = new URLSearchParams();
+
+    params.delete('create-dao-popup');
+    history.push({ search: params.toString() });
+    setIsShowCreateDaoPopup(false);
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+
+    if (urlParams.get('create-dao-popup')) {
+      setIsShowCreateDaoPopup(true);
+    }
+  }, [location]);
 
   return (
     <>
@@ -55,7 +81,7 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
               Discover DAO
             </a>
           </nav>
-          <SearchAutoComplete className={s.search} />
+          {showSearchBar && <SearchAutoComplete className={s.search} />}
           <div className={s.searchBtnContainer}>
             <IconButton
               className={s.searchBtn}
@@ -65,7 +91,11 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
             />
           </div>
           <div className={s.controls}>
-            <Button className={s.control} size="sm">
+            <Button
+              className={s.control}
+              size="sm"
+              onClick={showCreateDaoPopup}
+            >
               Create new DAO
             </Button>
             {!account && (
@@ -104,6 +134,7 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
           onSingOut={handleSingOut}
         />
       )}
+      {isShowCreateDaoPopup && <CreateDaoPopup onClose={hideCreateDaoPopup} />}
     </>
   );
 };

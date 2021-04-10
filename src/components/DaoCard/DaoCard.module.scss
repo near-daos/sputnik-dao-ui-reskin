@@ -30,7 +30,7 @@
     }
   }
 
-  @include desktop {
+  @include tablet-landscape {
     &.lg {
       flex-direction: row-reverse;
     }
