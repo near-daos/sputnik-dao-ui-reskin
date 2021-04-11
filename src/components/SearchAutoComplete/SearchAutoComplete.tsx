@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 import SearchBar, { SearchBarProps } from 'components/SearchBar/SearchBar';
 import { highlightSubstring } from 'utils/highlightSubstring';
+import { DaoItem } from 'types/dao';
 import s from './SearchAutoComplete.module.scss';
 
 export type Dao = {
@@ -19,22 +20,34 @@ export type Proposal = {
 export interface SearchAutoCompleteProps {
   className?: string;
   searchBarSize?: SearchBarProps['size'];
+  daoList: DaoItem[];
 }
 
 const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
   className,
   searchBarSize = 'sm',
+  daoList,
 }) => {
   const [searchText, setSearchText] = useState('');
   const [isShowResult, setIsShowResult] = useState(false);
-  const [daoResult, setDaoResult] = useState<Dao[]>([]);
+  const [daoResult, setDaoResult] = useState<DaoItem[]>([]);
   const [proposalResult, setProposalResult] = useState<Proposal[]>([]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleSearch = (value: string) => {
-    setDaoResult([{ name: 'testDao', id: '1' }]);
-    setProposalResult([{ name: 'testProposal', id: '2', daoId: '12' }]);
-  };
+  useEffect(() => {
+    if (!searchText) {
+      setDaoResult([]);
+      setProposalResult([]);
+
+      return;
+    }
+
+    const filtered = daoList.filter(
+      (doa) => doa.id.toUpperCase().indexOf(searchText.toUpperCase()) !== -1,
+    );
+
+    setDaoResult(filtered);
+    setProposalResult([]);
+  }, [searchText, daoList]);
 
   const renderName = (name: string) => {
     const string = highlightSubstring(name, searchText);
@@ -52,7 +65,6 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
       setIsShowResult(true);
     }
 
-    handleSearch(value);
     setSearchText(value);
   };
 
@@ -94,7 +106,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
               <>
                 {daoResult.map((item) => (
                   <Link to={`/dao/${item.id}`} className={s.item} key={item.id}>
-                    {renderName(item.name)}
+                    {renderName(item.id)}
                   </Link>
                 ))}
               </>

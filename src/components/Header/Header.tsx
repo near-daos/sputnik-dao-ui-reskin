@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { login, logout } from 'redux/actions';
-import { accountSelector } from 'redux/selectors';
+import { accountSelector, daoListSelector } from 'redux/selectors';
 import s from './Header.module.scss';
 
 interface HeaderProps {
@@ -29,6 +29,7 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
   const showSearchBar = !location.pathname.includes('search');
   const account = useSelector(accountSelector);
   const dispatch = useDispatch();
+  const daoList = useSelector(daoListSelector);
 
   const toggleMenu = () => {
     setOpenMenu(!isMenuOpen);
@@ -81,7 +82,9 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
               Discover DAO
             </a>
           </nav>
-          {showSearchBar && <SearchAutoComplete className={s.search} />}
+          {showSearchBar && (
+            <SearchAutoComplete className={s.search} daoList={daoList} />
+          )}
           <div className={s.searchBtnContainer}>
             <IconButton
               className={s.searchBtn}
