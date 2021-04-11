@@ -11,6 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { daoListSelector } from 'redux/selectors';
 
 import { fetchDaoList } from 'redux/actions';
+import { DaoItem } from 'types/dao';
 import s from './SelectDao.module.scss';
 
 export interface SelectDaoProps {
@@ -30,6 +31,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   const [searchText, setSearchText] = useState('');
   const history = useHistory();
   const daoList = useSelector(daoListSelector);
+  const [filteredDaoList, setFilteredDaoList] = useState<DaoItem[]>([]);
   const dispatch = useDispatch();
 
   const carouselSettings = {
@@ -50,6 +52,20 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   useEffect(() => {
     dispatch(fetchDaoList.started());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!searchText) {
+      setFilteredDaoList(daoList);
+
+      return;
+    }
+
+    const filtered = daoList.filter(
+      (item) => item.id.indexOf(searchText) !== -1,
+    );
+
+    setFilteredDaoList(filtered);
+  }, [daoList, searchText]);
 
   const handleCarouselMode = () => {
     setMode(Mode.Carousel);
@@ -101,7 +117,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
         </div>
       </section>
       <section className={cn(s.grid, { [s.hidden]: mode !== Mode.Grid })}>
-        {daoList.map((dao) => (
+        {filteredDaoList.map((dao) => (
           <DaoCard key={dao.id} className={s.card} dao={dao} size="md" />
         ))}
       </section>
@@ -111,7 +127,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
         <div className={s.carouselContainer}>
           <div className={s.carouselList}>
             <Slider {...carouselSettings}>
-              {daoList.map((dao, index) => (
+              {filteredDaoList.map((dao, index) => (
                 <div className={s.cardHolder} key={dao.id}>
                   <DaoCard
                     className={cn(s.card, {
