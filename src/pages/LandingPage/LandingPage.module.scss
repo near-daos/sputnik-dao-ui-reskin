@@ -18,7 +18,7 @@
   min-width: 100vw;
 
   @include media.mobile-only {
-    min-height: stretch;
+    min-height: calc(var(--vh, 1vh) * 100);
   }
 }
 

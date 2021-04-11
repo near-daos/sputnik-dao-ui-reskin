@@ -10,6 +10,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, RouteProps } from 'react-router-dom';
+import debounce from 'lodash.debounce';
+
 import { NearService } from 'services/NearService';
 import { useDispatch } from 'react-redux';
 import { fetchAccount, fetchDaoList } from 'redux/actions';
@@ -59,6 +61,17 @@ const App: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
   const mainLayoutPaths = routes.map((route) => route.path);
   const dispatch = useDispatch();
+
+  const setVH = () => {
+    // dynamically set 1vh value for mobile full height bug fix
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+
+  useEffect(() => {
+    setVH();
+    window.addEventListener('resize', debounce(setVH, 100));
+  }, []);
 
   useEffect(() => {
     NearService.init().then(() => {
