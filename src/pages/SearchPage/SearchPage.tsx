@@ -17,6 +17,8 @@ import { SearchDaoPage } from 'pages/SearchDaoPage';
 import { SearchProposalPage } from 'pages/SearchProposalPage';
 import { DaoItem } from 'types/dao';
 import { Proposal } from 'types/proposal';
+import { useSelector } from 'react-redux';
+import { daoListSelector } from 'redux/selectors';
 import s from './SearchPage.module.scss';
 
 type Sort = {
@@ -45,6 +47,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
   const history = useHistory();
   const urlParams = new URLSearchParams(location.search);
   const [searchQuery, setSearchQuery] = useState(urlParams.get('query') || '');
+  const daoList = useSelector(daoListSelector);
   const [daos, setDaos] = useState<DaoItem[]>([]);
   const [proposals, setProposals] = useState<Proposal[]>([]);
 
@@ -61,7 +64,21 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
     },
   ]);
 
-  const [sort, setSort] = useState<Sort>(sortOptions[0]);
+  useEffect(() => {
+    if (!searchQuery) {
+      setDaos([]);
+
+      return;
+    }
+
+    const filtered = daoList.filter(
+      (item) => item.id.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1,
+    );
+
+    setDaos(filtered);
+  }, [daoList, searchQuery]);
+
+  // const [sort, setSort] = useState<Sort>(sortOptions[0]);
 
   const handleSearch = (value: string) => {
     // eslint-disable-next-line no-console
@@ -107,7 +124,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
       />
       <NavTabs options={tabsOptions} className={s.tabs} />
       <div className={s.sortWrapper}>
-        <Select
+        {/* <Select
           label="Sorting"
           value={sort}
           options={sortOptions}
@@ -115,7 +132,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
           pickValue={(item) => item.value}
           onChange={setSort}
           className={s.sortSelect}
-        />
+        /> */}
       </div>
       <div className={s.resultWrapper}>
         <Switch>
