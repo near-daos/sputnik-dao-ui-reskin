@@ -227,3 +227,12 @@
   transform: rotate(90deg);
 }
 
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.typeItem + .typeItem {
+  margin-top: 8px;
+}

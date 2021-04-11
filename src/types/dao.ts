@@ -1,6 +1,6 @@
 export type CreateDaoParams = {
   name: string;
-  amount: string;
+  amountToTransfer: string;
   purpose: string;
   council: string;
   bond: string;
@@ -16,4 +16,5 @@ export type DaoItem = {
   votePeriod: string;
   numberOfProposals: number;
   numberOfMembers: number;
+  members: string[];
 };

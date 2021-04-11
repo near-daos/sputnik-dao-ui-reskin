@@ -6,8 +6,11 @@ import useMedia from 'hooks/use-media';
 
 import { StepProgressBar } from 'components/StepProgressBar';
 import { DaoLogoButton } from 'components/DaoLogoButton';
+import { NearService } from 'services/NearService';
 import s from './CreateDaoPopup.module.scss';
 import { Button, IconButton, SvgIcon, TextField } from '../UILib';
+import { CreateDaoErrors, CreateDaoValues } from './types';
+import { validateFirstStep, validateSecondStep } from './validators';
 
 export interface CreateDaoPopupProps {
   className?: string;
@@ -16,25 +19,75 @@ export interface CreateDaoPopupProps {
 
 const STEPS = ['General info', 'Details', 'DAO Logo'];
 
+const initialValues: CreateDaoValues = {
+  name: '',
+  purpose: '',
+  council: '',
+  bond: '',
+  votePeriod: '',
+  gracePeriod: '',
+  amountToTransfer: '',
+};
+
 const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   className,
   onClose,
 }) => {
   const [activeStep, setActiveStep] = useState(1);
   const media = useMedia();
+  const [values, setValues] = useState<CreateDaoValues>(initialValues);
+  const [errors, setErrors] = useState<CreateDaoErrors>({});
 
-  const [name, setName] = useState('');
-  const [purpose, setPurpose] = useState('');
-  const [council, setCouncil] = useState('');
+  const handleChange = (field: keyof CreateDaoValues, value: string) => {
+    if (errors[field]) {
+      setErrors({
+        ...errors,
+        [field]: '',
+      });
+    }
 
-  const [bond, setBond] = useState('');
-  const [votePeriod, setVotePeriod] = useState('');
-  const [gracePeriod, setGracePeriod] = useState('');
-  const [amountToTransfer, setAmountToTransfer] = useState('');
+    setValues({
+      ...values,
+      [field]: value,
+    });
+  };
 
-  const onSubmit = () => {
-    // eslint-disable-next-line no-console
-    console.log('submit form');
+  const onSubmitFirstStep = () => {
+    const firstStepErrors = validateFirstStep(values);
+
+    if (Object.keys(firstStepErrors).length) {
+      setErrors({
+        ...errors,
+        ...firstStepErrors,
+      });
+
+      return;
+    }
+
+    setActiveStep(2);
+  };
+
+  const onSubmitSecondStep = () => {
+    const fsecondStepErrors = validateSecondStep(values);
+
+    if (Object.keys(fsecondStepErrors).length) {
+      setErrors({
+        ...errors,
+        ...fsecondStepErrors,
+      });
+
+      return;
+    }
+
+    setActiveStep(3);
+  };
+
+  const onSubmit = async () => {
+    const response = await NearService.createDao(values);
+
+    console.log('response: ', response);
+
+    onClose?.();
   };
 
   let progressBarSize: 'sm' | 'md' | 'lg' = 'sm';
@@ -95,15 +148,17 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
               <div>
                 <TextField
                   name="name"
-                  value={name}
-                  onChange={setName}
+                  value={values.name}
+                  onChange={(value) => handleChange('name', value)}
+                  error={errors.name}
                   label="Enter DAO Name"
                   className={s.input}
                 />
                 <TextField
                   name="purpose"
-                  value={purpose}
-                  onChange={setPurpose}
+                  value={values.purpose}
+                  onChange={(value) => handleChange('purpose', value)}
+                  error={errors.purpose}
                   label="Enter Purpose"
                   multiline
                   maxLength={300}
@@ -111,8 +166,10 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                 />
                 <TextField
                   name="council"
-                  value={council}
-                  onChange={setCouncil}
+                  value={values.council}
+                  onChange={(value) => handleChange('council', value)}
+                  error={errors.council}
+                  multiline
                   label="Enter Council"
                   className={s.input}
                   helperText="One account per line"
@@ -121,9 +178,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
               <Button
                 size="lg"
                 className={s.singleButton}
-                onClick={() => {
-                  setActiveStep(2);
-                }}
+                onClick={onSubmitFirstStep}
               >
                 Continue
               </Button>
@@ -134,29 +189,33 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
               <div>
                 <TextField
                   name="bond"
-                  value={bond}
-                  onChange={setBond}
+                  value={values.bond}
+                  onChange={(value) => handleChange('bond', value)}
+                  error={errors.bond}
                   label="Enter Bond in NEAR"
                   className={s.input}
                 />
                 <TextField
                   name="votePeriod"
-                  value={votePeriod}
-                  onChange={setVotePeriod}
+                  value={values.votePeriod}
+                  onChange={(value) => handleChange('votePeriod', value)}
+                  error={errors.votePeriod}
                   label="Enter Vote Period in hours"
                   className={s.input}
                 />
                 <TextField
                   name="gracePeriod"
-                  value={gracePeriod}
-                  onChange={setGracePeriod}
+                  value={values.gracePeriod}
+                  onChange={(value) => handleChange('gracePeriod', value)}
+                  error={errors.gracePeriod}
                   label="Enter Grace Period in hours"
                   className={s.input}
                 />
                 <TextField
                   name="amountToTransfer"
-                  value={amountToTransfer}
-                  onChange={setAmountToTransfer}
+                  value={values.amountToTransfer}
+                  onChange={(value) => handleChange('amountToTransfer', value)}
+                  error={errors.amountToTransfer}
                   label="Amount to transfer to the DAO"
                   className={s.input}
                   helperText="Minimum 35 NEAR for storage"
@@ -179,9 +238,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                 <Button
                   size="lg"
                   className={s.button}
-                  onClick={() => {
-                    setActiveStep(3);
-                  }}
+                  onClick={onSubmitSecondStep}
                 >
                   Continue
                 </Button>

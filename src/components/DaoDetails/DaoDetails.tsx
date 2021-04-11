@@ -11,43 +11,20 @@ export interface DaoDetailsProps {
   className?: string;
   dao: DaoItem;
 }
+
+const NUMBER_OF_TOP_MEMBERS = 10;
+
 const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
-  const [firstTenMembers] = useState<string[]>([]);
-  // const [isOpenProposal, setIsOpenProposal] = useState(false);
+  const [firstTenMembers] = useState<string[]>(
+    (dao.members || []).slice(0, NUMBER_OF_TOP_MEMBERS),
+  );
   const [isShowMembersPopup, setIsShowMembersPopup] = useState(false);
-  // const { days, months, hours } = getVotePeriod(Number(dao.votePeriod));
-  const members: string[] = [];
 
   return (
     <div className={cn(s.root, className)}>
       <div className={s.column1}>
         <p className={s.title}>Purpose</p>
-        <div
-          className={cn(s.purposeWrapper, {
-            // [s.short]: !isOpenProposal,
-          })}
-        >
-          {dao.purpose}
-        </div>
-        {/* <Button */}
-        {/*  variant="outline" */}
-        {/*  rightElement={ */}
-        {/*    <SvgIcon */}
-        {/*      icon="dd-arrow" */}
-        {/*      size={18} */}
-        {/*      className={cn({ */}
-        {/*        [s.close]: isOpenProposal, */}
-        {/*      })} */}
-        {/*    /> */}
-        {/*  } */}
-        {/*  size="sm" */}
-        {/*  className={s.button} */}
-        {/*  onClick={() => { */}
-        {/*    setIsOpenProposal(!isOpenProposal); */}
-        {/*  }} */}
-        {/* > */}
-        {/*  {!isOpenProposal ? 'Read more' : 'Show Less'} */}
-        {/* </Button> */}
+        <div className={cn(s.purposeWrapper)}>{dao.purpose}</div>
         <div className={s.membersWrapper}>
           <p className={s.title}>Members</p>
           {firstTenMembers.map((item, index) => (
@@ -55,10 +32,10 @@ const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
               {item}
             </p>
           ))}
-          {members.length > 10 && (
+          {dao.members.length > NUMBER_OF_TOP_MEMBERS && (
             <Button
               variant="outline"
-              rightElement={<span>({members.length})</span>}
+              rightElement={<span>({dao.members.length})</span>}
               size="sm"
               className={s.button}
               onClick={() => {
@@ -97,8 +74,8 @@ const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
       {isShowMembersPopup && (
         <MembersPopup
           name={dao.id}
-          membersNumber={members.length}
-          members={members}
+          membersNumber={dao.members.length}
+          members={dao.members}
           onClose={() => {
             setIsShowMembersPopup(false);
           }}

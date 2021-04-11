@@ -42,11 +42,31 @@ export type ProposalKind =
       purpose: string;
     };
 
+export type ProposalKindRaw =
+  | {
+      type: ProposalType.Payout;
+      amount: string;
+    }
+  | {
+      type: ProposalType.ChangeVotePeriod;
+      vote_period: string;
+    }
+  | {
+      type: ProposalType.NewCouncil;
+    }
+  | {
+      type: ProposalType.RemoveCouncil;
+    }
+  | {
+      type: ProposalType.ChangePurpose;
+      purpose: string;
+    };
+
 export type ProposalRaw = {
   target: string;
   proposer: string;
   description: string;
-  kind: ProposalKind;
+  kind: ProposalKindRaw;
   status: ProposalStatus;
   vote_no: number;
   vote_period_end: number;
@@ -68,4 +88,13 @@ export type Proposal = {
   votes: {
     [key: string]: 'Yes' | 'No';
   };
+};
+
+export type CreateProposalParams = {
+  daoId: string;
+  target: string;
+  bond: string;
+  description: string;
+  kind: ProposalKind;
+  link: string;
 };

@@ -5,37 +5,122 @@ import { SputnikDaoLogo } from 'components/SputnikDaoLogo';
 import useMedia from 'hooks/use-media';
 
 import { StepProgressBar } from 'components/StepProgressBar';
+import { ProposalKind, ProposalType } from 'types/proposal';
+import { ProposalTypeItem } from 'components/ProposalTypeItem';
+import { NearService } from 'services/NearService';
+import { DaoItem } from 'types/dao';
+import { yoktoNear } from 'services/NearService/NearService';
+import Decimal from 'decimal.js';
 import s from './CreateProposalPopup.module.scss';
 import { Button, IconButton, SvgIcon, TextField } from '../UILib';
 
+import { CreateProposalErrors, CreateProposalValues } from './types';
+import { validateSecondStep } from './validators';
+
 export interface CreateProposalPopupProps {
   className?: string;
-  daoName: string;
+  dao: DaoItem;
   onClose?: () => void;
 }
 
-const STEPS = ['General info', 'Required details', 'Other details'];
+const STEPS = ['Select proposal', 'General info', 'Other details'];
+
+const proposalKinds: ProposalType[] = [
+  ProposalType.Payout,
+  ProposalType.NewCouncil,
+  ProposalType.RemoveCouncil,
+  ProposalType.ChangePurpose,
+  ProposalType.ChangeVotePeriod,
+];
+
+const initialValues: CreateProposalValues = {
+  target: '',
+  description: '',
+  payout: '',
+  purpose: '',
+  votePeriod: '',
+  link: '',
+};
+
+const mapToKind = (
+  type: ProposalType,
+  values: CreateProposalValues,
+): ProposalKind => {
+  switch (type) {
+    case ProposalType.NewCouncil:
+    case ProposalType.RemoveCouncil:
+      return { type };
+    case ProposalType.Payout:
+      return { type, amount: values.payout };
+    case ProposalType.ChangePurpose:
+      return { type, purpose: values.purpose };
+    case ProposalType.ChangeVotePeriod:
+      return { type, votePeriod: values.votePeriod };
+    default:
+      throw new Error(`Type: ${type} is not defined!`);
+  }
+};
 
 const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
   className,
   onClose,
-  daoName,
+  dao,
 }) => {
   const [activeStep, setActiveStep] = useState(1);
   const media = useMedia();
+  const [type, setType] = useState<ProposalType | null>(null);
 
-  const [name, setName] = useState('');
-  const [purpose, setPurpose] = useState('');
-  const [council, setCouncil] = useState('');
+  const [values, setValues] = useState<CreateProposalValues>(initialValues);
+  const [errors, setErrors] = useState<CreateProposalErrors>({});
 
-  const [bond, setBond] = useState('');
-  const [votePeriod, setVotePeriod] = useState('');
-  const [gracePeriod, setGracePeriod] = useState('');
-  const [amountToTransfer, setAmountToTransfer] = useState('');
+  const handleChange = (field: keyof CreateProposalValues, value: string) => {
+    if (errors[field]) {
+      setErrors({
+        ...errors,
+        [field]: '',
+      });
+    }
 
-  const onSubmit = () => {
-    // eslint-disable-next-line no-console
-    console.log('submit form');
+    setValues({
+      ...values,
+      [field]: value,
+    });
+  };
+
+  const onSubmitFirstStep = () => {
+    if (!type) return;
+
+    setActiveStep(2);
+  };
+
+  const onSubmitSecondStep = () => {
+    const fsecondStepErrors = validateSecondStep(values);
+
+    if (Object.keys(fsecondStepErrors).length) {
+      setErrors({
+        ...errors,
+        ...fsecondStepErrors,
+      });
+
+      return;
+    }
+
+    setActiveStep(3);
+  };
+
+  const onSubmit = async () => {
+    if (!type) return;
+
+    const response = await NearService.createProposal({
+      target: values.target,
+      description: values.description,
+      link: values.link,
+      bond: new Decimal(dao.bond).mul(yoktoNear).toFixed(),
+      daoId: dao.id,
+      kind: mapToKind(type, values),
+    });
+
+    console.log('response: ', response);
   };
 
   let progressBarSize: 'sm' | 'md' | 'lg' = 'sm';
@@ -60,6 +145,10 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
     };
   }, [onClose]);
 
+  const handleSelectType = (newType: ProposalType) => {
+    setType(newType);
+  };
+
   return (
     <div className={cn(s.root, className)}>
       <div className={s.wrapper}>
@@ -75,7 +164,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
             onClick={onClose}
           />
           <p className={s.mobileTitle}>Add New proposal</p>
-          <p className={s.mobileDaoName}>{daoName}</p>
+          <p className={s.mobileDaoName}>{dao.id}</p>
           <StepProgressBar
             steps={STEPS}
             current={activeStep}
@@ -85,7 +174,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
         </div>
         <div className={s.formWrapper}>
           <p className={s.desktopTitle}>Add New proposal</p>
-          <p className={s.desktopDaoName}>{daoName}</p>
+          <p className={s.desktopDaoName}>{dao.id}</p>
           <IconButton
             icon="close"
             size="lg"
@@ -95,38 +184,21 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
           />
           {activeStep === 1 && (
             <div className={s.form}>
-              <div>
-                <TextField
-                  name="name"
-                  value={name}
-                  onChange={setName}
-                  label="Enter DAO Name"
-                  className={s.input}
-                />
-                <TextField
-                  name="purpose"
-                  value={purpose}
-                  onChange={setPurpose}
-                  label="Enter Purpose"
-                  multiline
-                  maxLength={300}
-                  className={s.texArea}
-                />
-                <TextField
-                  name="council"
-                  value={council}
-                  onChange={setCouncil}
-                  label="Enter Council"
-                  className={s.input}
-                  helperText="One account per line"
-                />
-              </div>
+              <ul className={s.list}>
+                {proposalKinds.map((item) => (
+                  <ProposalTypeItem
+                    key={item}
+                    className={s.typeItem}
+                    label={item}
+                    active={item === type}
+                    onClick={() => handleSelectType(item)}
+                  />
+                ))}
+              </ul>
               <Button
                 size="lg"
                 className={s.singleButton}
-                onClick={() => {
-                  setActiveStep(2);
-                }}
+                onClick={onSubmitFirstStep}
               >
                 Continue
               </Button>
@@ -136,33 +208,22 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
             <div className={s.form}>
               <div>
                 <TextField
-                  name="bond"
-                  value={bond}
-                  onChange={setBond}
-                  label="Enter Bond in NEAR"
+                  name="target"
+                  value={values.target}
+                  error={errors.target}
+                  onChange={(val) => handleChange('target', val)}
+                  label="Target"
                   className={s.input}
                 />
                 <TextField
-                  name="votePeriod"
-                  value={votePeriod}
-                  onChange={setVotePeriod}
-                  label="Enter Vote Period in hours"
+                  name="description"
+                  value={values.description}
+                  error={errors.description}
+                  onChange={(val) => handleChange('description', val)}
+                  label="Job/proposal description"
+                  multiline
+                  maxLength={240}
                   className={s.input}
-                />
-                <TextField
-                  name="gracePeriod"
-                  value={gracePeriod}
-                  onChange={setGracePeriod}
-                  label="Enter Grace Period in hours"
-                  className={s.input}
-                />
-                <TextField
-                  name="amountToTransfer"
-                  value={amountToTransfer}
-                  onChange={setAmountToTransfer}
-                  label="Amount to transfer to the DAO"
-                  className={s.input}
-                  helperText="Minimum 35 NEAR for storage"
                 />
               </div>
               <div className={s.buttonsWrapper}>
@@ -182,9 +243,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                 <Button
                   size="lg"
                   className={s.button}
-                  onClick={() => {
-                    setActiveStep(3);
-                  }}
+                  onClick={onSubmitSecondStep}
                 >
                   Continue
                 </Button>
@@ -195,34 +254,43 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
             <div className={s.form}>
               <div>
                 <TextField
-                  name="bond"
-                  value={bond}
-                  onChange={setBond}
-                  label="Enter Bond in NEAR"
+                  name="link"
+                  value={values.link}
+                  error={errors.link}
+                  onChange={(val) => handleChange('link', val)}
+                  label="Forum link"
                   className={s.input}
                 />
-                <TextField
-                  name="votePeriod"
-                  value={votePeriod}
-                  onChange={setVotePeriod}
-                  label="Enter Vote Period in hours"
-                  className={s.input}
-                />
-                <TextField
-                  name="gracePeriod"
-                  value={gracePeriod}
-                  onChange={setGracePeriod}
-                  label="Enter Grace Period in hours"
-                  className={s.input}
-                />
-                <TextField
-                  name="amountToTransfer"
-                  value={amountToTransfer}
-                  onChange={setAmountToTransfer}
-                  label="Amount to transfer to the DAO"
-                  className={s.input}
-                  helperText="Minimum 35 NEAR for storage"
-                />
+                {type === ProposalType.Payout && (
+                  <TextField
+                    name="payout"
+                    value={values.payout}
+                    error={errors.payout}
+                    onChange={(val) => handleChange('payout', val)}
+                    label="Payout"
+                    className={s.input}
+                  />
+                )}
+                {type === ProposalType.ChangePurpose && (
+                  <TextField
+                    name="purpose"
+                    value={values.payout}
+                    error={errors.payout}
+                    onChange={(val) => handleChange('purpose', val)}
+                    label="New purpose"
+                    className={s.input}
+                  />
+                )}
+                {type === ProposalType.ChangeVotePeriod && (
+                  <TextField
+                    name="votePeriod"
+                    value={values.payout}
+                    error={errors.payout}
+                    onChange={(val) => handleChange('votePeriod', val)}
+                    label="New Vote Period"
+                    className={s.input}
+                  />
+                )}
               </div>
               <div className={s.buttonsWrapper}>
                 <Button

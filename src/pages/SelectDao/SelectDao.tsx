@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 import Slider from 'react-slick';
 import useMedia from 'hooks/use-media';
@@ -10,6 +10,7 @@ import SearchBar from 'components/SearchBar';
 import { useHistory } from 'react-router-dom';
 import { daoListSelector } from 'redux/selectors';
 
+import { fetchDaoList } from 'redux/actions';
 import s from './SelectDao.module.scss';
 
 export interface SelectDaoProps {
@@ -29,6 +30,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   const [searchText, setSearchText] = useState('');
   const history = useHistory();
   const daoList = useSelector(daoListSelector);
+  const dispatch = useDispatch();
 
   const carouselSettings = {
     infinite: true,
@@ -44,6 +46,10 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
     },
     ref: carousel,
   };
+
+  useEffect(() => {
+    dispatch(fetchDaoList.started());
+  }, [dispatch]);
 
   const handleCarouselMode = () => {
     setMode(Mode.Carousel);

@@ -10,9 +10,39 @@ import Decimal from 'decimal.js';
 import { CreateDaoParams, DaoItem } from 'types/dao';
 import { AccountState } from 'near-api-js/lib/account';
 import { timestampToReadable } from 'utils/getVotePeriod';
-import { Proposal, ProposalRaw } from 'types/proposal';
+import {
+  CreateProposalParams,
+  Proposal,
+  ProposalRaw,
+  ProposalStatus,
+  ProposalType,
+} from 'types/proposal';
 import camelcaseKeys from 'camelcase-keys';
 import { ContractPool } from './ContractPool';
+
+export const parseForumUrl = (url: string): string => {
+  // let afterSlashChars = id.match(/\/([^\/]+)\/?$/)[1];
+  const a = url.replace(/\/$/, '').split('/');
+  const last = a[a.length - 1];
+  const secondLast = a[a.length - 2];
+  let category = null;
+  let subCategory = null;
+
+  if (/^\d+$/.test(secondLast)) {
+    category = secondLast;
+    subCategory = last;
+  } else if (/^\d+$/.test(last)) {
+    category = last;
+  }
+
+  if (category === null) {
+    return '';
+  }
+
+  return subCategory === null
+    ? `/t/${category}`
+    : `/t/${category}/${subCategory}`;
+};
 
 export const yoktoNear = 1000000000000000000000000;
 
@@ -79,7 +109,7 @@ class NearService {
       grace_period: new Decimal(params.gracePeriod).mul('3.6e12').toFixed(),
     };
 
-    const amount = new Decimal(params.amount);
+    const amount = new Decimal(params.amountToTransfer);
     const amountYokto = amount.mul(yoktoNear).toFixed();
     const args = Buffer.from(JSON.stringify(argsList)).toString('base64');
 
@@ -90,6 +120,44 @@ class NearService {
       },
       new Decimal('45000000000000').toString(), // todo move to constant
       amountYokto.toString(),
+    );
+  }
+
+  public async createProposal(params: CreateProposalParams): Promise<any> {
+    const data: any = {
+      target: params.target,
+      description: `${params.description} ${parseForumUrl(params.link)}`.trim(),
+      kind: {
+        type: params.kind.type,
+      },
+    };
+
+    if (params.kind.type === ProposalType.Payout) {
+      const amount = new Decimal(params.kind.amount);
+      const amountYokto = amount.mul(yoktoNear).toFixed();
+
+      data.kind.amount = amountYokto;
+    }
+
+    if (params.kind.type === ProposalType.ChangeVotePeriod) {
+      const votePeriod = new Decimal(params.kind.votePeriod).mul('3.6e12');
+
+      data.kind.vote_period = votePeriod;
+    }
+
+    if (params.kind.type === ProposalType.ChangePurpose) {
+      data.kind.purpose = params.kind.purpose;
+    }
+
+    // eslint-disable-next-line no-debugger
+    debugger;
+
+    return this.contractPool.get(params.daoId).add_proposal(
+      {
+        proposal: data,
+      },
+      new Decimal('30000000000000').toString(),
+      params.bond,
     );
   }
 
@@ -121,6 +189,7 @@ class NearService {
         votePeriod: details[index][3],
         numberOfProposals: details[index][4],
         numberOfMembers: details[index][5].length,
+        members: details[index][5],
       }),
     );
   }
@@ -184,11 +253,29 @@ class NearService {
       .get_proposals({ from_index: index, limit });
 
     return camelcaseKeys(proposals, { deep: true }).map(
-      (item: ProposalRaw, itemIndex: number) => ({
-        ...item,
-        daoId: contractId,
-        id: itemIndex,
-      }),
+      (item: ProposalRaw, itemIndex: number) => {
+        if (item.kind.type === ProposalType.Payout) {
+          const amountYokto = new Decimal(item.kind.amount);
+
+          amountYokto.div(yoktoNear).toFixed(2);
+
+          return {
+            ...item,
+            kind: {
+              type: ProposalType.Payout,
+              amount: amountYokto.div(yoktoNear).toFixed(2),
+            },
+            daoId: contractId,
+            id: itemIndex,
+          };
+        }
+
+        return {
+          ...item,
+          daoId: contractId,
+          id: itemIndex,
+        };
+      },
     );
   }
 

@@ -92,9 +92,9 @@ export const DaoPage: React.FC = () => {
         </Switch>
       </div>
 
-      {isShowCreateProposal && (
+      {isShowCreateProposal && dao && (
         <CreateProposalPopup
-          daoName={dao?.id || ''}
+          dao={dao}
           onClose={() => {
             setIsShowCreateProposal(false);
           }}

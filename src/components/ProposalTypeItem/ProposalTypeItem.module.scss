@@ -1,0 +1,41 @@
+@import 'styles/typography';
+@import 'styles/helpers';
+
+
+.root {
+  background-color: #222121;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.64);
+
+  cursor: pointer;
+  height: 56px;
+
+  &:hover {
+    box-shadow: 0 0 0 2px #01e3fe;
+  }
+}
+
+.active {
+  box-shadow: 0 0 0 2px #01e3fe;
+}
+
+.corner {
+  left: 0;
+  max-height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.label {
+  @extend %title-4;
+  color: #fff;
+  margin-left: 48px;
+}
+
+.btn {
+  @extend %button-reset;
+
+  align-items: center;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}

@@ -1,5 +1,5 @@
-import { DaoItem } from 'types/dao';
-import { Proposal } from 'types/proposal';
+import { CreateDaoParams, DaoItem } from 'types/dao';
+import { CreateProposalParams, Proposal } from 'types/proposal';
 import actionCreatorFactory from 'typescript-fsa';
 
 const actionCreator = actionCreatorFactory('sputnik-dao');
@@ -19,3 +19,13 @@ export const fetchDaoList = actionCreator.async<void, DaoItem[], Error>(
 export const fetchProposals = actionCreator.async<string, Proposal[], Error>(
   'FETCH_PROPOSALS',
 );
+
+export const createDao = actionCreator.async<CreateDaoParams, void, Error>(
+  'CREATE_DAO',
+);
+
+export const createProposal = actionCreator.async<
+  CreateProposalParams,
+  void,
+  Error
+>('CREATE_PROPOSAL');

@@ -62,7 +62,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     NearService.init().then(() => {
-      console.log('near init');
       dispatch(fetchAccount.started());
       dispatch(fetchDaoList.started());
       setIsInitialized(true);
