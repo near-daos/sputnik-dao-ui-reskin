@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
-import Slider from 'react-slick';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import useMedia from 'hooks/use-media';
 
 import { Button, IconButton, SvgIcon } from 'components/UILib';
@@ -26,28 +26,13 @@ enum Mode {
 export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   const [mode, setMode] = useState(Mode.Carousel);
   const [activeSlide, setActiveSlide] = useState(0);
-  const carousel = useRef<Slider>(null);
+  const [swiper, setSwiper] = useState<any>();
   const media = useMedia();
   const [searchText, setSearchText] = useState('');
   const history = useHistory();
   const daoList = useSelector(daoListSelector);
   const [filteredDaoList, setFilteredDaoList] = useState<DaoItem[]>([]);
   const dispatch = useDispatch();
-
-  const carouselSettings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    centerMode: true,
-    arrows: false,
-    initialSlide: activeSlide,
-    centerPadding: '0px',
-    beforeChange: (oldIndex: number, newIndex: number) => {
-      setActiveSlide(newIndex);
-    },
-    ref: carousel,
-  };
 
   useEffect(() => {
     dispatch(fetchDaoList.started());
@@ -60,8 +45,8 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
       return;
     }
 
-    const filtered = daoList.filter(
-      (item) => item.id.indexOf(searchText) !== -1,
+    const filtered = daoList.filter((i) =>
+      i.id.toLowerCase().includes(searchText.toLowerCase()),
     );
 
     setFilteredDaoList(filtered);
@@ -126,9 +111,26 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
       >
         <div className={s.carouselContainer}>
           <div className={s.carouselList}>
-            <Slider {...carouselSettings}>
+            <Swiper
+              observer
+              spaceBetween={72}
+              loop={filteredDaoList.length > 1}
+              slidesPerView="auto"
+              centeredSlides
+              initialSlide={activeSlide}
+              onSlideChange={(swiperObject) => {
+                const index = swiperObject.realIndex;
+
+                setActiveSlide(index);
+              }}
+              onSwiper={(swiperObject) => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                setSwiper(swiperObject);
+              }}
+            >
               {filteredDaoList.map((dao, index) => (
-                <div className={s.cardHolder} key={dao.id}>
+                <SwiperSlide key={dao.id} className={s.cardHolder}>
                   <DaoCard
                     className={cn(s.card, {
                       [s.activeCard]: activeSlide === index,
@@ -136,9 +138,9 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
                     dao={dao}
                     size="lg"
                   />
-                </div>
+                </SwiperSlide>
               ))}
-            </Slider>
+            </Swiper>
           </div>
         </div>
       </section>
@@ -151,7 +153,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
             className={s.slideButton}
             variant="monochrome"
             size="lg"
-            onClick={() => carousel.current?.slickPrev()}
+            onClick={() => swiper.slidePrev()}
             iconClassName={s.leftArrowIcon}
           />
         ) : (
@@ -162,7 +164,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
               <SvgIcon className={s.leftArrowIcon} icon="dd-arrow" />
             }
             size="lg"
-            onClick={() => carousel.current?.slickPrev()}
+            onClick={() => swiper.slidePrev()}
           >
             Previous DAO
           </Button>
@@ -176,7 +178,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
             className={s.slideButton}
             variant="monochrome"
             size="lg"
-            onClick={() => carousel.current?.slickNext()}
+            onClick={() => swiper.slideNext()}
             iconClassName={s.rightArrowIcon}
           />
         ) : (
@@ -187,7 +189,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
               <SvgIcon className={s.rightArrowIcon} icon="dd-arrow" />
             }
             size="lg"
-            onClick={() => carousel.current?.slickNext()}
+            onClick={() => swiper.slideNext()}
           >
             Next DAO
           </Button>

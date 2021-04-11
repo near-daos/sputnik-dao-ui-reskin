@@ -5,6 +5,7 @@
 
 .root {
   background-color: var(--theme-dao-card-bg);
+  box-sizing: border-box;
   display: flex;
   filter: var(--theme-dao-card-filter-shadow);
   flex-direction: column;
@@ -17,7 +18,7 @@
 
   &.md,
   &.sm {
-    padding: functions.calc-rem(24) functions.calc-rem(32) functions.calc-rem(32);
+    padding: functions.calc-rem(40);
   }
 }
 
@@ -61,6 +62,10 @@
 .content {
   display: flex;
   flex-direction: column;
+
+  @include tablet-landscape {
+    flex: 1;
+  }
 }
 
 .imageWrapper {
@@ -70,7 +75,7 @@
   justify-content: center;
   width: 100%;
 
-  @include desktop {
+  @include tablet-landscape {
     &.lg {
       height: auto;
       margin-left: 40px;
@@ -147,10 +152,16 @@
 .purpose {
   @extend %body-3;
   @include truncate-multiline(5);
+  height: functions.calc-rem(120);
   margin-top: functions.calc-rem(4);
+
 
   @include tablet-portrait {
     @include body-2;
+  }
+
+  @include desktop {
+    height: functions.calc-rem(100);
   }
 }
 

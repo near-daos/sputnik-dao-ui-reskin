@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 
-// import Slider from 'react-slick';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { DaoCardMini } from 'components/DaoCardMini';
 import { DaoItem } from 'types/dao';
@@ -28,7 +27,7 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
     <div className={cn(s.root, className)}>
       <Swiper
         spaceBetween={30}
-        // loop
+        loop
         slidesPerView={2}
         slideToClickedSlide
         centeredSlides
@@ -54,9 +53,10 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
           },
         }}
         onSlideChange={(swiper) => {
-          const index = swiper.activeIndex;
+          const index = swiper.realIndex;
 
           setActiveSlide(index);
+          console.log(index);
           history.push(`/dao/${daos[index].id}`);
         }}
       >
