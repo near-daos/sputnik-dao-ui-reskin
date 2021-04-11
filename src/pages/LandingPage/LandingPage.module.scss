@@ -16,6 +16,10 @@
   justify-content: space-between;
   min-height: 100vh;
   min-width: 100vw;
+
+  @include media.mobile-only {
+    min-height: stretch;
+  }
 }
 
 .background {
@@ -35,7 +39,20 @@
 
 .content {
   flex: 1 1 auto;
+  min-height: functions.calc-rem(600);
   position: relative;
+}
+
+div.slider {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.slide {
+  overflow: hidden;
 }
 
 .logo {

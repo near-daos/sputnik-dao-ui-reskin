@@ -18,7 +18,7 @@
   top: 0;
   z-index: 3;
 
-  @include media.desktop {
+  @include media.tablet-landscape {
     display: none;
   }
 }
@@ -49,6 +49,7 @@
 
 .logo {
   @extend %heading-6;
+  @include mixins.button-reset;
 
   display: inline-block;
   text-decoration: none;
@@ -82,10 +83,22 @@
 
 .menuLink {
   @extend %title-5;
+  @include mixins.button-reset;
 
-  display: block;
   line-height: functions.calc-rem(48);
-  text-decoration: none;
+  position: relative;
+}
+
+.menuLinkActive {
+  &::after {
+    background: var(--color-purple-50);
+    bottom: functions.calc-rem(3);
+    content: '';
+    display: block;
+    height: functions.calc-rem(4);
+    position: absolute;
+    width: 100%;
+  }
 }
 
 .connectButton {

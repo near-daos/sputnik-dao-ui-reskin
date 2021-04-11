@@ -1,0 +1,93 @@
+@use 'styles/mixins';
+@use 'styles/functions';
+@use 'styles/media';
+@import 'styles/typography';
+
+.root {
+  height: 100%;
+}
+
+.container {
+  @include mixins.container;
+
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: functions.calc-rem(850);
+  position: relative;
+  z-index: 1;
+}
+
+.heading {
+  @extend %heading-2;
+  margin: 0 0 functions.calc-rem(56);
+  text-align: left;
+  width: 100%;
+
+  @include media.tablet-landscape {
+    text-align: center;
+  }
+}
+
+.heading {
+  @extend %heading-5;
+  margin: 0 0 functions.calc-rem(32);
+
+  @include media.tablet-landscape {
+    font-size: functions.calc-rem(60);
+    line-height: functions.calc-rem(72);
+    margin: 0 0 functions.calc-rem(56);
+  }
+}
+
+.description {
+  @extend %body-1;
+}
+
+.form {
+  display: grid;
+  margin-top: functions.calc-rem(48);
+  row-gap: functions.calc-rem(16);
+  width: 100%;
+
+  @include media.tablet-landscape {
+    column-gap: functions.calc-rem(20);
+    grid-template-columns:
+      minmax(functions.calc-rem(140), functions.calc-rem(400))
+      auto;
+    margin-top: functions.calc-rem(40);
+    width: auto;
+  }
+}
+
+.socialMedia {
+  column-gap: functions.calc-rem(25);
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  margin-top: functions.calc-rem(48);
+
+  @include media.tablet-landscape {
+    margin-top: functions.calc-rem(56);
+  }
+}
+
+.figureContainer {
+  align-items: flex-start;
+  bottom: 0;
+  justify-content: flex-end;
+  position: absolute;
+  right: 65%;
+  top: 0;
+  width: 35%;
+}
+
+.figure {
+  height: auto;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: initial;
+  width: auto;
+}

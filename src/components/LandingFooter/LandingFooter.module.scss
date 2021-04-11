@@ -83,6 +83,7 @@
   display: inline-block;
   flex: 1 1 auto;
   margin: 0 functions.calc-rem(16);
+  max-width: functions.calc-rem(300);
 
   @include media.mobile-only {
     margin: functions.calc-rem(16) 0;

@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
 
+export const breakpoints = {
+  mobile: 768,
+  tabletPortrait: 992,
+  tabletLandscape: 1200,
+};
+
 type Media = {
   mobile: boolean;
   desktop: boolean;
@@ -18,10 +24,14 @@ export default function useMedia(): Media {
   useEffect(() => {
     const onResize = () => {
       setMedia({
-        mobile: window.innerWidth < 768,
-        tabletPortrait: window.innerWidth <= 992 && window.innerWidth >= 768,
-        tabletLandscape: window.innerWidth < 1200 && window.innerWidth > 992,
-        desktop: window.innerWidth > 1200,
+        mobile: window.innerWidth < breakpoints.mobile,
+        tabletPortrait:
+          window.innerWidth <= breakpoints.tabletPortrait &&
+          window.innerWidth >= breakpoints.mobile,
+        tabletLandscape:
+          window.innerWidth < breakpoints.tabletLandscape &&
+          window.innerWidth > breakpoints.tabletPortrait,
+        desktop: window.innerWidth > breakpoints.tabletLandscape,
       });
     };
 

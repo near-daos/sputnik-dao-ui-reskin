@@ -1,0 +1,78 @@
+@use 'styles/mixins';
+@use 'styles/functions';
+@use 'styles/media';
+@import 'styles/typography';
+
+.root {
+  height: 100%;
+  position: relative;
+}
+
+.container {
+  @include mixins.container;
+
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: functions.calc-rem(850);
+  padding-bottom: 5%;
+  position: relative;
+  z-index: 2;
+}
+
+.heading {
+  @extend %heading-5;
+  margin: 0 0 functions.calc-rem(32);
+  text-align: left;
+  width: 100%;
+
+  @include media.tablet-landscape {
+    font-size: functions.calc-rem(60);
+    line-height: functions.calc-rem(72);
+    margin: 0 0 functions.calc-rem(56);
+    text-align: center;
+  }
+}
+
+.description {
+  @extend %body-1;
+}
+
+.button {
+  margin-top: functions.calc-rem(40);
+  width: 100%;
+
+  @include media.tablet-landscape {
+    margin-top: functions.calc-rem(48);
+    width: auto;
+  }
+}
+
+.figureContainer {
+  bottom: 0;
+  display: block;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.cityFigure {
+  bottom: 0;
+  left: 0;
+  max-height: functions.calc-rem(400);
+  position: absolute;
+  width: 100%;
+}
+
+.cometsFigure {
+  left: 0;
+  max-height: functions.calc-rem(600);
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}

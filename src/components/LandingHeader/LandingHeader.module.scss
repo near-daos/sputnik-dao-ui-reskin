@@ -17,8 +17,10 @@
 
 .logo {
   @extend %heading-6;
+  @include mixins.button-reset;
 
   display: inline-block;
+  justify-self: start;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -31,7 +33,7 @@
 
   @include media.mobile-only {
     height: functions.calc-rem(32);
-    margin-bottom: functions.calc-rem(8);
+    margin-bottom: functions.calc-rem(5);
   }
 }
 
@@ -48,28 +50,52 @@
 }
 
 .menu {
-  display: flex;
+  display: none;
   list-style: none;
   white-space: nowrap;
 
-  @include media.mobile-only {
-    display: none;
+  @include media.tablet-landscape {
+    display: flex;
   }
 }
 
 .menuLink {
-  padding: functions.calc-rem(5) functions.calc-rem(24);
-  text-decoration: none;
+  @include mixins.button-reset;
+
+  padding: functions.calc-rem(5) functions.calc-rem(12);
+  position: relative;
+
+  @include media.desktop {
+    padding: functions.calc-rem(5) functions.calc-rem(24);
+  }
+}
+
+.menuLinkActive {
+  &::after {
+    background: var(--color-purple-50);
+    bottom: functions.calc-rem(-4);
+    content: '';
+    display: block;
+    height: functions.calc-rem(4);
+    left: functions.calc-rem(12);
+    position: absolute;
+    right: functions.calc-rem(12);
+
+    @include media.desktop {
+      left: functions.calc-rem(24);
+      right: functions.calc-rem(24);
+    }
+  }
 }
 
 .mobileMenuButton {
   @extend %button-reset;
 
-  display: none;
+  display: flex;
   margin-left: -(functions.calc-rem(8));
   padding: functions.calc-rem(5);
 
-  @include media.mobile-only {
-    display: block;
+  @include media.tablet-landscape {
+    display: none;
   }
 }

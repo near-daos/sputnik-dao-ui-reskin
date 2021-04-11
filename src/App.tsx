@@ -13,8 +13,8 @@ import { BrowserRouter, Route, RouteProps } from 'react-router-dom';
 import { NearService } from 'services/NearService';
 import { useDispatch } from 'react-redux';
 import { fetchAccount, fetchDaoList } from 'redux/actions';
-import { LandingLayout, MainLayout } from './components';
-import { Landing } from './pages/Landing/Landing';
+import { MainLayout } from './components';
+import { LandingPage } from './pages/LandingPage/LandingPage';
 import { SelectDao } from './pages/SelectDao/SelectDao';
 import { SelectProposals } from './pages/SelectProposal/SelectProposal';
 import { Proposals } from './pages/Proposals/Proposals';
@@ -23,9 +23,9 @@ import { SearchPage } from './pages/SearchPage';
 
 import 'normalize.css/normalize.css';
 import 'slick-carousel/slick/slick.css';
+import 'swiper/swiper.scss';
 import './styles/theme.scss';
 import './styles/main.scss';
-import 'swiper/swiper.scss';
 
 interface RouteInfo extends RouteProps {
   path: string;
@@ -75,9 +75,7 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Route exact path="/">
-        <LandingLayout>
-          <Landing />
-        </LandingLayout>
+        <LandingPage />
       </Route>
       <Route path={mainLayoutPaths}>
         <MainLayout>

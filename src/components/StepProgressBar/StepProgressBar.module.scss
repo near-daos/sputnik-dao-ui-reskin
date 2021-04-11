@@ -65,7 +65,6 @@
   &.done {
     background-color: var(--theme-step-progress-bg-active);
   }
-
 }
 
 .icon {
@@ -100,7 +99,6 @@
   &.lg {
     @extend %heading-6;
   }
-
 }
 
 .textWrapper {
@@ -180,7 +178,6 @@
 .border {
   background-color: var(--theme-step-progress-border);
   flex: 1;
-
 
   &.sm {
     height: 2px;

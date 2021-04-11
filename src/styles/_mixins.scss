@@ -48,3 +48,13 @@
   -webkit-line-clamp: $lineCount;
   overflow: hidden;
 }
+
+@mixin button-reset {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: block;
+  outline: none;
+  padding: 0;
+  text-decoration: none;
+}

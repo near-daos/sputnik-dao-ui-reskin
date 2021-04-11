@@ -1,17 +1,14 @@
 @use 'styles/functions';
 @use 'styles/mixins';
+@import 'styles/media';
 
 .root {
   @include mixins.container;
   align-items: center;
-  bottom: 0;
   display: flex;
   flex-direction: column;
+  height: 100%;
   justify-content: space-between;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
 }
 
 .logoHolder {
@@ -25,15 +22,33 @@
 
 .logo {
   display: block;
+  flex: 1 1 auto;
   height: 95%;
   padding-bottom: 5%;
 }
 
-.scrollTip {
-  display: inline-block;
+%tip {
   flex: 0 0 auto;
   font-size: functions.calc-rem(16);
   font-weight: 600;
   line-height: functions.calc-rem(24);
   margin: functions.calc-rem(24) 0;
+}
+
+.scrollTip {
+  @extend %tip;
+  display: none;
+
+  @include tablet-landscape {
+    display: inline-block;
+  }
+}
+
+.scrollTipMobile {
+  @extend %tip;
+  display: inline-block;
+
+  @include tablet-landscape {
+    display: none;
+  }
 }
