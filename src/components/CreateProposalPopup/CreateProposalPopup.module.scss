@@ -236,3 +236,73 @@
 .typeItem + .typeItem {
   margin-top: 8px;
 }
+
+.description {
+  @extend %body-1;
+  margin-top: functions.calc-rem(48);
+  text-align: center;
+
+}
+
+.linkWrapper {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: functions.calc-rem(24);
+}
+
+.link {
+  @extend %body-1;
+  color: var(--color-cyan-50);
+  display: flex;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-cyan-70);
+  }
+}
+
+.linkIcon {
+  margin-left: functions.calc-rem(4);
+}
+
+.linkText {
+  @extend %body-1;
+  margin-left: functions.calc-rem(8);
+}
+
+.linkInput {
+  margin-bottom: functions.calc-rem(50);
+}
+
+.bondWrapper {
+  background-color: var(--color-grey-100);
+  margin-top: functions.calc-rem(50);
+  padding: functions.calc-rem(8);
+  position: relative;
+  width: 100%;
+}
+
+.bondTitle {
+  @extend %caption-2;
+  color: var(--color-grey-70);
+}
+
+.bondValue {
+  @extend %body-1;
+  margin-top: functions.calc-rem(6);
+}
+
+.bondTokenIcon {
+  color: var(--color-grey-70);
+  position: absolute;
+  right: functions.calc-rem(15);
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.bondEditionText {
+  @extend %caption-1;
+  color: var(--color-grey-50);
+  margin-top: functions.calc-rem(8);
+}

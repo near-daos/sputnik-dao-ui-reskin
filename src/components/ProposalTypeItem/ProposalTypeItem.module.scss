@@ -1,33 +1,45 @@
+@use 'styles/functions';
 @import 'styles/typography';
 @import 'styles/helpers';
 
 
 .root {
-  background-color: #222121;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.64);
+  background-color: var(--theme-proposal-card-bg);
 
   cursor: pointer;
+  filter: var(--theme-proposal-card-filter-shadow);
   height: 56px;
 
   &:hover {
-    box-shadow: 0 0 0 2px #01e3fe;
+    box-shadow: inset 0 0 0 2px #01e3fe;
   }
 }
 
 .active {
-  box-shadow: 0 0 0 2px #01e3fe;
+  box-shadow: inset 0 0 0 2px #01e3fe;
 }
 
 .corner {
+  background-image: url('/images/corner-dark-grey.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: functions.calc-rem(28);
   left: 0;
-  max-height: 100%;
   position: absolute;
   top: 0;
+  width: functions.calc-rem(40);
+}
+
+.root:hover,
+.root.active {
+  .corner {
+    background-image: url('/images/corner-dark-cyan.svg');
+  }
 }
 
 .label {
   @extend %title-4;
-  color: #fff;
   margin-left: 48px;
 }
 

@@ -18,6 +18,7 @@ const ProposalTypeItem: React.FC<ProposalTypeItemProps> = ({
 }) => (
   <li className={cn(s.root, className, { [s.active]: active })}>
     <button className={s.btn} onClick={onClick}>
+      <div className={s.corner} />
       <span className={s.label}>{label}</span>
     </button>
   </li>

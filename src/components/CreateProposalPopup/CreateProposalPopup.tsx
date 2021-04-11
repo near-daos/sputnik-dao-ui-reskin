@@ -253,13 +253,28 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
           {activeStep === 3 && (
             <div className={s.form}>
               <div>
+                <p className={s.description}>
+                  Create a discussion before submitting a proposal here
+                </p>
+                <div className={s.linkWrapper}>
+                  <a
+                    href="/https://gov.near.org/c/10"
+                    target="_blank"
+                    className={s.link}
+                  >
+                    https://gov.near.org/c/10
+                    <SvgIcon icon="link" className={s.linkIcon} size={24} />
+                  </a>
+                  <span className={s.linkText}>and use below</span>
+                </div>
                 <TextField
                   name="link"
                   value={values.link}
                   error={errors.link}
                   onChange={(val) => handleChange('link', val)}
                   label="Forum link"
-                  className={s.input}
+                  className={cn(s.input, s.linkInput)}
+                  helperText="Please copy and paste the forum link here"
                 />
                 {type === ProposalType.Payout && (
                   <TextField
@@ -269,6 +284,14 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                     onChange={(val) => handleChange('payout', val)}
                     label="Payout"
                     className={s.input}
+                    helperText="Show payout in NEAR"
+                    rightElement={
+                      <SvgIcon
+                        icon="token"
+                        size={18}
+                        className={s.bondTokenIcon}
+                      />
+                    }
                   />
                 )}
                 {type === ProposalType.ChangePurpose && (
@@ -291,6 +314,12 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                     className={s.input}
                   />
                 )}
+                <div className={s.bondWrapper}>
+                  <p className={s.bondTitle}>Bond</p>
+                  <p className={s.bondValue}>{dao.bond}</p>
+                  <SvgIcon icon="token" size={18} className={s.bondTokenIcon} />
+                </div>
+                <p className={s.bondEditionText}>Amount to pay now</p>
               </div>
               <div className={s.buttonsWrapper}>
                 <Button

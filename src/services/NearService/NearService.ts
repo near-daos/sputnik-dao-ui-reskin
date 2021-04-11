@@ -14,7 +14,6 @@ import {
   CreateProposalParams,
   Proposal,
   ProposalRaw,
-  ProposalStatus,
   ProposalType,
 } from 'types/proposal';
 import camelcaseKeys from 'camelcase-keys';

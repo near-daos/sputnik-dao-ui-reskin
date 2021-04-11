@@ -112,6 +112,9 @@
     
     --theme-sign-out-text: var(--color-error-40);
     --theme-sign-out-hover-bg: var(--color-error-90);
+    
+    --theme-proposal-type-bg: var(--color-grey-100);
+    --theme-proposal-type-shadow: 0 16px 40px rgba(0, 0, 0, 0.64);;
   }
 
   &[data-theme='light'] {
@@ -226,5 +229,8 @@
 
     --theme-sign-out-text: var(--color-error-60);
     --theme-sign-out-hover-bg: var(--color-error-10);
+
+    --theme-proposal-type-bg: var(--white);
+    --theme-proposal-type-shadow: 0 16px 40px rgba(22, 21, 21, 0.15);
   }
 }

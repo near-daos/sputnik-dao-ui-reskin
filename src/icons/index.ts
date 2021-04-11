@@ -14,6 +14,7 @@ const icons = {
   token: import('./token.svg'),
   'chip-rect': import('./chip-rect.svg'),
   carousel: import('./carousel.svg'),
+  link: import('./link.svg'),
 };
 
 export default icons;
