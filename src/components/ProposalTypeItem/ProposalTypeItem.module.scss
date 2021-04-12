@@ -11,16 +11,16 @@
   height: 56px;
 
   &:hover {
-    box-shadow: inset 0 0 0 2px #01e3fe;
+    box-shadow: inset 0 0 0 2px var(--theme-proposal-type-active-border);
   }
 }
 
 .active {
-  box-shadow: inset 0 0 0 2px #01e3fe;
+  box-shadow: inset 0 0 0 2px var(--theme-proposal-type-active-border);
 }
 
 .corner {
-  background-image: url('/images/corner-dark-grey.svg');
+  background-image: var(--theme-corner-grey);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -34,7 +34,7 @@
 .root:hover,
 .root.active {
   .corner {
-    background-image: url('/images/corner-dark-cyan.svg');
+    background-image: var(--theme-proposal-type-corner-active);
   }
 }
 

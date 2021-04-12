@@ -178,10 +178,10 @@
   flex: 1;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0 functions.calc-rem(24);
+  padding: functions.calc-rem(40) functions.calc-rem(24) 0;
 
   @include tablet-portrait {
-    padding: 0 functions.calc-rem(64);
+    padding: functions.calc-rem(48) functions.calc-rem(64) 0;
   }
 
   @include tablet-landscape {
@@ -229,7 +229,6 @@
 
 .list {
   list-style: none;
-  margin: 0;
   padding: 0;
 }
 
@@ -238,27 +237,36 @@
 }
 
 .description {
-  @extend %body-1;
-  margin-top: functions.calc-rem(48);
+  @extend %body-2;
+  font-size: functions.calc-rem(13);
   text-align: center;
+
+  @include tablet-portrait {
+    @include body-1;
+  }
 
 }
 
 .linkWrapper {
-  align-items: center;
+  align-items: flex-end;
   display: flex;
   justify-content: center;
   margin-bottom: functions.calc-rem(24);
 }
 
 .link {
-  @extend %body-1;
-  color: var(--color-cyan-50);
+  @extend %body-2;
+  color: var(--theme-proposal-type-corner-link);
   display: flex;
+  font-size: functions.calc-rem(13);
   text-decoration: none;
 
+  @include tablet-portrait {
+    @include body-1;
+  }
+
   &:hover {
-    color: var(--color-cyan-70);
+    color: var(--theme-proposal-type-corner-hover);
   }
 }
 
@@ -267,8 +275,13 @@
 }
 
 .linkText {
-  @extend %body-1;
+  @extend %body-2;
+  font-size: functions.calc-rem(13);
   margin-left: functions.calc-rem(8);
+
+  @include tablet-portrait {
+    @include body-1;
+  }
 }
 
 .linkInput {
@@ -276,7 +289,7 @@
 }
 
 .bondWrapper {
-  background-color: var(--color-grey-100);
+  background-color: var(--theme-proposal-type-corner-bond-bg);
   margin-top: functions.calc-rem(50);
   padding: functions.calc-rem(8);
   position: relative;
@@ -285,7 +298,7 @@
 
 .bondTitle {
   @extend %caption-2;
-  color: var(--color-grey-70);
+  color: var(--theme-proposal-type-corner-bond-token);
 }
 
 .bondValue {
@@ -294,7 +307,7 @@
 }
 
 .bondTokenIcon {
-  color: var(--color-grey-70);
+  color: var(--theme-proposal-type-corner-bond-token);
   position: absolute;
   right: functions.calc-rem(15);
   top: 50%;

@@ -114,7 +114,13 @@
     --theme-sign-out-hover-bg: var(--color-error-90);
     
     --theme-proposal-type-bg: var(--color-grey-100);
-    --theme-proposal-type-shadow: 0 16px 40px rgba(0, 0, 0, 0.64);;
+    --theme-proposal-type-shadow: 0 16px 40px rgba(0, 0, 0, 0.64);
+    --theme-proposal-type-corner-active: url('/images/corner-dark-cyan.svg');
+    --theme-proposal-type-active-border: var(--color-cyan-50);
+    --theme-proposal-type-corner-link: var(--color-cyan-50);
+    --theme-proposal-type-corner-hover: var(--color-cyan-80);
+    --theme-proposal-type-corner-bond-bg: var(--color-grey-100);
+    --theme-proposal-type-corner-bond-token: var(--color-grey-70);
   }
 
   &[data-theme='light'] {
@@ -232,5 +238,11 @@
 
     --theme-proposal-type-bg: var(--white);
     --theme-proposal-type-shadow: 0 16px 40px rgba(22, 21, 21, 0.15);
+    --theme-proposal-type-corner-active: url('/images/corner-light-cyan.svg');
+    --theme-proposal-type-active-border: var(--color-cyan-70);
+    --theme-proposal-type-corner-link: var(--color-cyan-60);
+    --theme-proposal-type-corner-hover: var(--color-cyan-80);
+    --theme-proposal-type-corner-bond-bg: var(--color-grey-10);
+    --theme-proposal-type-corner-bond-token: var(--color-grey-70);
   }
 }
