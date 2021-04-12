@@ -34,20 +34,20 @@
   height: functions.calc-rem(12);
   left: 50%;
   position: absolute;
-  top: 3px;
-  transform: translate(-50%, 0);
+  top: 9px;
+  transform: translate(-50%, -50%);
   transition: 0.2s;
   width: functions.calc-rem(12);
 }
 
 .input:checked ~ .button {
   background-color: var(--white);
-  top: calc(100% - 3px);
-  transform: translate(-50%, -100%);
+  top: calc(100% - 9px);
+  transform: translate(-50%, -50%);
 }
 
 .label:active .button {
-  height: functions.calc-rem(18);
+  //height: functions.calc-rem(18);
 }
 
 .dark {
