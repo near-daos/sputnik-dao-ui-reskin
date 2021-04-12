@@ -151,7 +151,7 @@
   flex: 1;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0 functions.calc-rem(24);
+  padding: functions.calc-rem(40) functions.calc-rem(24) 0;
 
   @include tablet-portrait {
     padding: 0 functions.calc-rem(64);
@@ -165,10 +165,14 @@
 }
 
 .input {
-  margin-bottom: functions.calc-rem(24);
+  margin-bottom: functions.calc-rem(35);
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &.daoName {
+    margin-bottom: functions.calc-rem(70);
   }
 }
 
@@ -246,6 +250,10 @@
 
   &:last-child {
     margin-right: 0;
+  }
+
+  &.inactive {
+    filter: grayscale(100%);
   }
 }
 

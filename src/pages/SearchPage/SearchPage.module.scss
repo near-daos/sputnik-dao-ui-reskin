@@ -1,8 +1,10 @@
 @use 'styles/functions';
 @import 'styles/typography';
 @import 'styles/media';
+@import 'styles/mixins';
 
 .root {
+  @include container;
   display: block;
 
   padding: functions.calc-rem(40) functions.calc-rem(24) functions.calc-rem(56);
