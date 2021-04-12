@@ -98,6 +98,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
             value={searchText}
             onChange={setSearchText}
             name="search"
+            size="md"
           />
         </div>
       </section>

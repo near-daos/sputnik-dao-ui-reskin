@@ -85,7 +85,7 @@
   @include desktop {
     display: block;
     right: functions.calc-rem(112);
-    top: functions.calc-rem(144);
+    top: functions.calc-rem(120);
   }
 }
 
@@ -168,8 +168,9 @@
 
   @include tablet-landscape {
     flex-direction: column;
-    margin: functions.calc-rem(110) auto 0;
+    margin: 0 auto;
     overflow-y: auto;
+    padding-top: functions.calc-rem(110);
   }
 }
 
@@ -230,11 +231,27 @@
 .list {
   list-style: none;
   padding: 0;
+
+  @include tablet-portrait {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
 .typeItem + .typeItem {
   margin-top: 8px;
 }
+
+//.centerWrapper{
+//  @include tablet-portrait{
+//    flex: 1;
+//    display: flex;
+//    flex-direction: column;
+//    justify-content: center;
+//  }
+//}
 
 .description {
   @extend %body-2;

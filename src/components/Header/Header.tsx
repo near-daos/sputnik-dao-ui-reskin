@@ -30,6 +30,7 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
   const account = useSelector(accountSelector);
   const dispatch = useDispatch();
   const daoList = useSelector(daoListSelector);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const toggleMenu = () => {
     setOpenMenu(!isMenuOpen);
@@ -66,70 +67,86 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
   return (
     <>
       <header className={cn(s.root, className)}>
-        <div className={s.container}>
-          <nav className={s.links}>
-            <IconButton
-              icon="menu"
-              className={s.menuBtn}
-              variant="clear"
-              size="sm"
-              onClick={toggleMenu}
-            />
-            <a href="/select-dao" className={s.logo}>
-              <SputnikDaoLogo className={s.logoIcon} />
-            </a>
-            <a className={s.link} href="/">
-              Discover DAO
-            </a>
-          </nav>
-          {showSearchBar && (
-            <SearchAutoComplete className={s.search} daoList={daoList} />
-          )}
-          {showSearchBar && (
-            <div className={s.searchBtnContainer}>
+        {!mobileSearchOpen && (
+          <div className={s.container}>
+            <nav className={s.links}>
               <IconButton
-                className={s.searchBtn}
-                icon="search"
-                variant="monochrome"
+                icon="menu"
+                className={s.menuBtn}
+                variant="clear"
                 size="sm"
-                onClick={() => {
-                  history.push('search');
-                }}
+                onClick={toggleMenu}
+              />
+              <a href="/select-dao" className={s.logo}>
+                <SputnikDaoLogo className={s.logoIcon} />
+              </a>
+              <a className={s.link} href="/">
+                Discover DAO
+              </a>
+            </nav>
+            {showSearchBar && (
+              <SearchAutoComplete className={s.search} daoList={daoList} />
+            )}
+            {showSearchBar && (
+              <div className={s.searchBtnContainer}>
+                <IconButton
+                  className={s.searchBtn}
+                  icon="search"
+                  variant="monochrome"
+                  size="sm"
+                  onClick={() => {
+                    setMobileSearchOpen(true);
+                  }}
+                />
+              </div>
+            )}
+            <div className={s.controls}>
+              <Button
+                className={s.control}
+                size="sm"
+                onClick={showCreateDaoPopup}
+              >
+                Create new DAO
+              </Button>
+              {!account && (
+                <Button
+                  className={cn(s.control, s.authBtn)}
+                  size="sm"
+                  variant="outline"
+                  onClick={handleSingIn}
+                >
+                  Sign In
+                </Button>
+              )}
+              {account && (
+                <ProfileButton
+                  className={cn(s.control, s.authBtn)}
+                  accountName={account}
+                  onSingOut={handleSingOut}
+                />
+              )}
+              <ThemeSwitcher
+                value={theme}
+                onChange={toggleTheme}
+                className={s.themeSwitcher}
               />
             </div>
-          )}
-          <div className={s.controls}>
-            <Button
-              className={s.control}
-              size="sm"
-              onClick={showCreateDaoPopup}
-            >
-              Create new DAO
-            </Button>
-            {!account && (
-              <Button
-                className={cn(s.control, s.authBtn)}
-                size="sm"
-                variant="outline"
-                onClick={handleSingIn}
-              >
-                Sign In
-              </Button>
-            )}
-            {account && (
-              <ProfileButton
-                className={cn(s.control, s.authBtn)}
-                accountName={account}
-                onSingOut={handleSingOut}
-              />
-            )}
-            <ThemeSwitcher
-              value={theme}
-              onChange={toggleTheme}
-              className={s.themeSwitcher}
-            />
           </div>
-        </div>
+        )}
+        {mobileSearchOpen && (
+          <div className={cn(s.container, s.mobileSearchWrapper)}>
+            <IconButton
+              className={s.closeSearchButton}
+              icon="arrow-back"
+              variant="monochrome"
+              size="sm"
+              onClick={() => {
+                setMobileSearchOpen(false);
+              }}
+            />
+            <SearchAutoComplete className={s.mobileSearch} daoList={daoList} />
+          </div>
+        )}
       </header>
       {isMenuOpen && (
         <MobileMenu

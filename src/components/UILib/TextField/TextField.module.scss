@@ -91,10 +91,11 @@
 }
 
 .border {
-  border: none;
+  //border: none;
+  //box-shadow: 0 0 0 var(--input-border-width) var(--input-border-color);
+  border: solid var(--input-border-width) var(--input-border-color);
   border-radius: inherit;
   bottom: 0;
-  box-shadow: 0 0 0 var(--input-border-width) var(--input-border-color);
   left: 0;
   margin: 0;
   padding: 0;
