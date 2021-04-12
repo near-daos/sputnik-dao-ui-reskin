@@ -35,7 +35,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   type = 'button',
   active,
-  disabled,
+  disabled = false,
   ...other
 }) => {
   const styleAttrs: DataAttrs = {

@@ -16,7 +16,13 @@
   line-height: functions.calc-rem(24);
   outline: none;
   transition: all 0.2s;
+  user-select: none;
   white-space: nowrap;
+
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 
   // color && variant
   &[data-color='primary'] {
