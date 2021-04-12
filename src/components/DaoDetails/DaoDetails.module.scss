@@ -17,8 +17,10 @@
 }
 
 .column2 {
-  margin-left: functions.calc-rem(32);
-  width: 40%;
+  @include tablet-portrait {
+    margin-left: functions.calc-rem(32);
+    width: 40%;
+  }
 }
 
 .title {

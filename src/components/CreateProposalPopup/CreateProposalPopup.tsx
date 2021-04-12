@@ -138,9 +138,11 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
       }
     };
 
+    document.body.style.overflow = 'hidden';
     window.addEventListener('popstate', handleGoBack, false);
 
     return () => {
+      document.body.style.overflow = 'auto';
       window.removeEventListener('popstate', handleGoBack);
     };
   }, [onClose]);

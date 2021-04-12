@@ -105,9 +105,11 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
       }
     };
 
+    document.body.style.overflow = 'hidden';
     window.addEventListener('popstate', handleGoBack, false);
 
     return () => {
+      document.body.style.overflow = 'auto';
       window.removeEventListener('popstate', handleGoBack);
     };
   }, [onClose]);
@@ -152,7 +154,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   onChange={(value) => handleChange('name', value)}
                   error={errors.name}
                   label="Enter DAO Name"
-                  className={s.input}
+                  className={cn(s.input, s.daoName)}
                 />
                 <TextField
                   name="purpose"
@@ -253,7 +255,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                     title="Purchase a curated NFT logo"
                     description="Unique and perfectly matched logo from dozens of handpicked elements."
                     imageType="exclamation"
-                    className={s.banner}
+                    className={cn(s.banner, s.inactive)}
                   />
                   <DaoLogoButton
                     title="Free random logo"

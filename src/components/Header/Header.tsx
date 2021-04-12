@@ -75,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
               size="sm"
               onClick={toggleMenu}
             />
-            <a href="/" className={s.logo}>
+            <a href="/select-dao" className={s.logo}>
               <SputnikDaoLogo className={s.logoIcon} />
             </a>
             <a className={s.link} href="/">
@@ -85,14 +85,19 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
           {showSearchBar && (
             <SearchAutoComplete className={s.search} daoList={daoList} />
           )}
-          <div className={s.searchBtnContainer}>
-            <IconButton
-              className={s.searchBtn}
-              icon="search"
-              variant="monochrome"
-              size="sm"
-            />
-          </div>
+          {showSearchBar && (
+            <div className={s.searchBtnContainer}>
+              <IconButton
+                className={s.searchBtn}
+                icon="search"
+                variant="monochrome"
+                size="sm"
+                onClick={() => {
+                  history.push('search');
+                }}
+              />
+            </div>
+          )}
           <div className={s.controls}>
             <Button
               className={s.control}

@@ -87,7 +87,7 @@ export const DaoPage: React.FC = () => {
           </Route>
 
           <Route path={`${path}`}>
-            <Redirect to={`${url}/details`} />
+            <Redirect to={`${url}/proposals`} />
           </Route>
         </Switch>
       </div>

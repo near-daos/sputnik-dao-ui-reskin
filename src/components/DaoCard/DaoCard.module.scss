@@ -52,11 +52,16 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  height: functions.calc-rem(56);
+  height: functions.calc-rem(35);
   left: 0;
   position: absolute;
   top: 0;
-  width: functions.calc-rem(80);
+  width: functions.calc-rem(50);
+  
+  @include tablet-landscape {
+    height: functions.calc-rem(56);
+    width: functions.calc-rem(80);
+  }
 }
 
 .content {
