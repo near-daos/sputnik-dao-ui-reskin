@@ -5,13 +5,13 @@ import SwiperClass from 'swiper/types/swiper-class';
 
 import { LandingHeader } from 'components/LandingHeader';
 import { LandingFooter } from 'components/LandingFooter';
-
 import { LandingHome } from 'components/LandingHome';
 import { HowItWorks } from 'components/HowItWorks';
 import { Developers } from 'components/Developers';
 import { CommunityConnect } from 'components/CommunityConnect';
 import { CreateYourDao } from 'components/CreateYourDao';
 import { breakpoints } from 'hooks/use-media';
+import { ProgressBar } from 'components/UILib';
 
 import s from './LandingPage.module.scss';
 
@@ -54,6 +54,8 @@ export const LandingPage: React.FC = () => {
     controlledSwiper?.slideTo(index);
   };
 
+  const progress = ((activeSlide + 1) / landingSlides.length) * 100;
+
   return (
     <div className={s.root} id="themed" data-theme={DEFAULT_LANDING_THEME}>
       <div className={s.background}>
@@ -89,6 +91,7 @@ export const LandingPage: React.FC = () => {
               </SwiperSlide>
             ))}
           </Swiper>
+          <ProgressBar className={s.progress} progress={progress} />
         </main>
       </div>
       <LandingFooter className={s.footer} />

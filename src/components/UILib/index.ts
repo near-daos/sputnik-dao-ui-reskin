@@ -8,3 +8,4 @@ export * from './Chip';
 export * from './Tooltip';
 export * from './Dropdown';
 export * from './Select';
+export * from './ProgressBar';

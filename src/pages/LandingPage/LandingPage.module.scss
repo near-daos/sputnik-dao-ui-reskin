@@ -73,6 +73,14 @@ div.slider {
   vertical-align: middle;
 }
 
+.progress {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+}
+
 .footer {
   @include media.mobile-only {
     display: none;

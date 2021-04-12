@@ -1,0 +1,14 @@
+@use 'styles/functions';
+
+.root {
+  background-color: transparent;
+  display: block;
+  height: functions.calc-rem(4);
+  width: 100%;
+}
+
+.progress {
+  background-color: var(--color-purple-50);
+  height: 100%;
+  transition: 0.3s;
+}
