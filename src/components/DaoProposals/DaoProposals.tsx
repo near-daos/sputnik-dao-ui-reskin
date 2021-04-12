@@ -101,6 +101,8 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
   const isMember = dao.members.includes(account || '');
 
   useEffect(() => {
+    console.log('filters: ', filters);
+
     if (filters[0].value === null) {
       setFilteredProposals(proposals);
 
@@ -155,19 +157,27 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
       return;
     }
 
-    const newFilters = filters.filter((filter) => filter.value !== null);
+    let newFilters = filters.filter((filter) => filter.value !== null);
 
     const existsFilter = newFilters.find(
       (filter) => filter.value === filterOption.value,
     );
 
     if (existsFilter) {
-      setFilters(
-        newFilters.filter((filter) => filter.value !== filterOption.value),
+      newFilters = newFilters.filter(
+        (filter) => filter.value !== filterOption.value,
       );
     } else {
-      setFilters([...newFilters, filterOption]);
+      newFilters = [...newFilters, filterOption];
     }
+
+    if (newFilters.length === 0) {
+      setFilters([filterOptions[0]]);
+
+      return;
+    }
+
+    setFilters(newFilters);
   };
 
   const handleApprove = (proposalId: number) => {

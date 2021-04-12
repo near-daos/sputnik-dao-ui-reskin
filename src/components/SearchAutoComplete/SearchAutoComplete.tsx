@@ -31,12 +31,10 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
   const [searchText, setSearchText] = useState('');
   const [isShowResult, setIsShowResult] = useState(false);
   const [daoResult, setDaoResult] = useState<DaoItem[]>([]);
-  const [proposalResult, setProposalResult] = useState<Proposal[]>([]);
 
   useEffect(() => {
     if (!searchText) {
       setDaoResult([]);
-      setProposalResult([]);
 
       return;
     }
@@ -46,7 +44,6 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
     );
 
     setDaoResult(filtered);
-    setProposalResult([]);
   }, [searchText, daoList]);
 
   const renderName = (name: string) => {
@@ -113,41 +110,6 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
             ) : (
               <p className={s.emptyText}>DAO not found</p>
             )}
-            <div className={s.border} />
-            <div className={s.titleWrapper}>
-              <p className={s.title}>Proposals</p>
-              <Link
-                to={`/search/proposal/?query=${searchText}`}
-                className={s.link}
-              >
-                See All
-                <span className={s.count}>({proposalResult.length})</span>
-              </Link>
-            </div>
-            {proposalResult.length > 0 ? (
-              <>
-                {proposalResult.map((item) => (
-                  <Link
-                    to={`/dao/${item.daoId}/proposals?proposal=${item.name}`}
-                    className={s.item}
-                    key={item.id}
-                  >
-                    {renderName(item.name)}
-                  </Link>
-                ))}
-              </>
-            ) : (
-              <p className={s.emptyText}>proposal not found</p>
-            )}
-            <Link
-              to={`/search/dao/?query=${searchText}`}
-              className={cn(s.link, s.all)}
-            >
-              Show all results
-              <span className={s.count}>
-                ({daoResult.length + proposalResult.length})
-              </span>
-            </Link>
           </div>
         </>
       )}
