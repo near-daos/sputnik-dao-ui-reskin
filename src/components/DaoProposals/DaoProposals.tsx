@@ -92,27 +92,23 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
 
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<ProposalSortOption>(sortOptions[0]);
-  const [filters, setFilters] = useState<ProposalFilterOption[]>([
+  const [filters, setFilters] = useState<ProposalFilterOption>(
     filterOptions[0],
-  ]);
+  );
 
   const account = useSelector(accountSelector);
 
   const isMember = dao.members.includes(account || '');
 
   useEffect(() => {
-    console.log('filters: ', filters);
-
-    if (filters[0].value === null) {
+    if (filters.value === null) {
       setFilteredProposals(proposals);
 
       return;
     }
 
-    const options = filters.map((item) => item.value);
-
     setFilteredProposals(
-      proposals.filter((proposal) => options.includes(proposal.status)),
+      proposals.filter((proposal) => proposal.status === filters.value),
     );
   }, [filters, proposals]);
 
@@ -151,33 +147,7 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
   }, [location]);
 
   const handleChangeFilters = (filterOption: ProposalFilterOption) => {
-    if (filterOption.value === null) {
-      setFilters([filterOption]);
-
-      return;
-    }
-
-    let newFilters = filters.filter((filter) => filter.value !== null);
-
-    const existsFilter = newFilters.find(
-      (filter) => filter.value === filterOption.value,
-    );
-
-    if (existsFilter) {
-      newFilters = newFilters.filter(
-        (filter) => filter.value !== filterOption.value,
-      );
-    } else {
-      newFilters = [...newFilters, filterOption];
-    }
-
-    if (newFilters.length === 0) {
-      setFilters([filterOptions[0]]);
-
-      return;
-    }
-
-    setFilters(newFilters);
+    setFilters(filterOption);
   };
 
   const handleApprove = (proposalId: number) => {
@@ -207,7 +177,7 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
             <Chip
               key={filterOption.label}
               size="lg"
-              active={filters.includes(filterOption)}
+              active={filters.value === filterOption.value}
               label={filterOption.label}
               color={filterOption.color}
               amount={filterOption.count}
