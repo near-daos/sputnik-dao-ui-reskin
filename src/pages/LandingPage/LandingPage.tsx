@@ -71,10 +71,9 @@ export const LandingPage: React.FC = () => {
             spaceBetween={50}
             slidesPerView={1}
             direction="vertical"
+            speed={700}
             mousewheel
             simulateTouch
-            freeMode
-            freeModeSticky
             resizeObserver
             onSlideChange={handleSlideChange}
             controller={{ control: controlledSwiper }}
