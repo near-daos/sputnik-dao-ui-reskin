@@ -15,6 +15,7 @@ const icons = {
   'chip-rect': import('./chip-rect.svg'),
   carousel: import('./carousel.svg'),
   link: import('./link.svg'),
+  'arrow-back': import('./arrow-back.svg'),
 };
 
 export default icons;

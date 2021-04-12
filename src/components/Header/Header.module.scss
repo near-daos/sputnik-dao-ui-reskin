@@ -80,16 +80,14 @@
 .searchBtnContainer {
   display: none;
   flex: 1 1 auto;
+  justify-content: flex-end;
   margin: 0 functions.calc-rem(16);
 
   @include media.mobile-only {
-    display: block;
+    display: flex;
   }
 }
 
-.searchBtn {
-  margin: 0 auto;
-}
 
 .controls {
   display: flex;
@@ -130,4 +128,18 @@
   @include media.mobile-only {
     display: none;
   }
+}
+
+.mobileSearchWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.mobileSearch {
+  flex: 1;
+}
+
+.closeSearchButton {
+  margin-right: functions.calc-rem(8);
 }

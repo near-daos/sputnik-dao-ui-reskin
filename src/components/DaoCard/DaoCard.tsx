@@ -16,7 +16,7 @@ export interface DaoCardProps {
 const DaoCard: React.FC<DaoCardProps> = ({ className, dao, size = 'lg' }) => {
   const history = useHistory();
   const handleSelect = () => {
-    history.push(`dao/${dao.id}`);
+    history.push(`/dao/${dao.id}`);
   };
 
   return (

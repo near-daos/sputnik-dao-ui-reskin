@@ -6,7 +6,7 @@ import light from 'images/light-switch-icons.svg';
 import dark from 'images/dark-switch-icons.svg';
 import s from './ThemeSwitcher.module.scss';
 
-const CHECKED_THEME = Theme.Dark;
+const CHECKED_THEME = Theme.Light;
 
 type ThemeSwitcherProps = {
   className?: string;
@@ -32,14 +32,14 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
         src={light}
         alt={light}
         className={cn(s.light, {
-          [s.show]: value,
+          [s.show]: value === Theme.Light,
         })}
       />
       <img
         src={dark}
         alt="dark"
         className={cn(s.dark, {
-          [s.show]: !value,
+          [s.show]: value === Theme.Dark,
         })}
       />
       <span className={s.button} />

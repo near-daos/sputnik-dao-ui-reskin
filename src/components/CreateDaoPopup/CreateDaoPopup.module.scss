@@ -83,7 +83,7 @@
   @include desktop {
     display: block;
     right: functions.calc-rem(112);
-    top: functions.calc-rem(144);
+    top: functions.calc-rem(120);
   }
 }
 
@@ -141,8 +141,9 @@
 
   @include tablet-landscape {
     flex-direction: column;
-    margin: functions.calc-rem(110) auto 0;
+    margin: 0 auto;
     overflow-y: auto;
+    padding-top: functions.calc-rem(110);
   }
 }
 
@@ -230,7 +231,7 @@
   min-width: 0;
   overflow-x: auto;
   overflow-y: visible;
-  padding: functions.calc-rem(60) 0;
+  padding: functions.calc-rem(48) 0;
 
   @include tablet-portrait {
     justify-content: center;

@@ -46,7 +46,8 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
 
       setTabOptions([
         {
-          ...tabsOptions[0],
+          name: 'DAOs',
+          route: `/search/dao`,
           count: 0,
         },
       ]);
@@ -61,11 +62,12 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
     setDaos(filtered);
     setTabOptions([
       {
-        ...tabsOptions[0],
+        name: 'DAOs',
+        route: `/search/dao`,
         count: filtered.length,
       },
     ]);
-  }, [daoList, searchQuery, tabsOptions]);
+  }, [daoList, searchQuery]);
 
   // const [sort, setSort] = useState<Sort>(sortOptions[0]);
 

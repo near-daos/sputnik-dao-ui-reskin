@@ -1,5 +1,6 @@
 @import 'styles/typography';
 @import 'styles/helpers';
+@import 'styles/media';
 
 .root {
   display: block;
@@ -10,12 +11,18 @@
   @extend %button-reset;
   background-color: var(--theme-overlay);
   cursor: default;
+  display: none;
   height: 100vH;
   left: 0;
   position: fixed;
   top: 0;
   width: 100vW;
   z-index: 1;
+
+
+  @include tablet-portrait {
+    display: block;
+  }
 }
 
 .search {
@@ -27,12 +34,20 @@
 .resultWrapper {
   background-color: var(--theme-autocomplete-bg);
   box-shadow: var(--theme-autocomplete-shadow);
-  margin-top: 8px;
+  height: calc(100vH - 64px);
+  left: 0;
   padding: 18px 0;
-  position: absolute;
-  top: 100%;
-  width: 100%;
+  position: fixed;
+  top: 64px;
+  width: 100vW;
   z-index: 100;
+
+  @include tablet-portrait {
+    height: auto;
+    margin-top: 8px;
+    position: absolute;
+    width: 100%;
+  }
 }
 
 .titleWrapper {
