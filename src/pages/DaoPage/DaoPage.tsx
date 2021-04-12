@@ -83,7 +83,7 @@ export const DaoPage: React.FC = () => {
           </Route>
 
           <Route path={`${path}/proposals`}>
-            <DaoProposals proposals={proposals} />
+            {dao && <DaoProposals proposals={proposals} dao={dao} />}
           </Route>
 
           <Route path={`${path}`}>

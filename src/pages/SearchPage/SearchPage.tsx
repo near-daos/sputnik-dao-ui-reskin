@@ -10,7 +10,7 @@ import {
   useLocation,
   useHistory,
 } from 'react-router-dom';
-import { NavTabs, Select } from 'components/UILib';
+import { NavTabs } from 'components/UILib';
 import { NavItem } from 'components/UILib/NavTabs/NavTabs';
 
 import { SearchDaoPage } from 'pages/SearchDaoPage';

@@ -91,11 +91,10 @@
 }
 
 .border {
-  border-color: var(--input-border-color);
+  border: none;
   border-radius: inherit;
-  border-style: solid;
-  border-width: var(--input-border-width);
   bottom: 0;
+  box-shadow: 0 0 0 var(--input-border-width) var(--input-border-color);
   left: 0;
   margin: 0;
   padding: 0;
@@ -104,6 +103,8 @@
   position: absolute;
   right: 0;
   top: functions.calc-rem(-6);
+  transition: box-shadow 0.35s ease-in-out;
+
   z-index: 0;
 }
 

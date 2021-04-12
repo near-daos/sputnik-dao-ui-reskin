@@ -148,9 +148,6 @@ class NearService {
       data.kind.purpose = params.kind.purpose;
     }
 
-    // eslint-disable-next-line no-debugger
-    debugger;
-
     return this.contractPool.get(params.daoId).add_proposal(
       {
         proposal: data,
@@ -294,8 +291,8 @@ class NearService {
 
   public vote(
     contractId: string,
-    proposalId: string,
-    vote: string,
+    proposalId: number,
+    vote: 'Yes' | 'No',
   ): Promise<void> {
     return this.contractPool.get(contractId).vote({
       id: proposalId,
@@ -303,7 +300,7 @@ class NearService {
     });
   }
 
-  public finalize(contractId: string, proposalId: string): Promise<void> {
+  public finalize(contractId: string, proposalId: number): Promise<void> {
     return this.contractPool.get(contractId).finalize({
       id: proposalId,
     });

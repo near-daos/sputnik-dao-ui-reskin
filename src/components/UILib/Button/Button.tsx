@@ -17,6 +17,7 @@ export interface ButtonProps {
   rightElement?: ReactChild;
   type?: 'submit' | 'reset' | 'button';
   active?: boolean;
+  disabled?: boolean;
 }
 
 interface DataAttrs {
@@ -34,6 +35,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   type = 'button',
   active,
+  disabled,
   ...other
 }) => {
   const styleAttrs: DataAttrs = {
@@ -60,6 +62,7 @@ const Button: React.FC<ButtonProps> = ({
       className={cn(s.root, className)}
       onClick={handleClick}
       type={type}
+      disabled={disabled}
       {...styleAttrs}
       {...other}
     >

@@ -31,6 +31,7 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
         slidesPerView={2}
         slideToClickedSlide
         centeredSlides
+        grabCursor
         initialSlide={activeSlide}
         breakpoints={{
           500: {

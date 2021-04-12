@@ -117,6 +117,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
               loop={filteredDaoList.length > 1}
               slidesPerView="auto"
               centeredSlides
+              grabCursor
               initialSlide={activeSlide}
               onSlideChange={(swiperObject) => {
                 const index = swiperObject.realIndex;
@@ -124,8 +125,6 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
                 setActiveSlide(index);
               }}
               onSwiper={(swiperObject) => {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
                 setSwiper(swiperObject);
               }}
             >

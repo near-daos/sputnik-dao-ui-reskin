@@ -7,6 +7,10 @@ import { Chip, ChipProps, Select } from 'components/UILib';
 import { Proposal, ProposalStatus } from 'types/proposal';
 
 import { useLocation } from 'react-router-dom';
+import { DaoItem } from 'types/dao';
+import { NearService } from 'services/NearService';
+import { useSelector } from 'react-redux';
+import { accountSelector } from 'redux/selectors';
 import s from './DaoProposals.module.scss';
 
 export type ProposalFilterOption = {
@@ -57,6 +61,7 @@ const getFilterOptions = (proposals: Proposal[]): ProposalFilterOption[] => [
 export interface DaoProposalsProps {
   className?: string;
   proposals: Array<Proposal>;
+  dao: DaoItem;
 }
 
 enum ProposalSort {
@@ -77,6 +82,7 @@ const sortOptions: ProposalSortOption[] = [
 const DaoProposals: React.FC<DaoProposalsProps> = ({
   className,
   proposals,
+  dao,
 }) => {
   const location = useLocation();
   const [filteredProposals, setFilteredProposals] = useState<Proposal[]>([]);
@@ -89,6 +95,10 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
   const [filters, setFilters] = useState<ProposalFilterOption[]>([
     filterOptions[0],
   ]);
+
+  const account = useSelector(accountSelector);
+
+  const isMember = dao.members.includes(account || '');
 
   useEffect(() => {
     if (filters[0].value === null) {
@@ -160,6 +170,18 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
     }
   };
 
+  const handleApprove = (proposalId: number) => {
+    NearService.vote(dao.id, proposalId, 'Yes');
+  };
+
+  const handleReject = (proposalId: number) => {
+    NearService.vote(dao.id, proposalId, 'No');
+  };
+
+  const handleFinalize = (proposalId: number) => {
+    NearService.finalize(dao.id, proposalId);
+  };
+
   return (
     <section className={cn(s.root, className)}>
       <SearchBar
@@ -195,7 +217,14 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
       </div>
       <div className={s.proposalList}>
         {sortedProposals.map((proposal) => (
-          <ProposalCard key={proposal.id} proposal={proposal} />
+          <ProposalCard
+            key={proposal.id}
+            proposal={proposal}
+            isMember={isMember}
+            onApprove={() => handleApprove(proposal.id)}
+            onReject={() => handleReject(proposal.id)}
+            onFinalize={() => handleFinalize(proposal.id)}
+          />
         ))}
       </div>
     </section>

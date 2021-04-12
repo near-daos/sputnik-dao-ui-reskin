@@ -9,12 +9,19 @@ import { Proposal, ProposalStatus, ProposalType } from 'types/proposal';
 import useMedia from 'hooks/use-media';
 import numberReduction from 'utils/numberReduction';
 
+import { useSelector } from 'react-redux';
+import { accountSelector } from 'redux/selectors';
+import { convertDuration } from 'utils';
 import s from './ProposalCard.module.scss';
 
 export interface ProposalCardProps {
   className?: string;
   daoName?: string;
   proposal: Proposal;
+  isMember?: boolean;
+  onApprove?: () => void;
+  onReject?: () => void;
+  onFinalize?: () => void;
 }
 
 const getTitle = (proposal: Proposal): string => {
@@ -38,8 +45,16 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
   className,
   daoName,
   proposal,
+  isMember = false,
+  onApprove,
+  onReject,
+  onFinalize,
 }) => {
   const media = useMedia();
+  const accountId = useSelector(accountSelector);
+
+  const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
+  const isNotExpired = votePeriodEnd < new Date();
 
   return (
     <div className={cn(s.root, className)}>
@@ -97,30 +112,51 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
         </div>
       </div>
       <div className={s.buttonWrapper}>
-        <Button
-          size={media.mobile ? 'xs' : 'sm'}
-          variant="outline"
-          className={s.button}
-        >
-          <>
-            Approve{' '}
-            <span className={s.buttonTextCount}>
-              ({numberReduction(proposal.voteYes)})
-            </span>
-          </>
-        </Button>
-        <Button
-          size={media.mobile ? 'xs' : 'sm'}
-          variant="outline"
-          className={s.button}
-        >
-          <>
-            Reject{' '}
-            <span className={s.buttonTextCount}>
-              ({numberReduction(proposal.voteNo)})
-            </span>
-          </>
-        </Button>
+        {isMember && (
+          <Button
+            size={media.mobile ? 'xs' : 'sm'}
+            variant="outline"
+            className={s.button}
+            onClick={onApprove}
+            disabled={isNotExpired || proposal.status !== ProposalStatus.Vote}
+          >
+            <>
+              Approve{' '}
+              <span className={s.buttonTextCount}>
+                ({numberReduction(proposal.voteYes)})
+              </span>
+            </>
+          </Button>
+        )}
+        {proposal.proposer === accountId &&
+          votePeriodEnd < new Date() &&
+          proposal.status === ProposalStatus.Vote && (
+            <Button
+              size={media.mobile ? 'xs' : 'sm'}
+              disabled={isNotExpired || proposal.status !== ProposalStatus.Vote}
+              variant="outline"
+              className={s.button}
+              onClick={onFinalize}
+            >
+              Finalise
+            </Button>
+          )}
+        {isMember && (
+          <Button
+            size={media.mobile ? 'xs' : 'sm'}
+            variant="outline"
+            className={s.button}
+            disabled={isNotExpired || proposal.status !== ProposalStatus.Vote}
+            onClick={onReject}
+          >
+            <>
+              Reject{' '}
+              <span className={s.buttonTextCount}>
+                ({numberReduction(proposal.voteNo)})
+              </span>
+            </>
+          </Button>
+        )}
       </div>
     </div>
   );
