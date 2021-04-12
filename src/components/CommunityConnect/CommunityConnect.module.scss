@@ -64,14 +64,21 @@
 }
 
 .socialMedia {
-  column-gap: functions.calc-rem(25);
-  display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  margin-top: functions.calc-rem(48);
+  column-gap: functions.calc-rem(15);
+  margin-top: functions.calc-rem(43);
 
   @include media.tablet-landscape {
     margin-top: functions.calc-rem(56);
   }
+}
+
+.socialButton {
+  padding: functions.calc-rem(5);
+}
+
+.socialIcon {
+  height: functions.calc-rem(32);
+  width: functions.calc-rem(32);
 }
 
 .figureContainer {

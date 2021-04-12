@@ -5,6 +5,10 @@
 @import 'styles/typography';
 
 .root {
+  --text-color: var(--white);
+  --link-decoration-color: var(--color-purple-50);
+  --link-decoration-hover-color: var(--color-purple-70);
+
   @include mixins.container;
 
   align-items: center;
@@ -38,7 +42,7 @@
 }
 
 .logoText {
-  color: var(--textColor);
+  color: var(--text-color);
   display: inline-block;
   margin-bottom: functions.calc-rem(6);
   margin-left: functions.calc-rem(10);
@@ -68,11 +72,9 @@
   @include media.desktop {
     padding: functions.calc-rem(5) functions.calc-rem(24);
   }
-}
 
-.menuLinkActive {
   &::after {
-    background: var(--color-purple-50);
+    background: transparent;
     bottom: functions.calc-rem(-4);
     content: '';
     display: block;
@@ -80,12 +82,21 @@
     left: functions.calc-rem(12);
     position: absolute;
     right: functions.calc-rem(12);
+    transition: 0.2s;
 
     @include media.desktop {
       left: functions.calc-rem(24);
       right: functions.calc-rem(24);
     }
   }
+
+  &:hover::after {
+    background: var(--link-decoration-hover-color);
+  }
+}
+
+.menuLinkActive::after {
+  background: var(--link-decoration-color);
 }
 
 .mobileMenuButton {

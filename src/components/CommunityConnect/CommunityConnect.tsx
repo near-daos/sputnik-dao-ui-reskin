@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, SvgIcon, TextField } from 'components/UILib';
+import { Button, TextField } from 'components/UILib';
 import useMedia from 'hooks/use-media';
+import { SocialMedias } from 'components/SocialMedias';
 
 import { ReactComponent as Spaceship } from 'images/spaceship.svg';
 
@@ -33,23 +34,12 @@ const CommunityConnect: React.FC = () => {
           />
           <Button size="lg">Stay with us</Button>
         </form>
-        <div className={s.socialMedia}>
-          <a href="/" className={s.socialLink}>
-            <SvgIcon size={32} className={s.socialIcon} icon="twitter" />
-          </a>
-          <a href="/" className={s.socialLink}>
-            <SvgIcon size={32} className={s.socialIcon} icon="telegram" />
-          </a>
-          <a href="/" className={s.socialLink}>
-            <SvgIcon size={32} className={s.socialIcon} icon="discord" />
-          </a>
-          <a href="/" className={s.socialLink}>
-            <SvgIcon size={32} className={s.socialIcon} icon="github" />
-          </a>
-          <a href="/" className={s.socialLink}>
-            <SvgIcon size={32} className={s.socialIcon} icon="wechat" />
-          </a>
-        </div>
+        <SocialMedias
+          className={s.socialMedia}
+          size="custom"
+          buttonClassName={s.socialButton}
+          iconClassName={s.socialIcon}
+        />
       </div>
       <div className={s.figureContainer}>
         <Spaceship className={s.figure} />

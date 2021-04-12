@@ -4,7 +4,6 @@
 @import 'styles/typography';
 
 .root {
-  --text-primary-color: var(--white);
   --text-secondary-color: var(--color-grey-50);
   --border-color: var(--color-grey-100);
 
@@ -15,9 +14,9 @@
   flex: 0 0 auto;
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
-  padding-bottom: functions.calc-rem(40);
+  padding-bottom: functions.calc-rem(38);
   padding-top: functions.calc-rem(32);
-  row-gap: functions.calc-rem(28);
+  row-gap: functions.calc-rem(26);
 
   @include media.mobile-only {
     grid-template-columns: 100%;
@@ -40,18 +39,6 @@
   @include media.mobile-only {
     justify-content: space-between;
     order: 2;
-  }
-}
-
-.socialLink + .socialLink {
-  margin-left: functions.calc-rem(24);
-}
-
-.socialIcon {
-  color: var(--text-secondary-color);
-
-  @include media.mobile-only {
-    color: var(--text-primary-color);
   }
 }
 
@@ -87,6 +74,7 @@
 
   @include media.mobile-only {
     margin: functions.calc-rem(16) 0;
+    max-width: initial;
   }
 }
 

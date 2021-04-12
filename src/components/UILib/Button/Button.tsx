@@ -9,19 +9,20 @@ import s from './Button.module.scss';
 export interface ButtonProps {
   children: ReactChild;
   variant?: 'regular' | 'outline' | 'monochrome' | 'clear';
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'custom';
   color?: 'primary' | 'danger';
   className?: string;
-  onClick?: EventHandler<React.MouseEvent<HTMLButtonElement>>;
+  onClick?: EventHandler<React.MouseEvent<HTMLElement>>;
   leftElement?: ReactChild;
   rightElement?: ReactChild;
   type?: 'submit' | 'reset' | 'button';
   active?: boolean;
   disabled?: boolean;
+  href?: string;
 }
 
 interface DataAttrs {
-  [attribute: string]: string;
+  [attribute: string]: string | undefined;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -36,19 +37,20 @@ const Button: React.FC<ButtonProps> = ({
   type = 'button',
   active,
   disabled = false,
+  href,
   ...other
 }) => {
   const styleAttrs: DataAttrs = {
     'data-color': color,
     'data-variant': variant,
-    'data-size': size,
+    'data-size': size === 'custom' ? undefined : size,
   };
 
   if (active) {
     styleAttrs['data-active'] = '';
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
 
@@ -57,12 +59,15 @@ const Button: React.FC<ButtonProps> = ({
     }
   };
 
+  const Element = href ? 'a' : 'button';
+
   return (
-    <button
+    <Element
       className={cn(s.root, className)}
       onClick={handleClick}
-      type={type}
+      type={!href ? type : undefined}
       disabled={disabled}
+      href={href}
       {...styleAttrs}
       {...other}
     >
@@ -79,7 +84,7 @@ const Button: React.FC<ButtonProps> = ({
           <div className={s.rightElement}>{rightElement}</div>
         </>
       )}
-    </button>
+    </Element>
   );
 };
 

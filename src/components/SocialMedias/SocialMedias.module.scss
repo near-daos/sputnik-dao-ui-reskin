@@ -1,0 +1,28 @@
+@use 'styles/media';
+@use 'styles/functions';
+
+.root {
+  --text-primary-color: var(--white);
+  --text-secondary-color: var(--color-grey-50);
+  --text-hover-color: var(--color-purple-50);
+
+  column-gap: functions.calc-rem(12);
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  grid-row: 1fr;
+}
+
+a.button {
+  color: var(--text-secondary-color);
+
+  @include media.mobile-only {
+    color: var(--text-primary-color);
+  }
+
+  &:hover[data-variant='clear'] {
+    background: none;
+    border-color: transparent;
+    color: var(--text-hover-color);
+  }
+}

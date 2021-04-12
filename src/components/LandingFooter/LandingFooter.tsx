@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
-import { Button, TextField, SvgIcon } from '../UILib';
+import { SocialMedias } from 'components/SocialMedias';
+import { Button, TextField } from '../UILib';
 
 import s from './LandingFooter.module.scss';
 
@@ -15,23 +16,7 @@ const LandingFooter: React.FC<LandingFooterProps> = ({ className }) => {
 
   return (
     <footer className={cn(s.root, className)}>
-      <div className={s.socialMedia}>
-        <a href="/" className={s.socialLink}>
-          <SvgIcon className={s.socialIcon} icon="twitter" />
-        </a>
-        <a href="/" className={s.socialLink}>
-          <SvgIcon className={s.socialIcon} icon="telegram" />
-        </a>
-        <a href="/" className={s.socialLink}>
-          <SvgIcon className={s.socialIcon} icon="discord" />
-        </a>
-        <a href="/" className={s.socialLink}>
-          <SvgIcon className={s.socialIcon} icon="github" />
-        </a>
-        <a href="/" className={s.socialLink}>
-          <SvgIcon className={s.socialIcon} icon="wechat" />
-        </a>
-      </div>
+      <SocialMedias className={s.socialMedia} />
       <form className={s.form}>
         <label className={s.formLabel} htmlFor="input-contact-email">
           Stay in touch
@@ -52,15 +37,15 @@ const LandingFooter: React.FC<LandingFooterProps> = ({ className }) => {
       </form>
       <p className={s.copyright}>© Mothership 2021. All rights reserved</p>
       <nav className={s.links}>
-        <a href="/" className={s.link}>
+        <Button href="/" variant="clear" size="custom" className={s.link}>
           Privacy Police
-        </a>
-        <a href="/" className={s.link}>
+        </Button>
+        <Button href="/" variant="clear" size="custom" className={s.link}>
           Terms of Use
-        </a>
-        <a href="/" className={s.link}>
+        </Button>
+        <Button href="/" variant="clear" size="custom" className={s.link}>
           FAQ
-        </a>
+        </Button>
       </nav>
     </footer>
   );
