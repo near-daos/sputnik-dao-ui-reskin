@@ -99,6 +99,7 @@
 
 .value {
   @extend %title-6;
+  text-transform: capitalize;
 
   @include tablet-portrait {
     @include title-3;

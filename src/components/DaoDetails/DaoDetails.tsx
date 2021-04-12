@@ -3,6 +3,7 @@ import cn from 'classnames';
 
 import { Button, SvgIcon } from 'components/UILib';
 import { DaoItem } from 'types/dao';
+import { nearConfig } from 'config';
 import { MembersPopup } from '../MembersPopup';
 
 import s from './DaoDetails.module.scss';
@@ -57,7 +58,7 @@ const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
         </div>
         <div className={s.row}>
           <p className={s.subTitle}>Network</p>
-          <p className={s.value}>dao.network</p>
+          <p className={s.value}>{nearConfig.networkId}</p>
         </div>
         <div className={s.row}>
           <div className={s.subTitleWrapper}>
