@@ -24,7 +24,6 @@ import { DaoPage } from './pages/DaoPage/DaoPage';
 import { SearchPage } from './pages/SearchPage';
 
 import 'normalize.css/normalize.css';
-import 'slick-carousel/slick/slick.css';
 import 'swiper/swiper.scss';
 import './styles/theme.scss';
 import './styles/main.scss';
