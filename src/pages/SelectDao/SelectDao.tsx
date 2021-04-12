@@ -112,35 +112,37 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
       >
         <div className={s.carouselContainer}>
           <div className={s.carouselList}>
-            <Swiper
-              observer
-              spaceBetween={72}
-              loop={filteredDaoList.length > 1}
-              slidesPerView="auto"
-              centeredSlides
-              grabCursor
-              initialSlide={activeSlide}
-              onSlideChange={(swiperObject) => {
-                const index = swiperObject.realIndex;
+            {filteredDaoList.length > 0 && (
+              <Swiper
+                observer
+                spaceBetween={72}
+                loop={filteredDaoList.length > 1}
+                slidesPerView="auto"
+                centeredSlides
+                grabCursor
+                initialSlide={activeSlide}
+                onSlideChange={(swiperObject) => {
+                  const index = swiperObject.realIndex;
 
-                setActiveSlide(index);
-              }}
-              onSwiper={(swiperObject) => {
-                setSwiper(swiperObject);
-              }}
-            >
-              {filteredDaoList.map((dao, index) => (
-                <SwiperSlide key={dao.id} className={s.cardHolder}>
-                  <DaoCard
-                    className={cn(s.card, {
-                      [s.activeCard]: activeSlide === index,
-                    })}
-                    dao={dao}
-                    size="lg"
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+                  setActiveSlide(index);
+                }}
+                onSwiper={(swiperObject) => {
+                  setSwiper(swiperObject);
+                }}
+              >
+                {filteredDaoList.map((dao, index) => (
+                  <SwiperSlide key={dao.id} className={s.cardHolder}>
+                    <DaoCard
+                      className={cn(s.card, {
+                        [s.activeCard]: activeSlide === index,
+                      })}
+                      dao={dao}
+                      size="lg"
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            )}
           </div>
         </div>
       </section>
