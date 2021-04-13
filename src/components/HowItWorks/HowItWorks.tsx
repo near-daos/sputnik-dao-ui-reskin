@@ -17,13 +17,10 @@ const HowItWorks: React.FC = () => {
         <div className={s.info}>
           <h2 className={s.heading}>How it works</h2>
           <p className={s.description}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            SputnikDAO is a hub of DAOs empowering communities of the NEAR
+            ecosystem. Receive rewards for individual contributions by
+            submitting proposals to existing DAOs. Create a guild for your own
+            meaningful project to find allies and monthly funding.
           </p>
         </div>
       </div>

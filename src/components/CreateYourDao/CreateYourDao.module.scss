@@ -52,27 +52,19 @@
 }
 
 .figureContainer {
+  align-items: flex-start;
   bottom: 0;
-  display: block;
-  left: 0;
+  justify-content: flex-end;
   position: absolute;
-  right: 0;
+  right: 65%;
   top: 0;
+  width: 35%;
 }
 
-.cityFigure {
-  bottom: 0;
-  left: 0;
-  max-height: functions.calc-rem(400);
-  position: absolute;
-  width: 100%;
-}
-
-.cometsFigure {
-  left: 0;
-  max-height: functions.calc-rem(600);
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 1;
+.figure {
+  height: auto;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: initial;
+  width: auto;
 }

@@ -21,6 +21,10 @@ p {
   margin: 0;
 }
 
+code {
+  font-family: variables.$monospace-font;
+}
+
 *,
 *::before,
 *::after {

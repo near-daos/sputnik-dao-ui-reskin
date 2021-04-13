@@ -20,36 +20,26 @@
 }
 
 .logo {
-  @extend %heading-6;
-  @include mixins.button-reset;
-
-  display: inline-block;
-  justify-self: start;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.logoIcon {
-  height: functions.calc-rem(63);
-  margin-bottom: functions.calc-rem(15);
-  vertical-align: middle;
-  width: auto;
-
-  @include media.mobile-only {
-    height: functions.calc-rem(32);
-    margin-bottom: functions.calc-rem(5);
-  }
-}
-
-.logoText {
-  color: var(--text-color);
-  display: inline-block;
-  margin-bottom: functions.calc-rem(6);
-  margin-left: functions.calc-rem(10);
-  vertical-align: middle;
+  fill: var(--text-color);
+  height: 100%;
+  max-width: functions.calc-rem(160);
+  min-width: functions.calc-rem(100);
+  width: 100%;
 
   @include media.mobile-only {
     display: none;
+  }
+}
+
+.logoSmall {
+  display: none;
+  fill: var(--text-color);
+  height: 100%;
+  max-height: functions.calc-rem(40);
+  width: 100%;
+
+  @include media.mobile-only {
+    display: block;
   }
 }
 
@@ -90,7 +80,7 @@
     }
   }
 
-  &:hover::after {
+  &:not(.menuLinkActive):hover::after {
     background: var(--link-decoration-hover-color);
   }
 }

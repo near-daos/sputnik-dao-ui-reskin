@@ -35,11 +35,16 @@ const LandingFooter: React.FC<LandingFooterProps> = ({ className }) => {
           Submit
         </Button>
       </form>
-      <p className={s.copyright}>© Mothership 2021. All rights reserved</p>
+      <p className={s.copyright}>
+        <span>2021 NEAR Protocol | All rights reserved</span>
+        <span className={s.copyrightDivider}>&nbsp;|&nbsp;</span>
+        <span>
+          <a href="mailto:hello@near.org">hello@near.org</a>
+          &nbsp;|&nbsp;
+          <a href="/">Privacy Policy</a>
+        </span>
+      </p>
       <nav className={s.links}>
-        <Button href="/" variant="clear" size="custom" className={s.link}>
-          Privacy Police
-        </Button>
         <Button href="/" variant="clear" size="custom" className={s.link}>
           Terms of Use
         </Button>

@@ -13,23 +13,23 @@ interface SocialLink {
 const socialLinks: SocialLink[] = [
   {
     icon: 'twitter',
-    href: 'http://google.com',
+    href: 'https://twitter.com/NEARProtocol',
   },
   {
     icon: 'telegram',
-    href: 'http://google.com',
+    href: 'https://t.me/cryptonear',
   },
   {
     icon: 'discord',
-    href: 'http://google.com',
+    href: 'https://discord.gg/TWyADPNwkq',
   },
   {
     icon: 'github',
-    href: 'http://google.com',
+    href: 'https://github.com/near-daos',
   },
   {
     icon: 'wechat',
-    href: 'http://google.com',
+    href: 'https://near.org/wechat',
   },
 ];
 

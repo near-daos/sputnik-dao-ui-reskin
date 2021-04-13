@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 
-import { ReactComponent as MothershipLogo } from 'images/mothership-logo-small.svg';
 import { LandingMobileMenu } from 'components/LandingMobileMenu';
 import { useHistory } from 'react-router-dom';
-import { Button, IconButton } from '../UILib';
+import { Button, IconButton } from 'components/UILib';
+
+import { ReactComponent as NearLogo } from 'images/near-logo.svg';
+import { ReactComponent as NearLogoSmall } from 'images/near-logo-small.svg';
 
 import s from './LandingHeader.module.scss';
 
@@ -42,10 +44,10 @@ const LandingHeader: React.FC<LandingHeaderProps> = ({
           icon="menu"
           variant="clear"
         />
-        <button className={s.logo} onClick={() => goToSlide(0)}>
-          <MothershipLogo className={s.logoIcon} />
-          <span className={s.logoText}>Mothership</span>
-        </button>
+        <a href="https://near.org/">
+          <NearLogo className={s.logo} />
+          <NearLogoSmall className={s.logoSmall} />
+        </a>
         <nav className={s.menu}>
           {menuLinks.map((name, index) => (
             <button
@@ -64,7 +66,7 @@ const LandingHeader: React.FC<LandingHeaderProps> = ({
             history.push('/select-dao');
           }}
         >
-          Connect to Mothership
+          Launch SputnikDAO
         </Button>
       </header>
       {isMenuOpen && (

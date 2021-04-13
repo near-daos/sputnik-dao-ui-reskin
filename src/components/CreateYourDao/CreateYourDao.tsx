@@ -3,8 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Button } from 'components/UILib';
 
-import { ReactComponent as Houses } from 'images/houses.svg';
-import { ReactComponent as CometSky } from 'images/comet-sky.svg';
+import { ReactComponent as Spaceship } from 'images/spaceship.svg';
 
 import s from './CreateYourDao.module.scss';
 
@@ -30,8 +29,7 @@ const CreateYourDao: React.FC = () => {
         </Button>
       </div>
       <div className={s.figureContainer}>
-        <CometSky className={s.cometsFigure} />
-        <Houses className={s.cityFigure} />
+        <Spaceship className={s.figure} />
       </div>
     </div>
   );

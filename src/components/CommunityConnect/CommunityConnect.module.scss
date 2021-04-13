@@ -18,7 +18,7 @@
   margin: 0 auto;
   max-width: functions.calc-rem(850);
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .heading {
@@ -82,19 +82,27 @@
 }
 
 .figureContainer {
-  align-items: flex-start;
   bottom: 0;
-  justify-content: flex-end;
+  display: block;
+  left: 0;
   position: absolute;
-  right: 65%;
+  right: 0;
   top: 0;
-  width: 35%;
 }
 
-.figure {
-  height: auto;
-  max-height: 100%;
-  max-width: 100%;
-  overflow: initial;
-  width: auto;
+.cityFigure {
+  bottom: 0;
+  left: 0;
+  max-height: functions.calc-rem(400);
+  position: absolute;
+  width: 100%;
+}
+
+.cometsFigure {
+  left: 0;
+  max-height: functions.calc-rem(600);
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }

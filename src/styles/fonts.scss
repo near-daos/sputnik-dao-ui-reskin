@@ -13,3 +13,9 @@
   '../fonts/aileron/semibold/Aileron-SemiBold-webfont',
   600
 );
+
+@include mixins.font-face(
+  'Source Code Pro',
+  '../fonts/source-code-pro/regular/sourcecodepro-regular-webfont',
+  400
+);

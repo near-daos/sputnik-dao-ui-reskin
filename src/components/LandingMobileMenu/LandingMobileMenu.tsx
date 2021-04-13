@@ -2,8 +2,9 @@ import React from 'react';
 import cn from 'classnames';
 
 import { Button, IconButton } from 'components/UILib';
-import { ReactComponent as MothershipLogo } from 'images/mothership-logo-small.svg';
 import { LandingFooter } from 'components/LandingFooter';
+
+import { ReactComponent as NearLogo } from 'images/near-logo.svg';
 
 import s from './LandingMobileMenu.module.scss';
 
@@ -30,10 +31,9 @@ const LandingMobileMenu: React.FC<LandingMobileMenuProps> = ({
         icon="close"
         variant="clear"
       />
-      <button className={s.logo} onClick={() => handleMenuLink(0)}>
-        <MothershipLogo className={s.logoIcon} />
-        <span className={s.logoText}>Mothership</span>
-      </button>
+      <a href="https://near.org/">
+        <NearLogo className={s.logo} />
+      </a>
     </header>
     <section className={s.content}>
       <nav className={s.menu}>
@@ -52,7 +52,7 @@ const LandingMobileMenu: React.FC<LandingMobileMenuProps> = ({
         ))}
       </nav>
       <Button className={s.connectButton} size="sm">
-        Connect to Mothership
+        Launch SputnikDAO
       </Button>
     </section>
     <LandingFooter />

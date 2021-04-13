@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'components/UILib';
 
 import { ReactComponent as Spaceman } from 'images/spaceman.svg';
 
@@ -11,20 +10,25 @@ const Developers: React.FC = () => (
       <div className={s.info}>
         <h3 className={s.heading}>Developers</h3>
         <p className={s.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          Build apps quickly using languages you already know (Rust and
+          AssemblyScript). Get inspired with 1st class{' '}
+          <a href="https://examples.near.org/">demos</a>, fantastic{' '}
+          <a href="https://docs.near.org/docs/develop/basics/getting-started">
+            docs
+          </a>
+          , and slick tooling. Attention to User Experience extends to your
+          Developer Experience with NEAR. Learn at your own pace at{' '}
+          <a href="https://near.academy/">Near Academy</a> or join the 5 days
+          intensive{' '}
+          <a href="https://learnnear.club/certified-near-developer-application/">
+            NEAR Certified Developer Program
+          </a>
+          . Check the unique possibilities of NEAR with biweekly{' '}
+          <a href="https://www.youtube.com/playlist?list=PL9tzQn_TEuFXnHlfh00etU57IjpRlQGpY">
+            Live App Review videos
+          </a>
+          . Time to <code>npx create-near-app your-awesome-project</code>!
         </p>
-        <div className={s.buttons}>
-          <Button size="lg">Try it</Button>
-          <Button size="lg" variant="outline">
-            Docs
-          </Button>
-        </div>
       </div>
     </div>
     <div className={s.figureContainer}>
