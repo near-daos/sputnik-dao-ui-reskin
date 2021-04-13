@@ -49,10 +49,6 @@
 }
 
 .picture {
-  background-image: url('../../images/placeholder.png');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: contain;
   grid-area: picture;
   height: functions.calc-rem(176);
   object-fit: cover;

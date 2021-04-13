@@ -27,6 +27,7 @@ import { DaoItem } from 'types/dao';
 
 import { fetchProposals } from 'redux/actions';
 import imgPlaceholder from 'images/placeholder.png';
+import { appConfig } from 'config';
 import s from './DaoPage.module.scss';
 
 export const DaoPage: React.FC = () => {
@@ -65,7 +66,7 @@ export const DaoPage: React.FC = () => {
           <img
             ref={imgRef}
             className={s.picture}
-            src={`https://sputnik-dao.s3.eu-central-1.amazonaws.com/${dao?.id}.png`}
+            src={`${appConfig.logoPath}${dao?.id}.png`}
             onError={handleError}
             alt="Logo"
           />

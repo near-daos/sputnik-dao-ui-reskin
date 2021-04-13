@@ -6,6 +6,7 @@ import { DaoItem } from 'types/dao';
 import { Button, SvgIcon } from 'components/UILib';
 import { useHistory } from 'react-router-dom';
 import imgPlaceholder from 'images/placeholder.png';
+import { appConfig } from 'config';
 import s from './DaoCard.module.scss';
 
 export interface DaoCardProps {
@@ -33,7 +34,7 @@ const DaoCard: React.FC<DaoCardProps> = ({ className, dao, size = 'lg' }) => {
       <div className={s.corner} />
       <div className={cn(s.imageWrapper, s[size])}>
         <img
-          src={`https://sputnik-dao.s3.eu-central-1.amazonaws.com/${dao?.id}.png`}
+          src={`${appConfig.logoPath}${dao?.id}.png`}
           onError={handleError}
           className={s.image}
           alt="dao-logo"

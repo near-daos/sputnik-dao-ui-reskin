@@ -13,8 +13,12 @@ import { BrowserRouter, Route, RouteProps } from 'react-router-dom';
 import debounce from 'lodash.debounce';
 
 import { NearService } from 'services/NearService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchAccount, fetchDaoList } from 'redux/actions';
+import { getRandomLogo } from 'services/LogoRandomizer';
+import { daoListSelector } from 'redux/selectors';
+import { checkIfLogoExist } from 'utils';
+import { AwsUploader } from 'services/AwsUploader';
 import { MainLayout } from './components';
 import { LandingPage } from './pages/LandingPage/LandingPage';
 import { SelectDao } from './pages/SelectDao/SelectDao';
@@ -60,6 +64,7 @@ const App: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
   const mainLayoutPaths = routes.map((route) => route.path);
   const dispatch = useDispatch();
+  const daoList = useSelector(daoListSelector);
 
   const setVH = () => {
     // dynamically set 1vh value for mobile full height bug fix
@@ -73,12 +78,29 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    NearService.init().then(() => {
+    NearService.init().then(async () => {
       dispatch(fetchAccount.started());
       dispatch(fetchDaoList.started());
       setIsInitialized(true);
     });
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!daoList[0]) return;
+
+    checkIfLogoExist(daoList[0].id).then((isExist) => {
+      if (isExist) return;
+
+      daoList.forEach(async (dao) => {
+        const isLogoExist = await checkIfLogoExist(dao.id);
+
+        if (!isLogoExist) {
+          const file = await getRandomLogo(dao.id);
+          await AwsUploader.uploadToBucket(file);
+        }
+      });
+    });
+  }, [daoList]);
 
   if (!isInitialized) {
     return null; // todo add loader

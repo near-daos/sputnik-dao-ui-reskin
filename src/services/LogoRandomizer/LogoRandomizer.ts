@@ -1,8 +1,37 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getRandomIntInclusive } from 'utils';
+import { getRandomIntInclusive, shuffle } from 'utils';
 import { GradientEffect } from './filters/GradientEffect';
 import { iconColors, ringColors } from './settings';
+
+const cardWidth = 834;
+const cardHeight = 1158;
+const frameWidth = 600;
+const frameHeight = 900;
+
+const getVariation = (
+  numberOfRings: number,
+  numberOfShapes: number,
+  numberOfRingColors: number,
+  numberOfShapeColors: number,
+) => {
+  const variations = [];
+
+  for (let r = 0; r < numberOfRings; r++) {
+    for (let s = 0; s < numberOfShapes; s++) {
+      for (let rc = 0; rc < numberOfRingColors; rc++) {
+        for (let sc = 0; sc < numberOfShapeColors; sc++) {
+          variations.push([r, s, rc, sc]);
+        }
+      }
+    }
+  }
+
+  shuffle(variations);
+
+  return variations;
+};
 
 const loadScript = (src: string) =>
   new Promise((resolve, reject) => {
@@ -14,11 +43,6 @@ const loadScript = (src: string) =>
     script.src = src;
     document.head.append(script);
   });
-
-const cardWidth = 834;
-const cardHeight = 1158;
-const frameWidth = 600;
-const frameHeight = 900;
 
 export const loadImage = (url: string): any =>
   new Promise((resolve) => window.fabric.Image.fromURL(url, resolve));
@@ -108,9 +132,10 @@ export const addFront = (canvas: any, img: any, colorParams: any): void => {
 };
 
 let fabricPromise: Promise<unknown> | null = null;
+const variations = getVariation(11, 13, 4, 7);
 
-export const getRandomLogo = async (): Promise<Blob> =>
-  new Promise<Blob>((resolve) => {
+export const getRandomLogo = async (logoName: string): Promise<File> =>
+  new Promise<File>((resolve) => {
     if (!fabricPromise) {
       fabricPromise = loadScript(
         '//cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js',
@@ -120,13 +145,22 @@ export const getRandomLogo = async (): Promise<Blob> =>
     fabricPromise.then(async () => {
       GradientEffect(window);
 
-      const ring = getRandomIntInclusive(1, 12);
+      const [
+        ringIndex,
+        shapeIndex,
+        ringColorIndex,
+        shapeColorIndex,
+      ] = variations[getRandomIntInclusive(0, variations.length - 1)];
 
-      const back = await loadImage(`/logo-randomizer/back/back${ring}.png`);
-      const shape = await loadImage(
-        `/logo-randomizer/shape/shape${getRandomIntInclusive(1, 14)}.png`,
+      const back = await loadImage(
+        `/logo-randomizer/back/back${ringIndex + 1}.png`,
       );
-      const front = await loadImage(`/logo-randomizer/front/front${ring}.png`);
+      const shape = await loadImage(
+        `/logo-randomizer/shape/shape${shapeIndex + 1}.png`,
+      );
+      const front = await loadImage(
+        `/logo-randomizer/front/front${ringIndex + 1}.png`,
+      );
 
       const canvasEl = document.createElement('canvas');
 
@@ -138,9 +172,9 @@ export const getRandomLogo = async (): Promise<Blob> =>
       canvas.interactive = false;
 
       canvas.clear();
-      addBack(canvas, back, ringColors[getRandomIntInclusive(0, 4)]);
-      addShape(canvas, shape, iconColors[getRandomIntInclusive(0, 7)]);
-      addFront(canvas, front, ringColors[getRandomIntInclusive(0, 4)]);
+      addBack(canvas, back, ringColors[ringColorIndex]);
+      addShape(canvas, shape, iconColors[shapeColorIndex]);
+      addFront(canvas, front, ringColors[ringColorIndex]);
 
       const blob = await new Promise<Blob | null>((resolve1) => {
         setTimeout(() => canvasEl.toBlob(resolve1), 0);
@@ -150,6 +184,8 @@ export const getRandomLogo = async (): Promise<Blob> =>
         throw new Error('Error while creating logo');
       }
 
-      resolve(blob);
+      const file = new File([blob], `${logoName}.png`);
+
+      resolve(file);
     });
   });

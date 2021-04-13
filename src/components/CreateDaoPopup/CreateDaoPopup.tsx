@@ -90,10 +90,8 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   };
 
   const onSubmit = async () => {
-    const blob = await getRandomLogo();
-    const file = new File(
-      [blob],
-      `${values.name}.${nearConfig.contractName}.png`,
+    const file = await getRandomLogo(
+      `${values.name}.${nearConfig.contractName}`,
     );
 
     await AwsUploader.uploadToBucket(file);

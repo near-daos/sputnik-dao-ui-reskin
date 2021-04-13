@@ -5,6 +5,7 @@ import cn from 'classnames';
 import { DaoItem } from 'types/dao';
 import imgPlaceholder from 'images/placeholder.png';
 
+import { appConfig } from 'config';
 import s from './DaoCardMini.module.scss';
 
 export interface DaoCardMiniProps {
@@ -33,7 +34,7 @@ const DaoCardMini: React.FC<DaoCardMiniProps> = ({
     >
       <div className={s.imageWrapper}>
         <img
-          src={`https://sputnik-dao.s3.eu-central-1.amazonaws.com/${dao?.id}.png`}
+          src={`${appConfig.logoPath}${dao?.id}.png`}
           onError={handleError}
           alt="dao-logo"
           className={s.image}
