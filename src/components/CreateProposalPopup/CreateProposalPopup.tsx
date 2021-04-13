@@ -15,7 +15,7 @@ import s from './CreateProposalPopup.module.scss';
 import { Button, IconButton, SvgIcon, TextField } from '../UILib';
 
 import { CreateProposalErrors, CreateProposalValues } from './types';
-import { validateSecondStep } from './validators';
+import { validateSecondStep, validateThirdStep } from './validators';
 
 export interface CreateProposalPopupProps {
   className?: string;
@@ -110,6 +110,17 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
 
   const onSubmit = async () => {
     if (!type) return;
+
+    const thirdStepErrors = validateThirdStep(values, type);
+
+    if (Object.keys(thirdStepErrors).length) {
+      setErrors({
+        ...errors,
+        ...thirdStepErrors,
+      });
+
+      return;
+    }
 
     await NearService.createProposal({
       target: values.target,
@@ -297,8 +308,9 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                 {type === ProposalType.ChangePurpose && (
                   <TextField
                     name="purpose"
-                    value={values.payout}
-                    error={errors.payout}
+                    value={values.purpose}
+                    error={errors.purpose}
+                    multiline
                     onChange={(val) => handleChange('purpose', val)}
                     label="New purpose"
                     className={s.input}
@@ -307,8 +319,8 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                 {type === ProposalType.ChangeVotePeriod && (
                   <TextField
                     name="votePeriod"
-                    value={values.payout}
-                    error={errors.payout}
+                    value={values.votePeriod}
+                    error={errors.votePeriod}
                     onChange={(val) => handleChange('votePeriod', val)}
                     label="New Vote Period"
                     className={s.input}

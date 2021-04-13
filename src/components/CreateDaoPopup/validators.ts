@@ -1,27 +1,13 @@
 import { nearConfig } from 'config';
 import { DaoItem } from 'types/dao';
+import {
+  validateAmount,
+  validateCouncil,
+  validateNumber,
+  validateName,
+  validatePurpose,
+} from 'utils/validators';
 import { CreateDaoErrors, CreateDaoValues } from './types';
-
-// eslint-disable-next-line no-useless-escape
-const validNameRegexp = /^(?=[0-9a-zA-Z])(?=.*[0-9a-zA-Z]$)(?!.*__.*)(?!.*--.*)[0-9a-zA-Z_\-]*$/;
-
-export const validateCouncil = (value: string): boolean =>
-  !!value && value.indexOf(',') === -1;
-
-export const validatePurpose = (value: string): boolean =>
-  !!value && value.length >= 10 && value.length <= 280;
-
-export const validateName = (value: string): boolean =>
-  !!value &&
-  value.length >= 2 &&
-  value.length <= 35 &&
-  validNameRegexp.test(value);
-
-export const validateAmount = (value: string): boolean =>
-  !!value && !Number.isNaN(value) && Number(value) >= 3.5;
-
-export const validateNumber = (value: string): boolean =>
-  !!value && !Number.isNaN(value) && value.length > 0;
 
 export const validateFirstStep = (
   values: CreateDaoValues,
