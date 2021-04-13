@@ -75,6 +75,11 @@
 
 .imageWrapper {
   align-items: center;
+  background-image: url('../../images/placeholder.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
   display: flex;
   height: functions.calc-rem(135);
   justify-content: center;

@@ -1,3 +1,5 @@
+import { nearConfig } from 'config';
+import { DaoItem } from 'types/dao';
 import { CreateDaoErrors, CreateDaoValues } from './types';
 
 // eslint-disable-next-line no-useless-escape
@@ -21,7 +23,10 @@ export const validateAmount = (value: string): boolean =>
 export const validateNumber = (value: string): boolean =>
   !!value && !Number.isNaN(value) && value.length > 0;
 
-export const validateFirstStep = (values: CreateDaoValues): CreateDaoErrors => {
+export const validateFirstStep = (
+  values: CreateDaoValues,
+  daoList: DaoItem[],
+): CreateDaoErrors => {
   const errors: CreateDaoErrors = {};
 
   if (!validateCouncil(values.council)) {
@@ -35,6 +40,14 @@ export const validateFirstStep = (values: CreateDaoValues): CreateDaoErrors => {
   if (!validateName(values.name)) {
     errors.name =
       'Please enter between 2 and 35 chars, lowercase characters (a-z), digits (0-9),(_-) can be used as separators';
+  }
+
+  const existDao = daoList.find(
+    (dao) => dao.id === `${values.name}.${nearConfig.contractName}`,
+  );
+
+  if (existDao) {
+    errors.name = `Dao ${existDao.id} already exists`;
   }
 
   return errors;

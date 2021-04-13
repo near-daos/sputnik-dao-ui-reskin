@@ -44,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
     dispatch(logout.started());
   };
 
-  const showCreateDaoPopup = () => {
+  const showCreateDaoPopup = async () => {
     setIsShowCreateDaoPopup(true);
   };
 

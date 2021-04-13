@@ -57,7 +57,6 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
           const index = swiper.realIndex;
 
           setActiveSlide(index);
-          console.log(index);
           history.push(`/dao/${daos[index].id}`);
         }}
       >

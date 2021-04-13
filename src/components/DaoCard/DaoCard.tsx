@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import cn from 'classnames';
 
@@ -15,15 +16,28 @@ export interface DaoCardProps {
 
 const DaoCard: React.FC<DaoCardProps> = ({ className, dao, size = 'lg' }) => {
   const history = useHistory();
+
   const handleSelect = () => {
     history.push(`/dao/${dao.id}`);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleError = (event: any) => {
+    event.target.onerror = null;
+    event.target.src = imgPlaceholder;
+    event.target.style = 'background-image: none';
   };
 
   return (
     <div className={cn(s.root, className, s[size])}>
       <div className={s.corner} />
       <div className={cn(s.imageWrapper, s[size])}>
-        <img src={imgPlaceholder} className={s.image} alt="dao-logo" />
+        <img
+          src={`https://sputnik-dao.s3.eu-central-1.amazonaws.com/${dao?.id}.png`}
+          onError={handleError}
+          className={s.image}
+          alt="dao-logo"
+        />
       </div>
       <div className={s.content}>
         <p className={cn(s.title, s[size])}>{dao.id}</p>

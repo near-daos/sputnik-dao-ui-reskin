@@ -111,7 +111,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
   const onSubmit = async () => {
     if (!type) return;
 
-    const response = await NearService.createProposal({
+    await NearService.createProposal({
       target: values.target,
       description: values.description,
       link: values.link,
@@ -119,8 +119,6 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
       daoId: dao.id,
       kind: mapToKind(type, values),
     });
-
-    console.log('response: ', response);
   };
 
   let progressBarSize: 'sm' | 'md' | 'lg' = 'sm';

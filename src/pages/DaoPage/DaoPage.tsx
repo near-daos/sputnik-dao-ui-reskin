@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-param-reassign */
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Redirect,
@@ -33,6 +34,7 @@ export const DaoPage: React.FC = () => {
   const params = useParams<{ id: string }>();
   const { path, url } = useRouteMatch();
   const [isShowCreateProposal, setIsShowCreateProposal] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   const daoList = useSelector(daoListSelector);
   const dao = useSelector<StoreState, DaoItem | undefined>((state) =>
@@ -46,6 +48,13 @@ export const DaoPage: React.FC = () => {
     dispatch(fetchProposals.started(params.id));
   }, [dispatch, params.id]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleError = (event: any) => {
+    event.target.onerror = null;
+    event.target.src = imgPlaceholder;
+    event.target.style = 'background-image: none';
+  };
+
   return (
     <section className={s.root}>
       <section className={s.slider}>
@@ -53,7 +62,13 @@ export const DaoPage: React.FC = () => {
       </section>
       <div className={s.content}>
         <section className={s.header}>
-          <img className={s.picture} src={imgPlaceholder} alt="" />
+          <img
+            ref={imgRef}
+            className={s.picture}
+            src={`https://sputnik-dao.s3.eu-central-1.amazonaws.com/${dao?.id}.png`}
+            onError={handleError}
+            alt="Logo"
+          />
           <h1 className={s.heading}>DAO {dao?.id}</h1>
           <div className={s.nav}>
             <NavTabs

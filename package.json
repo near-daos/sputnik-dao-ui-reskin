@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/lodash.debounce": "^4.0.6",
     "@types/swiper": "^5.4.2",
+    "aws-sdk": "^2.885.0",
     "camelcase-keys": "^6.2.2",
     "classnames": "^2.2.6",
     "decimal.js": "^10.2.1",

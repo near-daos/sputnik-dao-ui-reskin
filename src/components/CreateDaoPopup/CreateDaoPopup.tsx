@@ -7,10 +7,16 @@ import useMedia from 'hooks/use-media';
 import { StepProgressBar } from 'components/StepProgressBar';
 import { DaoLogoButton } from 'components/DaoLogoButton';
 import { NearService } from 'services/NearService';
-import s from './CreateDaoPopup.module.scss';
+import { getRandomLogo } from 'services/LogoRandomizer';
+import { AwsUploader } from 'services/AwsUploader';
+import { nearConfig } from 'config';
+import { useSelector } from 'react-redux';
+import { daoListSelector } from 'redux/selectors';
 import { Button, IconButton, SvgIcon, TextField } from '../UILib';
 import { CreateDaoErrors, CreateDaoValues } from './types';
 import { validateFirstStep, validateSecondStep } from './validators';
+
+import s from './CreateDaoPopup.module.scss';
 
 export interface CreateDaoPopupProps {
   className?: string;
@@ -37,6 +43,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   const media = useMedia();
   const [values, setValues] = useState<CreateDaoValues>(initialValues);
   const [errors, setErrors] = useState<CreateDaoErrors>({});
+  const daoList = useSelector(daoListSelector);
 
   const handleChange = (field: keyof CreateDaoValues, value: string) => {
     if (errors[field]) {
@@ -53,7 +60,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   };
 
   const onSubmitFirstStep = () => {
-    const firstStepErrors = validateFirstStep(values);
+    const firstStepErrors = validateFirstStep(values, daoList);
 
     if (Object.keys(firstStepErrors).length) {
       setErrors({
@@ -83,9 +90,14 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   };
 
   const onSubmit = async () => {
-    const response = await NearService.createDao(values);
+    const blob = await getRandomLogo();
+    const file = new File(
+      [blob],
+      `${values.name}.${nearConfig.contractName}.png`,
+    );
 
-    console.log('response: ', response);
+    await AwsUploader.uploadToBucket(file);
+    await NearService.createDao(values);
 
     onClose?.();
   };

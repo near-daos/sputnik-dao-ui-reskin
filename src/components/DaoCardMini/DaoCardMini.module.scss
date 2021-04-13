@@ -34,6 +34,12 @@
 }
 
 .image {
+  align-items: center;
+  background-image: url('../../images/placeholder.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
   height: 100%;
   object-fit: contain;
   width: 100%;

@@ -26,6 +26,7 @@ enum Mode {
 export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   const [mode, setMode] = useState(Mode.Carousel);
   const [activeSlide, setActiveSlide] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [swiper, setSwiper] = useState<any>();
   const media = useMedia();
   const [searchText, setSearchText] = useState('');
