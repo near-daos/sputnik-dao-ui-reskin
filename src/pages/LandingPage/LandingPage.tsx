@@ -5,11 +5,9 @@ import SwiperClass from 'swiper/types/swiper-class';
 
 import { LandingHeader } from 'components/LandingHeader';
 import { LandingFooter } from 'components/LandingFooter';
-import { LandingHome } from 'components/LandingHome';
 import { HowItWorks } from 'components/HowItWorks';
 import { Developers } from 'components/Developers';
 import { CommunityConnect } from 'components/CommunityConnect';
-import { CreateYourDao } from 'components/CreateYourDao';
 import { breakpoints } from 'hooks/use-media';
 import { ProgressBar } from 'components/UILib';
 
@@ -21,10 +19,6 @@ SwiperCore.use([Mousewheel, Controller]);
 
 const landingSlides = [
   {
-    name: 'Home',
-    children: LandingHome,
-  },
-  {
     name: 'How it works',
     children: HowItWorks,
   },
@@ -35,10 +29,6 @@ const landingSlides = [
   {
     name: 'Community',
     children: CommunityConnect,
-  },
-  {
-    name: 'Create DAO',
-    children: CreateYourDao,
   },
 ];
 
