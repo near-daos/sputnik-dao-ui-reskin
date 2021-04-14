@@ -11,6 +11,12 @@
   white-space: nowrap;
 }
 
+.active {
+  .label {
+    text-decoration: underline;
+  }
+}
+
 .root.default {
   --text-color: var(--theme-chip-icon-active-default);
 
