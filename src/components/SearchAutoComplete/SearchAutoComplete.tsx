@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import SearchBar, { SearchBarProps } from 'components/SearchBar/SearchBar';
 import { highlightSubstring } from 'utils/highlightSubstring';
 import { DaoItem } from 'types/dao';
@@ -31,6 +31,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
   const [searchText, setSearchText] = useState('');
   const [isShowResult, setIsShowResult] = useState(false);
   const [daoResult, setDaoResult] = useState<DaoItem[]>([]);
+  const history = useHistory();
 
   useEffect(() => {
     if (!searchText) {
@@ -65,6 +66,10 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
     setSearchText(value);
   };
 
+  const handleSubmit = () => {
+    history.push(`/search/dao/?query=${searchText}`);
+  };
+
   return (
     <div className={cn(s.root, className)}>
       <SearchBar
@@ -74,6 +79,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
         name="search"
         className={s.search}
         size={searchBarSize}
+        onSubmit={handleSubmit}
       />
       {isShowResult && (
         <>

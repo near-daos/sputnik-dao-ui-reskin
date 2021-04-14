@@ -77,11 +77,11 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
                 size="sm"
                 onClick={toggleMenu}
               />
-              <a href="/select-dao" className={s.logo}>
+              <a href="/" className={s.logo}>
                 <SputnikDaoLogo className={s.logoIcon} />
               </a>
-              <a className={s.link} href="/">
-                Discover DAO
+              <a className={s.link} href="/select-dao">
+                All DAO
               </a>
             </nav>
             {showSearchBar && (

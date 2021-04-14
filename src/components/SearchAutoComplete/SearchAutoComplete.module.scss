@@ -17,7 +17,7 @@
   position: fixed;
   top: 0;
   width: 100vW;
-  z-index: 1;
+  z-index: 99;
 
 
   @include tablet-portrait {
@@ -28,7 +28,7 @@
 .search {
   background-color: var(--theme-autocomplete-bg);
   position: relative;
-  z-index: 2;
+  z-index: 100;
 }
 
 .resultWrapper {
