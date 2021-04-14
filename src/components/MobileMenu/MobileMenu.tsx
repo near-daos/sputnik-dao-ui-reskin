@@ -77,26 +77,26 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         </div>
       </header>
       <section className={s.content}>
+        {isAuth && (
+          <div className={s.accountWrapper}>
+            <div className={s.iconWrapper}>
+              <div className={s.icon} />
+            </div>
+            <div className={s.textWrapper}>
+              <p className={s.title}>Signed in as</p>
+              <p className={s.accountText}>{accountName}</p>
+            </div>
+          </div>
+        )}
         <nav className={s.menuList}>
-          <a className={s.menuLink} href="/">
-            Discover DAO
+          <a className={s.menuLink} href="/select-dao">
+            All DAO
           </a>
         </nav>
         {isAuth && (
-          <>
-            <div className={s.accountWrapper}>
-              <div className={s.iconWrapper}>
-                <div className={s.icon} />
-              </div>
-              <div className={s.textWrapper}>
-                <p className={s.title}>Signed in as</p>
-                <p className={s.accountText}>{accountName}</p>
-              </div>
-            </div>
-            <button className={s.signOut} onClick={onSingOut}>
-              Sing Out
-            </button>
-          </>
+          <button className={s.signOut} onClick={onSingOut}>
+            Sign Out
+          </button>
         )}
       </section>
       <Footer className={s.footer} />

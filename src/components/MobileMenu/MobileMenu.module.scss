@@ -73,7 +73,7 @@
 }
 
 .menuList {
-  margin: functions.calc-rem(18) 0;
+  margin: functions.calc-rem(24) 0;
 }
 
 .menuLink {
@@ -96,7 +96,7 @@
   align-items: center;
   display: flex;
   flex-direction: row;
-  margin-top: functions.calc-rem(48);
+  margin-top: functions.calc-rem(24);
 
   @include media.tablet-portrait {
     margin-top: functions.calc-rem(32);

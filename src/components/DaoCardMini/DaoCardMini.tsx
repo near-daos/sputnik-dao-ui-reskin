@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { DaoItem } from 'types/dao';
 import imgPlaceholder from 'images/placeholder.png';
 
-import { appConfig } from 'config';
+// import { appConfig } from 'config';
 import s from './DaoCardMini.module.scss';
 
 export interface DaoCardMiniProps {
@@ -32,14 +32,14 @@ const DaoCardMini: React.FC<DaoCardMiniProps> = ({
         [s.active]: active,
       })}
     >
-      <div className={s.imageWrapper}>
-        <img
-          src={`${appConfig.logoPath}${dao?.id}.png`}
-          onError={handleError}
-          alt="dao-logo"
-          className={s.image}
-        />
-      </div>
+      {/* <div className={s.imageWrapper}> */}
+      {/*  <img */}
+      {/*    src={`${appConfig.logoPath}${dao?.id}.png`} */}
+      {/*    onError={handleError} */}
+      {/*    alt="dao-logo" */}
+      {/*    className={s.image} */}
+      {/*  /> */}
+      {/* </div> */}
       <div className={s.overlay} />
       <p className={s.name}>{dao.id}</p>
     </div>
