@@ -160,12 +160,8 @@ class NearService {
 
   public async getDaoList(): Promise<DaoItem[]> {
     const list: string[] = await this.factoryContract.get_dao_list();
-    const filteredList = list.filter(
-      (daoId: string) => daoId !== 'daotest9.dev-1610115292586-3217148', // todo - remove
-    );
-
     const details = await Promise.all(
-      filteredList.map((daoId: string) =>
+      list.map((daoId: string) =>
         Promise.all([
           this.getDaoAmount(daoId),
           this.getBond(daoId),
@@ -177,7 +173,7 @@ class NearService {
       ),
     );
 
-    return filteredList.map(
+    return list.map(
       (daoId, index): DaoItem => ({
         id: daoId,
         amount: details[index][0],
@@ -192,16 +188,35 @@ class NearService {
   }
 
   public async getDaoState(contractId: string): Promise<AccountState> {
-    const account = await this.near.account(contractId);
+    try {
+      const account = await this.near.account(contractId);
 
-    return account.state();
+      return account.state();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+
+      return {
+        amount: '0',
+        code_hash: '',
+        storage_usage: 0,
+        locked: '0',
+      };
+    }
   }
 
   public async getDaoAmount(contractId: string): Promise<string> {
-    const state = await this.getDaoState(contractId);
-    const amountYokto = new Decimal(state.amount);
+    try {
+      const state = await this.getDaoState(contractId);
+      const amountYokto = new Decimal(state.amount);
 
-    return amountYokto.div(yoktoNear).toFixed(2);
+      return amountYokto.div(yoktoNear).toFixed(2);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+
+      return '0';
+    }
   }
 
   public async getBond(contractId: string): Promise<string> {
@@ -232,12 +247,26 @@ class NearService {
     }
   }
 
-  public getNumProposals(contractId: string): Promise<number> {
-    return this.contractPool.get(contractId).get_num_proposals();
+  public async getNumProposals(contractId: string): Promise<number> {
+    try {
+      return await this.contractPool.get(contractId).get_num_proposals();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+
+      return 0;
+    }
   }
 
-  public getPurpose(contractId: string): Promise<string> {
-    return this.contractPool.get(contractId).get_purpose();
+  public async getPurpose(contractId: string): Promise<string> {
+    try {
+      return await this.contractPool.get(contractId).get_purpose();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+
+      return '';
+    }
   }
 
   public async getProposals(
@@ -245,45 +274,66 @@ class NearService {
     limit: number,
     index = 0,
   ): Promise<Proposal[]> {
-    const proposals = await this.contractPool
-      .get(contractId)
-      .get_proposals({ from_index: index, limit });
+    try {
+      const proposals = await this.contractPool
+        .get(contractId)
+        .get_proposals({ from_index: index, limit });
 
-    return camelcaseKeys(proposals, { deep: true }).map(
-      (item: ProposalRaw, itemIndex: number) => {
-        if (item.kind.type === ProposalType.Payout) {
-          const amountYokto = new Decimal(item.kind.amount);
+      return camelcaseKeys(proposals, { deep: true }).map(
+        (item: ProposalRaw, itemIndex: number) => {
+          if (item.kind.type === ProposalType.Payout) {
+            const amountYokto = new Decimal(item.kind.amount);
 
-          amountYokto.div(yoktoNear).toFixed(2);
+            amountYokto.div(yoktoNear).toFixed(2);
+
+            return {
+              ...item,
+              kind: {
+                type: ProposalType.Payout,
+                amount: amountYokto.div(yoktoNear).toFixed(2),
+              },
+              daoId: contractId,
+              id: itemIndex,
+            };
+          }
 
           return {
             ...item,
-            kind: {
-              type: ProposalType.Payout,
-              amount: amountYokto.div(yoktoNear).toFixed(2),
-            },
             daoId: contractId,
             id: itemIndex,
           };
-        }
+        },
+      );
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
 
-        return {
-          ...item,
-          daoId: contractId,
-          id: itemIndex,
-        };
-      },
-    );
+      return [];
+    }
   }
 
-  public async getAllProposals(contractId: string) {
-    const limit = await this.getNumProposals(contractId);
+  public async getAllProposals(contractId: string): Promise<Proposal[]> {
+    try {
+      const limit = await this.getNumProposals(contractId);
 
-    return this.getProposals(contractId, limit);
+      return await this.getProposals(contractId, limit);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+
+      return [];
+    }
   }
 
-  public getCouncil(contractId: string): Promise<string[]> {
-    return this.contractPool.get(contractId).get_council();
+  public async getCouncil(contractId: string): Promise<string[]> {
+    try {
+      return await this.contractPool.get(contractId).get_council();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+
+      return [];
+    }
   }
 
   public addProposal(contractId: string): Promise<void> {
