@@ -16,6 +16,7 @@ import { SmallDaoSlider } from 'components/SmallDaoSlider';
 import { CreateProposalPopup } from 'components/CreateProposalPopup';
 
 import {
+  accountSelector,
   daoListSelector,
   daoSelector,
   proposalListSelector,
@@ -25,8 +26,7 @@ import { StoreState } from 'types/store';
 import { Proposal } from 'types/proposal';
 import { DaoItem } from 'types/dao';
 
-import { fetchProposals } from 'redux/actions';
-import imgPlaceholder from 'images/placeholder.png';
+import { fetchProposals, login } from 'redux/actions';
 import { appConfig } from 'config';
 import s from './DaoPage.module.scss';
 
@@ -37,6 +37,7 @@ export const DaoPage: React.FC = () => {
   const [isShowCreateProposal, setIsShowCreateProposal] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
+  const account = useSelector(accountSelector);
   const daoList = useSelector(daoListSelector);
   const dao = useSelector<StoreState, DaoItem | undefined>((state) =>
     daoSelector(state, params.id),
@@ -49,11 +50,18 @@ export const DaoPage: React.FC = () => {
     dispatch(fetchProposals.started(params.id));
   }, [dispatch, params.id]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleError = (event: any) => {
-    event.target.onerror = null;
-    event.target.src = imgPlaceholder;
-    event.target.style = 'background-image: none';
+  const handleShowCreateProposalPopup = () => {
+    if (account) {
+      setIsShowCreateProposal(true);
+
+      return;
+    }
+
+    dispatch(login.started());
+  };
+
+  const handleCreateProposal = () => {
+    setIsShowCreateProposal(false);
   };
 
   return (
@@ -67,7 +75,6 @@ export const DaoPage: React.FC = () => {
             ref={imgRef}
             className={s.picture}
             src={`${appConfig.logoPath}${dao?.id}.png`}
-            onError={handleError}
             alt="Logo"
           />
           <h1 className={s.heading}>DAO {dao?.id}</h1>
@@ -84,9 +91,7 @@ export const DaoPage: React.FC = () => {
             <Button
               className={s.button}
               variant="outline"
-              onClick={() => {
-                setIsShowCreateProposal(true);
-              }}
+              onClick={handleShowCreateProposalPopup}
             >
               Create new proposal
             </Button>
@@ -109,12 +114,7 @@ export const DaoPage: React.FC = () => {
       </div>
 
       {isShowCreateProposal && dao && (
-        <CreateProposalPopup
-          dao={dao}
-          onClose={() => {
-            setIsShowCreateProposal(false);
-          }}
-        />
+        <CreateProposalPopup dao={dao} onClose={handleCreateProposal} />
       )}
     </section>
   );

@@ -10,7 +10,6 @@ import {
   SvgIcon,
 } from 'components/UILib';
 import { useHistory } from 'react-router-dom';
-import imgPlaceholder from 'images/placeholder.png';
 import { appConfig } from 'config';
 import s from './DaoCard.module.scss';
 
@@ -33,13 +32,6 @@ const DaoCard: React.FC<DaoCardProps> = ({
     history.push(`/dao/${dao.id}`);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleError = (event: any) => {
-    event.target.onerror = null;
-    event.target.src = imgPlaceholder;
-    event.target.style = 'background-image: none';
-  };
-
   return (
     <div className={cn(s.root, className, s[size])}>
       <PixelCorner
@@ -50,7 +42,6 @@ const DaoCard: React.FC<DaoCardProps> = ({
       <div className={cn(s.imageWrapper, s[size])}>
         <img
           src={`${appConfig.logoPath}${dao?.id}.png`}
-          onError={handleError}
           className={s.image}
           alt="dao-logo"
         />
