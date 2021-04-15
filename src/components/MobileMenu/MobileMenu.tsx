@@ -59,16 +59,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           </a>
         </div>
         <div className={s.controls}>
-          {!isAuth && (
-            <Button
-              className={cn(s.control, s.authBtn)}
-              size="sm"
-              variant="outline"
-              onClick={onSingIn}
-            >
-              Sign In
-            </Button>
-          )}
           <ThemeSwitcher
             value={theme}
             onChange={toggleTheme}
@@ -77,6 +67,16 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         </div>
       </header>
       <section className={s.content}>
+        {!isAuth && (
+          <Button
+            className={cn(s.control, s.authBtn)}
+            size="sm"
+            variant="outline"
+            onClick={onSingIn}
+          >
+            Sign In
+          </Button>
+        )}
         {isAuth && (
           <div className={s.accountWrapper}>
             <div className={s.iconWrapper}>
@@ -90,7 +90,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         )}
         <nav className={s.menuList}>
           <a className={s.menuLink} href="/select-dao">
-            All DAO
+            All DAOs
           </a>
         </nav>
         {isAuth && (
