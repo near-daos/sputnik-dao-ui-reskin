@@ -201,6 +201,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
               <div>
                 <TextField
                   name="bond"
+                  type="number"
                   value={values.bond}
                   onChange={(value) => handleChange('bond', value)}
                   error={errors.bond}
@@ -208,6 +209,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   className={s.input}
                 />
                 <TextField
+                  type="number"
                   name="votePeriod"
                   value={values.votePeriod}
                   onChange={(value) => handleChange('votePeriod', value)}
@@ -216,6 +218,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   className={s.input}
                 />
                 <TextField
+                  type="number"
                   name="gracePeriod"
                   value={values.gracePeriod}
                   onChange={(value) => handleChange('gracePeriod', value)}
@@ -224,6 +227,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   className={s.input}
                 />
                 <TextField
+                  type="number"
                   name="amountToTransfer"
                   value={values.amountToTransfer}
                   onChange={(value) => handleChange('amountToTransfer', value)}
