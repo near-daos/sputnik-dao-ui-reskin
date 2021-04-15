@@ -142,6 +142,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
                       })}
                       dao={dao}
                       size="lg"
+                      disableCornerAnimation={activeSlide !== index}
                     />
                   </SwiperSlide>
                 ))}

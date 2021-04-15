@@ -9,3 +9,4 @@ export * from './Tooltip';
 export * from './Dropdown';
 export * from './Select';
 export * from './ProgressBar';
+export * from './PixelCorner';

@@ -29,9 +29,6 @@
 }
 
 .corner {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
   height: functions.calc-rem(35);
 
   left: 0;
@@ -43,23 +40,6 @@
   @include media.tablet-landscape {
     height: functions.calc-rem(56);
     width: functions.calc-rem(80);
-  }
-
-  &.delayed {
-    background-image: var(--theme-corner-yellow);
-  }
-
-  &.inProgress {
-    background-image: var(--theme-corner-pink);
-  }
-
-  &.rejected,
-  &.fail {
-    background-image: var(--theme-corner-red);
-  }
-
-  &.approved {
-    background-image: var(--theme-corner-green);
   }
 }
 
