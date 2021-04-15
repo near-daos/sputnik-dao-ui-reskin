@@ -51,7 +51,7 @@
 .picture {
   grid-area: picture;
   height: functions.calc-rem(176);
-  object-fit: cover;
+  object-fit: contain;
   width: functions.calc-rem(176);
 
   @include media.mobile-only {

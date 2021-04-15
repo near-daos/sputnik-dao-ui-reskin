@@ -9,6 +9,7 @@
   display: flex;
   filter: var(--theme-dao-card-filter-shadow);
   flex-direction: column;
+  max-width: calc(100vW - 48px);
   position: relative;
   width: 100%;
 
@@ -57,7 +58,7 @@
   position: absolute;
   top: 0;
   width: functions.calc-rem(50);
-  
+
   @include tablet-landscape {
     height: functions.calc-rem(56);
     width: functions.calc-rem(80);

@@ -81,7 +81,7 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
                 <SputnikDaoLogo className={s.logoIcon} />
               </a>
               <a className={s.link} href="/select-dao">
-                All DAO
+                All DAOs
               </a>
             </nav>
             {showSearchBar && (
