@@ -13,7 +13,11 @@
 }
 
 .column1 {
-  width: 60%;
+  width: 100%;
+  
+  @include tablet-portrait {
+    width: 60%;
+  }
 }
 
 .column2 {

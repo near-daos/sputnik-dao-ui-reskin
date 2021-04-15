@@ -67,6 +67,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
   };
 
   const handleSubmit = () => {
+    setIsShowResult(false);
     history.push(`/search/dao/?query=${searchText}`);
   };
 

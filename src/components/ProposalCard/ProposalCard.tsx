@@ -2,7 +2,12 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { Button, SvgIcon } from 'components/UILib';
+import {
+  Button,
+  SvgIcon,
+  PixelCorner,
+  PixelCornerColors,
+} from 'components/UILib';
 
 import { Proposal, ProposalStatus, ProposalType } from 'types/proposal';
 
@@ -67,17 +72,20 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
     </a>
   );
 
+  const cornerColorsMap = {
+    [ProposalStatus.Success]: PixelCornerColors.Green,
+    [ProposalStatus.Reject]: PixelCornerColors.Red,
+    [ProposalStatus.Vote]: PixelCornerColors.Pink,
+    [ProposalStatus.Delay]: PixelCornerColors.Yellow,
+    [ProposalStatus.Fail]: PixelCornerColors.Red,
+  };
+
   return (
     <div className={cn(s.root, className)}>
       <div className={s.wrapper}>
-        <div
-          className={cn(s.corner, {
-            [s.approved]: proposal.status === ProposalStatus.Success,
-            [s.rejected]: proposal.status === ProposalStatus.Reject,
-            [s.inProgress]: proposal.status === ProposalStatus.Vote,
-            [s.delayed]: proposal.status === ProposalStatus.Delay,
-            [s.fail]: proposal.status === ProposalStatus.Fail,
-          })}
+        <PixelCorner
+          color={cornerColorsMap[proposal.status]}
+          className={s.corner}
         />
         <div className={s.header}>
           <p

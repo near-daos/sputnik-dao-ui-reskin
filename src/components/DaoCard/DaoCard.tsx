@@ -3,9 +3,13 @@ import React from 'react';
 import cn from 'classnames';
 
 import { DaoItem } from 'types/dao';
-import { Button, SvgIcon } from 'components/UILib';
+import {
+  Button,
+  PixelCorner,
+  PixelCornerColors,
+  SvgIcon,
+} from 'components/UILib';
 import { useHistory } from 'react-router-dom';
-import imgPlaceholder from 'images/placeholder.png';
 import { appConfig } from 'config';
 import s from './DaoCard.module.scss';
 
@@ -13,29 +17,31 @@ export interface DaoCardProps {
   className?: string;
   dao: DaoItem;
   size?: 'sm' | 'md' | 'lg';
+  disableCornerAnimation?: boolean;
 }
 
-const DaoCard: React.FC<DaoCardProps> = ({ className, dao, size = 'lg' }) => {
+const DaoCard: React.FC<DaoCardProps> = ({
+  className,
+  dao,
+  size = 'lg',
+  disableCornerAnimation = false,
+}) => {
   const history = useHistory();
 
   const handleSelect = () => {
     history.push(`/dao/${dao.id}`);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleError = (event: any) => {
-    event.target.onerror = null;
-    event.target.src = imgPlaceholder;
-    event.target.style = 'background-image: none';
-  };
-
   return (
     <div className={cn(s.root, className, s[size])}>
-      <div className={s.corner} />
+      <PixelCorner
+        color={PixelCornerColors.Grey}
+        className={s.corner}
+        animated={!disableCornerAnimation}
+      />
       <div className={cn(s.imageWrapper, s[size])}>
         <img
           src={`${appConfig.logoPath}${dao?.id}.png`}
-          onError={handleError}
           className={s.image}
           alt="dao-logo"
         />

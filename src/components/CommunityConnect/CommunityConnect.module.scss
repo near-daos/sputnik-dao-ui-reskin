@@ -45,6 +45,11 @@
 
 .description {
   @extend %body-1;
+
+  @include media.desktop {
+    font-size: functions.calc-rem(24);
+    line-height: functions.calc-rem(32);
+  }
 }
 
 .form {

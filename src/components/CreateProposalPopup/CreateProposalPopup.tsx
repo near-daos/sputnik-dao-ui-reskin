@@ -290,6 +290,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                 />
                 {type === ProposalType.Payout && (
                   <TextField
+                    type="number"
                     name="payout"
                     value={values.payout}
                     error={errors.payout}
@@ -319,6 +320,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                 )}
                 {type === ProposalType.ChangeVotePeriod && (
                   <TextField
+                    type="number"
                     name="votePeriod"
                     value={values.votePeriod}
                     error={errors.votePeriod}
