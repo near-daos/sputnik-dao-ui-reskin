@@ -93,7 +93,7 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<ProposalSortOption>(sortOptions[0]);
   const [filters, setFilters] = useState<ProposalFilterOption>(
-    filterOptions[0],
+    filterOptions[filterOptions.length - 1],
   );
 
   const account = useSelector(accountSelector);

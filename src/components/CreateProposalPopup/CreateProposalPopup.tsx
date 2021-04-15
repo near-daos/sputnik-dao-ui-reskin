@@ -269,9 +269,10 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                 </p>
                 <div className={s.linkWrapper}>
                   <a
-                    href="/https://gov.near.org/c/10"
+                    href="https://gov.near.org/c/10"
                     target="_blank"
                     className={s.link}
+                    rel="noreferrer"
                   >
                     https://gov.near.org/c/10
                     <SvgIcon icon="link" className={s.linkIcon} size={24} />
