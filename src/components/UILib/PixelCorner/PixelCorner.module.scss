@@ -1,0 +1,151 @@
+/* stylelint-disable max-nesting-depth */
+
+@use 'styles/functions';
+
+.root {
+  --color-main: var(--theme-corner-main);
+  --color-1: var(--theme-corner-grey-1);
+  --color-2: var(--theme-corner-grey-2);
+  --color-3: var(--theme-corner-grey-3);
+  --color-4: var(--theme-corner-grey-4);
+  --color-5: var(--theme-corner-grey-5);
+
+  display: block;
+
+  &.green {
+    --color-1: var(--theme-corner-success-1);
+    --color-2: var(--theme-corner-success-2);
+    --color-3: var(--theme-corner-success-3);
+    --color-4: var(--theme-corner-success-4);
+    --color-5: var(--theme-corner-success-5);
+  }
+
+  &.yellow {
+    --color-1: var(--theme-corner-warning-1);
+    --color-2: var(--theme-corner-warning-2);
+    --color-3: var(--theme-corner-warning-3);
+    --color-4: var(--theme-corner-warning-4);
+    --color-5: var(--theme-corner-warning-5);
+  }
+
+  &.red {
+    --color-1: var(--theme-corner-error-1);
+    --color-2: var(--theme-corner-error-2);
+    --color-3: var(--theme-corner-error-3);
+    --color-4: var(--theme-corner-error-4);
+    --color-5: var(--theme-corner-error-5);
+  }
+
+  &.pink {
+    --color-1: var(--theme-corner-pink-1);
+    --color-2: var(--theme-corner-pink-2);
+    --color-3: var(--theme-corner-pink-3);
+    --color-4: var(--theme-corner-pink-4);
+    --color-5: var(--theme-corner-pink-5);
+  }
+
+  rect {
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    fill: var(--current-color);
+
+    &[x='0'][y='0'],
+    &[x='0'][y='2'],
+    &[x='0'][y='3'],
+    &[x='1'][y='1'],
+    &[x='1'][y='4'],
+    &[x='1'][y='5'],
+    &[x='0'][y='5'],
+    &[x='0'][y='6'],
+    &[x='2'][y='2'],
+    &[x='3'][y='1'],
+    &[x='4'][y='0'],
+    &[x='5'][y='0'],
+    &[x='7'][y='0'],
+    &[x='6'][y='1'],
+    &[x='6'][y='2'],
+    &[x='6'][y='3'],
+    &[x='5'][y='3'],
+    &[x='4'][y='2'],
+    &[x='3'][y='3'],
+    &[x='3'][y='4'],
+    &[x='3'][y='6'],
+    &[x='8'][y='1'] {
+      --current-color: var(--color-main);
+    }
+
+    &[x='3'][y='5'],
+    &[x='4'][y='4'],
+    &[x='5'][y='4'],
+    &[x='9'][y='0'],
+    &[x='7'][y='2'],
+    &[x='7'][y='3'],
+    &[x='2'][y='6'],
+    &[x='1'][y='6'] {
+      --current-color: var(--color-1);
+    }
+
+    &[x='2'][y='5'],
+    &[x='2'][y='4'],
+    &[x='4'][y='3'],
+    &[x='5'][y='2'],
+    &[x='7'][y='1'],
+    &[x='8'][y='0'] {
+      --current-color: var(--color-2);
+    }
+
+    &[x='2'][y='3'],
+    &[x='3'][y='2'],
+    &[x='5'][y='1'],
+    &[x='6'][y='0'] {
+      --current-color: var(--color-3);
+    }
+
+    &[x='4'][y='1'],
+    &[x='1'][y='3'],
+    &[x='0'][y='4'] {
+      --current-color: var(--color-4);
+    }
+
+    &[x='1'][y='2'],
+    &[x='0'][y='1'],
+    &[x='1'][y='0'],
+    &[x='2'][y='0'],
+    &[x='3'][y='0'],
+    &[x='2'][y='1'] {
+      --current-color: var(--color-5);
+    }
+  }
+}
+
+.root.animated {
+  rect[x][y].active {
+    animation-name: blink;
+  }
+}
+
+@keyframes blink {
+  0% {
+    --current-color: var(--color-main);
+  }
+
+  20% {
+    --current-color: var(--color-1);
+  }
+
+  40% {
+    --current-color: var(--color-2);
+  }
+
+  60% {
+    --current-color: var(--color-3);
+  }
+
+  80% {
+    --current-color: var(--color-4);
+  }
+
+  100% {
+    --current-color: var(--color-5);
+  }
+}

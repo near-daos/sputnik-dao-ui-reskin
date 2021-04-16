@@ -2,7 +2,6 @@
 @import 'styles/typography';
 @import 'styles/helpers';
 
-
 .root {
   background-color: var(--theme-proposal-card-bg);
 
@@ -20,7 +19,7 @@
 }
 
 .corner {
-  background-image: var(--theme-corner-grey);
+  background-image: var(--theme-proposal-type-corner);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;

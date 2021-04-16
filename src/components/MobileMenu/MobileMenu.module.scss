@@ -138,6 +138,10 @@
   @extend %title-6;
 }
 
+.authBtn {
+  margin-top: functions.calc-rem(24);
+}
+
 .signOut {
   @extend %button-reset;
   @extend %title-5;

@@ -5,10 +5,10 @@ import { getRandomIntInclusive, shuffle } from 'utils';
 import { GradientEffect } from './filters/GradientEffect';
 import { iconColors, ringColors } from './settings';
 
-const cardWidth = 834;
-const cardHeight = 1158;
-const frameWidth = 600;
-const frameHeight = 900;
+const cardWidth = 450;
+const cardHeight = 600;
+const frameWidth = 400;
+const frameHeight = 600;
 
 const getVariation = (
   numberOfRings: number,
@@ -164,8 +164,8 @@ export const getRandomLogo = async (logoName: string): Promise<File> =>
 
       const canvasEl = document.createElement('canvas');
 
-      canvasEl.width = 834;
-      canvasEl.height = 1158;
+      canvasEl.width = cardWidth;
+      canvasEl.height = cardHeight;
 
       const canvas = new window.fabric.Canvas(canvasEl);
 

@@ -1,3 +1,5 @@
+/* stylelint-disable function-parentheses-space-inside */
+
 #themed {
   &[data-theme='dark'] {
     --theme-text-color: var(--white);
@@ -65,12 +67,16 @@
     --theme-status-in-progress: var(--color-pink-50);
 
     --theme-proposal-card-bg: var(--color-grey-100);
-    --theme-proposal-card-filter-shadow: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
+    --theme-proposal-card-filter-shadow: drop-shadow(
+      0 16px 40px rgba(0, 0, 0, 0.64)
+    );
     --theme-proposal-card-additional-text: var(--color-grey-50);
     --theme-proposal-card-dao-name: var(--color-cyan-50);
 
     --theme-dao-card-mini-bg: var(--color-grey-100);
-    --theme-dao-card-mini-active-filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.7));
+    --theme-dao-card-mini-active-filter: drop-shadow(
+      0 8px 10px rgba(0, 0, 0, 0.7)
+    );
 
     --theme-banner-bg: var(--color-grey-100);
 
@@ -78,7 +84,9 @@
     --theme-create-dao-popup-bar-border: var(--color-grey-100);
 
     --theme-dao-card-bg: var(--color-grey-100);
-    --theme-dao-card-filter-shadow: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.64));
+    --theme-dao-card-filter-shadow: drop-shadow(
+      0 16px 40px rgba(0, 0, 0, 0.64)
+    );
     --theme-dao-card-additional-text: var(--color-grey-50);
     --theme-dao-card-token: var(--color-cyan-50);
 
@@ -100,27 +108,49 @@
     --theme-select-dao-number: var(--color-grey-50);
 
     --theme-create-proposal-dao-name: var(--color-grey-50);
-    
-    --theme-corner-green: url('/images/corner-dark-green.svg');
-    --theme-corner-grey: url('/images/corner-dark-grey.svg');
-    --theme-corner-pink: url('/images/corner-dark-pink.svg');
-    --theme-corner-red: url('/images/corner-dark-red.svg');
-    --theme-corner-yellow: url('/images/corner-dark-yellow.svg');
 
     --theme-avatar: url('/images/dark-avatar.svg');
     --theme-avatar-hover: url('/images/dark-avatar-hover.svg');
-    
+
     --theme-sign-out-text: var(--color-error-40);
     --theme-sign-out-hover-bg: var(--color-error-90);
-    
+
     --theme-proposal-type-bg: var(--color-grey-100);
     --theme-proposal-type-shadow: 0 16px 40px rgba(0, 0, 0, 0.64);
+    --theme-proposal-type-corner: url('/images/corner-dark-grey.svg');
     --theme-proposal-type-corner-active: url('/images/corner-dark-cyan.svg');
     --theme-proposal-type-active-border: var(--color-cyan-50);
     --theme-proposal-type-corner-link: var(--color-cyan-50);
     --theme-proposal-type-corner-hover: var(--color-cyan-80);
     --theme-proposal-type-corner-bond-bg: var(--color-grey-100);
     --theme-proposal-type-corner-bond-token: var(--color-grey-70);
+
+    --theme-corner-main: var(--color-brand-black);
+    --theme-corner-grey-1: var(--color-grey-90);
+    --theme-corner-grey-2: var(--color-grey-80);
+    --theme-corner-grey-3: var(--color-grey-70);
+    --theme-corner-grey-4: var(--color-grey-60);
+    --theme-corner-grey-5: var(--color-grey-50);
+    --theme-corner-success-1: var(--color-success-90);
+    --theme-corner-success-2: var(--color-success-80);
+    --theme-corner-success-3: var(--color-success-70);
+    --theme-corner-success-4: var(--color-success-60);
+    --theme-corner-success-5: var(--color-success-50);
+    --theme-corner-warning-1: var(--color-warning-90);
+    --theme-corner-warning-2: var(--color-warning-80);
+    --theme-corner-warning-3: var(--color-warning-70);
+    --theme-corner-warning-4: var(--color-warning-60);
+    --theme-corner-warning-5: var(--color-warning-50);
+    --theme-corner-error-1: var(--color-error-90);
+    --theme-corner-error-2: var(--color-error-80);
+    --theme-corner-error-3: var(--color-error-70);
+    --theme-corner-error-4: var(--color-error-60);
+    --theme-corner-error-5: var(--color-error-50);
+    --theme-corner-pink-1: var(--color-pink-90);
+    --theme-corner-pink-2: var(--color-pink-80);
+    --theme-corner-pink-3: var(--color-pink-70);
+    --theme-corner-pink-4: var(--color-pink-60);
+    --theme-corner-pink-5: var(--color-pink-50);
   }
 
   &[data-theme='light'] {
@@ -128,7 +158,9 @@
 
     --theme-primary-bg: var(--white);
     --theme-primary-border: var(--color-grey-30);
-    --theme-primari-shadow-filter: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
+    --theme-primari-shadow-filter: drop-shadow(
+      0 16px 40px rgba(22, 21, 21, 0.15)
+    );
     --theme-logo-major-line: var(--color-brand-black);
     --theme-logo-minor-line: var(--color-grey-70);
 
@@ -188,12 +220,16 @@
     --theme-status-in-progress: var(--color-pink-60);
 
     --theme-proposal-card-bg: var(--white);
-    --theme-proposal-card-filter-shadow: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
+    --theme-proposal-card-filter-shadow: drop-shadow(
+      0 16px 40px rgba(22, 21, 21, 0.15)
+    );
     --theme-proposal-card-additional-text: var(--color-grey-70);
     --theme-proposal-card-dao-name: var(--color-cyan-70);
 
     --theme-dao-card-mini-bg: var(--color-grey-10);
-    --theme-dao-card-mini-active-filter: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
+    --theme-dao-card-mini-active-filter: drop-shadow(
+      0 16px 40px rgba(22, 21, 21, 0.15)
+    );
 
     --theme-chip-icon: var(--color-grey-20);
     --theme-chip-icon-hover-default: var(--color-cyan-30);
@@ -208,7 +244,9 @@
     --theme-chip-icon-active-in-progress: var(--color-pink-70);
 
     --theme-dao-card-bg: var(--white);
-    --theme-dao-card-filter-shadow: drop-shadow(0 16px 40px rgba(22, 21, 21, 0.15));
+    --theme-dao-card-filter-shadow: drop-shadow(
+      0 16px 40px rgba(22, 21, 21, 0.15)
+    );
     --theme-dao-card-additional-text: var(--color-grey-70);
     --theme-dao-card-token: var(--color-cyan-70);
 
@@ -224,12 +262,6 @@
 
     --theme-create-proposal-dao-name: var(--color-grey-70);
 
-    --theme-corner-green: url('/images/corner-light-green.svg');
-    --theme-corner-grey: url('/images/corner-light-grey.svg');
-    --theme-corner-pink: url('/images/corner-light-pink.svg');
-    --theme-corner-red: url('/images/corner-light-red.svg');
-    --theme-corner-yellow: url('/images/corner-light-yellow.svg');
-    
     --theme-avatar: url('/images/light-avatar.svg');
     --theme-avatar-hover: url('/images/light-avatar-hover.svg');
 
@@ -238,11 +270,39 @@
 
     --theme-proposal-type-bg: var(--white);
     --theme-proposal-type-shadow: 0 16px 40px rgba(22, 21, 21, 0.15);
+    --theme-proposal-type-corner: url('/images/corner-light-grey.svg');
     --theme-proposal-type-corner-active: url('/images/corner-light-cyan.svg');
     --theme-proposal-type-active-border: var(--color-cyan-70);
     --theme-proposal-type-corner-link: var(--color-cyan-60);
     --theme-proposal-type-corner-hover: var(--color-cyan-80);
     --theme-proposal-type-corner-bond-bg: var(--color-grey-10);
     --theme-proposal-type-corner-bond-token: var(--color-grey-70);
+
+    --theme-corner-main: var(--white);
+    --theme-corner-grey-1: var(--color-grey-10);
+    --theme-corner-grey-2: var(--color-grey-20);
+    --theme-corner-grey-3: var(--color-grey-30);
+    --theme-corner-grey-4: var(--color-grey-40);
+    --theme-corner-grey-5: var(--color-grey-50);
+    --theme-corner-success-1: var(--color-success-10);
+    --theme-corner-success-2: var(--color-success-20);
+    --theme-corner-success-3: var(--color-success-30);
+    --theme-corner-success-4: var(--color-success-40);
+    --theme-corner-success-5: var(--color-success-50);
+    --theme-corner-warning-1: var(--color-warning-10);
+    --theme-corner-warning-2: var(--color-warning-20);
+    --theme-corner-warning-3: var(--color-warning-30);
+    --theme-corner-warning-4: var(--color-warning-40);
+    --theme-corner-warning-5: var(--color-warning-50);
+    --theme-corner-error-1: var(--color-error-10);
+    --theme-corner-error-2: var(--color-error-20);
+    --theme-corner-error-3: var(--color-error-30);
+    --theme-corner-error-4: var(--color-error-40);
+    --theme-corner-error-5: var(--color-error-50);
+    --theme-corner-pink-1: var(--color-pink-10);
+    --theme-corner-pink-2: var(--color-pink-20);
+    --theme-corner-pink-3: var(--color-pink-30);
+    --theme-corner-pink-4: var(--color-pink-40);
+    --theme-corner-pink-5: var(--color-pink-50);
   }
 }

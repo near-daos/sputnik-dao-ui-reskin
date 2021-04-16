@@ -130,6 +130,9 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
                 onSwiper={(swiperObject) => {
                   setSwiper(swiperObject);
                 }}
+                onClick={(swiperObject) => {
+                  history.push(`/dao/${daoList[swiperObject.realIndex].id}`);
+                }}
               >
                 {filteredDaoList.map((dao, index) => (
                   <SwiperSlide key={dao.id} className={s.cardHolder}>
@@ -139,6 +142,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
                       })}
                       dao={dao}
                       size="lg"
+                      disableCornerAnimation={activeSlide !== index}
                     />
                   </SwiperSlide>
                 ))}
