@@ -27,7 +27,7 @@ const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
         <p className={s.title}>Purpose</p>
         <div className={cn(s.purposeWrapper)}>{dao.purpose}</div>
         <div className={s.membersWrapper}>
-          <p className={s.title}>Members</p>
+          <p className={s.title}>Council</p>
           {firstTenMembers.map((item, index) => (
             <p className={s.member} key={String(`member-${index}`)}>
               {item}

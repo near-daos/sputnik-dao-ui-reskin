@@ -11,8 +11,12 @@ import { SearchAutoComplete } from 'components/SearchAutoComplete';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import { login, logout } from 'redux/actions';
-import { accountSelector, daoListSelector } from 'redux/selectors';
+import { clearRedirect, login, logout } from 'redux/actions';
+import {
+  accountSelector,
+  daoListSelector,
+  redirectSelector,
+} from 'redux/selectors';
 import s from './Header.module.scss';
 
 interface HeaderProps {
@@ -30,6 +34,7 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
   const account = useSelector(accountSelector);
   const dispatch = useDispatch();
   const daoList = useSelector(daoListSelector);
+  const redirectFlow = useSelector(redirectSelector);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -51,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
       return;
     }
 
-    dispatch(login.started());
+    dispatch(login.started('CREATE_DAO'));
   };
 
   const hideCreateDaoPopup = () => {
@@ -69,6 +74,16 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
       setIsShowCreateDaoPopup(true);
     }
   }, [location]);
+
+  useEffect(() => {
+    if (redirectFlow && account) {
+      const params = new URLSearchParams();
+
+      params.append('create-dao-popup', 'true');
+      history.push({ search: params.toString() });
+      dispatch(clearRedirect());
+    }
+  }, [dispatch, redirectFlow, account, history]);
 
   return (
     <>

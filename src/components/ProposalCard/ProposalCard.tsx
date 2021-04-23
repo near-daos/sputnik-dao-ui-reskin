@@ -17,7 +17,9 @@ import numberReduction from 'utils/numberReduction';
 import { useSelector } from 'react-redux';
 import { accountSelector } from 'redux/selectors';
 import { convertDuration } from 'utils';
+import { Link } from 'react-router-dom';
 import s from './ProposalCard.module.scss';
+import { getTitle } from './utils';
 
 export interface ProposalCardProps {
   className?: string;
@@ -28,23 +30,6 @@ export interface ProposalCardProps {
   onReject?: () => void;
   onFinalize?: () => void;
 }
-
-const getTitle = (proposal: Proposal): string => {
-  switch (proposal.kind.type) {
-    case ProposalType.ChangePurpose:
-      return `Change DAO Purpose`;
-    case ProposalType.NewCouncil:
-      return `New Council Member`;
-    case ProposalType.RemoveCouncil:
-      return `Remove Council Member`;
-    case ProposalType.ChangeVotePeriod:
-      return `Change Vote Period`;
-    case ProposalType.Payout:
-      return 'Payout';
-    default:
-      return '';
-  }
-};
 
 const ProposalCard: React.FC<ProposalCardProps> = ({
   className,
@@ -82,6 +67,10 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
 
   return (
     <div className={cn(s.root, className)}>
+      <Link
+        className={s.link}
+        to={`/dao/${proposal.daoId}/proposals/${proposal.id}`}
+      />
       <div className={s.wrapper}>
         <PixelCorner
           color={cornerColorsMap[proposal.status]}
@@ -125,12 +114,13 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
           )}
           {proposal.kind.type === ProposalType.ChangePurpose && (
             <div className={s.proposerWrapper}>
-              <p className={s.name}>Proposer:</p>
+              <p className={s.name}>Purpose:</p>
               <p className={s.value}>{proposal.kind.purpose}</p>
             </div>
           )}
         </div>
       </div>
+
       <div className={s.buttonWrapper}>
         {isMember && (
           <Button
@@ -153,7 +143,6 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
           proposal.status === ProposalStatus.Vote && (
             <Button
               size={media.mobile ? 'xs' : 'sm'}
-              disabled={isNotExpired || proposal.status !== ProposalStatus.Vote}
               variant="outline"
               className={s.button}
               onClick={onFinalize}
