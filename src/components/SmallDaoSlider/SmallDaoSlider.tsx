@@ -56,6 +56,8 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
         onSlideChange={(swiper) => {
           const index = swiper.realIndex;
 
+          if (!daos[index]) return;
+
           setActiveSlide(index);
           history.push(`/dao/${daos[index].id}`);
         }}
@@ -66,7 +68,7 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
               key={dao.id}
               className={s.daoCard}
               dao={dao}
-              active={dao.id === daos[activeSlide].id}
+              active={dao.id === daos[activeSlide]?.id}
             />
           </SwiperSlide>
         ))}

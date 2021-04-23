@@ -4,8 +4,9 @@ import {
   login,
   logout,
   fetchAccount,
+  clearRedirect,
 } from 'redux/actions';
-import { AuthState, DaoState, ProposalState } from 'types/store';
+import { AuthState, DaoState, ProposalState, RedirectState } from 'types/store';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 
 const initialState = {
@@ -50,5 +51,16 @@ export const proposals = reducerWithInitialState<ProposalState>(initialState)
     ...state,
     items: result,
     loading: false,
+  }))
+  .build();
+
+export const redirect = reducerWithInitialState<RedirectState>({
+  flow: null,
+})
+  .case(login.started, (state, payload) => ({
+    flow: payload || state.flow,
+  }))
+  .case(clearRedirect, () => ({
+    flow: null,
   }))
   .build();

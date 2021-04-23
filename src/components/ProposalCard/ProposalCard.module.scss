@@ -11,6 +11,8 @@
   overflow: hidden;
   padding: functions.calc-rem(32);
   position: relative;
+  position: relative;
+  text-decoration: none;
   width: auto;
 
   @include media.tablet-portrait {
@@ -26,6 +28,8 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .corner {
@@ -120,6 +124,10 @@
   @include media.desktop {
     margin-top: functions.calc-rem(32);
   }
+
+  a {
+    pointer-events: all;
+  }
 }
 
 .aboutText {
@@ -178,10 +186,16 @@
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: functions.calc-rem(16);
+  pointer-events: none;
   row-gap: functions.calc-rem(12);
+  z-index: 1;
 
   @include media.mobile-only {
     column-gap: functions.calc-rem(16);
+  }
+
+  .button:not(:disabled) {
+    pointer-events: all;
   }
 }
 
@@ -196,4 +210,12 @@
 .buttonTextCount {
   @extend %body-1;
   color: var(--theme-proposal-card-additional-text);
+}
+
+.link {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }

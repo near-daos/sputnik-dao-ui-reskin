@@ -63,7 +63,7 @@ const DaoCard: React.FC<DaoCardProps> = ({
             <p className={s.value}>{dao.bond}</p>
           </div>
           <div className={cn(s.container, s.amountOfMember, s[size])}>
-            <p className={s.label}>Amount of members</p>
+            <p className={s.label}>Council size</p>
             <p className={s.value}>{dao.numberOfMembers}</p>
           </div>
           <div className={cn(s.container, s.funds, s[size])}>

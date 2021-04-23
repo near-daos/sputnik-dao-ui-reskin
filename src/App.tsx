@@ -9,7 +9,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, RouteProps } from 'react-router-dom';
+import { BrowserRouter, Route, RouteProps, Switch } from 'react-router-dom';
 import debounce from 'lodash.debounce';
 
 import { NearService } from 'services/NearService';
@@ -26,6 +26,7 @@ import { SelectProposals } from './pages/SelectProposal/SelectProposal';
 import { Proposals } from './pages/Proposals/Proposals';
 import { DaoPage } from './pages/DaoPage/DaoPage';
 import { SearchPage } from './pages/SearchPage';
+import { ProposalPage } from './pages/ProposalPage';
 
 import 'normalize.css/normalize.css';
 import 'swiper/swiper.scss';
@@ -49,6 +50,10 @@ const routes: RouteInfo[] = [
   {
     path: '/proposals',
     component: Proposals,
+  },
+  {
+    path: '/dao/:daoId/proposals/:proposalId',
+    component: ProposalPage,
   },
   {
     path: '/dao/:id',
@@ -113,9 +118,11 @@ const App: React.FC = () => {
       </Route>
       <Route path={mainLayoutPaths}>
         <MainLayout>
-          {routes.map((route, i) => (
-            <Route key={i} {...route} />
-          ))}
+          <Switch>
+            {routes.map((route, i) => (
+              <Route key={i} {...route} />
+            ))}
+          </Switch>
         </MainLayout>
       </Route>
     </BrowserRouter>

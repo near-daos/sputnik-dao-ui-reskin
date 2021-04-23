@@ -44,7 +44,9 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
       (doa) => doa.id.toUpperCase().indexOf(searchText.toUpperCase()) !== -1,
     );
 
-    setDaoResult(filtered);
+    const firstTen = filtered.slice(0, 10);
+
+    setDaoResult(firstTen);
   }, [searchText, daoList]);
 
   const renderName = (name: string) => {
