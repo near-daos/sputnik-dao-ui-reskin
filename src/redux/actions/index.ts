@@ -1,10 +1,13 @@
 import { CreateDaoParams, DaoItem } from 'types/dao';
 import { CreateProposalParams, Proposal } from 'types/proposal';
 import actionCreatorFactory from 'typescript-fsa';
+import { RedirectFlow } from 'types';
 
 const actionCreator = actionCreatorFactory('sputnik-dao');
 
-export const login = actionCreator.async<void, string, Error>('LOGIN');
+export const login = actionCreator.async<RedirectFlow | void, string, Error>(
+  'LOGIN',
+);
 
 export const logout = actionCreator.async<void, void, Error>('LOGOUT');
 
@@ -29,3 +32,5 @@ export const createProposal = actionCreator.async<
   void,
   Error
 >('CREATE_PROPOSAL');
+
+export const clearRedirect = actionCreator<void>('CLEAR_REDIRECT');

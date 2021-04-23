@@ -67,7 +67,7 @@ const MembersPopup: React.FC<MembersPopupProps> = ({
         />
         <p className={s.daoName}>{name}</p>
         <div className={s.titleWrapper}>
-          <p className={s.title}>Members</p>
+          <p className={s.title}>Council</p>
           <p className={s.number}>({membersNumber})</p>
         </div>
         <div className={s.border} />

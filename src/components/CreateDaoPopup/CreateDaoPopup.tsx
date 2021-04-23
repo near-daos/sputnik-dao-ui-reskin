@@ -173,7 +173,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   error={errors.purpose}
                   label="Enter Purpose"
                   multiline
-                  maxLength={300}
+                  maxLength={280}
                   className={s.texArea}
                 />
                 <TextField
@@ -234,7 +234,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   error={errors.amountToTransfer}
                   label="Amount to transfer to the DAO"
                   className={s.input}
-                  helperText="Minimum 35 NEAR for storage"
+                  helperText="Minimum 3.5 NEAR for storage"
                 />
               </div>
               <div className={s.buttonsWrapper}>
