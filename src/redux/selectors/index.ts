@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { AuthState, DaoState, ProposalState, StoreState } from 'types/store';
+import { RedirectFlow } from '../../types';
 
 export const authSelector = (state: StoreState): AuthState => state.auth;
 
@@ -35,3 +36,6 @@ export const accountSelector = createSelector(
   authSelector,
   (state) => state.accountId,
 );
+
+export const redirectSelector = (state: StoreState): RedirectFlow | null =>
+  state.redirect.flow;
