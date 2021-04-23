@@ -6,7 +6,7 @@ import { ProposalCard } from 'components/ProposalCard';
 import { Chip, ChipProps, Select } from 'components/UILib';
 import { Proposal, ProposalStatus } from 'types/proposal';
 
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { DaoItem } from 'types/dao';
 import { NearService } from 'services/NearService';
 import { useSelector } from 'react-redux';
@@ -84,6 +84,7 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
   proposals,
   dao,
 }) => {
+  const history = useHistory();
   const location = useLocation();
   const [filteredProposals, setFilteredProposals] = useState<Proposal[]>([]);
   const [sortedProposals, setSortedProposals] = useState<Proposal[]>([]);

@@ -25,6 +25,12 @@ export const proposalListSelector = createSelector(
   (state, daoId) => state.items.filter((item) => item.daoId === daoId),
 );
 
+export const proposalSelector = createSelector(
+  proposalListSelector,
+  (_: unknown, _1: unknown, proposalId: number) => proposalId,
+  (proposals, proposalId) => proposals.find((item) => item.id === proposalId),
+);
+
 export const accountSelector = createSelector(
   authSelector,
   (state) => state.accountId,
