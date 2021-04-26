@@ -31,11 +31,13 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
   const [searchText, setSearchText] = useState('');
   const [isShowResult, setIsShowResult] = useState(false);
   const [daoResult, setDaoResult] = useState<DaoItem[]>([]);
+  const [searchResultCount, setSearchResultCount] = useState(0);
   const history = useHistory();
 
   useEffect(() => {
     if (!searchText) {
       setDaoResult([]);
+      setSearchResultCount(0);
 
       return;
     }
@@ -43,6 +45,8 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
     const filtered = daoList.filter(
       (doa) => doa.id.toUpperCase().indexOf(searchText.toUpperCase()) !== -1,
     );
+
+    setSearchResultCount(filtered.length);
 
     const firstTen = filtered.slice(0, 10);
 
@@ -105,7 +109,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
               <p className={s.title}>DAOs</p>
               <Link to={`/search/dao/?query=${searchText}`} className={s.link}>
                 See All
-                <span className={s.count}>({daoResult.length})</span>
+                <span className={s.count}>({searchResultCount})</span>
               </Link>
             </div>
             {daoResult.length > 0 ? (
