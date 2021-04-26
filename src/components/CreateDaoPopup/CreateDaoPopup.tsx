@@ -161,7 +161,9 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                 <TextField
                   name="name"
                   value={values.name}
-                  onChange={(value) => handleChange('name', value)}
+                  onChange={(value) =>
+                    handleChange('name', value.toLowerCase())
+                  }
                   error={errors.name}
                   label="Enter DAO Name (will be prefix of .sputnikdao.near)"
                   className={cn(s.input, s.daoName)}
