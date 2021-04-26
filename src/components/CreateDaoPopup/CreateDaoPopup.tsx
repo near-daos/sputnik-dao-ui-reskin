@@ -10,13 +10,14 @@ import { NearService } from 'services/NearService';
 import { getRandomLogo } from 'services/LogoRandomizer';
 import { AwsUploader } from 'services/AwsUploader';
 import { nearConfig } from 'config';
-import { useSelector } from 'react-redux';
-import { daoListSelector } from 'redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { creatingDaoSelector, daoListSelector } from 'redux/selectors';
 import { Button, IconButton, SvgIcon, TextField } from '../UILib';
 import { CreateDaoErrors, CreateDaoValues } from './types';
 import { validateFirstStep, validateSecondStep } from './validators';
 
 import s from './CreateDaoPopup.module.scss';
+import { clearCreatingDaoData, setCreatingDaoData } from '../../redux/actions';
 
 export interface CreateDaoPopupProps {
   className?: string;
@@ -25,23 +26,16 @@ export interface CreateDaoPopupProps {
 
 const STEPS = ['General info', 'Details', 'DAO Logo'];
 
-const initialValues: CreateDaoValues = {
-  name: '',
-  purpose: '',
-  council: '',
-  bond: '',
-  votePeriod: '',
-  gracePeriod: '',
-  amountToTransfer: '',
-};
-
 const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   className,
   onClose,
 }) => {
   const [activeStep, setActiveStep] = useState(1);
   const media = useMedia();
-  const [values, setValues] = useState<CreateDaoValues>(initialValues);
+  const dispatch = useDispatch();
+  const values = useSelector(creatingDaoSelector);
+
+  // const [values, setValues] = useState<CreateDaoValues>(initialValues);
   const [errors, setErrors] = useState<CreateDaoErrors>({});
   const daoList = useSelector(daoListSelector);
 
@@ -53,10 +47,12 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
       });
     }
 
-    setValues({
-      ...values,
-      [field]: value,
-    });
+    dispatch(
+      setCreatingDaoData({
+        ...values,
+        [field]: value,
+      }),
+    );
   };
 
   const onSubmitFirstStep = () => {
@@ -97,6 +93,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
     await AwsUploader.uploadToBucket(file);
     await NearService.createDao(values);
 
+    dispatch(clearCreatingDaoData());
     onClose?.();
   };
 
@@ -107,6 +104,11 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   } else if (media.desktop || media.tabletLandscape) {
     progressBarSize = 'lg';
   }
+
+  const handleClose = () => {
+    dispatch(clearCreatingDaoData());
+    onClose?.();
+  };
 
   useEffect(() => {
     const handleGoBack = () => {
@@ -136,7 +138,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
             size="lg"
             variant="outline"
             className={s.mobileClose}
-            onClick={onClose}
+            onClick={handleClose}
           />
           <p className={s.mobileTitle}>Add New DAO</p>
           <StepProgressBar
@@ -153,7 +155,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
             size="lg"
             variant="outline"
             className={s.desktopClose}
-            onClick={onClose}
+            onClick={handleClose}
           />
           {activeStep === 1 && (
             <div className={s.form}>
