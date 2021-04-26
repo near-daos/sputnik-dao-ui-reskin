@@ -29,7 +29,7 @@ export interface TextFieldProps
   onChange: (value: string, name: string) => void;
   id?: string;
 }
-const invalidChars = ['-', '+', 'e'];
+const validChars = /[0-9]/;
 
 const TextField: React.FC<TextFieldProps> = ({
   className,
@@ -90,11 +90,12 @@ const TextField: React.FC<TextFieldProps> = ({
             <input
               id={id}
               type={type}
+              name={name}
               className={cn(styles.input, styles[variant], inputClassName)}
               value={value}
               placeholder={placeholder}
               onKeyPress={(e) => {
-                if (type === 'number' && invalidChars.includes(e.key)) {
+                if (type === 'number' && !validChars.test(e.key)) {
                   e.preventDefault();
                 }
               }}

@@ -252,6 +252,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                   }
                   className={s.button}
                   onClick={() => {
+                    setType(null);
                     setActiveStep(1);
                   }}
                 >

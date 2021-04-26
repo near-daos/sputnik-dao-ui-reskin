@@ -14,29 +14,34 @@ interface LandingFooterProps {
 const LandingFooter: React.FC<LandingFooterProps> = ({ className }) => {
   const [userEmail, changeUserEmail] = useState('');
 
-  const handleSubmitEmail = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (userEmail === '') {
-      window.open(
-        'https://42labs.us14.list-manage.com/subscribe/post?u=faedf5dec8739fb92e05b4131&id=14e8024c6c',
-        '_blank',
-      );
-    } else {
-      console.log('test');
-    }
-  };
+  // const handleSubmitEmail = (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //
+  //   if (userEmail === '') {
+  //     window.open(
+  //       'https://42labs.us14.list-manage.com/subscribe/post?u=faedf5dec8739fb92e05b4131&id=14e8024c6c',
+  //       '_blank',
+  //     );
+  //   } else {
+  //     console.log('test');
+  //   }
+  // };
 
   return (
     <footer className={cn(s.root, className)}>
       <SocialMedias className={s.socialMedia} />
-      <form className={s.form} onSubmit={handleSubmitEmail}>
+      <form
+        className={s.form}
+        action="https://42labs.us14.list-manage.com/subscribe/post?u=faedf5dec8739fb92e05b4131&id=14e8024c6c"
+        method="POST"
+        target="_blank"
+      >
         <label className={s.formLabel} htmlFor="input-contact-email">
           Stay in touch
         </label>
         <TextField
           type="text"
-          name="email"
+          name="EMAIL"
           value={userEmail}
           className={s.formInput}
           onChange={changeUserEmail}
@@ -44,7 +49,12 @@ const LandingFooter: React.FC<LandingFooterProps> = ({ className }) => {
           variant="sm"
           id="input-contact-email"
         />
-        <Button className={s.formButton} variant="outline" size="sm">
+        <Button
+          className={s.formButton}
+          variant="outline"
+          size="sm"
+          type="submit"
+        >
           Submit
         </Button>
       </form>

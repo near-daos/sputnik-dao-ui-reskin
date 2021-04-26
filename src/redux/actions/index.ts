@@ -34,3 +34,10 @@ export const createProposal = actionCreator.async<
 >('CREATE_PROPOSAL');
 
 export const clearRedirect = actionCreator<void>('CLEAR_REDIRECT');
+
+export const setCreatingDaoData = actionCreator<CreateDaoParams>(
+  'SET_CREATING_DAO_DATA',
+);
+export const clearCreatingDaoData = actionCreator<void>(
+  'CLEAR_CREATING_DAO_DATA',
+);
