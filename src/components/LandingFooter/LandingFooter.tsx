@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import cn from 'classnames';
 import { SocialMedias } from 'components/SocialMedias';
 import { Button, TextField } from '../UILib';
@@ -14,10 +14,23 @@ interface LandingFooterProps {
 const LandingFooter: React.FC<LandingFooterProps> = ({ className }) => {
   const [userEmail, changeUserEmail] = useState('');
 
+  const handleSubmitEmail = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (userEmail === '') {
+      window.open(
+        'https://42labs.us14.list-manage.com/subscribe/post?u=faedf5dec8739fb92e05b4131&id=14e8024c6c',
+        '_blank',
+      );
+    } else {
+      console.log('test');
+    }
+  };
+
   return (
     <footer className={cn(s.root, className)}>
       <SocialMedias className={s.socialMedia} />
-      <form className={s.form}>
+      <form className={s.form} onSubmit={handleSubmitEmail}>
         <label className={s.formLabel} htmlFor="input-contact-email">
           Stay in touch
         </label>

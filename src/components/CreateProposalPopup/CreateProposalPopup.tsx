@@ -156,6 +156,12 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
     };
   }, [onClose]);
 
+  useEffect(() => {
+    if (activeStep === 1 && type) {
+      setActiveStep(2);
+    }
+  }, [type, activeStep]);
+
   const handleSelectType = (newType: ProposalType) => {
     setType(newType);
   };

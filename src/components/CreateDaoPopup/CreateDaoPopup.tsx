@@ -163,7 +163,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   value={values.name}
                   onChange={(value) => handleChange('name', value)}
                   error={errors.name}
-                  label="Enter DAO Name"
+                  label="Enter DAO Name (will be prefix of .sputnikdao.near)"
                   className={cn(s.input, s.daoName)}
                 />
                 <TextField
@@ -203,7 +203,9 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   name="bond"
                   type="number"
                   value={values.bond}
-                  onChange={(value) => handleChange('bond', value)}
+                  onChange={(value) => {
+                    handleChange('bond', value);
+                  }}
                   error={errors.bond}
                   label="Enter Bond in NEAR"
                   className={s.input}

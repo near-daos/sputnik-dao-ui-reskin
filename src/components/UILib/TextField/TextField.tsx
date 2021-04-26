@@ -29,6 +29,7 @@ export interface TextFieldProps
   onChange: (value: string, name: string) => void;
   id?: string;
 }
+const invalidChars = ['-', '+', 'e'];
 
 const TextField: React.FC<TextFieldProps> = ({
   className,
@@ -92,7 +93,14 @@ const TextField: React.FC<TextFieldProps> = ({
               className={cn(styles.input, styles[variant], inputClassName)}
               value={value}
               placeholder={placeholder}
-              onChange={(e): void => onChange(e.currentTarget.value, name)}
+              onKeyPress={(e) => {
+                if (type === 'number' && invalidChars.includes(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+              onChange={(e): void => {
+                onChange(e.currentTarget.value, name);
+              }}
               onFocus={(): void => setFocus(true)}
               onBlur={(): void => setFocus(false)}
               disabled={disabled}
