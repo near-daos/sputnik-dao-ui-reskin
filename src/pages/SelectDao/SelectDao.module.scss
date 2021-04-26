@@ -35,7 +35,7 @@
   align-self: center;
   column-gap: functions.calc-rem(24);
   display: grid;
-  grid-template-columns: auto auto;
+  //grid-template-columns: auto auto;
 
   @include media.mobile-only {
     column-gap: functions.calc-rem(16);
