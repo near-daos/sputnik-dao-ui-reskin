@@ -173,10 +173,10 @@
   }
 
   &.daoName {
-    margin-bottom: functions.calc-rem(90);
+    margin-bottom: functions.calc-rem(100);
 
     @include tablet-portrait {
-      margin-bottom: functions.calc-rem(70);
+      margin-bottom: functions.calc-rem(80);
     }
   }
 
@@ -203,6 +203,14 @@
 
 .texArea {
   margin-bottom: functions.calc-rem(50);
+}
+
+.purpose {
+  margin-bottom: functions.calc-rem(70);
+  
+  @include tablet-portrait {
+    margin-bottom: functions.calc-rem(60);
+  }
 }
 
 .singleButton {
