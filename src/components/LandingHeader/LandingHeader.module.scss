@@ -19,15 +19,26 @@
   padding-top: functions.calc-rem(14);
 }
 
+.iconsWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
 .logo {
   fill: var(--text-color);
   height: 100%;
+  margin-left: functions.calc-rem(8);
   max-width: functions.calc-rem(160);
   min-width: functions.calc-rem(100);
+  transform: translate(0, functions.calc-rem(2));
   width: 100%;
-
+  
   @include media.mobile-only {
-    display: none;
+    margin-left: 0;
+    min-width: functions.calc-rem(100);
+    transform: translate(0, functions.calc-rem(1));
+    width: functions.calc-rem(100);
   }
 }
 

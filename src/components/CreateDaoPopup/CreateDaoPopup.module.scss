@@ -173,8 +173,32 @@
   }
 
   &.daoName {
-    margin-bottom: functions.calc-rem(70);
+    margin-bottom: functions.calc-rem(90);
+
+    @include tablet-portrait {
+      margin-bottom: functions.calc-rem(70);
+    }
   }
+
+  &.bond,
+  &.gracePeriod,
+  &.amountToTransfer {
+    margin-bottom: functions.calc-rem(120);
+    @include tablet-portrait {
+      margin-bottom: functions.calc-rem(90);
+    }
+  }
+
+  &.votePeriod {
+    margin-bottom: functions.calc-rem(90);
+    @include tablet-portrait {
+      margin-bottom: functions.calc-rem(70);
+    }
+  }
+}
+
+.council {
+  margin-bottom: functions.calc-rem(80) !important;
 }
 
 .texArea {

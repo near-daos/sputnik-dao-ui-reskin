@@ -164,11 +164,12 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   name="name"
                   value={values.name}
                   onChange={(value) =>
-                    handleChange('name', value.toLowerCase())
+                    handleChange('name', value.toLowerCase().trim())
                   }
                   error={errors.name}
                   label="Enter DAO Name (will be prefix of .sputnikdao.near)"
                   className={cn(s.input, s.daoName)}
+                  helperText="This refers to a sputnikdao.near contract instance. Whatever you input here will be the human-readable account ID of that DAO, for example: name.sputnikdao.near"
                 />
                 <TextField
                   name="purpose"
@@ -178,7 +179,8 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   label="Enter Purpose"
                   multiline
                   maxLength={280}
-                  className={s.texArea}
+                  className={cn(s.texArea, s.purpose)}
+                  helperText="Why DAO? Maybe indicate a specific goal related to an established project?"
                 />
                 <TextField
                   name="council"
@@ -187,8 +189,8 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   error={errors.council}
                   multiline
                   label="Enter Council"
-                  className={s.input}
-                  helperText="One account per line"
+                  className={cn(s.input, s.council)}
+                  helperText="These .near accounts will be initial members of the DAO’s council, and each member gets one vote on every proposal. Participants can be added / removed from a council. We recommend keeping the council small (3-5 members). By default, majority rule is the policy for all votes."
                 />
               </div>
               <Button
@@ -212,7 +214,8 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   }}
                   error={errors.bond}
                   label="Enter Bond in NEAR"
-                  className={s.input}
+                  className={cn(s.input, s.bond)}
+                  helperText="Minimum amount required to submit a proposal to the council. When a proposal gets approved, this amount is returned. However, if rejected, it goes into the DAO account."
                 />
                 <TextField
                   type="number"
@@ -221,7 +224,8 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   onChange={(value) => handleChange('votePeriod', value)}
                   error={errors.votePeriod}
                   label="Enter Vote Period in hours"
-                  className={s.input}
+                  className={cn(s.input, s.votePeriod)}
+                  helperText="Number of hours that proposals are open for voting. After this amount of time, proposals expire."
                 />
                 <TextField
                   type="number"
@@ -230,7 +234,10 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   onChange={(value) => handleChange('gracePeriod', value)}
                   error={errors.gracePeriod}
                   label="Enter Grace Period in hours"
-                  className={s.input}
+                  className={cn(s.input, s.gracePeriod)}
+                  helperText={
+                    'Number of hours after the vote period, in which council members can vote "NO" to cancel a payout. This provides an opportunity to speak up when a decision is almost finalized.'
+                  }
                 />
                 <TextField
                   type="number"
@@ -239,8 +246,8 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                   onChange={(value) => handleChange('amountToTransfer', value)}
                   error={errors.amountToTransfer}
                   label="Amount to transfer to the DAO"
-                  className={s.input}
-                  helperText="Minimum 3.5 NEAR for storage"
+                  className={cn(s.input, s.amountToTransfer)}
+                  helperText="Initial treasury. After your DAO is launched, anyone may transfer NEAR using its human-readable account ID, like this: name.sputnikdao.near"
                 />
               </div>
               <div className={s.buttonsWrapper}>

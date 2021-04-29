@@ -111,3 +111,10 @@
   width: 100%;
   z-index: 1;
 }
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: functions.calc-rem(56);
+  width: 100%;
+}
