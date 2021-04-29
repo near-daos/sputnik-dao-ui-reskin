@@ -1,5 +1,6 @@
 @use 'styles/functions';
 @import 'styles/typography';
+@import 'styles/mixins';
 
 .root {
   --input-color: var(--theme-input-text);
@@ -127,9 +128,12 @@
 }
 
 .label {
+
+  @include truncate();
   color: var(--input-border-color);
   left: 0;
   line-height: 1;
+  max-width: 90%;
   position: absolute;
   top: 0;
   transform-origin: top left;
@@ -210,6 +214,10 @@
   margin-top: functions.calc-rem(8);
   position: absolute;
   top: 100%;
+
+  &.short {
+    width: 90%;
+  }
 }
 
 .length {

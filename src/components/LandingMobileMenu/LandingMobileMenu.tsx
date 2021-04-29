@@ -52,7 +52,7 @@ const LandingMobileMenu: React.FC<LandingMobileMenuProps> = ({
         ))}
       </nav>
       <Button className={s.connectButton} size="sm">
-        Launch SputnikDAO
+        Launch App
       </Button>
     </section>
     <LandingFooter />

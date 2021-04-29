@@ -132,7 +132,13 @@ const TextField: React.FC<TextFieldProps> = ({
       </div>
 
       {!error && helperText && (
-        <p className={styles.helperText}>{helperText}</p>
+        <p
+          className={cn(styles.helperText, {
+            [styles.short]: multiline && maxLength,
+          })}
+        >
+          {helperText}
+        </p>
       )}
       {error && (
         <p className={styles.error}>
