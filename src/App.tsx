@@ -1,24 +1,11 @@
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable react/no-children-prop */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable padding-line-between-statements */
-/* eslint-disable react/no-children-prop */
-/* eslint-disable arrow-body-style */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, RouteProps, Switch } from 'react-router-dom';
 import debounce from 'lodash.debounce';
 
 import { NearService } from 'services/NearService';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchAccount, fetchDaoList } from 'redux/actions';
-import { getRandomLogo } from 'services/LogoRandomizer';
-import { daoListSelector } from 'redux/selectors';
-import { checkIfLogoExist } from 'utils';
-import { AwsUploader } from 'services/AwsUploader';
+import LogoRegenerationPage from 'pages/LogoRegenerationPage';
 import { MainLayout } from './components';
 import { LandingPage } from './pages/LandingPage/LandingPage';
 import { SelectDao } from './pages/SelectDao/SelectDao';
@@ -35,6 +22,7 @@ import './styles/main.scss';
 
 interface RouteInfo extends RouteProps {
   path: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: React.FC<any>;
 }
 
@@ -63,17 +51,22 @@ const routes: RouteInfo[] = [
     path: '/search',
     component: SearchPage,
   },
+  {
+    // only for internal usage
+    path: '/logo-regenerate-d1a6e16c',
+    component: LogoRegenerationPage,
+  },
 ];
 
 const App: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
   const mainLayoutPaths = routes.map((route) => route.path);
   const dispatch = useDispatch();
-  const daoList = useSelector(daoListSelector);
 
   const setVH = () => {
     // dynamically set 1vh value for mobile full height bug fix
     const vh = window.innerHeight * 0.01;
+
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   };
 
@@ -90,17 +83,6 @@ const App: React.FC = () => {
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    daoList.forEach(async (dao) => {
-      const isLogoExist = await checkIfLogoExist(dao.id);
-
-      if (!isLogoExist) {
-        const file = await getRandomLogo(dao.id);
-        await AwsUploader.uploadToBucket(file);
-      }
-    });
-  }, [daoList]);
-
   if (!isInitialized) {
     return null; // todo add loader
   }
@@ -114,7 +96,7 @@ const App: React.FC = () => {
         <MainLayout>
           <Switch>
             {routes.map((route, i) => (
-              <Route key={i} {...route} />
+              <Route key={String(i)} {...route} />
             ))}
           </Switch>
         </MainLayout>

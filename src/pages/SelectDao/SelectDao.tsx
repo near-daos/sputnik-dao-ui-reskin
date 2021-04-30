@@ -29,7 +29,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [swiper, setSwiper] = useState<any>();
   const media = useMedia();
-  const [searchText, setSearchText] = useState('');
+  const [searchText] = useState('');
   const history = useHistory();
   const daoList = useSelector(daoListSelector);
   const [filteredDaoList, setFilteredDaoList] = useState<DaoItem[]>([]);
