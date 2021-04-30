@@ -18,7 +18,9 @@ export const shuffle = <T>(array: T[]): void => {
 };
 
 export const checkIfLogoExist = async (logoName: string): Promise<boolean> => {
-  const response = await fetch(`${appConfig.logoPath}${logoName}.png`);
+  const response = await fetch(`${appConfig.logoPath}${logoName}.png`, {
+    mode: 'no-cors',
+  });
 
   return response.status !== 404;
 };

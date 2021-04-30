@@ -91,19 +91,13 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (!daoList[0]) return;
+    daoList.forEach(async (dao) => {
+      const isLogoExist = await checkIfLogoExist(dao.id);
 
-    checkIfLogoExist(daoList[0].id).then((isExist) => {
-      if (isExist) return;
-
-      daoList.forEach(async (dao) => {
-        const isLogoExist = await checkIfLogoExist(dao.id);
-
-        if (!isLogoExist) {
-          const file = await getRandomLogo(dao.id);
-          await AwsUploader.uploadToBucket(file);
-        }
-      });
+      if (!isLogoExist) {
+        const file = await getRandomLogo(dao.id);
+        await AwsUploader.uploadToBucket(file);
+      }
     });
   }, [daoList]);
 
