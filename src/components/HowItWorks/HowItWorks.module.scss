@@ -63,6 +63,12 @@
     padding-top: 5%;
     width: 50%;
   }
+  @include media.tablet-portrait {
+    opacity: 0.4;
+  }
+  @include media.tablet-landscape {
+    opacity: 1;
+  }
 }
 
 .figure {

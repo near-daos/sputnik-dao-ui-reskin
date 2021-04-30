@@ -5,9 +5,18 @@ import {
   logout,
   fetchAccount,
   clearRedirect,
+  setCreatingDaoData,
+  clearCreatingDaoData,
 } from 'redux/actions';
-import { AuthState, DaoState, ProposalState, RedirectState } from 'types/store';
+import {
+  AuthState,
+  CreatDaoState,
+  DaoState,
+  ProposalState,
+  RedirectState,
+} from 'types/store';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
+import { CreateDaoParams } from '../../types/dao';
 
 const initialState = {
   items: [],
@@ -62,5 +71,32 @@ export const redirect = reducerWithInitialState<RedirectState>({
   }))
   .case(clearRedirect, () => ({
     flow: null,
+  }))
+  .build();
+
+export const createDao = reducerWithInitialState<CreatDaoState>({
+  creatingDao: {
+    name: '',
+    purpose: '',
+    council: '',
+    bond: '0.1',
+    votePeriod: '168',
+    gracePeriod: '24',
+    amountToTransfer: '5',
+  },
+})
+  .case(setCreatingDaoData, (state, payload) => ({
+    creatingDao: payload,
+  }))
+  .case(clearCreatingDaoData, () => ({
+    creatingDao: {
+      name: '',
+      purpose: '',
+      council: '',
+      bond: '0.1',
+      votePeriod: '168',
+      gracePeriod: '24',
+      amountToTransfer: '5',
+    },
   }))
   .build();

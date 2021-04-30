@@ -5,8 +5,7 @@ import { LandingMobileMenu } from 'components/LandingMobileMenu';
 import { useHistory } from 'react-router-dom';
 import { Button, IconButton } from 'components/UILib';
 
-import { ReactComponent as NearLogo } from 'images/near-logo.svg';
-import { ReactComponent as NearLogoSmall } from 'images/near-logo-small.svg';
+import { ReactComponent as NearLogo } from 'images/sputnikDAO-logo.svg';
 
 import s from './LandingHeader.module.scss';
 
@@ -38,16 +37,17 @@ const LandingHeader: React.FC<LandingHeaderProps> = ({
   return (
     <>
       <header className={cn(s.root, className)}>
-        <IconButton
-          className={s.mobileMenuButton}
-          onClick={toggleMenu}
-          icon="menu"
-          variant="clear"
-        />
-        <a href="https://near.org/">
-          <NearLogo className={s.logo} />
-          <NearLogoSmall className={s.logoSmall} />
-        </a>
+        <div className={s.iconsWrapper}>
+          <IconButton
+            className={s.mobileMenuButton}
+            onClick={toggleMenu}
+            icon="menu"
+            variant="clear"
+          />
+          <a href="/">
+            <NearLogo className={s.logo} />
+          </a>
+        </div>
         <nav className={s.menu}>
           {menuLinks.map((name, index) => (
             <button
@@ -66,7 +66,7 @@ const LandingHeader: React.FC<LandingHeaderProps> = ({
             history.push('/select-dao');
           }}
         >
-          Launch SputnikDAO
+          Launch App
         </Button>
       </header>
       {isMenuOpen && (
