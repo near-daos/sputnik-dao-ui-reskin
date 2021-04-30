@@ -16,7 +16,6 @@ import {
   RedirectState,
 } from 'types/store';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { CreateDaoParams } from '../../types/dao';
 
 const initialState = {
   items: [],
