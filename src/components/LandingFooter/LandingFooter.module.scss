@@ -79,10 +79,10 @@
 }
 
 .formButton {
-  width: 100%;
   flex: 0 0 auto;
-  
-  @include media.tablet-portrait{
+  width: 100%;
+
+  @include media.tablet-portrait {
     width: auto;
   }
 }
@@ -92,8 +92,8 @@
   align-items: center;
   color: var(--white);
   display: flex;
-  
-  @include media.tablet-portrait{
+
+  @include media.tablet-portrait {
     justify-content: flex-end;
   }
 }
@@ -115,7 +115,7 @@
   flex-wrap: wrap;
   margin: 0;
   padding: 0;
-  @include media.tablet-portrait{
+  @include media.tablet-portrait {
     justify-content: flex-end;
   }
 }
