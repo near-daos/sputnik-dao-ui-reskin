@@ -14,22 +14,20 @@ interface LandingFooterProps {
 const LandingFooter: React.FC<LandingFooterProps> = ({ className }) => {
   const [userEmail, changeUserEmail] = useState('');
 
-  // const handleSubmitEmail = (event: FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //
-  //   if (userEmail === '') {
-  //     window.open(
-  //       'https://42labs.us14.list-manage.com/subscribe/post?u=faedf5dec8739fb92e05b4131&id=14e8024c6c',
-  //       '_blank',
-  //     );
-  //   } else {
-  //     console.log('test');
-  //   }
-  // };
-
   return (
     <footer className={cn(s.root, className)}>
       <SocialMedias className={s.socialMedia} />
+      <p className={s.createAccount}>
+        Need a NEAR account? Create one&nbsp;
+        <a
+          href="https://ethereum.bridgetonear.org/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          here
+        </a>
+        .
+      </p>
       <form
         className={s.form}
         action="https://42labs.us14.list-manage.com/subscribe/post?u=faedf5dec8739fb92e05b4131&id=14e8024c6c"
@@ -59,22 +57,8 @@ const LandingFooter: React.FC<LandingFooterProps> = ({ className }) => {
         </Button>
       </form>
       <p className={s.copyright}>
-        <span>2021 NEAR Protocol | All rights reserved</span>
-        <span className={s.copyrightDivider}>&nbsp;|&nbsp;</span>
-        <span>
-          <a href="mailto:hello@near.org">hello@near.org</a>
-          &nbsp;|&nbsp;
-          <a href="/">Privacy Policy</a>
-        </span>
+        Community developed. Not audited. Use at your own risk.
       </p>
-      <nav className={s.links}>
-        <Button href="/" variant="clear" size="custom" className={s.link}>
-          Terms of Use
-        </Button>
-        <Button href="/" variant="clear" size="custom" className={s.link}>
-          FAQ
-        </Button>
-      </nav>
     </footer>
   );
 };
