@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
 import { SocialMedias } from 'components/SocialMedias';
 import { Button, TextField } from '../UILib';
