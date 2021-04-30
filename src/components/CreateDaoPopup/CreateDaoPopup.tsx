@@ -12,12 +12,12 @@ import { AwsUploader } from 'services/AwsUploader';
 import { nearConfig } from 'config';
 import { useDispatch, useSelector } from 'react-redux';
 import { creatingDaoSelector, daoListSelector } from 'redux/selectors';
-import { clearCreatingDaoData, setCreatingDaoData } from 'redux/actions';
 import { Button, IconButton, SvgIcon, TextField } from '../UILib';
 import { CreateDaoErrors, CreateDaoValues } from './types';
 import { validateFirstStep, validateSecondStep } from './validators';
 
 import s from './CreateDaoPopup.module.scss';
+import { clearCreatingDaoData, setCreatingDaoData } from '../../redux/actions';
 
 export interface CreateDaoPopupProps {
   className?: string;
