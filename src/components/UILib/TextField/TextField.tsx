@@ -29,6 +29,7 @@ export interface TextFieldProps
   onChange: (value: string, name: string) => void;
   id?: string;
 }
+const validChars = /[0-9]/;
 
 const TextField: React.FC<TextFieldProps> = ({
   className,
@@ -89,10 +90,18 @@ const TextField: React.FC<TextFieldProps> = ({
             <input
               id={id}
               type={type}
+              name={name}
               className={cn(styles.input, styles[variant], inputClassName)}
               value={value}
               placeholder={placeholder}
-              onChange={(e): void => onChange(e.currentTarget.value, name)}
+              onKeyPress={(e) => {
+                if (type === 'number' && !validChars.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+              onChange={(e): void => {
+                onChange(e.currentTarget.value, name);
+              }}
               onFocus={(): void => setFocus(true)}
               onBlur={(): void => setFocus(false)}
               disabled={disabled}
@@ -123,7 +132,13 @@ const TextField: React.FC<TextFieldProps> = ({
       </div>
 
       {!error && helperText && (
-        <p className={styles.helperText}>{helperText}</p>
+        <p
+          className={cn(styles.helperText, {
+            [styles.short]: multiline && maxLength,
+          })}
+        >
+          {helperText}
+        </p>
       )}
       {error && (
         <p className={styles.error}>

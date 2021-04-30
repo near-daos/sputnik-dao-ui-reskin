@@ -6,7 +6,7 @@ import useMedia from 'hooks/use-media';
 
 import { Button, IconButton, SvgIcon } from 'components/UILib';
 import { DaoCard } from 'components/DaoCard';
-import SearchBar from 'components/SearchBar';
+// import SearchBar from 'components/SearchBar';
 import { useHistory } from 'react-router-dom';
 import { daoListSelector } from 'redux/selectors';
 
@@ -24,12 +24,12 @@ enum Mode {
 }
 
 export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
-  const [mode, setMode] = useState(Mode.Carousel);
+  const [mode, setMode] = useState(Mode.Grid);
   const [activeSlide, setActiveSlide] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [swiper, setSwiper] = useState<any>();
   const media = useMedia();
-  const [searchText, setSearchText] = useState('');
+  const [searchText] = useState('');
   const history = useHistory();
   const daoList = useSelector(daoListSelector);
   const [filteredDaoList, setFilteredDaoList] = useState<DaoItem[]>([]);
@@ -93,14 +93,14 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
               size="lg"
             />
           </div>
-          <SearchBar
-            className={s.search}
-            placeholder="DAO search"
-            value={searchText}
-            onChange={setSearchText}
-            name="search"
-            size="md"
-          />
+          {/* <SearchBar */}
+          {/*  className={s.search} */}
+          {/*  placeholder="DAO search" */}
+          {/*  value={searchText} */}
+          {/*  onChange={setSearchText} */}
+          {/*  name="search" */}
+          {/*  size="md" */}
+          {/* /> */}
         </div>
       </section>
       <section className={cn(s.grid, { [s.hidden]: mode !== Mode.Grid })}>

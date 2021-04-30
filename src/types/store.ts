@@ -1,5 +1,5 @@
 import { Proposal } from './proposal';
-import { DaoItem } from './dao';
+import { CreateDaoParams, DaoItem } from './dao';
 import { RedirectFlow } from './index';
 
 export type DaoState = {
@@ -22,9 +22,14 @@ export type RedirectState = {
   flow: RedirectFlow | null;
 };
 
+export type CreatDaoState = {
+  creatingDao: CreateDaoParams;
+};
+
 export interface StoreState {
   auth: AuthState;
   daos: DaoState;
   proposals: ProposalState;
   redirect: RedirectState;
+  createDao: CreatDaoState;
 }

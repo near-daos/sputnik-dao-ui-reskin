@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TextField } from 'components/UILib';
+import { Button } from 'components/UILib';
 import useMedia from 'hooks/use-media';
 import { SocialMedias } from 'components/SocialMedias';
 
@@ -10,6 +10,9 @@ import s from './CommunityConnect.module.scss';
 
 const CommunityConnect: React.FC = () => {
   const media = useMedia();
+  const handleLearnClick = () => {
+    window.open('https://learnnear.club/', '_blank');
+  };
 
   return (
     <div className={s.root}>
@@ -21,19 +24,12 @@ const CommunityConnect: React.FC = () => {
         </h3>
         <p className={s.description}>
           Creators of all kinds are welcome and rewarded in the NEAR community!
-          Log in to the <a href="https://gov.near.org/">NEAR Forum</a> to keep
-          up with other guilds and report your own activities.
+          Log in to the <a href="https://gov.near.org/">NEAR Forum</a> to
+          connect with guilds and earn NEAR through DAO proposals.
         </p>
-        <form className={s.form}>
-          <TextField
-            name="your-email"
-            value=""
-            placeholder="Your email"
-            onChange={() => ''}
-            variant="md"
-          />
-          <Button size="lg">Stay with us</Button>
-        </form>
+        <div className={s.buttonWrapper}>
+          <Button onClick={handleLearnClick}>NEAR Forum</Button>
+        </div>
         <SocialMedias
           className={s.socialMedia}
           size="custom"
