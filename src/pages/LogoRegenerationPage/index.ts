@@ -33,7 +33,8 @@ const LogoRegenerationPage: React.FC = () => {
         console.log('Logo uploaded for dao: ', dao.id);
       }
     });
-  }, [daoList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return null;
 };

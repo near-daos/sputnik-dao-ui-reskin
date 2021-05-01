@@ -48,7 +48,7 @@ const getInstanceConfig = () => {
 
 AWS.config.update(getGlobalAWSConfig());
 
-const awsS3 = new AWS.S3(getInstanceConfig());
+export const awsS3 = new AWS.S3(getInstanceConfig());
 
 export class AwsUploader {
   awsS3Instance: AWS.S3;
