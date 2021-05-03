@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { SputnikDaoLogo } from 'components/SputnikDaoLogo';
+import { ReactComponent as SputnikDaoLogo } from 'images/sputnikDAO-logo.svg';
 import useMedia from 'hooks/use-media';
 
 import { StepProgressBar } from 'components/StepProgressBar';
@@ -30,7 +30,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   className,
   onClose,
 }) => {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(3);
   const media = useMedia();
   const dispatch = useDispatch();
   const values = useSelector(creatingDaoSelector);
@@ -278,12 +278,12 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
             <div className={s.step3Wrapper}>
               <div className={s.bannerWrapper}>
                 <div className={s.bannerContainer}>
-                  <DaoLogoButton
-                    title="Purchase a curated NFT logo"
-                    description="Unique and perfectly matched logo from dozens of handpicked elements."
-                    imageType="exclamation"
-                    className={cn(s.banner, s.inactive)}
-                  />
+                  {/* <DaoLogoButton */}
+                  {/*  title="Purchase a curated NFT logo" */}
+                  {/*  description="Unique and perfectly matched logo from dozens of handpicked elements." */}
+                  {/*  imageType="exclamation" */}
+                  {/*  className={cn(s.banner, s.inactive)} */}
+                  {/* /> */}
                   <DaoLogoButton
                     title="Free random logo"
                     description="A randomly generated unique logo from dozens of our assets."

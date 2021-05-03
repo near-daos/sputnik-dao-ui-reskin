@@ -5,7 +5,7 @@ import ThemeSwitcher from 'components/ThemeSwitcher';
 import { Theme } from 'types/theme';
 import { CreateDaoPopup } from 'components/CreateDaoPopup';
 import { ProfileButton } from 'components/ProfileButton';
-import { SputnikDaoLogo } from 'components/SputnikDaoLogo';
+import { ReactComponent as SputnikDaoLogo } from 'images/sputnikDAO-logo.svg';
 import { MobileMenu } from 'components/MobileMenu';
 import { SearchAutoComplete } from 'components/SearchAutoComplete';
 import { useDispatch, useSelector } from 'react-redux';
