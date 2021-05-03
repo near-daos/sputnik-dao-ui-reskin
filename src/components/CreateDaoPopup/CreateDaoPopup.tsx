@@ -30,7 +30,7 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   className,
   onClose,
 }) => {
-  const [activeStep, setActiveStep] = useState(3);
+  const [activeStep, setActiveStep] = useState(1);
   const media = useMedia();
   const dispatch = useDispatch();
   const values = useSelector(creatingDaoSelector);
