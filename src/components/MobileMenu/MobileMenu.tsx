@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import cn from 'classnames';
 
 import { IconButton, Button } from 'components/UILib';
-import { SputnikDaoLogo } from 'components/SputnikDaoLogo';
+import { ReactComponent as SputnikDaoLogo } from 'images/sputnikDAO-logo.svg';
 import { Footer } from 'components/Footer';
 import ThemeSwitcher from 'components/ThemeSwitcher';
 import { Theme } from 'types/theme';

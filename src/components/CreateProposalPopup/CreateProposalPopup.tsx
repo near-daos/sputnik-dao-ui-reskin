@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { SputnikDaoLogo } from 'components/SputnikDaoLogo';
+import { ReactComponent as SputnikDaoLogo } from 'images/sputnikDAO-logo.svg';
 import useMedia from 'hooks/use-media';
 
 import { StepProgressBar } from 'components/StepProgressBar';
