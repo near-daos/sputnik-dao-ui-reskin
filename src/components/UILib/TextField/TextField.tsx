@@ -29,7 +29,7 @@ export interface TextFieldProps
   onChange: (value: string, name: string) => void;
   id?: string;
 }
-const validChars = /[0-9]/;
+const validChars = /[0-9,]/;
 
 const TextField: React.FC<TextFieldProps> = ({
   className,

@@ -115,6 +115,7 @@
 }
 
 .target {
+  @include mixins.truncate();
   margin-top: functions.calc-rem(4);
 }
 

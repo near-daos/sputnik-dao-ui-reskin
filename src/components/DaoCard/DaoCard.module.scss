@@ -108,6 +108,7 @@
 
 .title {
   @extend %heading-6;
+  @include truncate-multiline(2);
   margin-bottom: 24px;
   word-break: break-word;
 
