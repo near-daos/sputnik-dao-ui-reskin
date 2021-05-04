@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import cn from 'classnames';
 
 import { IconButton, Button } from 'components/UILib';
-import { ReactComponent as SputnikDaoLogo } from 'images/sputnikDAO-logo.svg';
 import { Footer } from 'components/Footer';
 import ThemeSwitcher from 'components/ThemeSwitcher';
 import { Theme } from 'types/theme';
@@ -55,7 +54,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             size="sm"
           />
           <a href="/" className={s.logo}>
-            <SputnikDaoLogo className={s.logoIcon} />
+            <div className={s.logoImage} />
           </a>
         </div>
         <div className={s.controls}>
