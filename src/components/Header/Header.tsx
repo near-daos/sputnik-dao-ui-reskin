@@ -5,7 +5,6 @@ import ThemeSwitcher from 'components/ThemeSwitcher';
 import { Theme } from 'types/theme';
 import { CreateDaoPopup } from 'components/CreateDaoPopup';
 import { ProfileButton } from 'components/ProfileButton';
-import { ReactComponent as SputnikDaoLogo } from 'images/sputnikDAO-logo.svg';
 import { MobileMenu } from 'components/MobileMenu';
 import { SearchAutoComplete } from 'components/SearchAutoComplete';
 import { useDispatch, useSelector } from 'react-redux';
@@ -99,7 +98,7 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
                 onClick={toggleMenu}
               />
               <a href="/" className={s.logo}>
-                <SputnikDaoLogo className={s.logoIcon} />
+                <div className={s.logoImage} />
               </a>
               <a className={s.link} href="/select-dao">
                 All DAOs

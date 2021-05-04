@@ -152,6 +152,8 @@
     --theme-corner-pink-3: var(--color-pink-70);
     --theme-corner-pink-4: var(--color-pink-60);
     --theme-corner-pink-5: var(--color-pink-50);
+
+    --theme-logo: url('/images/sputnik_horiz_dark.svg');
   }
 
   &[data-theme='light'] {
@@ -305,5 +307,7 @@
     --theme-corner-pink-3: var(--color-pink-30);
     --theme-corner-pink-4: var(--color-pink-40);
     --theme-corner-pink-5: var(--color-pink-50);
+
+    --theme-logo: url('/images/sputnik_horizLight.svg');
   }
 }
