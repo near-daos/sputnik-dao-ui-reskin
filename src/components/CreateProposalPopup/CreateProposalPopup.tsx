@@ -230,6 +230,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                   onChange={(val) => handleChange('target', val)}
                   label="Target"
                   className={s.input}
+                  helperText="Recipient NEAR address"
                 />
                 <TextField
                   name="description"
