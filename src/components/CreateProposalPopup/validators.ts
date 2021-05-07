@@ -1,4 +1,4 @@
-import { parseForumUrl } from 'services/NearService/NearService';
+import { URLTest } from 'services/NearService/NearService';
 import { ProposalType } from 'types/proposal';
 import { validateDescription, validateNumber } from 'utils/validators';
 import { CreateProposalValues, CreateProposalErrors } from './types';
@@ -25,7 +25,7 @@ export const validateThirdStep = (
 ): CreateProposalErrors => {
   const errors: CreateProposalErrors = {};
 
-  if (!parseForumUrl(values.link)) {
+  if (!URLTest(values.link)) {
     errors.link = 'Wrong link format';
   }
 

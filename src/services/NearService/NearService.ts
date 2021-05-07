@@ -44,6 +44,11 @@ export const parseForumUrl = (url: string): string => {
     : `/t/${category}/${subCategory}`;
 };
 
+export const URLTest = (url: string): boolean => {
+  const regExp = /^(ftp|http|https):\/\/[^ "]+$/;
+
+  return regExp.test(url);
+};
 export const yoktoNear = 1000000000000000000000000;
 
 class NearService {
