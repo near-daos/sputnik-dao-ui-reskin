@@ -1,10 +1,11 @@
 /* eslint-disable import/no-cycle */
 import React, { useState } from 'react';
 import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
+// import { Footer } from 'components/Footer';
 import { Theme } from 'types/theme';
 
 import s from './MainLayout.module.scss';
+import { LandingFooter } from '../LandingFooter';
 
 const DEFAULT_THEME = Theme.Dark;
 
@@ -30,7 +31,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     <div className={s.root} id="themed" data-theme={theme}>
       <Header className={s.header} toggleTheme={toggleTheme} theme={theme} />
       <main className={s.content}>{children}</main>
-      <Footer className={s.footer} />
+      {/* <Footer className={s.footer} /> */}
+      <LandingFooter />
     </div>
   );
 };

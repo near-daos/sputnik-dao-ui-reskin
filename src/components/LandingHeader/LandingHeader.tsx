@@ -5,7 +5,7 @@ import { LandingMobileMenu } from 'components/LandingMobileMenu';
 import { useHistory } from 'react-router-dom';
 import { Button, IconButton } from 'components/UILib';
 
-import { ReactComponent as NearLogo } from 'images/sputnikDAO-logo.svg';
+import { ReactComponent as NearLogo } from 'images/sputnik_horiz_dark.svg';
 
 import s from './LandingHeader.module.scss';
 
