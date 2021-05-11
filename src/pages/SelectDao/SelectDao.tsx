@@ -55,6 +55,9 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
 
   const handleCarouselMode = () => {
     setMode(Mode.Carousel);
+    setTimeout(() => {
+      swiper.update();
+    }, 0);
   };
 
   const handleGridMode = () => {

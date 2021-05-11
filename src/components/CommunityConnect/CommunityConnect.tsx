@@ -28,7 +28,9 @@ const CommunityConnect: React.FC = () => {
           connect with guilds and earn NEAR through DAO proposals.
         </p>
         <div className={s.buttonWrapper}>
-          <Button onClick={handleLearnClick}>NEAR Forum</Button>
+          <Button variant="outline" onClick={handleLearnClick}>
+            NEAR Forum
+          </Button>
         </div>
         <SocialMedias
           className={s.socialMedia}

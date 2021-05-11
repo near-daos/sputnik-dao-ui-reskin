@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { SputnikDaoLogo } from 'components/SputnikDaoLogo';
 import useMedia from 'hooks/use-media';
 
 import { StepProgressBar } from 'components/StepProgressBar';
@@ -171,7 +170,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
       <div className={s.wrapper}>
         <div className={s.header}>
           <Link to="/" className={s.logo}>
-            <SputnikDaoLogo />
+            <div className={s.logoImage} />
           </Link>
           <IconButton
             icon="close"
@@ -231,6 +230,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                   onChange={(val) => handleChange('target', val)}
                   label="Target"
                   className={s.input}
+                  helperText="Recipient NEAR address"
                 />
                 <TextField
                   name="description"
