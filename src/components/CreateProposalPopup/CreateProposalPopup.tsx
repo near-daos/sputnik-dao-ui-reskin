@@ -230,7 +230,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                   onChange={(val) => handleChange('target', val)}
                   label="Target"
                   className={s.input}
-                  helperText="Recipient NEAR address"
+                  helperText="Recipient NEAR address. For non-payout proposals use your own address."
                 />
                 <TextField
                   name="description"

@@ -48,6 +48,7 @@ const SocialMedias: React.FC<SocialMediasProps> = ({
   <div className={cn(s.root, className)}>
     {socialLinks.map(({ icon, href }) => (
       <IconButton
+        key={icon}
         icon={icon}
         href={href}
         className={cn(s.button, buttonClassName)}
