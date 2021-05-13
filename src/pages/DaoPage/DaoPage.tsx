@@ -39,12 +39,16 @@ export const DaoPage: React.FC = () => {
 
   const account = useSelector(accountSelector);
   const daoList = useSelector(daoListSelector);
+  const reversDaoList = daoList.slice().reverse();
+  // const [reversDaoList, setReversDaoList] = useState<DaoItem[]>([]);
   const dao = useSelector<StoreState, DaoItem | undefined>((state) =>
     daoSelector(state, params.id),
   );
   const proposals = useSelector<StoreState, Proposal[]>((state) =>
     proposalListSelector(state, params.id),
   );
+
+  console.log(proposals);
 
   useEffect(() => {
     dispatch(fetchProposals.started(params.id));
@@ -67,7 +71,7 @@ export const DaoPage: React.FC = () => {
   return (
     <section className={s.root}>
       <section className={s.slider}>
-        <SmallDaoSlider daos={daoList} activeDaoId={params.id} />
+        <SmallDaoSlider daos={reversDaoList} activeDaoId={params.id} />
       </section>
       <div className={s.content}>
         <section className={s.header}>
