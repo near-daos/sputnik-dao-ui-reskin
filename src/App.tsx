@@ -6,6 +6,7 @@ import { NearService } from 'services/NearService';
 import { useDispatch } from 'react-redux';
 import { fetchAccount, fetchDaoList } from 'redux/actions';
 import LogoRegenerationPage from 'pages/LogoRegenerationPage';
+import RedirectRoute from 'components/RedirectRoute';
 import { MainLayout } from './components';
 import { LandingPage } from './pages/LandingPage/LandingPage';
 import { SelectDao } from './pages/SelectDao/SelectDao';
@@ -89,6 +90,11 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
+      <RedirectRoute
+        from="/#/:daoId/:proposalId"
+        to="/dao/:daoId/proposals/:proposalId"
+      />
+      <RedirectRoute from="/#/:daoId" to="/dao/:daoId" />
       <Route exact path="/">
         <LandingPage />
       </Route>
