@@ -69,7 +69,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   };
 
   const handleSelectDao = () => {
-    history.push(`/dao/${daoList[activeSlide].id}`);
+    history.push(`/dao/${filteredDaoList[activeSlide].id}`);
   };
 
   return (
@@ -77,7 +77,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
       <section className={s.panel}>
         <div>
           <h1 className={s.title}>Select DAO</h1>
-          <span className={s.number}>({daoList.length})</span>
+          <span className={s.number}>({filteredDaoList.length})</span>
         </div>
         <div className={s.view}>
           <div className={s.viewModes}>
@@ -132,7 +132,11 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
                 onSlideChange={(swiperObject) => {
                   const index = swiperObject.realIndex;
 
-                  setActiveSlide(index);
+                  if (index === filteredDaoList.length) {
+                    swiperObject.slideTo(0);
+                  } else {
+                    setActiveSlide(index);
+                  }
                 }}
                 onSwiper={(swiperObject) => {
                   setSwiper(swiperObject);
