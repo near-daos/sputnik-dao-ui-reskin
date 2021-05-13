@@ -46,6 +46,8 @@ export const DaoPage: React.FC = () => {
     proposalListSelector(state, params.id),
   );
 
+  console.log(proposals);
+
   useEffect(() => {
     dispatch(fetchProposals.started(params.id));
   }, [dispatch, params.id]);

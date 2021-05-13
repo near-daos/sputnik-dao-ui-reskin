@@ -32,6 +32,7 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
   const [searchText] = useState('');
   const history = useHistory();
   const daoList = useSelector(daoListSelector);
+
   const [filteredDaoList, setFilteredDaoList] = useState<DaoItem[]>([]);
   const dispatch = useDispatch();
 
@@ -41,7 +42,10 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
 
   useEffect(() => {
     if (!searchText) {
-      setFilteredDaoList(daoList);
+      const reverseArray = daoList.slice().reverse();
+
+      // test.reverse();
+      setFilteredDaoList(reverseArray);
 
       return;
     }
@@ -134,7 +138,11 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
                   setSwiper(swiperObject);
                 }}
                 onClick={(swiperObject) => {
-                  history.push(`/dao/${daoList[swiperObject.realIndex].id}`);
+                  if (swiperObject.clickedIndex === swiperObject.activeIndex) {
+                    history.push(`/dao/${daoList[swiperObject.realIndex].id}`);
+                  } else {
+                    swiperObject.slideTo(swiperObject.clickedIndex);
+                  }
                 }}
               >
                 {filteredDaoList.map((dao, index) => (
