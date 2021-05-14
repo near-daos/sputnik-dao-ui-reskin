@@ -33,8 +33,6 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   const media = useMedia();
   const dispatch = useDispatch();
   const values = useSelector(creatingDaoSelector);
-
-  // const [values, setValues] = useState<CreateDaoValues>(initialValues);
   const [errors, setErrors] = useState<CreateDaoErrors>({});
   const daoList = useSelector(daoListSelector);
 
