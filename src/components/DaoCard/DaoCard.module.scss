@@ -108,7 +108,10 @@
 
 .title {
   @extend %heading-6;
+  @include truncate-multiline(2);
   margin-bottom: 24px;
+  word-break: break-word;
+
   @include desktop {
     @include heading-5;
   }
@@ -156,6 +159,8 @@
   @include truncate-multiline(5);
   height: functions.calc-rem(120);
   margin-top: functions.calc-rem(4);
+  word-break: break-word;
+
 
   @include tablet-portrait {
     @include body-2;

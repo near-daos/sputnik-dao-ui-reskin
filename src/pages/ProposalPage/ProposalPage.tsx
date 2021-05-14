@@ -144,14 +144,14 @@ export const ProposalPage: React.FC = () => {
     proposal.proposer === accountId &&
     proposal.status === ProposalStatus.Vote;
 
-  const description = proposal.description.split('/t/')[0];
-  const link = (
+  const [description, link] = proposal.description.split('/t/');
+  const linkEl = !!link && (
     <a
       target="_blank"
-      href={`https://gov.near.org/t/${proposal.description.split('/t/')[1]}`}
+      href={`https://gov.near.org/t/${link}`}
       rel="nofollow noreferrer"
     >
-      {`https://gov.near.org/t/${proposal.description.split('/t/')[1]}`}
+      {`https://gov.near.org/t/${link}`}
     </a>
   );
 
@@ -207,7 +207,7 @@ export const ProposalPage: React.FC = () => {
             <h5 className={s.aboutTitle}>About</h5>
             <p className={s.aboutDesc}>
               {description}
-              {link}
+              {linkEl}
             </p>
           </div>
 

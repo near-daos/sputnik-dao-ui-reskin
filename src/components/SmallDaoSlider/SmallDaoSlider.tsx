@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -18,10 +18,19 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
   daos,
   activeDaoId,
 }) => {
-  const [activeSlide, setActiveSlide] = useState(
-    daos.findIndex((item) => item.id === activeDaoId),
-  );
+  const activeSlide = daos.findIndex((item) => item.id === activeDaoId);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [swiper, setSwiper] = useState<any>();
+
   const history = useHistory();
+
+  useEffect(() => {
+    // console.log(swiper);
+    if (swiper && swiper.realIndex !== activeSlide) {
+      console.log(activeSlide);
+      swiper.slideToLoop(activeSlide, 0);
+    }
+  }, [swiper, activeSlide]);
 
   return (
     <div className={cn(s.root, className)}>
@@ -53,12 +62,15 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
             slidesPerView: 7,
           },
         }}
-        onSlideChange={(swiper) => {
-          const index = swiper.realIndex;
+        onSwiper={(swiperObject) => {
+          setSwiper(swiperObject);
+        }}
+        onSlideChange={(swiperObject) => {
+          const index = swiperObject.realIndex;
 
           if (!daos[index]) return;
 
-          setActiveSlide(index);
+          console.log(index);
           history.push(`/dao/${daos[index].id}`);
         }}
       >

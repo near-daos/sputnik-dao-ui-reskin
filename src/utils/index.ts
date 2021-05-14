@@ -1,4 +1,5 @@
-import { appConfig } from 'config';
+import { awsConfig } from 'config';
+import { awsS3 } from 'services/AwsUploader/AwsUploader';
 
 /* eslint-disable no-plusplus */
 export const convertDuration = (duration: number): Date => {
@@ -18,9 +19,20 @@ export const shuffle = <T>(array: T[]): void => {
 };
 
 export const checkIfLogoExist = async (logoName: string): Promise<boolean> => {
-  const response = await fetch(`${appConfig.logoPath}${logoName}.png`, {
-    mode: 'no-cors',
-  });
+  const params = {
+    Bucket: awsConfig.bucket,
+    Key: `${logoName}.png`,
+  };
 
-  return response.status !== 404;
+  try {
+    await awsS3.headObject(params).promise();
+
+    return true;
+  } catch (err) {
+    if (err.code === 'NotFound') {
+      return false;
+    }
+
+    return true;
+  }
 };

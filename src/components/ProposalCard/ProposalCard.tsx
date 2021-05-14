@@ -46,14 +46,14 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
   const isNotExpired = votePeriodEnd < new Date();
 
-  const description = proposal.description.split('/t/')[0];
-  const link = (
+  const [description, link] = proposal.description.split('/t/');
+  const linkEl = !!link && (
     <a
       target="_blank"
-      href={`https://gov.near.org/t/${proposal.description.split('/t/')[1]}`}
+      href={`https://gov.near.org/t/${link}`}
       rel="nofollow noreferrer"
     >
-      {`https://gov.near.org/t/${proposal.description.split('/t/')[1]}`}
+      {`https://gov.near.org/t/${link}`}
     </a>
   );
 
@@ -100,7 +100,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
         <div className={s.aboutWrapper}>
           <p className={s.name}>About</p>
           <p className={s.aboutText}>{description}</p>
-          {link}
+          {linkEl}
         </div>
         <div className={s.footer}>
           {proposal.kind.type === ProposalType.Payout && (

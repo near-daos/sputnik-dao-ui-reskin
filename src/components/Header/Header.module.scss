@@ -63,8 +63,17 @@
   }
 }
 
-.logoIcon {
-  display: block;
+.logoImage {
+  background-image: var(--theme-logo);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: functions.calc-rem(37);
+  width: functions.calc-rem(110);
+
+  @include media.tablet-portrait {
+    width: functions.calc-rem(140);
+  }
 }
 
 .search {
