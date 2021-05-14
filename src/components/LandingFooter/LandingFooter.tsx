@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
 import { SocialMedias } from 'components/SocialMedias';
 import { Button, TextField } from '../UILib';
@@ -19,11 +19,7 @@ const LandingFooter: React.FC<LandingFooterProps> = ({ className }) => {
       <SocialMedias className={s.socialMedia} />
       <p className={s.createAccount}>
         Need a NEAR account? Create one&nbsp;
-        <a
-          href="https://ethereum.bridgetonear.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://faucet.paras.id/" target="_blank" rel="noreferrer">
           here
         </a>
         .

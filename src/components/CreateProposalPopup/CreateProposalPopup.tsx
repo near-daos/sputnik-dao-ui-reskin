@@ -10,11 +10,13 @@ import { NearService } from 'services/NearService';
 import { DaoItem } from 'types/dao';
 import { yoktoNear } from 'services/NearService/NearService';
 import Decimal from 'decimal.js';
+import { useSelector } from 'react-redux';
 import s from './CreateProposalPopup.module.scss';
 import { Button, IconButton, SvgIcon, TextField } from '../UILib';
 
 import { CreateProposalErrors, CreateProposalValues } from './types';
 import { validateSecondStep, validateThirdStep } from './validators';
+import { accountSelector } from '../../redux/selectors';
 
 export interface CreateProposalPopupProps {
   className?: string;
@@ -67,8 +69,13 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
 }) => {
   const [activeStep, setActiveStep] = useState(1);
   const media = useMedia();
-  const [type, setType] = useState<ProposalType | null>(null);
+  const account = useSelector(accountSelector);
 
+  if (account) {
+    initialValues.target = account;
+  }
+
+  const [type, setType] = useState<ProposalType | null>(null);
   const [values, setValues] = useState<CreateProposalValues>(initialValues);
   const [errors, setErrors] = useState<CreateProposalErrors>({});
 
@@ -230,7 +237,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                   onChange={(val) => handleChange('target', val)}
                   label="Target"
                   className={s.input}
-                  helperText="Recipient NEAR address"
+                  helperText="Recipient NEAR address. For non-payout proposals use your own address."
                 />
                 <TextField
                   name="description"

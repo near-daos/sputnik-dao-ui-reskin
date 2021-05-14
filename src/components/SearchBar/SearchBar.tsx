@@ -38,6 +38,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   return (
     <form className={cn(styles.root, className)} onSubmit={handleSubmit}>
       <TextField
+        type="text"
         leftElementClassName={styles.buttonWrapper}
         rightElementClassName={styles.buttonWrapper}
         leftElement={
