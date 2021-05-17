@@ -80,7 +80,7 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!account && checkIfNearAuthKeysExist()) {
+    if (!NearService.isAuthorized() && checkIfNearAuthKeysExist()) {
       clearNearAuth();
     }
 
