@@ -73,9 +73,9 @@ class NearService {
       ...this.config,
     });
 
-    this.walletConnection = new WalletConnection(this.near, null);
+    this.walletConnection = new WalletConnection(this.near, 'sputnik');
 
-    const account = this.walletConnection.account();
+    const account = this.walletConnection.getAccountId();
 
     this.factoryContract = new Contract(account, this.config.contractName, {
       viewMethods: ['get_dao_list'],
