@@ -34,8 +34,8 @@
 
 .heading {
   @extend %heading-3;
-  color: #0099f2;
   grid-area: heading;
+  line-height: normal;
 
   margin: 0;
   padding: 0;
