@@ -5,8 +5,7 @@ import { Header } from 'components/Header';
 import { Theme } from 'types/theme';
 
 import { checkIfNearAuthKeysExist } from 'utils';
-import { accountSelector } from 'redux/selectors';
-import { useSelector } from 'react-redux';
+import { NearService } from 'services/NearService';
 import s from './MainLayout.module.scss';
 import { LandingFooter } from '../LandingFooter';
 
@@ -18,7 +17,8 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [theme, setTheme] = useState(DEFAULT_THEME);
-  const account = useSelector(accountSelector);
+  const isShowBanner =
+    !NearService.isAuthorized() && checkIfNearAuthKeysExist();
 
   const toggleTheme = () => {
     const updatedTheme = theme === Theme.Light ? Theme.Dark : Theme.Light;
@@ -33,7 +33,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   return (
     <div className={s.root} id="themed" data-theme={theme}>
-      {!account && checkIfNearAuthKeysExist() && (
+      {isShowBanner && (
         <div className={s.banner}>
           Sign in failed, please try again (mismatched app cache has been
           cleared).
