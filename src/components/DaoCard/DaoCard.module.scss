@@ -109,6 +109,7 @@
 .title {
   @extend %heading-6;
   @include truncate-multiline(2);
+  color: #0099f2;
   flex: none;
   margin-bottom: 24px;
   word-break: break-word;
@@ -123,6 +124,11 @@
       margin-top: 0;
     }
   }
+}
+
+.contractName {
+  @extend %body-3;
+  color: var(--theme-proposal-card-additional-text);
 }
 
 .label {

@@ -27,7 +27,7 @@ import { Proposal } from 'types/proposal';
 import { DaoItem } from 'types/dao';
 
 import { fetchProposals, login } from 'redux/actions';
-import { appConfig } from 'config';
+import { appConfig, nearConfig } from 'config';
 import s from './DaoPage.module.scss';
 
 export const DaoPage: React.FC = () => {
@@ -81,7 +81,10 @@ export const DaoPage: React.FC = () => {
             src={`${appConfig.logoPath}${dao?.id}.png`}
             alt="Logo"
           />
-          <h1 className={s.heading}>DAO {dao?.id}</h1>
+          <h1 className={s.heading}>
+            {dao?.id.replace(`.${nearConfig.contractName}`, '')}
+            <span className={s.contractName}>.{nearConfig.contractName}</span>
+          </h1>
           <div className={s.nav}>
             <NavTabs
               className={s.navTabs}

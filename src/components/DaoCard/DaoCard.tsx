@@ -10,7 +10,7 @@ import {
   SvgIcon,
 } from 'components/UILib';
 import { useHistory } from 'react-router-dom';
-import { appConfig } from 'config';
+import { appConfig, nearConfig } from 'config';
 import s from './DaoCard.module.scss';
 
 export interface DaoCardProps {
@@ -47,7 +47,10 @@ const DaoCard: React.FC<DaoCardProps> = ({
         />
       </div>
       <div className={s.content}>
-        <p className={cn(s.title, s[size])}>{dao.id}</p>
+        <p className={cn(s.title, s[size])}>
+          {dao?.id.replace(`.${nearConfig.contractName}`, '')}
+          <span className={s.contractName}>.{nearConfig.contractName}</span>
+        </p>
         <p className={s.label}>Purpose</p>
         <p className={s.purpose}>{dao.purpose}</p>
         <div className={s.wrapper}>
