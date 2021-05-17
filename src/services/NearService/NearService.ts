@@ -68,12 +68,14 @@ class NearService {
   }
 
   public async init(): Promise<void> {
+    // eslint-disable-next-line no-console
+    console.log('NearService: init');
     this.near = await connect({
       deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() },
       ...this.config,
     });
 
-    this.walletConnection = new WalletConnection(this.near, null);
+    this.walletConnection = new WalletConnection(this.near, 'sputnik');
 
     const account = this.walletConnection.account();
 
