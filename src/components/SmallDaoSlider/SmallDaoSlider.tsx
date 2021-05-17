@@ -35,7 +35,7 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
   return (
     <div className={cn(s.root, className)}>
       <Swiper
-        spaceBetween={30}
+        spaceBetween={80}
         loop
         slidesPerView={2}
         slideToClickedSlide

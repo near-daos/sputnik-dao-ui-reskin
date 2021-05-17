@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import { DaoItem } from 'types/dao';
 
-import { appConfig } from 'config';
+import { appConfig, nearConfig } from 'config';
 import s from './DaoCardMini.module.scss';
 
 export interface DaoCardMiniProps {
@@ -31,7 +31,9 @@ const DaoCardMini: React.FC<DaoCardMiniProps> = ({
       />
     </div>
     <div className={s.overlay} />
-    <p className={s.name}>{dao.id}</p>
+    <p className={s.name}>
+      {dao.id.replace(`.${nearConfig.contractName}`, '')}
+    </p>
   </div>
 );
 
