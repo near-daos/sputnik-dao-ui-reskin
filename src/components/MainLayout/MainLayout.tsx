@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from 'components/Header';
 // import { Footer } from 'components/Footer';
 import { Theme } from 'types/theme';
@@ -17,8 +17,13 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [theme, setTheme] = useState(DEFAULT_THEME);
-  const isShowBanner =
-    !NearService.isAuthorized() && checkIfNearAuthKeysExist();
+  const [isShowBanner, setIsShowBanner] = useState(false);
+
+  useEffect(() => {
+    if (!NearService.isAuthorized() && checkIfNearAuthKeysExist()) {
+      setIsShowBanner(true);
+    }
+  }, []);
 
   const toggleTheme = () => {
     const updatedTheme = theme === Theme.Light ? Theme.Dark : Theme.Light;

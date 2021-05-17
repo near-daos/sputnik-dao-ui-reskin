@@ -80,11 +80,11 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!NearService.isAuthorized() && checkIfNearAuthKeysExist()) {
-      clearNearAuth();
-    }
-
     NearService.init().then(async () => {
+      if (!NearService.isAuthorized() && checkIfNearAuthKeysExist()) {
+        clearNearAuth();
+      }
+
       dispatch(fetchAccount.started());
       dispatch(fetchDaoList.started());
       setIsInitialized(true);
