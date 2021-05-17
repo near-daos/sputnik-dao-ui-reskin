@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { fetchAccount, fetchDaoList } from 'redux/actions';
 import LogoRegenerationPage from 'pages/LogoRegenerationPage';
 import RedirectRoute from 'components/RedirectRoute';
+import useClearNearCache from 'hooks/use-clear-near-cache';
 import { MainLayout } from './components';
 import { LandingPage } from './pages/LandingPage/LandingPage';
 import { SelectDao } from './pages/SelectDao/SelectDao';
@@ -63,6 +64,8 @@ const App: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
   const mainLayoutPaths = routes.map((route) => route.path);
   const dispatch = useDispatch();
+
+  useClearNearCache();
 
   const setVH = () => {
     // dynamically set 1vh value for mobile full height bug fix
