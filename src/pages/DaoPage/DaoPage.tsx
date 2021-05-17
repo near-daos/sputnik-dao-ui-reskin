@@ -48,8 +48,6 @@ export const DaoPage: React.FC = () => {
     proposalListSelector(state, params.id),
   );
 
-  console.log(proposals);
-
   useEffect(() => {
     dispatch(fetchProposals.started(params.id));
   }, [dispatch, params.id]);
@@ -83,6 +81,7 @@ export const DaoPage: React.FC = () => {
           />
           <h1 className={s.heading}>
             {dao?.id.replace(`.${nearConfig.contractName}`, '')}
+            <br />
             <span className={s.contractName}>.{nearConfig.contractName}</span>
           </h1>
           <div className={s.nav}>

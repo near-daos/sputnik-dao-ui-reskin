@@ -18,3 +18,13 @@
   flex: 1 1 auto;
   flex-direction: column;
 }
+
+.banner {
+  align-items: center;
+  background-color: var(--color-purple-50);
+  color: #fff;
+  display: flex;
+  height: 45px;
+  justify-content: center;
+  width: 100%;
+}

@@ -36,3 +36,34 @@ export const checkIfLogoExist = async (logoName: string): Promise<boolean> => {
     return true;
   }
 };
+
+export const checkIfNearAuthKeysExist = (): boolean => {
+  let isKeysExist = false;
+  const keys = Object.keys(localStorage);
+
+  keys.forEach((key) => {
+    if (key.indexOf('near-api-js:') !== -1) {
+      isKeysExist = true;
+    }
+
+    if (key.indexOf('wallet_auth_key') !== -1) {
+      isKeysExist = true;
+    }
+  });
+
+  return isKeysExist;
+};
+
+export const clearNearAuth = (): void => {
+  const keys = Object.keys(localStorage);
+
+  keys.forEach((key) => {
+    if (key.indexOf('near-api-js:') !== -1) {
+      localStorage.removeItem(key);
+    }
+
+    if (key.indexOf('wallet_auth_key') !== -1) {
+      localStorage.removeItem(key);
+    }
+  });
+};
