@@ -34,6 +34,7 @@
 
 .heading {
   @extend %heading-3;
+  color: #0099f2;
   grid-area: heading;
 
   margin: 0;
@@ -46,6 +47,11 @@
     position: relative;
     z-index: 1;
   }
+}
+
+.contractName {
+  @extend %body-1;
+  color: var(--theme-proposal-card-additional-text);
 }
 
 .picture {
