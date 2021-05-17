@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  BrowserRouter,
   HashRouter,
   Redirect,
   Route,
@@ -13,7 +12,6 @@ import { NearService } from 'services/NearService';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAccount, fetchDaoList } from 'redux/actions';
 import LogoRegenerationPage from 'pages/LogoRegenerationPage';
-import RedirectRoute from 'components/RedirectRoute';
 import { accountSelector } from 'redux/selectors';
 import { checkIfNearAuthKeysExist, clearNearAuth } from 'utils';
 import { MainLayout } from './components';
