@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, RouteProps, Switch } from 'react-router-dom';
+import {
+  BrowserRouter,
+  HashRouter,
+  Redirect,
+  Route,
+  RouteProps,
+  Switch,
+} from 'react-router-dom';
 import debounce from 'lodash.debounce';
 
 import { NearService } from 'services/NearService';
@@ -96,12 +103,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <BrowserRouter>
-      <RedirectRoute
-        from="/#/:daoId/:proposalId"
-        to="/dao/:daoId/proposals/:proposalId"
-      />
-      <RedirectRoute from="/#/:daoId" to="/dao/:daoId" />
+    <HashRouter>
       <Route exact path="/">
         <LandingPage />
       </Route>
@@ -111,10 +113,15 @@ const App: React.FC = () => {
             {routes.map((route, i) => (
               <Route key={String(i)} {...route} />
             ))}
+            <Redirect
+              from="/:daoId/:proposalId"
+              to="/dao/:daoId/proposals/:proposalId"
+            />
+            <Redirect from="/:daoId" to="/dao/:daoId" />
           </Switch>
         </MainLayout>
       </Route>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
