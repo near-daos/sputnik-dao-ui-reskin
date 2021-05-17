@@ -49,6 +49,7 @@ const DaoCard: React.FC<DaoCardProps> = ({
       <div className={s.content}>
         <p className={cn(s.title, s[size])}>
           {dao?.id.replace(`.${nearConfig.contractName}`, '')}
+          <br />
           <span className={s.contractName}>.{nearConfig.contractName}</span>
         </p>
         <p className={s.label}>Purpose</p>

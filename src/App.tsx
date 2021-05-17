@@ -3,11 +3,12 @@ import { BrowserRouter, Route, RouteProps, Switch } from 'react-router-dom';
 import debounce from 'lodash.debounce';
 
 import { NearService } from 'services/NearService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchAccount, fetchDaoList } from 'redux/actions';
 import LogoRegenerationPage from 'pages/LogoRegenerationPage';
 import RedirectRoute from 'components/RedirectRoute';
-import useClearNearCache from 'hooks/use-clear-near-cache';
+import { accountSelector } from 'redux/selectors';
+import { checkIfNearAuthKeysExist, clearNearAuth } from 'utils';
 import { MainLayout } from './components';
 import { LandingPage } from './pages/LandingPage/LandingPage';
 import { SelectDao } from './pages/SelectDao/SelectDao';
@@ -63,9 +64,8 @@ const routes: RouteInfo[] = [
 const App: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
   const mainLayoutPaths = routes.map((route) => route.path);
+  const account = useSelector(accountSelector);
   const dispatch = useDispatch();
-
-  useClearNearCache();
 
   const setVH = () => {
     // dynamically set 1vh value for mobile full height bug fix
@@ -80,12 +80,16 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (!account && checkIfNearAuthKeysExist()) {
+      clearNearAuth();
+    }
+
     NearService.init().then(async () => {
       dispatch(fetchAccount.started());
       dispatch(fetchDaoList.started());
       setIsInitialized(true);
     });
-  }, [dispatch]);
+  }, [account, dispatch]);
 
   if (!isInitialized) {
     return null; // todo add loader
