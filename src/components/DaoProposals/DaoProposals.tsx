@@ -93,7 +93,7 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<ProposalSortOption>(sortOptions[0]);
   const [filters, setFilters] = useState<ProposalFilterOption>(
-    filterOptions[filterOptions.length - 1],
+    filterOptions[0],
   );
 
   const account = useSelector(accountSelector);
@@ -195,18 +195,26 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
           onChange={setSort}
         />
       </div>
-      <div className={s.proposalList}>
-        {sortedProposals.map((proposal) => (
-          <ProposalCard
-            key={proposal.id}
-            proposal={proposal}
-            isMember={isMember}
-            onApprove={() => handleApprove(proposal.id)}
-            onReject={() => handleReject(proposal.id)}
-            onFinalize={() => handleFinalize(proposal.id)}
-          />
-        ))}
-      </div>
+      {sortedProposals.length === 0 && (
+        <div className={s.emptyWrapper}>
+          <div className={s.emptyImage} />
+          <p className={s.emptyText}>No proposals here</p>
+        </div>
+      )}
+      {sortedProposals.length > 0 && (
+        <div className={s.proposalList}>
+          {sortedProposals.map((proposal) => (
+            <ProposalCard
+              key={proposal.id}
+              proposal={proposal}
+              isMember={isMember}
+              onApprove={() => handleApprove(proposal.id)}
+              onReject={() => handleReject(proposal.id)}
+              onFinalize={() => handleFinalize(proposal.id)}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 };

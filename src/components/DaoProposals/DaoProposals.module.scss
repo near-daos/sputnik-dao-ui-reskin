@@ -1,6 +1,8 @@
 @use 'styles/functions';
 @use 'styles/media';
 
+@import 'styles/typography';
+
 .root {
   display: block;
 }
@@ -42,4 +44,33 @@
     margin-top: functions.calc-rem(32);
     width: 100%;
   }
+}
+
+.emptyWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: functions.calc-rem(16);
+  width: 100%;
+  @include media.tablet-portrait {
+    margin-top: functions.calc-rem(40);
+  }
+}
+
+.emptyImage {
+  background-image: var(--theme-empty-proposal);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: functions.calc-rem(203);
+  width: functions.calc-rem(320);
+
+  @include media.tablet-portrait {
+    width: functions.calc-rem(380);
+  }
+}
+
+.emptyText {
+  @extend %title-5;
+  margin-top: functions.calc-rem(30);
 }

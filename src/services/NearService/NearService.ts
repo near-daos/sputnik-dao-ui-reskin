@@ -68,8 +68,6 @@ class NearService {
   }
 
   public async init(): Promise<void> {
-    // eslint-disable-next-line no-console
-    console.log('NearService: init');
     this.near = await connect({
       deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() },
       ...this.config,
@@ -200,9 +198,6 @@ class NearService {
 
       return account.state();
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-
       return {
         amount: '0',
         code_hash: '',
@@ -219,9 +214,6 @@ class NearService {
 
       return amountYokto.div(yoktoNear).toFixed(2);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-
       return '0';
     }
   }
@@ -232,9 +224,6 @@ class NearService {
 
       return new Decimal(bond.toString()).div(yoktoNear).toString();
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-
       return '0';
     }
   }
@@ -247,9 +236,6 @@ class NearService {
 
       return timestampToReadable(votePeriod);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-
       return '0';
     }
   }
@@ -258,9 +244,6 @@ class NearService {
     try {
       return await this.contractPool.get(contractId).get_num_proposals();
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-
       return 0;
     }
   }
@@ -269,9 +252,6 @@ class NearService {
     try {
       return await this.contractPool.get(contractId).get_purpose();
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-
       return '';
     }
   }
@@ -312,9 +292,6 @@ class NearService {
         },
       );
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-
       return [];
     }
   }
@@ -325,9 +302,6 @@ class NearService {
 
       return await this.getProposals(contractId, limit);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-
       return [];
     }
   }
@@ -336,9 +310,6 @@ class NearService {
     try {
       return await this.contractPool.get(contractId).get_council();
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-
       return [];
     }
   }
