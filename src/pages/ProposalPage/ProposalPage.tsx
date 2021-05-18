@@ -25,6 +25,7 @@ import { ButtonProps } from 'components/UILib/Button/Button';
 import { MembersPopup } from 'components/MembersPopup';
 import { fetchProposals } from 'redux/actions';
 import s from './ProposalPage.module.scss';
+import { nearConfig } from '../../config';
 
 const NUMBER_OF_TOP_MEMBERS = 10;
 
@@ -129,9 +130,19 @@ export const ProposalPage: React.FC = () => {
     dispatch(fetchProposals.started(daoId));
   }, [dispatch, daoId]);
 
+  useEffect(() => {
+    const daoName = dao?.id.replace(`.${nearConfig.contractName}`, '');
+
+    if (daoName) {
+      document.title = `${daoName} - #${proposalId}`;
+    }
+  }, [dao, proposalId]);
+
   if (!proposal) {
     return null;
   }
+
+  console.log(proposal);
 
   const isMember = dao?.members.includes(accountId || '');
 

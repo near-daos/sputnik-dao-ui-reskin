@@ -10,7 +10,6 @@
   display: flex;
   height: functions.calc-rem(56);
   justify-content: center;
-  overflow: hidden;
   padding: functions.calc-rem(4) functions.calc-rem(16);
   position: relative;
   text-decoration: none;
@@ -24,13 +23,11 @@
 .imageWrapper {
   align-items: center;
   display: flex;
-  height: functions.calc-rem(80);
+  height: functions.calc-rem(30);
   justify-content: center;
-  left: functions.calc-rem(8);
-  position: absolute;
-  top: functions.calc-rem(4);
-  width: functions.calc-rem(80);
-  z-index: 0;
+  opacity: 0.7;
+  width: functions.calc-rem(30);
+  z-index: 2;
 }
 
 .image {
@@ -46,7 +43,6 @@
   left: 0;
   mask-image: url('/images/dao-card-mini-mask.svg');
   mask-repeat: no-repeat;
-  opacity: 0.9;
   position: absolute;
   top: 0;
   width: 100%;
@@ -56,6 +52,11 @@
 .name {
   @extend %title-6;
   @include truncate-multiline(2);
+  flex: 1;
+  line-height: 1.3;
+  padding: 0 5px;
   position: relative;
+  text-align: center;
+  word-break: break-word;
   z-index: 2;
 }

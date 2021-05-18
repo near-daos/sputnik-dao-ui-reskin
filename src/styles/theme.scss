@@ -76,7 +76,7 @@
 
     --theme-dao-card-mini-bg: var(--color-grey-100);
     --theme-dao-card-mini-active-filter: drop-shadow(
-      0 8px 10px rgba(0, 0, 0, 0.7)
+      0 8px 10px rgba(118, 0, 255, 0.7)
     );
 
     --theme-banner-bg: var(--color-grey-100);
@@ -154,6 +154,7 @@
     --theme-corner-pink-5: var(--color-pink-50);
 
     --theme-logo: url('/images/sputnik_horiz_dark.svg');
+    --theme-empty-proposal: url('/images/empty_proposal_dark.svg');
   }
 
   &[data-theme='light'] {
@@ -231,7 +232,7 @@
 
     --theme-dao-card-mini-bg: var(--color-grey-10);
     --theme-dao-card-mini-active-filter: drop-shadow(
-      0 16px 40px rgba(22, 21, 21, 0.15)
+      0 8px 10px rgba(22, 21, 21, 0.7)
     );
 
     --theme-chip-icon: var(--color-grey-20);
@@ -309,5 +310,6 @@
     --theme-corner-pink-5: var(--color-pink-50);
 
     --theme-logo: url('/images/sputnik_horizLight.svg');
+    --theme-empty-proposal: url('/images/empty_proposal_light.svg');
   }
 }

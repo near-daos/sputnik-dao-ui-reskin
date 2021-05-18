@@ -57,6 +57,10 @@ export const SelectDao: React.FC<SelectDaoProps> = ({ className }) => {
     setFilteredDaoList(filtered);
   }, [daoList, searchText]);
 
+  useEffect(() => {
+    document.title = 'SputnikDAO';
+  }, []);
+
   const handleCarouselMode = () => {
     setMode(Mode.Carousel);
     setTimeout(() => {

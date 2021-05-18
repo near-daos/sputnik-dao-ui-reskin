@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import cn from 'classnames';
 
 import { LandingMobileMenu } from 'components/LandingMobileMenu';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Button, IconButton } from 'components/UILib';
 
 import { ReactComponent as NearLogo } from 'images/sputnik_horiz_dark.svg';
@@ -44,9 +44,9 @@ const LandingHeader: React.FC<LandingHeaderProps> = ({
             icon="menu"
             variant="clear"
           />
-          <a href="/">
+          <Link to="/">
             <NearLogo className={s.logo} />
-          </a>
+          </Link>
         </div>
         <nav className={s.menu}>
           {menuLinks.map((name, index) => (
