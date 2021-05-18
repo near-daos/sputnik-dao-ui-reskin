@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SwiperCore, { Mousewheel, Controller } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperClass from 'swiper/types/swiper-class';
@@ -43,6 +43,10 @@ export const LandingPage: React.FC = () => {
   const handleGoTo = (index: number) => {
     controlledSwiper?.slideTo(index);
   };
+
+  useEffect(() => {
+    document.title = 'SputnikDAO';
+  }, []);
 
   const progress = ((activeSlide + 1) / landingSlides.length) * 100;
 

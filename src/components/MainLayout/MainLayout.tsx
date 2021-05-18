@@ -9,14 +9,17 @@ import { NearService } from 'services/NearService';
 import s from './MainLayout.module.scss';
 import { LandingFooter } from '../LandingFooter';
 
-const DEFAULT_THEME = Theme.Dark;
+// const DEFAULT_THEME = Theme.Dark;
+const DEFAULT_THEME = localStorage.getItem('theme');
 
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const [theme, setTheme] = useState(DEFAULT_THEME);
+  const [theme, setTheme] = useState(
+    DEFAULT_THEME === 'light' ? Theme.Light : Theme.Dark,
+  );
   const [isShowBanner, setIsShowBanner] = useState(false);
 
   useEffect(() => {
@@ -30,6 +33,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
     document.documentElement.classList.add('color-theme-in-transition');
     setTheme(updatedTheme);
+    localStorage.setItem('theme', updatedTheme);
     document.documentElement.setAttribute('data-theme', updatedTheme);
     window.setTimeout(() => {
       document.documentElement.classList.remove('color-theme-in-transition');
