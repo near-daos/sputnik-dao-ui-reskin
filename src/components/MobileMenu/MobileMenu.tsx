@@ -6,6 +6,7 @@ import { Footer } from 'components/Footer';
 import ThemeSwitcher from 'components/ThemeSwitcher';
 import { Theme } from 'types/theme';
 
+import { Link } from 'react-router-dom';
 import s from './MobileMenu.module.scss';
 
 export interface MobileMenuProps {
@@ -53,9 +54,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             variant="clear"
             size="sm"
           />
-          <a href="/" className={s.logo}>
+          <Link to="/" className={s.logo}>
             <div className={s.logoImage} />
-          </a>
+          </Link>
         </div>
         <div className={s.controls}>
           <ThemeSwitcher
@@ -88,9 +89,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           </div>
         )}
         <nav className={s.menuList}>
-          <a className={s.menuLink} href="/select-dao">
+          <Link className={s.menuLink} to="/select-dao">
             All DAOs
-          </a>
+          </Link>
         </nav>
         {isAuth && (
           <button className={s.signOut} onClick={onSingOut}>
