@@ -11,7 +11,7 @@ import s from './CommunityConnect.module.scss';
 const CommunityConnect: React.FC = () => {
   const media = useMedia();
   const handleLearnClick = () => {
-    window.open('https://learnnear.club/', '_blank');
+    window.open('https://gov.near.org/', '_blank');
   };
 
   return (

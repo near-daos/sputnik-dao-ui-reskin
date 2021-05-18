@@ -154,6 +154,7 @@
     --theme-corner-pink-5: var(--color-pink-50);
 
     --theme-logo: url('/images/sputnik_horiz_dark.svg');
+    --theme-empty-proposal: url('/images/empty_proposal_dark.svg');
   }
 
   &[data-theme='light'] {
@@ -309,5 +310,6 @@
     --theme-corner-pink-5: var(--color-pink-50);
 
     --theme-logo: url('/images/sputnik_horizLight.svg');
+    --theme-empty-proposal: url('/images/empty_proposal_light.svg');
   }
 }
