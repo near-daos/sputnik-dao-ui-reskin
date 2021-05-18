@@ -48,6 +48,14 @@ export const DaoPage: React.FC = () => {
     proposalListSelector(state, params.id),
   );
 
+  const daoName = dao?.id.replace(`.${nearConfig.contractName}`, '');
+
+  useEffect(() => {
+    if (daoName) {
+      document.title = daoName;
+    }
+  }, [daoName]);
+
   useEffect(() => {
     dispatch(fetchProposals.started(params.id));
   }, [dispatch, params.id]);
@@ -80,7 +88,7 @@ export const DaoPage: React.FC = () => {
             alt="Logo"
           />
           <h1 className={s.heading}>
-            {dao?.id.replace(`.${nearConfig.contractName}`, '')}
+            {daoName}
             <br />
             <span className={s.contractName}>.{nearConfig.contractName}</span>
           </h1>

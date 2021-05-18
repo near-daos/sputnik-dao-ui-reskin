@@ -87,6 +87,10 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
     history.push({ search: params.toString() });
   }, [searchQuery, history]);
 
+  useEffect(() => {
+    document.title = 'SputnikDAO';
+  }, []);
+
   return (
     <div className={cn(s.root, className)}>
       <SearchBar
