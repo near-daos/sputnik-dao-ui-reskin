@@ -8,7 +8,7 @@ import { ProfileButton } from 'components/ProfileButton';
 import { MobileMenu } from 'components/MobileMenu';
 import { SearchAutoComplete } from 'components/SearchAutoComplete';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { clearRedirect, login, logout } from 'redux/actions';
 import {
@@ -97,12 +97,12 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
                 size="sm"
                 onClick={toggleMenu}
               />
-              <a href="/" className={s.logo}>
+              <Link to="/" className={s.logo}>
                 <div className={s.logoImage} />
-              </a>
-              <a className={s.link} href="/select-dao">
+              </Link>
+              <Link className={s.link} to="/select-dao">
                 All DAOs
-              </a>
+              </Link>
             </nav>
             {showSearchBar && (
               <SearchAutoComplete className={s.search} daoList={daoList} />
