@@ -12,6 +12,7 @@ export type NEAR_ENV =
   | 'ci-betanet';
 
 export type NearConfig = {
+  walletFormat?: string;
   networkId: string;
   nodeUrl: string;
   contractName: string;
@@ -27,6 +28,7 @@ export const getNearConfig = (env: NEAR_ENV): NearConfig => {
     case 'production':
     case 'mainnet':
       return {
+        walletFormat: '.near',
         networkId: 'mainnet',
         nodeUrl: 'https://rpc.mainnet.near.org',
         contractName: 'sputnikdao.near',
@@ -37,6 +39,7 @@ export const getNearConfig = (env: NEAR_ENV): NearConfig => {
     case 'development':
     case 'testnet':
       return {
+        walletFormat: '.testnet',
         networkId: 'testnet',
         nodeUrl: 'https://rpc.testnet.near.org',
         contractName: CONTRACT_NAME,
@@ -46,6 +49,7 @@ export const getNearConfig = (env: NEAR_ENV): NearConfig => {
       };
     case 'betanet':
       return {
+        walletFormat: '.betanet',
         networkId: 'betanet',
         nodeUrl: 'https://rpc.betanet.near.org',
         contractName: CONTRACT_NAME,
