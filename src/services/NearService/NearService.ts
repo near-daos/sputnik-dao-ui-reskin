@@ -68,6 +68,8 @@ class NearService {
   }
 
   public async init(): Promise<void> {
+    // eslint-disable-next-line no-console
+    // console.log('NearService: init');
     this.near = await connect({
       deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() },
       ...this.config,
