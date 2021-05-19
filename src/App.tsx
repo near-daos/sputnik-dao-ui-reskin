@@ -85,6 +85,11 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    // clear all query params
+    window.location.search = '';
+  }, []);
+
+  useEffect(() => {
     NearService.init().then(async () => {
       if (!NearService.isAuthorized() && checkIfNearAuthKeysExist()) {
         clearNearAuth();
@@ -105,7 +110,7 @@ const App: React.FC = () => {
       <Route exact path="/">
         <LandingPage />
       </Route>
-      <Route path={mainLayoutPaths}>
+      <Route path={[...mainLayoutPaths, '/:daoId/:proposalId', '/:daoId']}>
         <MainLayout>
           <Switch>
             {routes.map((route, i) => (
