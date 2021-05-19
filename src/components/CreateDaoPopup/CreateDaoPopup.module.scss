@@ -253,6 +253,7 @@
   justify-content: space-between;
   max-width: 100%;
   min-width: 0;
+  width: 100%;
 
   @include tablet-portrait {
     margin: 0 auto;
@@ -269,11 +270,13 @@
 .bannerWrapper {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   max-width: 100%;
   min-width: 0;
   overflow-x: auto;
   overflow-y: visible;
   padding: functions.calc-rem(48) 0;
+  width: 100%;
 
   @include tablet-portrait {
     justify-content: center;

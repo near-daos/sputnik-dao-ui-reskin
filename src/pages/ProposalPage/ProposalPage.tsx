@@ -142,7 +142,31 @@ export const ProposalPage: React.FC = () => {
     return null;
   }
 
-  console.log(proposal);
+  // console.log(dao?.members);
+  // console.log(proposal.votes);
+
+  const getVotes = () => {
+    const acceptUsers: string[] = [];
+    const rejectUsers: string[] = [];
+
+    Object.keys(proposal.votes).forEach((key) => {
+      const user = key
+        .split(/(?=[A-Z])/)
+        .join('.')
+        .toLowerCase();
+
+      if (proposal.votes[key] === 'Yes') {
+        acceptUsers.push(user);
+      } else if (proposal.votes[key] === 'No') {
+        rejectUsers.push(user);
+      }
+    });
+
+    // console.log(acceptUsers);
+    // console.log(rejectUsers);
+  };
+
+  getVotes();
 
   const isMember = dao?.members.includes(accountId || '');
 

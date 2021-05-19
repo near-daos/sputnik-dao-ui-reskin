@@ -1,6 +1,10 @@
 import { URLTest } from 'services/NearService/NearService';
 import { ProposalType } from 'types/proposal';
-import { validateDescription, validateNumber } from 'utils/validators';
+import {
+  validateDescription,
+  validateNumber,
+  validateTarget,
+} from 'utils/validators';
 import { CreateProposalValues, CreateProposalErrors } from './types';
 
 export const validateSecondStep = (
@@ -8,8 +12,8 @@ export const validateSecondStep = (
 ): CreateProposalErrors => {
   const errors: CreateProposalErrors = {};
 
-  if (!values.target) {
-    errors.target = 'User account does not exist!';
+  if (!validateTarget(values.target)) {
+    errors.target = 'User account not valid';
   }
 
   if (!validateDescription(values.description)) {

@@ -56,7 +56,7 @@ export const checkIfNearAuthKeysExist = (): boolean => {
 
 export const clearNearAuth = (): void => {
   // eslint-disable-next-line no-console
-  console.log('Near auth: clear');
+  // console.log('Near auth: clear');
 
   const keys = Object.keys(localStorage);
 
