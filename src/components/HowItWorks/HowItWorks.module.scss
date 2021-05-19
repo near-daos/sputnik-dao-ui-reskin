@@ -72,12 +72,9 @@
 }
 
 .figure {
-  flex: 1 1 auto;
-  height: auto;
-  max-height: 100%;
-  max-width: 100%;
-  overflow: initial;
-  width: auto;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
 
   @include media.tablet-landscape {
     min-height: functions.calc-rem(400);
