@@ -84,7 +84,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
       <SearchBar
         value={searchText}
         onChange={onChangeSearch}
-        placeholder="Search for DAO or proposal"
+        placeholder="Search for DAO"
         name="search"
         className={s.search}
         size={searchBarSize}

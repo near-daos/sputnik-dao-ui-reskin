@@ -18,7 +18,7 @@ import { MainLayout } from './components';
 import { LandingPage } from './pages/LandingPage/LandingPage';
 import { SelectDao } from './pages/SelectDao/SelectDao';
 import { SelectProposals } from './pages/SelectProposal/SelectProposal';
-import { Proposals } from './pages/Proposals/Proposals';
+// import { Proposals } from './pages/Proposals/Proposals';
 import { DaoPage } from './pages/DaoPage/DaoPage';
 import { SearchPage } from './pages/SearchPage';
 import { ProposalPage } from './pages/ProposalPage';
@@ -43,10 +43,10 @@ const routes: RouteInfo[] = [
     path: '/select-proposal',
     component: SelectProposals,
   },
-  {
-    path: '/proposals',
-    component: Proposals,
-  },
+  // {
+  //   path: '/proposals',
+  //   component: Proposals,
+  // },
   {
     path: '/dao/:daoId/proposals/:proposalId',
     component: ProposalPage,

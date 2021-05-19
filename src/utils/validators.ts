@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-useless-escape
 const validNameRegexp = /^(?=[0-9a-z])(?=.*[0-9a-z]$)(?!.*__.*)(?!.*--.*)[0-9a-z_\-]*$/;
+const targetRegExp = /^[0-9a-z][0-9_a-z]{2,}\.[a-z]+$/;
 
 export const validateCouncil = (value: string): boolean =>
   !!value && value.indexOf(',') === -1;
@@ -21,3 +22,6 @@ export const validateNumber = (value: string): boolean =>
 
 export const validateDescription = (value: string): boolean =>
   value.length >= 3 && value.length <= 240;
+
+export const validateTarget = (value: string): boolean =>
+  targetRegExp.test(value);

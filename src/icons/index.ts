@@ -16,6 +16,7 @@ const icons = {
   carousel: import('./carousel.svg'),
   link: import('./link.svg'),
   'arrow-back': import('./arrow-back.svg'),
+  info: import('./info.svg.svg'),
 };
 
 export default icons;
