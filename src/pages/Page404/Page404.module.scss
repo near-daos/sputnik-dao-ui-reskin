@@ -1,0 +1,47 @@
+@use 'styles/functions';
+@use 'styles/media';
+@import 'styles/typography';
+
+.root {
+  align-items: center;
+  background-color: var(--theme-404-background-color);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+}
+
+.image404 {
+  background-image: var(--theme-404-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: functions.calc-rem(400);
+  width: functions.calc-rem(698);
+
+  @include media.mobile-only {
+    height: functions.calc-rem(241);
+    width: functions.calc-rem(365);
+  }
+}
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.oops {
+  @extend %title-1;
+}
+
+.message {
+  @extend %paragraph-3;
+  margin-bottom: functions.calc-rem(23);
+  margin-top: functions.calc-rem(6);
+  text-align: center;
+}
+
+.link {
+  color: var(--color-cyan-70);
+}

@@ -155,6 +155,10 @@
 
     --theme-logo: url('/images/sputnik_horiz_dark.svg');
     --theme-empty-proposal: url('/images/empty_proposal_dark.svg');
+
+    --theme-404-background-color: var(--color-brand-black);
+    --theme-404-image: url('/images/404-dark.svg');
+    --theme-404-link-color: var(--color-cyan-50);
   }
 
   &[data-theme='light'] {
@@ -311,5 +315,9 @@
 
     --theme-logo: url('/images/sputnik_horizLight.svg');
     --theme-empty-proposal: url('/images/empty_proposal_light.svg');
+
+    --theme-404-background-color: var(--white);
+    --theme-404-image: url('/images/404-light.svg');
+    --theme-404-link-color: var(--color-cyan-70);
   }
 }
