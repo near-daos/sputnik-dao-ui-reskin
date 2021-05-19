@@ -89,6 +89,7 @@ export const DaoPage: React.FC = () => {
             src={`${appConfig.logoPath}${dao?.id}.png`}
             alt="Logo"
           />
+
           <div className={s.heading}>
             <p className={s.name}>{daoName}</p>
             <p className={s.contractName}>.{nearConfig.contractName}</p>

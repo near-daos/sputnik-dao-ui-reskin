@@ -22,19 +22,22 @@
   column-gap: functions.calc-rem(15);
   display: grid;
   grid-template: 'picture heading heading' 'picture tabs buttons';
-  grid-template-columns: functions.calc-rem(150) auto auto;
+  grid-template-columns: functions.calc-rem(150) calc(100% - #{functions.calc-rem(400)}) auto;
   grid-template-rows: auto auto;
   margin-bottom: functions.calc-rem(48);
 
   @include media.tablet-landscape {
     column-gap: functions.calc-rem(32);
-    grid-template-columns: functions.calc-rem(176) auto auto;
+    grid-template-columns: functions.calc-rem(176) calc(100% - #{functions.calc-rem(440)}) functions.calc-rem(200);
   }
 
   @include media.mobile-only {
-    grid-template: 'picture' 'heading' 'tabs' 'buttons';
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    //grid-template: 'picture' 'heading' 'tabs' 'buttons';
+    //grid-template-columns: 1fr;
+    //grid-template-rows: auto auto auto auto;
   }
 }
 
@@ -50,11 +53,13 @@
   }
 }
 
+
 .name {
   @include heading-5;
 
-  @include mixins.truncate;
+  @include mixins.truncate();
   color: var(--theme-proposal-card-dao-name);
+  width: 100%;
 
   @include media.tablet-portrait {
     @include heading-6;
@@ -64,6 +69,7 @@
     @include heading-3;
   }
 }
+
 
 .contractName {
   @extend %body-1;
@@ -86,7 +92,7 @@
   @include media.tablet-portrait {
     display: none;
   }
-  
+
 }
 
 .detailWrapper {
