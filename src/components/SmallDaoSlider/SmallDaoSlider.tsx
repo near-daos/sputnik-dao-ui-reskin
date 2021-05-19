@@ -25,9 +25,7 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
   const history = useHistory();
 
   useEffect(() => {
-    // console.log(swiper);
     if (swiper && swiper.realIndex !== activeSlide) {
-      // console.log(activeSlide);
       swiper.slideToLoop(activeSlide, 0);
     }
   }, [swiper, activeSlide]);

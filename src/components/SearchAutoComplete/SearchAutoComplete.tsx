@@ -73,8 +73,10 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
   };
 
   const handleSubmit = () => {
-    setIsShowResult(false);
-    history.push(`/search/dao/?query=${searchText}`);
+    if (daoResult.length > 0) {
+      setIsShowResult(false);
+      history.push(`/search/dao/?query=${searchText}`);
+    }
   };
 
   return (
@@ -106,11 +108,18 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
             onClick={closeResults}
           >
             <div className={s.titleWrapper}>
-              <p className={s.title}>DAOs</p>
-              <Link to={`/search/dao/?query=${searchText}`} className={s.link}>
-                See All
-                <span className={s.count}>({searchResultCount})</span>
-              </Link>
+              {daoResult.length > 0 && (
+                <>
+                  <p className={s.title}>DAOs</p>
+                  <Link
+                    to={`/search/dao/?query=${searchText}`}
+                    className={s.link}
+                  >
+                    See All
+                    <span className={s.count}>({searchResultCount})</span>
+                  </Link>
+                </>
+              )}
             </div>
             {daoResult.length > 0 ? (
               <>
