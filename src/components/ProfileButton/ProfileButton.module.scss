@@ -46,10 +46,18 @@
   padding: 0 functions.calc-rem(18);
 }
 
+.accountTooltip {
+  display: block;
+}
+
 .account {
   @extend %button-reset;
   @extend %title-6;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
   padding: 0 functions.calc-rem(18);
+  width: 100%;
 }
 
 .border {
@@ -74,4 +82,10 @@
 .tooltipText {
   @extend %caption-1;
   text-align: center;
+}
+
+.copyIcon {
+  height: 12px;
+  margin-left: 12px;
+  width: 8px;
 }

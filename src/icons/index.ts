@@ -17,6 +17,7 @@ const icons = {
   link: import('./link.svg'),
   'arrow-back': import('./arrow-back.svg'),
   info: import('./info.svg.svg'),
+  'copy-icon': import('./copy-icon.svg'),
 };
 
 export default icons;
