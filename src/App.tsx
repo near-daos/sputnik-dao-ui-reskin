@@ -119,6 +119,7 @@ const App: React.FC = () => {
           </Switch>
         </MainLayout>
       </Route>
+      <Route />
     </HashRouter>
   );
 };

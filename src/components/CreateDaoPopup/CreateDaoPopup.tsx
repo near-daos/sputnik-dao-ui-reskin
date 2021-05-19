@@ -67,6 +67,19 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
     setActiveStep(2);
   };
 
+  const onSubmit = async () => {
+    const file = await getRandomLogo(
+      `${values.name}.${nearConfig.contractName}`,
+    );
+
+    dispatch(clearCreatingDaoData());
+
+    await AwsUploader.uploadToBucket(file);
+    await NearService.createDao(values);
+
+    onClose?.();
+  };
+
   const onSubmitSecondStep = () => {
     const fsecondStepErrors = validateSecondStep(values);
 
@@ -79,20 +92,8 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
       return;
     }
 
-    setActiveStep(3);
-  };
-
-  const onSubmit = async () => {
-    const file = await getRandomLogo(
-      `${values.name}.${nearConfig.contractName}`,
-    );
-
-    dispatch(clearCreatingDaoData());
-
-    await AwsUploader.uploadToBucket(file);
-    await NearService.createDao(values);
-
-    onClose?.();
+    onSubmit();
+    // setActiveStep(3);
   };
 
   let progressBarSize: 'sm' | 'md' | 'lg' = 'sm';

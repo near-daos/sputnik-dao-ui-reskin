@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 export const breakpoints = {
   mobile: 768,
-  tabletPortrait: 992,
+  tabletPortrait: 959,
   tabletLandscape: 1200,
 };
 
