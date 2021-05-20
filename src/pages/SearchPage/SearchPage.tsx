@@ -2,14 +2,7 @@ import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 
 import SearchBar from 'components/SearchBar';
-import {
-  Redirect,
-  Route,
-  Switch,
-  useRouteMatch,
-  useLocation,
-  useHistory,
-} from 'react-router-dom';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 import { NavTabs } from 'components/UILib';
 import { NavItem } from 'components/UILib/NavTabs/NavTabs';
 
@@ -27,11 +20,10 @@ export interface SearchPageProps {
 }
 
 const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
-  const { path } = useRouteMatch();
-  const location = useLocation();
+  const route = useRouteMatch<{ searchPhrase: string }>();
+
   const history = useHistory();
-  const urlParams = new URLSearchParams(location.search);
-  const [searchQuery, setSearchQuery] = useState(urlParams.get('query') || '');
+  const [searchQuery, setSearchQuery] = useState(route.params.searchPhrase);
   const daoList = useSelector(daoListSelector);
   const [daos, setDaos] = useState<DaoItem[]>([]);
 
@@ -79,16 +71,10 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
   };
 
   useEffect(() => {
-    const params = new URLSearchParams();
-
-    if (searchQuery) {
-      params.append('query', searchQuery);
-    } else {
-      params.delete('query');
+    if (searchQuery && searchQuery !== route.params.searchPhrase) {
+      history.push(route.path.replace(':searchPhrase', searchQuery));
     }
-
-    history.push({ search: params.toString() });
-  }, [searchQuery, history]);
+  }, [searchQuery, history, route]);
 
   useEffect(() => {
     document.title = 'SputnikDAO';
@@ -104,29 +90,8 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
         placeholder="Search for DAO or proposal"
       />
       <NavTabs options={tabsOptions} className={s.tabs} />
-      <div className={s.sortWrapper}>
-        {/* <Select
-          label="Sorting"
-          value={sort}
-          options={sortOptions}
-          pickLabel={(item) => item.name}
-          pickValue={(item) => item.value}
-          onChange={setSort}
-          className={s.sortSelect}
-        /> */}
-      </div>
       <div className={s.resultWrapper}>
-        <Switch>
-          <Route path={`${path}/dao`}>
-            <SearchDaoPage daos={daos} />
-          </Route>
-          {/* <Route path={`${path}/proposal`}>
-            <SearchProposalPage proposals={proposals} />
-          </Route> */}
-          <Route path={`${path}/`}>
-            <Redirect to={`${path}/dao`} />
-          </Route>
-        </Switch>
+        <SearchDaoPage daos={daos} />
       </div>
     </div>
   );
