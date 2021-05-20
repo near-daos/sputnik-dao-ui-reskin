@@ -97,7 +97,7 @@ export const DaoPage: React.FC = () => {
               <div className={s.detailWrapper}>
                 <div className={s.subTitleWrapper}>
                   <p className={s.subTitle}>DAO Funds</p>
-                  <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+                  <SvgIcon icon="token" size={12} className={s.tokenIcon} />
                 </div>
                 <p className={s.value}>{dao?.amount}</p>
               </div>
@@ -117,7 +117,7 @@ export const DaoPage: React.FC = () => {
                 <div className={s.detailWrapper}>
                   <div className={s.subTitleWrapper}>
                     <p className={s.subTitle}>Bond</p>
-                    <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+                    <SvgIcon icon="token" size={12} className={s.tokenIcon} />
                   </div>
                   <p className={s.value}>{dao?.bond}</p>
                 </div>

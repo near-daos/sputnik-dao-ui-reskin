@@ -10,7 +10,7 @@
 .content {
   background-color: var(--theme-tooltip-bg);
   border-radius: 1px;
-  box-shadow: var(--theme-tooltip-filter);
+  filter: var(--theme-tooltip-filter);
   padding: functions.calc-rem(8) functions.calc-rem(12);
   position: absolute;
   white-space: pre-wrap;

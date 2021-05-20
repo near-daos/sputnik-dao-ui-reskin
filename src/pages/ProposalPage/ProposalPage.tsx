@@ -2,13 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import cn from 'classnames';
 import {
   accountSelector,
   daoSelector,
   proposalSelector,
 } from 'redux/selectors';
 
-import { Button, Chip, SvgIcon } from 'components/UILib';
+import { Button, Chip, SvgIcon, Tooltip } from 'components/UILib';
 
 import useMedia from 'hooks/use-media';
 
@@ -25,7 +26,8 @@ import { ButtonProps } from 'components/UILib/Button/Button';
 import { MembersPopup } from 'components/MembersPopup';
 import { fetchProposals } from 'redux/actions';
 import s from './ProposalPage.module.scss';
-import { nearConfig } from '../../config';
+import { appConfig, nearConfig } from '../../config';
+import { VotedMembersPopup } from '../../components/VotedMembersPopup';
 
 const NUMBER_OF_TOP_MEMBERS = 10;
 
@@ -142,13 +144,10 @@ export const ProposalPage: React.FC = () => {
     return null;
   }
 
-  // console.log(dao?.members);
-  // console.log(proposal.votes);
+  const acceptUsers: string[] = [];
+  const rejectUsers: string[] = [];
 
   const getVotes = () => {
-    const acceptUsers: string[] = [];
-    const rejectUsers: string[] = [];
-
     Object.keys(proposal.votes).forEach((key) => {
       const user = key
         .split(/(?=[A-Z])/)
@@ -161,12 +160,15 @@ export const ProposalPage: React.FC = () => {
         rejectUsers.push(user);
       }
     });
-
-    // console.log(acceptUsers);
-    // console.log(rejectUsers);
   };
 
   getVotes();
+
+  const isVoteApprove = (name: string): boolean =>
+    acceptUsers.findIndex((item) => item === name) !== -1;
+
+  const isVoteReject = (name: string): boolean =>
+    rejectUsers.findIndex((item) => item === name) !== -1;
 
   const isMember = dao?.members.includes(accountId || '');
 
@@ -195,15 +197,27 @@ export const ProposalPage: React.FC = () => {
   return (
     <section className={s.root}>
       <div className={s.container}>
-        <Button
-          className={s.btnBack}
-          size={media.mobile ? 'xs' : 'sm'}
-          variant="monochrome"
-          leftElement={<SvgIcon className={s.leftArrowIcon} icon="dd-arrow" />}
-          onClick={handleGoBack}
-        >
-          Back to DAO
-        </Button>
+        <div className={s.topWrapper}>
+          <Button
+            className={s.btnBack}
+            size={media.mobile ? 'xs' : 'sm'}
+            variant="monochrome"
+            leftElement={
+              <SvgIcon className={s.leftArrowIcon} icon="dd-arrow" />
+            }
+            onClick={handleGoBack}
+          >
+            Back to
+          </Button>
+          <div className={s.daoData}>
+            <img
+              className={s.daoLogo}
+              src={`${appConfig.logoPath}${dao?.id}.png`}
+              alt="Logo"
+            />
+            <p className={s.daoName}>{dao?.id}</p>
+          </div>
+        </div>
 
         <Chip
           className={s.status}
@@ -214,124 +228,159 @@ export const ProposalPage: React.FC = () => {
 
         <div className={s.content}>
           <header className={s.header}>
-            <h4 className={s.title}>{getTitle(proposal)}</h4>
-            <p className={s.target}>
-              <span>Target: </span>
-              {proposal.target}
-            </p>
+            <p className={s.title}>{getTitle(proposal)}</p>
+
+            {isMember && (
+              <div className={s.actions}>
+                <Tooltip
+                  className={s.action}
+                  containerClassName={s.membersTooltip}
+                  position="bottom"
+                  triggerElem={
+                    <Action
+                      label="Approve"
+                      disabled={isActionDisabled}
+                      count={proposal.voteYes}
+                      onClick={handleApprove}
+                    />
+                  }
+                >
+                  {acceptUsers.length === 0 && (
+                    <p className={s.tooltipNothing}>No votes yet.</p>
+                  )}
+                  {acceptUsers.slice(-5).map((item) => (
+                    <p className={s.tooltipMember}>{item}</p>
+                  ))}
+                </Tooltip>
+
+                <Tooltip
+                  className={s.action}
+                  containerClassName={s.membersTooltip}
+                  position="bottom"
+                  triggerElem={
+                    <Action
+                      label="Reject"
+                      disabled={isActionDisabled}
+                      count={proposal.voteNo}
+                      onClick={handleReject}
+                    />
+                  }
+                >
+                  {rejectUsers.length === 0 && (
+                    <p className={s.tooltipNothing}>No votes yet.</p>
+                  )}
+                  {rejectUsers.slice(-5).map((item) => (
+                    <p className={s.tooltipMember}>{item}</p>
+                  ))}
+                </Tooltip>
+
+                <div className={s.mobileBlock}>
+                  <div className={s.voteAmount}>
+                    <span className={s.green}>{proposal.voteYes}</span>
+                    &nbsp;approvals
+                  </div>
+                  <div className={s.voteAmount}>
+                    <span className={s.red}>{proposal.voteNo}</span>
+                    &nbsp;rejections
+                  </div>
+                </div>
+              </div>
+            )}
           </header>
-
-          {isMember && (
-            <div className={s.actions}>
-              <Action
-                label="Approve"
-                disabled={isActionDisabled}
-                count={proposal.voteYes}
-                onClick={handleApprove}
-              />
-              <Action
-                label="Reject"
-                disabled={isActionDisabled}
-                count={proposal.voteNo}
-                onClick={handleReject}
-              />
+          <div className={cn(s.row, s.topRow)}>
+            {/* <p className={s.target}> */}
+            {/*  <span>Target: </span> */}
+            {/*  {proposal.target} */}
+            {/* </p> */}
+            <div className={s.dataWrapper}>
+              <p className={s.dataTitle}>Target</p>
+              <p className={s.dataValue}>{proposal.target}</p>
             </div>
-          )}
-
-          <div className={s.about}>
-            <h5 className={s.aboutTitle}>About</h5>
-            <p className={s.aboutDesc}>
+            <div className={cn(s.dataWrapper, s.proposalPayoutWrapper)}>
+              <p className={s.dataTitle}>Proposer</p>
+              <p className={s.dataValue}>{proposal.proposer}</p>
+            </div>
+            <div className={cn(s.row, s.proposalPayoutWrapper)}>
+              <div className={s.dataWrapper}>
+                <p className={s.dataTitle}>Proposal ID</p>
+                <p className={s.dataValue}>{proposalId}</p>
+              </div>
+              {proposal.kind.type === ProposalType.Payout && (
+                <div className={s.dataWrapper}>
+                  <div className={s.dataTitleWrapper}>
+                    <p className={s.dataTitle}>Payout</p>
+                    <SvgIcon icon="token" size={12} className={s.tokenIcon} />
+                  </div>
+                  <p className={s.dataValue}>{proposal.kind.amount}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className={s.contentWrapper}>
+          <div className={s.detailsWrapper}>
+            <p className={s.aboutTitle}>About</p>
+            <p className={s.about}>
               {description}
+              <br />
               {linkEl}
             </p>
+            {/* <div className={s.row}> */}
+            {/*  <div className={s.dataWrapper}> */}
+            {/*    <p className={s.dataTitle}>Proposer</p> */}
+            {/*    <p className={s.dataValue}>{proposal.proposer}</p> */}
+            {/*  </div> */}
+            {/* </div> */}
           </div>
-
-          <div className={s.detailsWrapper}>
-            <dl className={s.details}>
-              <dt className={s.detailsLabel}>DAO name</dt>
-              <dd className={s.detailsValue}>{dao?.id}</dd>
-              <dt className={s.detailsLabel}>Voting deadline</dt>
-              <dd className={s.detailsValue}>
-                {convertDuration(proposal.votePeriodEnd).toLocaleDateString()}{' '}
-                {convertDuration(proposal.votePeriodEnd).toLocaleTimeString()}
-              </dd>
-              <dt className={s.detailsLabel}>Proposer</dt>
-              <dd className={s.detailsValue}>{proposal.proposer}</dd>
-              {proposal.kind.type === ProposalType.Payout && (
-                <>
-                  <dt className={s.detailsLabel}>
-                    Payout
-                    <SvgIcon icon="token" size={10} className={s.tokenIcon} />
-                  </dt>
-                  <dd className={s.detailsValue}>{proposal.kind.amount}</dd>
-                </>
+          <div className={s.membersWrapper}>
+            <div className={s.council}>
+              <h6 className={s.councilTitle}>Council</h6>
+              <ul className={s.councilList}>
+                {firstTenMembers.map((item) => (
+                  <li
+                    className={cn(s.councilItem, {
+                      [s.vote]: isVoteReject(item) || isVoteApprove(item),
+                    })}
+                    key={item}
+                  >
+                    <span
+                      className={cn(s.rect, {
+                        [s.red]: isVoteReject(item),
+                        [s.green]: isVoteApprove(item),
+                      })}
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              {councilMembers > NUMBER_OF_TOP_MEMBERS && (
+                <Button
+                  variant="outline"
+                  rightElement={<span>({councilMembers})</span>}
+                  size="sm"
+                  className={s.button}
+                  onClick={() => {
+                    setIsShowMembersPopup(true);
+                  }}
+                >
+                  View All
+                </Button>
               )}
-              {proposal.kind.type === ProposalType.ChangeVotePeriod && (
-                <>
-                  <dt className={s.detailsLabel}>
-                    Vote Period
-                    <SvgIcon icon="token" size={10} className={s.tokenIcon} />
-                  </dt>
-                  <dd className={s.detailsValue}>{proposal.kind.votePeriod}</dd>
-                </>
-              )}
-              {proposal.kind.type === ProposalType.ChangePurpose && (
-                <>
-                  <dt className={s.detailsLabel}>Purpose</dt>
-                  <dd className={s.detailsValue}>{proposal.kind.purpose}</dd>
-                </>
-              )}
-              <dt className={s.detailsLabel}>Proposal ID</dt>
-              <dd className={s.detailsValue}>{proposalId}</dd>
-            </dl>
-
-            {isShowFinalize && (
-              <Button
-                size={media.mobile ? 'xs' : 'sm'}
-                variant="monochrome"
-                className={s.finalize}
-                onClick={handleFinalize}
-              >
-                Finalise
-              </Button>
-            )}
+            </div>
           </div>
-
-          <div className={s.council}>
-            <h6 className={s.councilTitle}>Council</h6>
-            <ul className={s.councilList}>
-              {firstTenMembers.map((item) => (
-                <li className={s.councilItem} key={item}>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            {councilMembers > NUMBER_OF_TOP_MEMBERS && (
-              <Button
-                variant="outline"
-                rightElement={<span>({councilMembers})</span>}
-                size="sm"
-                className={s.button}
-                onClick={() => {
-                  setIsShowMembersPopup(true);
-                }}
-              >
-                View All
-              </Button>
-            )}
-          </div>
-
-          {isShowMembersPopup && dao && (
-            <MembersPopup
-              name={dao.id}
-              membersNumber={dao.members.length}
-              members={dao.members}
-              onClose={() => {
-                setIsShowMembersPopup(false);
-              }}
-            />
-          )}
         </div>
+
+        {isShowMembersPopup && dao && (
+          <VotedMembersPopup
+            name={dao.id}
+            members={dao.members}
+            approveArray={acceptUsers}
+            rejectArray={rejectUsers}
+            onClose={() => {
+              setIsShowMembersPopup(false);
+            }}
+          />
+        )}
       </div>
     </section>
   );
