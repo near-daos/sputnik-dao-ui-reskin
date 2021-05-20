@@ -58,7 +58,7 @@
   @include heading-5;
 
   @include mixins.truncate();
-  color: var(--theme-proposal-card-dao-name);
+  //color: var(--theme-proposal-card-dao-name);
   width: 100%;
 
   @include media.tablet-portrait {
@@ -67,6 +67,10 @@
 
   @include media.desktop {
     @include heading-3;
+  }
+
+  @include media.mobile-only {
+    text-align: center;
   }
 }
 
@@ -121,12 +125,15 @@
 }
 
 .tokenIcon {
-  color: var(--theme-dao-card-token);
+  //color: var(--theme-dao-card-token);
   margin-left: functions.calc-rem(4);
 }
 
 .value {
   @extend %title-4;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
   text-transform: capitalize;
 }
 
@@ -199,8 +206,11 @@
   justify-self: end;
 
   @include media.mobile-only {
-    justify-self: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     margin-top: functions.calc-rem(24);
+    width: 100%;
   }
 }
 

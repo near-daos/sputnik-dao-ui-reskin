@@ -159,6 +159,11 @@
     --theme-404-background-color: var(--color-brand-black);
     --theme-404-image: url('/images/404-dark.svg');
     --theme-404-link-color: var(--color-cyan-50);
+    
+    --theme-poroposal-member-not-vote: var(--color-grey-50);
+    --theme-poroposal-member-vote: var(--color-cyan-50);
+    --theme-poroposal-member-corner-reject: var(--color-error-50);
+    --theme-poroposal-member-corner-approve: var(--color-success-50);
   }
 
   &[data-theme='light'] {
@@ -319,5 +324,10 @@
     --theme-404-background-color: var(--white);
     --theme-404-image: url('/images/404-light.svg');
     --theme-404-link-color: var(--color-cyan-70);
+
+    --theme-poroposal-member-not-vote: var(--color-grey-70);
+    --theme-poroposal-member-vote: var(--color-cyan-70);
+    --theme-poroposal-member-corner-reject: var(--color-error-60);
+    --theme-poroposal-member-corner-approve: var(--color-success-70);
   }
 }
