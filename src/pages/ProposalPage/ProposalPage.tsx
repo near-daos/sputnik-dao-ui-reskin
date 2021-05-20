@@ -200,10 +200,6 @@ export const ProposalPage: React.FC = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.sputnik.fund/#/" />
         <meta
-          property="og:image"
-          content="https://ia.media-imdb.com/images/rock.jpg"
-        />
-        <meta
           property="og:title"
           content={`${dao?.id.replace(
             `.${nearConfig.contractName}`,

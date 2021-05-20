@@ -23,7 +23,7 @@ export interface CreateDaoPopupProps {
   onClose?: () => void;
 }
 
-const STEPS = ['General info', 'Details', 'DAO Logo'];
+const STEPS = ['General info', 'Details'];
 
 const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   className,

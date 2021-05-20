@@ -109,7 +109,10 @@ export const DaoPage: React.FC = () => {
                   }}
                 >
                   <p className={s.subTitle}>Council</p>
-                  <p className={s.value}>{dao?.members.length}</p>
+                  <p className={s.value}>
+                    {dao?.members.length}
+                    <SvgIcon icon="info" size={18} className={s.infoIcon} />
+                  </p>
                 </button>
                 <div className={s.detailWrapper}>
                   <div className={s.subTitleWrapper}>

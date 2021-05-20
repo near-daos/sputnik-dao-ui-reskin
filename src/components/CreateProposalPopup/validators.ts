@@ -29,7 +29,7 @@ export const validateThirdStep = (
 ): CreateProposalErrors => {
   const errors: CreateProposalErrors = {};
 
-  if (!URLTest(values.link)) {
+  if (values.link && !URLTest(values.link)) {
     errors.link = 'Wrong format. Include a valid link including https://';
   }
 
