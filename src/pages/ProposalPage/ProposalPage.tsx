@@ -249,7 +249,9 @@ export const ProposalPage: React.FC = () => {
                     <p className={s.tooltipNothing}>No votes yet.</p>
                   )}
                   {acceptUsers.slice(-5).map((item) => (
-                    <p className={s.tooltipMember}>{item}</p>
+                    <p key={item} className={s.tooltipMember}>
+                      {item}
+                    </p>
                   ))}
                 </Tooltip>
 
@@ -270,7 +272,9 @@ export const ProposalPage: React.FC = () => {
                     <p className={s.tooltipNothing}>No votes yet.</p>
                   )}
                   {rejectUsers.slice(-5).map((item) => (
-                    <p className={s.tooltipMember}>{item}</p>
+                    <p key={item} className={s.tooltipMember}>
+                      {item}
+                    </p>
                   ))}
                 </Tooltip>
 

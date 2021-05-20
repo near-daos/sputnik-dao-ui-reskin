@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/lodash.debounce": "^4.0.6",
+    "@types/react-gtm-module": "^2.0.0",
     "@types/swiper": "^5.4.2",
     "aws-sdk": "^2.885.0",
     "camelcase-keys": "^6.2.2",
@@ -16,6 +17,7 @@
     "path-to-regexp": "^6.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-gtm-module": "^2.0.11",
     "react-redux": "^7.2.3",
     "react-responsive": "^8.2.0",
     "react-router": "^5.2.0",

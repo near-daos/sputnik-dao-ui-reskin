@@ -81,8 +81,9 @@ const VotedMembersPopup: React.FC<VotedMembersPopupProps> = ({
           />
 
           <div className={s.container}>
-            {filteredMembersList.map((item, index) => (
+            {filteredMembersList.map((item) => (
               <p
+                key={item}
                 className={cn(s.councilItem, {
                   [s.vote]: isVoteReject(item) || isVoteApprove(item),
                 })}
