@@ -92,7 +92,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // clear non-hash routes
-    if (window.location.pathname) {
+    if (window.location.pathname && window.location.pathname !== '/') {
       window.location.pathname = '';
     }
 
