@@ -7,6 +7,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import debounce from 'lodash.debounce';
+import { Helmet } from 'react-helmet';
 
 import { NearService } from 'services/NearService';
 import { useDispatch, useSelector } from 'react-redux';
@@ -110,6 +111,30 @@ const App: React.FC = () => {
 
   return (
     <HashRouter>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.test.com" />
+        <meta property="og:title" content="Sputnik DAO" />
+      </Helmet>
+      <Route exact path="/">
+        <LandingPage />
+      </Route>
+      <Route path={[...mainLayoutPaths, '/:daoId/:proposalId', '/:daoId']}>
+        <MainLayout>
+          <Switch>
+            {routes.map((route, i) => (
+              <Route key={String(i)} {...route} />
+            ))}
+            <Redirect
+              from="/:daoId/:proposalId"
+              to="/dao/:daoId/proposals/:proposalId"
+            />
+            <Redirect from="/:daoId" to="/dao/:daoId" />
+          </Switch>
+        </MainLayout>
+      </Route>
+      <Route />
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/404" component={Page404} />
