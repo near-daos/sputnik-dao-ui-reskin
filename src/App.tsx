@@ -15,6 +15,7 @@ import LogoRegenerationPage from 'pages/LogoRegenerationPage';
 import { accountSelector } from 'redux/selectors';
 import { checkIfNearAuthKeysExist, clearNearAuth } from 'utils';
 import { Page404 } from 'pages/Page404';
+import TagManager from 'react-gtm-module';
 import { MainLayout } from './components';
 import { LandingPage } from './pages/LandingPage/LandingPage';
 import { SelectDao } from './pages/SelectDao/SelectDao';
@@ -28,6 +29,12 @@ import 'normalize.css/normalize.css';
 import 'swiper/swiper.scss';
 import './styles/theme.scss';
 import './styles/main.scss';
+
+const tagManagerArgs = {
+  gtmId: 'GTM-NJ4LDQC',
+};
+
+TagManager.initialize(tagManagerArgs);
 
 interface RouteInfo extends RouteProps {
   path: string;
