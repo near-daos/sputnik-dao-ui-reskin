@@ -204,13 +204,21 @@
   margin-left: functions.calc-rem(4);
 }
 
-.numberOfProposal,
+.numberOfProposal {
+  @include desktop {
+    &.lg,
+    &.md {
+      width: 40%;
+    }
+  }
+}
+
 .bond,
 .amountOfMember {
   @include desktop {
     &.lg,
     &.md {
-      width: 33%;
+      width: 30%;
     }
   }
 }

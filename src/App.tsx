@@ -127,25 +127,6 @@ const App: React.FC = () => {
           </Switch>
         </MainLayout>
       </Route>
-      <Route />
-      <Switch>
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/404" component={Page404} />
-        <Route path={[...mainLayoutPaths, '/:daoId/:proposalId', '/:daoId']}>
-          <MainLayout>
-            <Switch>
-              {routes.map((route, i) => (
-                <Route key={String(i)} {...route} />
-              ))}
-              <Redirect
-                from="/:daoId/:proposalId"
-                to="/dao/:daoId/proposals/:proposalId"
-              />
-              <Redirect from="/:daoId" to="/dao/:daoId" />
-            </Switch>
-          </MainLayout>
-        </Route>
-      </Switch>
     </HashRouter>
   );
 };
