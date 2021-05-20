@@ -3,8 +3,8 @@ import { Button } from 'components/UILib';
 import useMedia from 'hooks/use-media';
 import { SocialMedias } from 'components/SocialMedias';
 
-import { ReactComponent as Houses } from 'images/houses.svg';
-import { ReactComponent as CometSky } from 'images/comet-sky.svg';
+import city from 'images/city.png';
+import cometSky from 'images/comet-sky.png';
 
 import s from './CommunityConnect.module.scss';
 
@@ -40,8 +40,8 @@ const CommunityConnect: React.FC = () => {
         />
       </div>
       <div className={s.figureContainer}>
-        <CometSky className={s.cometsFigure} />
-        <Houses className={s.cityFigure} />
+        <img src={cometSky} className={s.cometsFigure} alt="comets sky" />
+        <img className={s.cityFigure} src={city} alt="city" />
       </div>
     </div>
   );

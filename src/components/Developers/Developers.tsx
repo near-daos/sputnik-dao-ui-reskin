@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ReactComponent as Spaceman } from 'images/spaceman.svg';
+import spaceman from 'images/spaceman.png';
 
 import s from './Developers.module.scss';
 import { Button } from '../UILib';
@@ -46,7 +46,7 @@ const Developers: React.FC = () => {
       </div>
       <div className={s.figureContainer}>
         <div className={s.figureHolder}>
-          <Spaceman className={s.figure} />
+          <img src={spaceman} className={s.figure} alt="spaceman" />
         </div>
       </div>
     </div>
