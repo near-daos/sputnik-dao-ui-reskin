@@ -7,6 +7,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import debounce from 'lodash.debounce';
+import { Helmet } from 'react-helmet';
 
 import { NearService } from 'services/NearService';
 import { useDispatch, useSelector } from 'react-redux';
@@ -107,6 +108,16 @@ const App: React.FC = () => {
 
   return (
     <HashRouter>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.test.com" />
+        <meta
+          property="og:image"
+          content="https://ia.media-imdb.com/images/rock.jpg"
+        />
+        <meta property="og:title" content="Sputnik DAO" />
+      </Helmet>
       <Route exact path="/">
         <LandingPage />
       </Route>
