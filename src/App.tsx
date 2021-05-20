@@ -91,9 +91,15 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    // clear non-hash routes
+    if (window.location.pathname) {
+      window.location.pathname = '';
+    }
+
     // clear all query params
     if (window.location.search) {
       window.location.search = '';
+      window.location.href = window.location.href.replace('?', '');
     }
   }, []);
 
