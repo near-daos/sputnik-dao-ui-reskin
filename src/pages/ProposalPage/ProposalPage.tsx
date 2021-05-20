@@ -8,8 +8,6 @@ import {
   proposalSelector,
 } from 'redux/selectors';
 
-import { Helmet } from 'react-helmet';
-
 import { Button, Chip, SvgIcon } from 'components/UILib';
 
 import useMedia from 'hooks/use-media';
@@ -196,18 +194,6 @@ export const ProposalPage: React.FC = () => {
 
   return (
     <section className={s.root}>
-      <Helmet>
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.sputnik.fund/#/" />
-        <meta
-          property="og:title"
-          content={`${dao?.id.replace(
-            `.${nearConfig.contractName}`,
-            '',
-          )} - #${proposalId}`}
-        />
-        <meta property="og:description" content={description} />
-      </Helmet>
       <div className={s.container}>
         <Button
           className={s.btnBack}
