@@ -155,6 +155,11 @@
 
     --theme-logo: url('/images/sputnik_horiz_dark.svg');
     --theme-empty-proposal: url('/images/empty_proposal_dark.svg');
+    
+    --theme-poroposal-member-not-vote: var(--color-grey-50);
+    --theme-poroposal-member-vote: var(--color-cyan-50);
+    --theme-poroposal-member-corner-reject: var(--color-error-50);
+    --theme-poroposal-member-corner-approve: var(--color-success-50);
   }
 
   &[data-theme='light'] {
@@ -311,5 +316,10 @@
 
     --theme-logo: url('/images/sputnik_horizLight.svg');
     --theme-empty-proposal: url('/images/empty_proposal_light.svg');
+
+    --theme-poroposal-member-not-vote: var(--color-grey-70);
+    --theme-poroposal-member-vote: var(--color-cyan-70);
+    --theme-poroposal-member-corner-reject: var(--color-error-60);
+    --theme-poroposal-member-corner-approve: var(--color-success-70);
   }
 }

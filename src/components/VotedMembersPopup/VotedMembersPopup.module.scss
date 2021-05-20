@@ -100,7 +100,7 @@
 
 .searchBar {
   padding: 0 functions.calc-rem(24);
-  
+
   @include tablet-portrait {
     padding: 0 functions.calc-rem(48);
   }
@@ -117,13 +117,33 @@
   }
 }
 
-.member {
-  @extend %title-5;
-  @include mixins.truncate();
-  color: var(--theme-popup-member);
-  margin-bottom: functions.calc-rem(12);
+.councilItem {
+  @extend %body-2;
+  color: var(--theme-poroposal-member-not-vote);
+  display: flex;
+  flex-direction: row;
+  margin-bottom: functions.calc-rem(8);
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &.vote {
+    color: var(--theme-poroposal-member-vote);
+  }
+}
+
+.rect {
+  border: functions.calc-rem(6) solid;
+  border-color: var(--color-grey-80) transparent transparent var(--color-grey-80);
+  height: 0;
+  width: 0;
+
+  &.red {
+    border-color: var(--theme-poroposal-member-corner-reject) transparent transparent var(--theme-poroposal-member-corner-reject);
+  }
+
+  &.green {
+    border-color: var(--theme-poroposal-member-corner-approve) transparent transparent var(--theme-poroposal-member-corner-approve);
   }
 }
