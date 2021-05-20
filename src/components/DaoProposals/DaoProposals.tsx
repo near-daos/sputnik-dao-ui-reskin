@@ -3,14 +3,14 @@ import cn from 'classnames';
 
 import SearchBar from 'components/SearchBar';
 import { ProposalCard } from 'components/ProposalCard';
-import { Chip, ChipProps, Select } from 'components/UILib';
+import { Chip, ChipProps, Loader, Select } from 'components/UILib';
 import { Proposal, ProposalStatus } from 'types/proposal';
 
 import { useLocation } from 'react-router-dom';
 import { DaoItem } from 'types/dao';
 import { NearService } from 'services/NearService';
 import { useSelector } from 'react-redux';
-import { accountSelector } from 'redux/selectors';
+import { accountSelector, proposalsLoadingSelector } from 'redux/selectors';
 import s from './DaoProposals.module.scss';
 
 export type ProposalFilterOption = {
@@ -61,7 +61,7 @@ const getFilterOptions = (proposals: Proposal[]): ProposalFilterOption[] => [
 export interface DaoProposalsProps {
   className?: string;
   proposals: Array<Proposal>;
-  dao: DaoItem;
+  dao?: DaoItem;
 }
 
 enum ProposalSort {
@@ -89,6 +89,7 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
   const [sortedProposals, setSortedProposals] = useState<Proposal[]>([]);
   const [resultingProposals, setResultingProposals] = useState<Proposal[]>([]);
   const filterOptions = useMemo(() => getFilterOptions(proposals), [proposals]);
+  const loading = useSelector(proposalsLoadingSelector);
 
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<ProposalSortOption>(sortOptions[0]);
@@ -98,7 +99,7 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
 
   const account = useSelector(accountSelector);
 
-  const isMember = dao.members.includes(account || '');
+  const isMember = dao?.members.includes(account || '');
 
   useEffect(() => {
     if (filters.value === null) {
@@ -151,15 +152,21 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
   };
 
   const handleApprove = (proposalId: number) => {
-    NearService.vote(dao.id, proposalId, 'Yes');
+    if (dao) {
+      NearService.vote(dao.id, proposalId, 'Yes');
+    }
   };
 
   const handleReject = (proposalId: number) => {
-    NearService.vote(dao.id, proposalId, 'No');
+    if (dao) {
+      NearService.vote(dao.id, proposalId, 'No');
+    }
   };
 
   const handleFinalize = (proposalId: number) => {
-    NearService.finalize(dao.id, proposalId);
+    if (dao) {
+      NearService.finalize(dao.id, proposalId);
+    }
   };
 
   return (
@@ -195,26 +202,25 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
           onChange={setSort}
         />
       </div>
-      {sortedProposals.length === 0 && (
+      {!loading && sortedProposals.length === 0 && (
         <div className={s.emptyWrapper}>
           <div className={s.emptyImage} />
           <p className={s.emptyText}>No proposals here</p>
         </div>
       )}
-      {sortedProposals.length > 0 && (
-        <div className={s.proposalList}>
-          {sortedProposals.map((proposal) => (
-            <ProposalCard
-              key={proposal.id}
-              proposal={proposal}
-              isMember={isMember}
-              onApprove={() => handleApprove(proposal.id)}
-              onReject={() => handleReject(proposal.id)}
-              onFinalize={() => handleFinalize(proposal.id)}
-            />
-          ))}
-        </div>
-      )}
+      <div className={s.proposalList}>
+        {loading && <Loader className={s.loader} />}
+        {sortedProposals.map((proposal) => (
+          <ProposalCard
+            key={proposal.id}
+            proposal={proposal}
+            isMember={isMember}
+            onApprove={() => handleApprove(proposal.id)}
+            onReject={() => handleReject(proposal.id)}
+            onFinalize={() => handleFinalize(proposal.id)}
+          />
+        ))}
+      </div>
     </section>
   );
 };

@@ -37,10 +37,12 @@ interface RouteInfo extends RouteProps {
 
 const routes: RouteInfo[] = [
   {
+    exact: true,
     path: '/select-dao',
     component: SelectDao,
   },
   {
+    exact: true,
     path: '/select-proposal',
     component: SelectProposals,
   },
@@ -49,19 +51,23 @@ const routes: RouteInfo[] = [
   //   component: Proposals,
   // },
   {
+    exact: true,
     path: '/dao/:daoId/proposals/:proposalId',
     component: ProposalPage,
   },
   {
+    exact: true,
     path: '/dao/:id',
     component: DaoPage,
   },
   {
+    exact: true,
     path: '/search',
     component: SearchPage,
   },
   {
     // only for internal usage
+    exact: true,
     path: '/logo-regenerate-d1a6e16c',
     component: LogoRegenerationPage,
   },
@@ -69,7 +75,6 @@ const routes: RouteInfo[] = [
 
 const App: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
-  const mainLayoutPaths = routes.map((route) => route.path);
   const account = useSelector(accountSelector);
   const dispatch = useDispatch();
 
@@ -113,17 +118,19 @@ const App: React.FC = () => {
       <Route exact path="/">
         <LandingPage />
       </Route>
-      <Route path={[...mainLayoutPaths, '/:daoId/:proposalId', '/:daoId']}>
+      <Route path="*">
         <MainLayout>
           <Switch>
             {routes.map((route, i) => (
               <Route key={String(i)} {...route} />
             ))}
+            <Redirect exact from="/:daoId" to="/dao/:daoId" />
             <Redirect
+              exact
               from="/:daoId/:proposalId"
               to="/dao/:daoId/proposals/:proposalId"
             />
-            <Redirect from="/:daoId" to="/dao/:daoId" />
+            <Route path="*" component={Page404} />
           </Switch>
         </MainLayout>
       </Route>

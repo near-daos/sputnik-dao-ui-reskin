@@ -27,18 +27,19 @@ import { MembersPopup } from '../../components/MembersPopup';
 import { PurposePopup } from '../../components/PurposePopup';
 import { DaoDetailPopup } from '../../components/DaoDetailPopup';
 
-// const NUMBER_OF_TOP_MEMBERS = 10;
-
 export const DaoPage: React.FC = () => {
   const dispatch = useDispatch();
   const params = useParams<{ id: string }>();
   const [isShowCreateProposal, setIsShowCreateProposal] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
+  const [isShowMembersPopup, setIsShowMembersPopup] = useState(false);
+  const [isShowPurposePopup, setIsShowPurposePopup] = useState(false);
+  const [isShowDaoDetailPopup, setIsShowDaoDetailPopup] = useState(false);
+
   const account = useSelector(accountSelector);
   const daoList = useSelector(daoListSelector);
   const reversDaoList = daoList.slice().reverse();
-  // const [reversDaoList, setReversDaoList] = useState<DaoItem[]>([]);
   const dao = useSelector<StoreState, DaoItem | undefined>((state) =>
     daoSelector(state, params.id),
   );
@@ -72,10 +73,6 @@ export const DaoPage: React.FC = () => {
     setIsShowCreateProposal(false);
   };
 
-  const [isShowMembersPopup, setIsShowMembersPopup] = useState(false);
-  const [isShowPurposePopup, setIsShowPurposePopup] = useState(false);
-  const [isShowDaoDetailPopup, setIsShowDaoDetailPopup] = useState(false);
-
   return (
     <section className={s.root}>
       <section className={s.slider}>
@@ -89,7 +86,6 @@ export const DaoPage: React.FC = () => {
             src={`${appConfig.logoPath}${dao?.id}.png`}
             alt="Logo"
           />
-
           <div className={s.heading}>
             <p className={s.name}>{daoName}</p>
             <p className={s.contractName}>.{nearConfig.contractName}</p>
@@ -156,7 +152,7 @@ export const DaoPage: React.FC = () => {
             </Button>
           </div>
         </section>
-        {dao && <DaoProposals proposals={proposals} dao={dao} />}
+        <DaoProposals proposals={proposals} dao={dao} />
       </div>
 
       {isShowCreateProposal && dao && (
