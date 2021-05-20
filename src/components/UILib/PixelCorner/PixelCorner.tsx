@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import cn from 'classnames';
 
 import { shuffleArray } from 'utils/shuffleArray';
@@ -43,6 +43,8 @@ const PixelCorner: React.FC<PixelCornerProps> = ({
   const [showAnimation, setShowAnimation] = useState(false);
   const [activeElements, setActiveElements] = useState<number[]>([]);
 
+  const timeouts = useRef<ReturnType<typeof setTimeout>[]>([]);
+
   const pickActiveElements = useCallback(() => {
     let elements: number[] = [];
     const pixels = Array.from(pixelsMatrix.join('')).reduce(
@@ -64,18 +66,24 @@ const PixelCorner: React.FC<PixelCornerProps> = ({
     return elements;
   }, []);
 
+  const clearAllTimeouts = useCallback(() => {
+    timeouts.current.forEach((timeout) => {
+      clearTimeout(timeout);
+    });
+  }, [timeouts]);
+
   const runAnimation = useCallback(() => {
     setActiveElements(pickActiveElements());
 
-    setTimeout(() => {
+    timeouts.current[0] = setTimeout(() => {
       setShowAnimation(true);
       setActiveElements(pickActiveElements());
 
-      setTimeout(() => {
+      timeouts.current[1] = setTimeout(() => {
         setShowAnimation(false);
       }, 1000);
 
-      setTimeout(() => {
+      timeouts.current[2] = setTimeout(() => {
         runAnimation();
       }, ANIMATION_COOL_DOWN);
     }, getRandomInt(0, ANIMATION_MAX_TIMING));
@@ -85,7 +93,9 @@ const PixelCorner: React.FC<PixelCornerProps> = ({
     if (animated) {
       runAnimation();
     }
-  }, [runAnimation, animated]);
+
+    return clearAllTimeouts;
+  }, [runAnimation, animated, clearAllTimeouts]);
 
   const renderPixels = () => {
     let index = 0;
