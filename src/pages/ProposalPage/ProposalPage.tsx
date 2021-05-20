@@ -273,6 +273,17 @@ export const ProposalPage: React.FC = () => {
                     <p className={s.tooltipMember}>{item}</p>
                   ))}
                 </Tooltip>
+
+                <div className={s.mobileBlock}>
+                  <div className={s.voteAmount}>
+                    <span className={s.green}>{proposal.voteYes}</span>
+                    &nbsp;approvals
+                  </div>
+                  <div className={s.voteAmount}>
+                    <span className={s.red}>{proposal.voteNo}</span>
+                    &nbsp;rejections
+                  </div>
+                </div>
               </div>
             )}
           </header>
@@ -298,7 +309,7 @@ export const ProposalPage: React.FC = () => {
                 <div className={s.dataWrapper}>
                   <div className={s.dataTitleWrapper}>
                     <p className={s.dataTitle}>Payout</p>
-                    <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+                    <SvgIcon icon="token" size={12} className={s.tokenIcon} />
                   </div>
                   <p className={s.dataValue}>{proposal.kind.amount}</p>
                 </div>
@@ -309,7 +320,11 @@ export const ProposalPage: React.FC = () => {
         <div className={s.contentWrapper}>
           <div className={s.detailsWrapper}>
             <p className={s.aboutTitle}>About</p>
-            <p className={s.about}>{description}</p>
+            <p className={s.about}>
+              {description}
+              <br />
+              {linkEl}
+            </p>
             {/* <div className={s.row}> */}
             {/*  <div className={s.dataWrapper}> */}
             {/*    <p className={s.dataTitle}>Proposer</p> */}
