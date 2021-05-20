@@ -5,6 +5,9 @@
 @import 'styles/helpers';
 
 .root {
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
   padding-bottom: functions.calc-rem(72);
 }
 
@@ -52,7 +55,6 @@
     align-items: flex-start;
   }
 }
-
 
 .name {
   @include heading-5;
@@ -202,7 +204,6 @@
 
 .buttons {
   align-self: end;
-  //grid-area: buttons;
   justify-self: end;
 
   @include media.mobile-only {
@@ -216,4 +217,7 @@
 
 .content {
   @include mixins.narrow-container;
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
 }

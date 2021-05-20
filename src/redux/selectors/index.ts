@@ -33,6 +33,11 @@ export const proposalSelector = createSelector(
   (proposals, proposalId) => proposals.find((item) => item.id === proposalId),
 );
 
+export const proposalsLoadingSelector = createSelector(
+  proposalsSelector,
+  (state) => state.loading,
+);
+
 export const accountSelector = createSelector(
   authSelector,
   (state) => state.accountId,

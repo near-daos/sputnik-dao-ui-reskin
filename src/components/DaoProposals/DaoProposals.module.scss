@@ -4,14 +4,19 @@
 @import 'styles/typography';
 
 .root {
-  display: block;
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
 }
 
 .proposalList {
   display: grid;
+  flex: 1 1;
   gap: functions.calc-rem(32);
   grid-auto-rows: auto;
   grid-template-columns: 1fr 1fr;
+  min-height: 200px;
+  position: relative;
 
   @include media.mobile-only {
     grid-template-columns: 1fr;
@@ -73,4 +78,11 @@
 .emptyText {
   @extend %title-5;
   margin-top: functions.calc-rem(30);
+}
+
+.loader {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
