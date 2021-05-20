@@ -49,6 +49,8 @@ const Header: React.FC<HeaderProps> = ({ className, toggleTheme, theme }) => {
   };
 
   const showCreateDaoPopup = async () => {
+    history.push('/select-dao');
+
     if (account) {
       setIsShowCreateDaoPopup(true);
 

@@ -52,7 +52,7 @@ const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
         <div className={s.row}>
           <div className={s.subTitleWrapper}>
             <p className={s.subTitle}>DAO Funds</p>
-            <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+            <SvgIcon icon="token" size={12} className={s.tokenIcon} />
           </div>
           <p className={s.value}>{dao.amount}</p>
         </div>
@@ -63,7 +63,7 @@ const DaoDetails: React.FC<DaoDetailsProps> = ({ className, dao }) => {
         <div className={s.row}>
           <div className={s.subTitleWrapper}>
             <p className={s.subTitle}>Bond</p>
-            <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+            <SvgIcon icon="token" size={12} className={s.tokenIcon} />
           </div>
           <p className={s.value}>{dao.bond}</p>
         </div>

@@ -1,4 +1,5 @@
 @use 'styles/functions';
+@use 'styles/mixins';
 @import 'styles/typography';
 @import 'styles/helpers';
 @import 'styles/media';
@@ -53,6 +54,10 @@
 .daoName {
   @extend %caption-1;
   padding: functions.calc-rem(24) functions.calc-rem(24) 0;
+
+  @include tablet-portrait {
+    padding: functions.calc-rem(40) functions.calc-rem(48) 0;
+  }
 }
 
 .titleWrapper {
@@ -61,6 +66,10 @@
   flex-direction: row;
   margin-top: functions.calc-rem(2);
   padding: 0 functions.calc-rem(24);
+
+  @include tablet-portrait {
+    padding: 0 functions.calc-rem(48);
+  }
 }
 
 .title {
@@ -90,18 +99,27 @@
 }
 
 .searchBar {
-  padding: 0 functions.calc-rem(48);
+  padding: 0 functions.calc-rem(24);
+  
+  @include tablet-portrait {
+    padding: 0 functions.calc-rem(48);
+  }
 }
 
 .container {
   flex: 1;
   margin-top: 24px;
   overflow-y: scroll;
-  padding: 0 functions.calc-rem(48);
+  padding: 0 functions.calc-rem(24);
+
+  @include tablet-portrait {
+    padding: 0 functions.calc-rem(48);
+  }
 }
 
 .member {
   @extend %title-5;
+  @include mixins.truncate();
   color: var(--theme-popup-member);
   margin-bottom: functions.calc-rem(12);
 

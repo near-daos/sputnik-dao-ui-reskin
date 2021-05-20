@@ -1,0 +1,144 @@
+@use 'styles/functions';
+@import 'styles/typography';
+@import 'styles/helpers';
+@import 'styles/media';
+
+.root {
+  align-items: center;
+  display: flex;
+  height: 100vH;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vW;
+  z-index: 100;
+}
+
+.overlay {
+  @extend %button-reset;
+  background-color: var(--theme-overlay);
+  cursor: default;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.wrapper {
+  background-color: var(--theme-popup-bg);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+
+  @include tablet-landscape {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-height: functions.calc-rem(590);
+    width: functions.calc-rem(476);
+  }
+}
+
+.close {
+  position: absolute;
+  right: functions.calc-rem(16);
+  top: functions.calc-rem(16);
+}
+
+.subTitle {
+  @extend %caption-1;
+  padding: functions.calc-rem(24) functions.calc-rem(24) 0;
+}
+
+
+.title {
+  @extend %heading-5;
+  margin-top: functions.calc-rem(2);
+  padding: 0 functions.calc-rem(24);
+
+}
+
+.border {
+  background-color: var(--theme-popup-border);
+  height: functions.calc-rem(1);
+  margin-top: functions.calc-rem(16);
+  width: 100%;
+}
+
+.contentWrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding: functions.calc-rem(32) functions.calc-rem(24) functions.calc-rem(96);
+}
+
+.daoName {
+  @extend %heading-6;
+
+  span {
+    color: var(--theme-proposal-card-dao-name);
+  }
+}
+
+.detailWrapper {
+  padding-top: functions.calc-rem(16);
+}
+
+.dataWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-right: functions.calc-rem(24);
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.row {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: functions.calc-rem(16);
+}
+
+.nameWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.name {
+  @extend %title-7;
+  color: var(--theme-proposal-card-additional-text);
+}
+
+.tokenIcon {
+  //color: var(--theme-dao-card-token);
+  margin-left: functions.calc-rem(4);
+}
+
+.value {
+  @extend %title-4;
+  text-transform: capitalize;
+}
+
+.purposeTitle {
+  @extend %title-5;
+  margin: functions.calc-rem(24) 0;
+}
+
+.purpose {
+  @extend %body-2;
+}
+
+.council {
+  @extend %button-reset;
+}

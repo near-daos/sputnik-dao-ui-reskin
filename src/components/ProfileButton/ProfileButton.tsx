@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 
+import { Dropdown, SvgIcon, Tooltip } from '../UILib';
+
 import s from './ProfileButton.module.scss';
-import { Dropdown, Tooltip } from '../UILib';
 
 export interface ProfileButtonProps {
   className?: string;
@@ -56,9 +57,11 @@ const ProfileButton: React.FC<ProfileButtonProps> = ({
         <div />
         <p className={s.title}>Signed in as</p>
         <Tooltip
+          className={s.accountTooltip}
           triggerElem={
             <button className={s.account} onClick={handleClickOnAccountName}>
               {accountName}
+              <SvgIcon icon="copy-icon" className={s.copyIcon} />
             </button>
           }
         >

@@ -2,8 +2,12 @@
 @use 'styles/mixins';
 @use 'styles/media';
 @import 'styles/typography';
+@import 'styles/helpers';
 
 .root {
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
   padding-bottom: functions.calc-rem(72);
 }
 
@@ -18,53 +22,172 @@
 }
 
 .header {
-  column-gap: functions.calc-rem(32);
+  column-gap: functions.calc-rem(15);
   display: grid;
   grid-template: 'picture heading heading' 'picture tabs buttons';
-  grid-template-columns: functions.calc-rem(176) auto auto;
+  grid-template-columns: functions.calc-rem(150) calc(100% - #{functions.calc-rem(400)}) auto;
   grid-template-rows: auto auto;
   margin-bottom: functions.calc-rem(48);
 
+  @include media.tablet-landscape {
+    column-gap: functions.calc-rem(32);
+    grid-template-columns: functions.calc-rem(176) calc(100% - #{functions.calc-rem(440)}) functions.calc-rem(200);
+  }
+
   @include media.mobile-only {
-    grid-template: 'picture' 'heading' 'tabs' 'buttons';
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    //grid-template: 'picture' 'heading' 'tabs' 'buttons';
+    //grid-template-columns: 1fr;
+    //grid-template-rows: auto auto auto auto;
   }
 }
 
 .heading {
-  @extend %heading-3;
-  grid-area: heading;
-  line-height: normal;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  z-index: 2;
 
-  margin: 0;
-  padding: 0;
-
-  @include media.mobile-only {
-    font-size: functions.calc-rem(24);
-    justify-self: center;
-    margin-bottom: functions.calc-rem(16);
-    position: relative;
-    z-index: 1;
+  @include media.tablet-portrait {
+    align-items: flex-start;
   }
 }
+
+.name {
+  @include heading-5;
+
+  @include mixins.truncate();
+  //color: var(--theme-proposal-card-dao-name);
+  width: 100%;
+
+  @include media.tablet-portrait {
+    @include heading-6;
+  }
+
+  @include media.desktop {
+    @include heading-3;
+  }
+
+  @include media.mobile-only {
+    text-align: center;
+  }
+}
+
 
 .contractName {
   @extend %body-1;
   color: var(--theme-proposal-card-additional-text);
 }
 
+
+.details {
+  display: none;
+  @include media.tablet-portrait {
+    display: block;
+    margin-top: functions.calc-rem(12);
+  }
+}
+
+.detailsButton {
+  @extend %button-reset;
+  margin-top: functions.calc-rem(36);
+
+  @include media.tablet-portrait {
+    display: none;
+  }
+
+}
+
+.detailWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-right: functions.calc-rem(24);
+
+  @include media.tablet-landscape {
+    margin-right: functions.calc-rem(60);
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.subTitleWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.subTitle {
+  @extend %title-7;
+  color: var(--theme-proposal-card-additional-text);
+}
+
+.tokenIcon {
+  //color: var(--theme-dao-card-token);
+  margin-left: functions.calc-rem(4);
+}
+
+.value {
+  @extend %title-4;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  text-transform: capitalize;
+}
+
 .picture {
   grid-area: picture;
-  height: functions.calc-rem(176);
+  height: functions.calc-rem(150);
   object-fit: contain;
-  width: functions.calc-rem(176);
+  width: functions.calc-rem(150);
+
+  @include media.tablet-landscape {
+    height: functions.calc-rem(176);
+    width: functions.calc-rem(176);
+  }
 
   @include media.mobile-only {
     justify-self: center;
     margin-bottom: functions.calc-rem(-97);
     opacity: 0.5;
   }
+}
+
+.detailRow {
+  display: flex;
+  flex-direction: row;
+  margin-top: functions.calc-rem(4);
+}
+
+.council {
+  @extend %button-reset;
+
+  &:hover {
+    color: var(--theme-dao-card-token);
+  }
+}
+
+.purposeButton {
+  @extend %title-5;
+  @extend %button-reset;
+  align-items: center;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  padding: functions.calc-rem(5) 0;
+
+  &:hover {
+    color: var(--theme-dao-card-token);
+  }
+}
+
+.infoIcon {
+  color: var(--theme-dao-card-token);
+  margin-left: functions.calc-rem(4);
 }
 
 .nav {
@@ -81,15 +204,20 @@
 
 .buttons {
   align-self: end;
-  grid-area: buttons;
   justify-self: end;
 
   @include media.mobile-only {
-    justify-self: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     margin-top: functions.calc-rem(24);
+    width: 100%;
   }
 }
 
 .content {
   @include mixins.narrow-container;
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
 }

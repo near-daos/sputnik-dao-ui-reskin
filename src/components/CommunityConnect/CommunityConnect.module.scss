@@ -97,8 +97,10 @@
 
 .cityFigure {
   bottom: 0;
+  height: functions.calc-rem(400);
   left: 0;
-  max-height: functions.calc-rem(400);
+  object-fit: contain;
+  object-position: 50% 100%;
   position: absolute;
   width: 100%;
 }
@@ -106,6 +108,7 @@
 .cometsFigure {
   left: 0;
   max-height: functions.calc-rem(600);
+  object-fit: contain;
   position: absolute;
   top: 0;
   width: 100%;

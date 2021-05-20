@@ -62,7 +62,7 @@ const DaoCard: React.FC<DaoCardProps> = ({
           <div className={cn(s.container, s.bond, s[size])}>
             <div className={s.nameWrapper}>
               <p className={s.label}>Bond</p>
-              <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+              <SvgIcon icon="token" size={12} className={s.tokenIcon} />
             </div>
             <p className={s.value}>{dao.bond}</p>
           </div>
@@ -73,7 +73,7 @@ const DaoCard: React.FC<DaoCardProps> = ({
           <div className={cn(s.container, s.funds, s[size])}>
             <div className={s.nameWrapper}>
               <p className={s.label}>DAO Funds</p>
-              <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+              <SvgIcon icon="token" size={12} className={s.tokenIcon} />
             </div>
             <p className={cn(s.value, s[size])}>{dao.amount}</p>
           </div>

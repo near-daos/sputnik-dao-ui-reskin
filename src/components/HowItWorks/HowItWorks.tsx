@@ -1,15 +1,13 @@
 import React from 'react';
 import useMedia from 'hooks/use-media';
 
-import { ReactComponent as Comets } from 'images/comets.svg';
-import { ReactComponent as CometsMobile } from 'images/comets-mobile.svg';
+import comets from 'images/comets.png';
+import cometsMobile from 'images/comets-mobile.png';
 
 import s from './HowItWorks.module.scss';
 
 const HowItWorks: React.FC = () => {
   const media = useMedia();
-
-  const Figure = media.mobile ? CometsMobile : Comets;
 
   return (
     <div className={s.root}>
@@ -25,7 +23,11 @@ const HowItWorks: React.FC = () => {
         </div>
       </div>
       <div className={s.figureContainer}>
-        <Figure className={s.figure} />
+        <img
+          src={media.mobile ? cometsMobile : comets}
+          className={s.figure}
+          alt="comets"
+        />
       </div>
     </div>
   );

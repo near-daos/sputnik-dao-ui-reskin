@@ -76,6 +76,7 @@
   height: auto;
   max-height: 100%;
   max-width: 100%;
+  object-position: 50% 100%;
   position: absolute;
   right: 0;
   transform: rotate(-90deg);
@@ -84,11 +85,11 @@
   @include media.tablet-landscape {
     height: 100%;
     max-height: functions.calc-rem(600);
-    min-height: functions.calc-rem(400);
-    min-width: functions.calc-rem(700);
+    object-fit: contain;
     position: relative;
     right: initial;
     transform: initial;
+    width: 100%;
   }
 }
 

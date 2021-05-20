@@ -68,7 +68,6 @@ const SmallDaoSlider: React.FC<SmallDaoSliderProps> = ({
 
           if (!daos[index]) return;
 
-          console.log(index);
           history.push(`/dao/${daos[index].id}`);
         }}
       >
