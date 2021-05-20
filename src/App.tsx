@@ -69,7 +69,7 @@ const routes: RouteInfo[] = [
   },
   {
     exact: true,
-    path: '/search',
+    path: '/search/dao/:searchPhrase',
     component: SearchPage,
   },
   {
