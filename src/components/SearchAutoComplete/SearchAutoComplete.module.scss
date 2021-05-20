@@ -36,6 +36,8 @@
   box-shadow: var(--theme-autocomplete-shadow);
   height: calc(100vH - 64px);
   left: 0;
+  max-height: calc(100vH - 150px);
+  overflow: auto;
   padding: 18px 0;
   position: fixed;
   top: 64px;
@@ -112,5 +114,31 @@
   bold {
     @extend %title-6;
     color: var(--theme-text-color);
+  }
+}
+
+.proposals {
+  @extend %title-6;
+  padding-left: 16px;
+
+  .item {
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .red {
+    color: var(--theme-chip-icon-active-error);
+  }
+
+  .green {
+    color: var(--theme-chip-icon-active-success);
+  }
+
+  .purple {
+    color: var(--theme-chip-icon-active-in-progress);
+  }
+
+  .yellow {
+    color: var(--theme-chip-icon-active-warning);
   }
 }

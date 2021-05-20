@@ -46,8 +46,9 @@ export const parseForumUrl = (url: string): string => {
 
 export const URLTest = (url: string): boolean => {
   const regExp = /^(ftp|http|https):\/\/[^ "]+$/;
+  const regExp2 = /^https:\/\/gov.near.org\/[a-z0-9\\/]+$/;
 
-  return regExp.test(url);
+  return regExp.test(url) && regExp2.test(url);
 };
 export const yoktoNear = 1000000000000000000000000;
 
@@ -68,6 +69,8 @@ class NearService {
   }
 
   public async init(): Promise<void> {
+    // eslint-disable-next-line no-console
+    // console.log('NearService: init');
     this.near = await connect({
       deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() },
       ...this.config,

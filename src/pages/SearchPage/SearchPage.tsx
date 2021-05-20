@@ -17,6 +17,9 @@ import { SearchDaoPage } from 'pages/SearchDaoPage';
 import { DaoItem } from 'types/dao';
 import { useSelector } from 'react-redux';
 import { daoListSelector } from 'redux/selectors';
+import { DAO_PROPOSAL_IDS_SEARCH_SEPARATOR } from '../../constants/searchConstants';
+import { filterDaoBySearchStr } from '../../utils/filterDaoBySearchStr';
+
 import s from './SearchPage.module.scss';
 
 export interface SearchPageProps {
@@ -41,7 +44,11 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
   ]);
 
   useEffect(() => {
-    if (!searchQuery) {
+    const daoSearchStr = searchQuery.split(
+      DAO_PROPOSAL_IDS_SEARCH_SEPARATOR,
+    )[0];
+
+    if (!daoSearchStr) {
       setDaos([]);
 
       setTabOptions([
@@ -55,9 +62,7 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
       return;
     }
 
-    const filtered = daoList.filter(
-      (item) => item.id.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1,
-    );
+    const filtered = filterDaoBySearchStr(daoSearchStr, daoList);
 
     setDaos(filtered);
     setTabOptions([
@@ -68,8 +73,6 @@ const SearchPage: React.FC<SearchPageProps> = ({ className }) => {
       },
     ]);
   }, [daoList, searchQuery]);
-
-  // const [sort, setSort] = useState<Sort>(sortOptions[0]);
 
   const handleSearch = (value: string) => {
     setSearchQuery(value);

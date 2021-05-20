@@ -1,5 +1,4 @@
 @use 'styles/functions';
-@use 'styles/mixins';
 @import 'styles/typography';
 @import 'styles/helpers';
 @import 'styles/media';
@@ -36,7 +35,7 @@
   width: 100%;
   z-index: 2;
 
-  @include desktop {
+  @include tablet-landscape {
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -55,31 +54,20 @@
   @extend %caption-1;
   padding: functions.calc-rem(24) functions.calc-rem(24) 0;
 
-  @include tablet-portrait {
+  @include tablet-landscape {
     padding: functions.calc-rem(40) functions.calc-rem(48) 0;
   }
 }
 
-.titleWrapper {
-  align-items: flex-end;
-  display: flex;
-  flex-direction: row;
-  margin-top: functions.calc-rem(2);
-  padding: 0 functions.calc-rem(24);
-
-  @include tablet-portrait {
-    padding: 0 functions.calc-rem(48);
-  }
-}
 
 .title {
   @extend %heading-5;
-}
+  margin-top: functions.calc-rem(2);
+  padding: 0 functions.calc-rem(24);
 
-.number {
-  @extend %body-1;
-  color: var(--theme-popup-number);
-  margin-left: functions.calc-rem(8);
+  @include tablet-landscape {
+    padding: 0 functions.calc-rem(48);
+  }
 }
 
 .border {
@@ -89,41 +77,19 @@
   width: 100%;
 }
 
-.membersWrapper {
+.purposeWrapper {
   display: flex;
   flex: 1;
   flex-direction: column;
   overflow: hidden;
   overflow-y: scroll;
-  padding: functions.calc-rem(24) 0 functions.calc-rem(4);
-}
+  padding: functions.calc-rem(32) functions.calc-rem(24) functions.calc-rem(96);
 
-.searchBar {
-  padding: 0 functions.calc-rem(24);
-  
-  @include tablet-portrait {
-    padding: 0 functions.calc-rem(48);
+  @include tablet-landscape {
+    padding: functions.calc-rem(32) functions.calc-rem(48) functions.calc-rem(96);
   }
 }
 
-.container {
-  flex: 1;
-  margin-top: 24px;
-  overflow-y: scroll;
-  padding: 0 functions.calc-rem(24);
-
-  @include tablet-portrait {
-    padding: 0 functions.calc-rem(48);
-  }
-}
-
-.member {
-  @extend %title-5;
-  @include mixins.truncate();
-  color: var(--theme-popup-member);
-  margin-bottom: functions.calc-rem(12);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
+.purpose {
+  @extend %body-2;
 }

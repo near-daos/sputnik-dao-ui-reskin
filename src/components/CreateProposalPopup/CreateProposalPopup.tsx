@@ -218,13 +218,13 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                   />
                 ))}
               </ul>
-              <Button
-                size="lg"
-                className={s.singleButton}
-                onClick={onSubmitFirstStep}
-              >
-                Continue
-              </Button>
+              {/* <Button */}
+              {/*  size="lg" */}
+              {/*  className={s.singleButton} */}
+              {/*  onClick={onSubmitFirstStep} */}
+              {/* > */}
+              {/*  Continue */}
+              {/* </Button> */}
             </div>
           )}
           {activeStep === 2 && (
