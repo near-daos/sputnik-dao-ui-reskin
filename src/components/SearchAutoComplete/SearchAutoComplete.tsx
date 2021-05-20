@@ -88,7 +88,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
   const handleSubmit = () => {
     if (daoResult.length > 0) {
       setIsShowResult(false);
-      history.push(`/search/dao/?query=${searchText}`);
+      history.push(`/search/dao/${searchText}`);
     }
   };
 
