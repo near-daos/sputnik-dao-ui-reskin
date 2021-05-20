@@ -98,6 +98,16 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    NearService.init().then(async () => {
+      if (!NearService.isAuthorized() && checkIfNearAuthKeysExist()) {
+        clearNearAuth();
+      }
+
+      dispatch(fetchAccount.started());
+      dispatch(fetchDaoList.started());
+      setIsInitialized(true);
+    });
+
     // clear non-hash routes
     if (window.location.pathname && window.location.pathname !== '/') {
       window.location.pathname = '';
@@ -108,18 +118,6 @@ const App: React.FC = () => {
       window.location.search = '';
       window.location.href = window.location.href.replace('?', '');
     }
-  }, []);
-
-  useEffect(() => {
-    NearService.init().then(async () => {
-      if (!NearService.isAuthorized() && checkIfNearAuthKeysExist()) {
-        clearNearAuth();
-      }
-
-      dispatch(fetchAccount.started());
-      dispatch(fetchDaoList.started());
-      setIsInitialized(true);
-    });
   }, [account, dispatch]);
 
   if (!isInitialized) {
