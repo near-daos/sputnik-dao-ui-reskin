@@ -107,7 +107,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
             <div className={s.payoutWrapper}>
               <div className={s.payoutName}>
                 <p className={cn(s.name, s.payoutTitle)}>Payout</p>{' '}
-                <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+                <SvgIcon icon="token" size={12} className={s.tokenIcon} />
               </div>
               <p className={s.payoutValue}>{proposal.kind.amount}</p>
             </div>
