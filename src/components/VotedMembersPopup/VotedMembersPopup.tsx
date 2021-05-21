@@ -27,9 +27,6 @@ const VotedMembersPopup: React.FC<VotedMembersPopupProps> = ({
   rejectArray,
   onClose,
 }) => {
-  console.log(approveArray);
-  console.log(rejectArray);
-
   const [searchText, setSearchText] = useState('');
   const [filteredMembersList, setFilteredMembersList] = useState<string[]>([]);
 

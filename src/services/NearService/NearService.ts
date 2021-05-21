@@ -134,7 +134,7 @@ class NearService {
   public async createProposal(params: CreateProposalParams): Promise<any> {
     const data: any = {
       target: params.target,
-      description: `${params.description} ${parseForumUrl(params.link)}`.trim(),
+      description: `${params.description} ---${params.link}`.trim(),
       kind: {
         type: params.kind.type,
       },
