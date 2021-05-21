@@ -297,7 +297,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                   name="link"
                   value={values.link}
                   error={errors.link}
-                  onChange={(val) => handleChange('link', val)}
+                  onChange={(val) => handleChange('link', val.trim())}
                   label="Forum link"
                   className={cn(s.input, s.linkInput)}
                   helperText="Please copy and paste the forum link here"
