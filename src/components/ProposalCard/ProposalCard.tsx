@@ -21,6 +21,44 @@ import { Link } from 'react-router-dom';
 import s from './ProposalCard.module.scss';
 import { getTitle } from './utils';
 
+export function getDescriptionAndLink(
+  proposalDescription: string,
+): [string, JSX.Element | boolean] {
+  let linkEl: JSX.Element | boolean = false;
+  let description = '';
+  let link = '';
+
+  const test = proposalDescription.split('---');
+
+  if (test.length > 1 && test[test.length - 1] !== '') {
+    [description, link] = proposalDescription.split('---');
+    linkEl = !!link && (
+      <a
+        target="_blank"
+        className={s.proposalLink}
+        href={`${link}`}
+        rel="nofollow noreferrer"
+      >
+        {`${link}`}
+      </a>
+    );
+  } else {
+    [description, link] = proposalDescription.split('/t/');
+    linkEl = !!link && (
+      <a
+        className={s.proposalLink}
+        target="_blank"
+        href={`https://gov.near.org/t/${link}`}
+        rel="nofollow noreferrer"
+      >
+        {`https://gov.near.org/t/${link}`}
+      </a>
+    );
+  }
+
+  return [description, linkEl];
+}
+
 export interface ProposalCardProps {
   className?: string;
   daoName?: string;
@@ -46,16 +84,18 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
   const isNotExpired = votePeriodEnd < new Date();
 
-  const [description, link] = proposal.description.split('/t/');
-  const linkEl = !!link && (
-    <a
-      target="_blank"
-      href={`https://gov.near.org/t/${link}`}
-      rel="nofollow noreferrer"
-    >
-      {`https://gov.near.org/t/${link}`}
-    </a>
-  );
+  const [description, linkEl] = getDescriptionAndLink(proposal.description);
+
+  // const [description, link] = proposal.description.split('/t/');
+  // const linkEl = !!link && (
+  //   <a
+  //     target="_blank"
+  //     href={`https://gov.near.org/t/${link}`}
+  //     rel="nofollow noreferrer"
+  //   >
+  //     {`https://gov.near.org/t/${link}`}
+  //   </a>
+  // );
 
   const cornerColorsMap = {
     [ProposalStatus.Success]: PixelCornerColors.Green,

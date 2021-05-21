@@ -73,37 +73,28 @@ export const DaoPage: React.FC = () => {
     setIsShowCreateProposal(false);
   };
 
-  // console.log(document.location);
-
-  // const meta1 = document.createElement('meta');
+  // const metaURL = document.querySelector('meta[property="og:url"]');
+  // const metaTitle = document.querySelector('meta[property="og:title"]');
+  // const metaDescription = document.querySelector(
+  //   'meta[property="og:description"]',
+  // );
+  // const metaImage = document.querySelector('meta[property="og:image"]');
   //
-  // meta1.setAttribute('property', 'og:url');
-  // meta1.content = document.location.href;
+  // if (metaURL) {
+  //   metaURL.setAttribute('content', document.location.href);
+  // }
   //
-  // document.head.appendChild(meta1);
-
-  const metaURL = document.querySelector('meta[property="og:url"]');
-  const metaTitle = document.querySelector('meta[property="og:title"]');
-  const metaDescription = document.querySelector(
-    'meta[property="og:description"]',
-  );
-  const metaImage = document.querySelector('meta[property="og:image"]');
-
-  if (metaURL) {
-    metaURL.setAttribute('content', document.location.href);
-  }
-
-  if (metaTitle && daoName) {
-    metaTitle.setAttribute('content', daoName);
-  }
-
-  if (metaDescription) {
-    metaDescription.setAttribute('content', 'some description');
-  }
-
-  if (metaImage) {
-    metaImage.setAttribute('content', `${appConfig.logoPath}${dao?.id}.png`);
-  }
+  // if (metaTitle && daoName) {
+  //   metaTitle.setAttribute('content', daoName);
+  // }
+  //
+  // if (metaDescription) {
+  //   metaDescription.setAttribute('content', 'some description');
+  // }
+  //
+  // if (metaImage) {
+  //   metaImage.setAttribute('content', `${appConfig.logoPath}${dao?.id}.png`);
+  // }
 
   return (
     <section className={s.root}>
