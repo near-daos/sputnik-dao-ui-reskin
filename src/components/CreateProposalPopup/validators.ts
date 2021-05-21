@@ -29,9 +29,9 @@ export const validateThirdStep = (
 ): CreateProposalErrors => {
   const errors: CreateProposalErrors = {};
 
-  if (values.link && !URLTest(values.link)) {
-    errors.link = 'Wrong format. Include a valid link including https://';
-  }
+  // if (values.link && !URLTest(values.link)) {
+  //   errors.link = 'Wrong format. Include a valid link including https://';
+  // }
 
   if (
     type === ProposalType.ChangePurpose &&

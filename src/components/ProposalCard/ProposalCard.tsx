@@ -20,6 +20,7 @@ import { convertDuration } from 'utils';
 import { Link } from 'react-router-dom';
 import s from './ProposalCard.module.scss';
 import { getTitle } from './utils';
+import { getDescriptionAndLink } from '../../pages/ProposalPage/ProposalPage';
 
 export interface ProposalCardProps {
   className?: string;
@@ -46,16 +47,18 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
   const isNotExpired = votePeriodEnd < new Date();
 
-  const [description, link] = proposal.description.split('/t/');
-  const linkEl = !!link && (
-    <a
-      target="_blank"
-      href={`https://gov.near.org/t/${link}`}
-      rel="nofollow noreferrer"
-    >
-      {`https://gov.near.org/t/${link}`}
-    </a>
-  );
+  const [description, linkEl] = getDescriptionAndLink(proposal.description);
+
+  // const [description, link] = proposal.description.split('/t/');
+  // const linkEl = !!link && (
+  //   <a
+  //     target="_blank"
+  //     href={`https://gov.near.org/t/${link}`}
+  //     rel="nofollow noreferrer"
+  //   >
+  //     {`https://gov.near.org/t/${link}`}
+  //   </a>
+  // );
 
   const cornerColorsMap = {
     [ProposalStatus.Success]: PixelCornerColors.Green,
