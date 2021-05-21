@@ -31,6 +31,44 @@ import { VotedMembersPopup } from '../../components/VotedMembersPopup';
 
 const NUMBER_OF_TOP_MEMBERS = 10;
 
+export function getDescriptionAndLink(
+  proposalDescription: string,
+): [string, JSX.Element | boolean] {
+  let linkEl: JSX.Element | boolean = false;
+  let description = '';
+  let link = '';
+
+  const test = proposalDescription.split('---');
+
+  if (test.length > 1 && test[test.length - 1] !== '') {
+    [description, link] = proposalDescription.split('---');
+    linkEl = !!link && (
+      <a
+        target="_blank"
+        className={s.proposalLink}
+        href={`${link}`}
+        rel="nofollow noreferrer"
+      >
+        {`${link}`}
+      </a>
+    );
+  } else {
+    [description, link] = proposalDescription.split('/t/');
+    linkEl = !!link && (
+      <a
+        className={s.proposalLink}
+        target="_blank"
+        href={`https://gov.near.org/t/${link}`}
+        rel="nofollow noreferrer"
+      >
+        {`https://gov.near.org/t/${link}`}
+      </a>
+    );
+  }
+
+  return [description, linkEl];
+}
+
 type ActionProps = Pick<ButtonProps, 'onClick' | 'disabled'> & {
   label: string;
   count: number;
@@ -181,16 +219,7 @@ export const ProposalPage: React.FC = () => {
     proposal.proposer === accountId &&
     proposal.status === ProposalStatus.Vote;
 
-  const [description, link] = proposal.description.split('/t/');
-  const linkEl = !!link && (
-    <a
-      target="_blank"
-      href={`https://gov.near.org/t/${link}`}
-      rel="nofollow noreferrer"
-    >
-      {`https://gov.near.org/t/${link}`}
-    </a>
-  );
+  const [description, linkEl] = getDescriptionAndLink(proposal.description);
 
   const councilMembers = dao?.members.length || 0;
 

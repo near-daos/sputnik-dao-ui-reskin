@@ -220,3 +220,10 @@
   top: 0;
   width: 100%;
 }
+
+.proposalLink {
+  @include mixins.truncate();
+  display: block;
+  width: 100%;
+}
+
