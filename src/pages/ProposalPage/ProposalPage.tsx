@@ -43,7 +43,12 @@ export function getDescriptionAndLink(
   if (test.length > 1 && test[test.length - 1] !== '') {
     [description, link] = proposalDescription.split('---');
     linkEl = !!link && (
-      <a target="_blank" href={`${link}`} rel="nofollow noreferrer">
+      <a
+        target="_blank"
+        className={s.proposalLink}
+        href={`${link}`}
+        rel="nofollow noreferrer"
+      >
         {`${link}`}
       </a>
     );
@@ -51,6 +56,7 @@ export function getDescriptionAndLink(
     [description, link] = proposalDescription.split('/t/');
     linkEl = !!link && (
       <a
+        className={s.proposalLink}
         target="_blank"
         href={`https://gov.near.org/t/${link}`}
         rel="nofollow noreferrer"

@@ -20,7 +20,44 @@ import { convertDuration } from 'utils';
 import { Link } from 'react-router-dom';
 import s from './ProposalCard.module.scss';
 import { getTitle } from './utils';
-import { getDescriptionAndLink } from '../../pages/ProposalPage/ProposalPage';
+
+export function getDescriptionAndLink(
+  proposalDescription: string,
+): [string, JSX.Element | boolean] {
+  let linkEl: JSX.Element | boolean = false;
+  let description = '';
+  let link = '';
+
+  const test = proposalDescription.split('---');
+
+  if (test.length > 1 && test[test.length - 1] !== '') {
+    [description, link] = proposalDescription.split('---');
+    linkEl = !!link && (
+      <a
+        target="_blank"
+        className={s.proposalLink}
+        href={`${link}`}
+        rel="nofollow noreferrer"
+      >
+        {`${link}`}
+      </a>
+    );
+  } else {
+    [description, link] = proposalDescription.split('/t/');
+    linkEl = !!link && (
+      <a
+        className={s.proposalLink}
+        target="_blank"
+        href={`https://gov.near.org/t/${link}`}
+        rel="nofollow noreferrer"
+      >
+        {`https://gov.near.org/t/${link}`}
+      </a>
+    );
+  }
+
+  return [description, linkEl];
+}
 
 export interface ProposalCardProps {
   className?: string;
