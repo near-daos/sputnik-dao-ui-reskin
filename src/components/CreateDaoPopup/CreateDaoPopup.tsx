@@ -184,7 +184,9 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                 <TextField
                   name="council"
                   value={values.council}
-                  onChange={(value) => handleChange('council', value)}
+                  onChange={(value) =>
+                    handleChange('council', value.toLowerCase())
+                  }
                   error={errors.council}
                   multiline
                   label="Enter Council"

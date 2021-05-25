@@ -7,7 +7,7 @@ import { SvgIcon } from '../SvgIcon';
 export interface ChipProps {
   className?: string;
   label: string;
-  color?: 'default' | 'warning' | 'success' | 'error' | 'inProgress';
+  color?: 'default' | 'failed' | 'success' | 'error' | 'inProgress';
   size?: 'sm' | 'lg';
   active?: boolean;
   onClick?: () => void;
