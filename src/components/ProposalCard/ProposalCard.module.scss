@@ -67,12 +67,15 @@
   }
 
   &.inProgress {
-    color: var(--theme-status-in-progress);
+    color: var(--theme-status-delayed);
+  }
+  
+  &.rejected {
+    color: var(--theme-status-rejected);
   }
 
-  &.rejected,
   &.fail {
-    color: var(--theme-status-rejected);
+    color: var(--theme-status-in-progress);
   }
 
   &.approved {

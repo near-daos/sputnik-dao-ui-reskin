@@ -39,7 +39,7 @@ const initialValues: CreateProposalValues = {
   description: '',
   payout: '',
   purpose: '',
-  votePeriod: '',
+  votePeriod: '168',
   link: '',
 };
 
@@ -339,7 +339,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                     value={values.votePeriod}
                     error={errors.votePeriod}
                     onChange={(val) => handleChange('votePeriod', val)}
-                    label="New Vote Period"
+                    label="New Vote Period (in hours)"
                     className={s.input}
                   />
                 )}

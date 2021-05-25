@@ -33,11 +33,17 @@ const getFilterOptions = (proposals: Proposal[]): ProposalFilterOption[] => [
     value: null,
   },
   {
-    label: 'Delayed',
-    color: 'warning',
-    count: countProposalsByStatus(proposals, ProposalStatus.Delay),
-    value: ProposalStatus.Delay,
+    label: 'Voting is in progress',
+    color: 'inProgress',
+    count: countProposalsByStatus(proposals, ProposalStatus.Vote),
+    value: ProposalStatus.Vote,
   },
+  // {
+  //   label: 'Delayed',
+  //   color: 'warning',
+  //   count: countProposalsByStatus(proposals, ProposalStatus.Delay),
+  //   value: ProposalStatus.Delay,
+  // },
   {
     label: 'Approved',
     color: 'success',
@@ -45,16 +51,16 @@ const getFilterOptions = (proposals: Proposal[]): ProposalFilterOption[] => [
     value: ProposalStatus.Success,
   },
   {
-    label: 'Rejected',
+    label: 'Rejected/expired',
     color: 'error',
     count: countProposalsByStatus(proposals, ProposalStatus.Reject),
     value: ProposalStatus.Reject,
   },
   {
-    label: 'Voting is in progress',
-    color: 'inProgress',
-    count: countProposalsByStatus(proposals, ProposalStatus.Vote),
-    value: ProposalStatus.Vote,
+    label: 'Failed',
+    color: 'failed',
+    count: countProposalsByStatus(proposals, ProposalStatus.Fail),
+    value: ProposalStatus.Fail,
   },
 ];
 

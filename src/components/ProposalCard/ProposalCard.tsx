@@ -100,9 +100,9 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
   const cornerColorsMap = {
     [ProposalStatus.Success]: PixelCornerColors.Green,
     [ProposalStatus.Reject]: PixelCornerColors.Red,
-    [ProposalStatus.Vote]: PixelCornerColors.Pink,
+    [ProposalStatus.Vote]: PixelCornerColors.Yellow,
     [ProposalStatus.Delay]: PixelCornerColors.Yellow,
-    [ProposalStatus.Fail]: PixelCornerColors.Red,
+    [ProposalStatus.Fail]: PixelCornerColors.Pink,
   };
 
   return (
@@ -152,32 +152,36 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
               <p className={s.payoutValue}>{proposal.kind.amount}</p>
             </div>
           )}
-          {proposal.kind.type === ProposalType.ChangePurpose && (
-            <div className={s.proposerWrapper}>
-              <p className={s.name}>Purpose:</p>
-              <p className={s.value}>{proposal.kind.purpose}</p>
-            </div>
-          )}
+          {/* {proposal.kind.type === ProposalType.ChangePurpose && ( */}
+          <div className={s.proposerWrapper}>
+            <p className={s.name}>Purpose:</p>
+            <p className={s.value}>
+              {proposal.kind.type === ProposalType.ChangePurpose
+                ? proposal.kind.purpose
+                : proposal.proposer}
+            </p>
+          </div>
+          {/* )} */}
         </div>
       </div>
 
       <div className={s.buttonWrapper}>
-        {isMember && (
-          <Button
-            size={media.mobile ? 'xs' : 'sm'}
-            variant="outline"
-            className={s.button}
-            onClick={onApprove}
-            disabled={isNotExpired || proposal.status !== ProposalStatus.Vote}
-          >
-            <>
-              Approve{' '}
-              <span className={s.buttonTextCount}>
-                ({numberReduction(proposal.voteYes)})
-              </span>
-            </>
-          </Button>
-        )}
+        <Button
+          size={media.mobile ? 'xs' : 'sm'}
+          variant="outline"
+          className={s.button}
+          onClick={onApprove}
+          disabled={
+            isNotExpired || proposal.status !== ProposalStatus.Vote || !isMember
+          }
+        >
+          <>
+            Approve{' '}
+            <span className={s.buttonTextCount}>
+              ({numberReduction(proposal.voteYes)})
+            </span>
+          </>
+        </Button>
         {proposal.proposer === accountId &&
           votePeriodEnd < new Date() &&
           proposal.status === ProposalStatus.Vote && (
@@ -190,22 +194,23 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
               Finalise
             </Button>
           )}
-        {isMember && (
-          <Button
-            size={media.mobile ? 'xs' : 'sm'}
-            variant="outline"
-            className={s.button}
-            disabled={isNotExpired || proposal.status !== ProposalStatus.Vote}
-            onClick={onReject}
-          >
-            <>
-              Reject{' '}
-              <span className={s.buttonTextCount}>
-                ({numberReduction(proposal.voteNo)})
-              </span>
-            </>
-          </Button>
-        )}
+
+        <Button
+          size={media.mobile ? 'xs' : 'sm'}
+          variant="outline"
+          className={s.button}
+          disabled={
+            isNotExpired || proposal.status !== ProposalStatus.Vote || !isMember
+          }
+          onClick={onReject}
+        >
+          <>
+            Reject{' '}
+            <span className={s.buttonTextCount}>
+              ({numberReduction(proposal.voteNo)})
+            </span>
+          </>
+        </Button>
       </div>
     </div>
   );
