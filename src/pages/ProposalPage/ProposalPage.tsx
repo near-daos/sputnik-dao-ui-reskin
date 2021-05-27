@@ -100,8 +100,6 @@ const getStatus = (status: ProposalStatus) => {
       return 'error';
     case ProposalStatus.Vote:
       return 'inProgress';
-    case ProposalStatus.Delay:
-      return 'warning';
     case ProposalStatus.Fail:
       return 'error';
 
@@ -143,6 +141,9 @@ export const ProposalPage: React.FC = () => {
   const proposal = useSelector<StoreState, Proposal | null>(
     (state) => proposalSelector(state, params.daoId, proposalId) || null,
   );
+
+  console.log(proposal);
+
   const accountId = useSelector(accountSelector);
 
   const [firstTenMembers] = useState<string[]>(
