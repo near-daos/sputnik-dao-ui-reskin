@@ -115,6 +115,8 @@
 
   @include desktop {
     @include heading-5;
+    line-height: 1;
+    margin-top: functions.calc-rem(5);
   }
 
   &.lg {
