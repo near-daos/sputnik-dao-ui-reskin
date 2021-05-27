@@ -125,6 +125,17 @@
   margin-left: functions.calc-rem(4);
 }
 
+.valueRow {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.infoIcon {
+  color: var(--theme-dao-card-token);
+  margin-left: functions.calc-rem(4);
+}
+
 .value {
   @extend %title-4;
   text-transform: capitalize;
