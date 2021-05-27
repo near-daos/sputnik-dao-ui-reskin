@@ -69,7 +69,7 @@
   &.inProgress {
     color: var(--theme-status-delayed);
   }
-  
+
   &.rejected {
     color: var(--theme-status-rejected);
   }
@@ -230,3 +230,60 @@
   width: 100%;
 }
 
+
+.voteDetailsWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.voteStatusWrapper {
+  align-items: center;
+  border: solid 1px var(--theme-proposal-card-additional-text);
+  display: flex;
+  flex-direction: row;
+  margin-right: functions.calc-rem(15);
+  padding: functions.calc-rem(6) functions.calc-rem(9) functions.calc-rem(6) functions.calc-rem(14);
+}
+
+.border {
+  background-color: var(--theme-proposal-card-additional-text);
+  height: functions.calc-rem(24);
+  margin: 0 functions.calc-rem(18);
+  width: functions.calc-rem(1);
+}
+
+.voteStatus {
+  @extend %title-7;
+}
+
+.showDesktop {
+  display: none;
+  @include media.tablet-landscape {
+    display: block;
+  }
+}
+
+.hideDesktop {
+  @include media.tablet-landscape {
+    display: none;
+  }
+}
+
+.bigDeclineIcon {
+  color: var(--theme-proposal-decline-icon-big);
+  margin-left: functions.calc-rem(10);
+}
+
+.bigAcceptIcon {
+  color: var(--theme-proposal-accept-icon-big);
+  margin-left: functions.calc-rem(10);
+}
+
+.smallDeclineIcon {
+  color: var(--theme-proposal-decline-icon-small);
+}
+
+.smallAcceptIcon {
+  color: var(--theme-proposal-accept-icon-small);
+}
