@@ -23,7 +23,6 @@ import numberReduction from 'utils/numberReduction';
 
 import { getTitle } from 'components/ProposalCard/utils';
 import { ButtonProps } from 'components/UILib/Button/Button';
-import { MembersPopup } from 'components/MembersPopup';
 import { fetchProposals } from 'redux/actions';
 import s from './ProposalPage.module.scss';
 import { appConfig, nearConfig } from '../../config';
@@ -159,7 +158,7 @@ export const ProposalPage: React.FC = () => {
   };
 
   const handleReject = () => {
-    NearService.vote(daoId, proposalId, 'Yes');
+    NearService.vote(daoId, proposalId, 'No');
   };
 
   const handleGoBack = () => {
