@@ -260,66 +260,66 @@ export const ProposalPage: React.FC = () => {
           <header className={s.header}>
             <p className={s.title}>{getTitle(proposal)}</p>
 
-            {isMember && (
-              <div className={s.actions}>
-                <Tooltip
-                  className={s.action}
-                  containerClassName={s.membersTooltip}
-                  position="bottom"
-                  triggerElem={
-                    <Action
-                      label="Approve"
-                      disabled={isActionDisabled}
-                      count={proposal.voteYes}
-                      onClick={handleApprove}
-                    />
-                  }
-                >
-                  {acceptUsers.length === 0 && (
-                    <p className={s.tooltipNothing}>No votes yet.</p>
-                  )}
-                  {acceptUsers.slice(-5).map((item) => (
-                    <p key={item} className={s.tooltipMember}>
-                      {item}
-                    </p>
-                  ))}
-                </Tooltip>
+            {/* {isMember && ( */}
+            <div className={s.actions}>
+              <Tooltip
+                className={s.action}
+                containerClassName={s.membersTooltip}
+                position="bottom"
+                triggerElem={
+                  <Action
+                    label="Approve"
+                    disabled={isActionDisabled}
+                    count={proposal.voteYes}
+                    onClick={handleApprove}
+                  />
+                }
+              >
+                {acceptUsers.length === 0 && (
+                  <p className={s.tooltipNothing}>No votes yet.</p>
+                )}
+                {acceptUsers.slice(-5).map((item) => (
+                  <p key={item} className={s.tooltipMember}>
+                    {item}
+                  </p>
+                ))}
+              </Tooltip>
 
-                <Tooltip
-                  className={s.action}
-                  containerClassName={s.membersTooltip}
-                  position="bottom"
-                  triggerElem={
-                    <Action
-                      label="Reject"
-                      disabled={isActionDisabled}
-                      count={proposal.voteNo}
-                      onClick={handleReject}
-                    />
-                  }
-                >
-                  {rejectUsers.length === 0 && (
-                    <p className={s.tooltipNothing}>No votes yet.</p>
-                  )}
-                  {rejectUsers.slice(-5).map((item) => (
-                    <p key={item} className={s.tooltipMember}>
-                      {item}
-                    </p>
-                  ))}
-                </Tooltip>
+              <Tooltip
+                className={s.action}
+                containerClassName={s.membersTooltip}
+                position="bottom"
+                triggerElem={
+                  <Action
+                    label="Reject"
+                    disabled={isActionDisabled}
+                    count={proposal.voteNo}
+                    onClick={handleReject}
+                  />
+                }
+              >
+                {rejectUsers.length === 0 && (
+                  <p className={s.tooltipNothing}>No votes yet.</p>
+                )}
+                {rejectUsers.slice(-5).map((item) => (
+                  <p key={item} className={s.tooltipMember}>
+                    {item}
+                  </p>
+                ))}
+              </Tooltip>
 
-                <div className={s.mobileBlock}>
-                  <div className={s.voteAmount}>
-                    <span className={s.green}>{proposal.voteYes}</span>
-                    &nbsp;approvals
-                  </div>
-                  <div className={s.voteAmount}>
-                    <span className={s.red}>{proposal.voteNo}</span>
-                    &nbsp;rejections
-                  </div>
+              <div className={s.mobileBlock}>
+                <div className={s.voteAmount}>
+                  <span className={s.green}>{proposal.voteYes}</span>
+                  &nbsp;approvals
+                </div>
+                <div className={s.voteAmount}>
+                  <span className={s.red}>{proposal.voteNo}</span>
+                  &nbsp;rejections
                 </div>
               </div>
-            )}
+            </div>
+            {/* )} */}
           </header>
           <div className={cn(s.row, s.topRow)}>
             {/* <p className={s.target}> */}

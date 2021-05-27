@@ -62,7 +62,10 @@ const DaoDetailPopup: React.FC<DaoDetailPopupProps> = ({
                 }}
               >
                 <p className={s.name}>Council</p>
-                <p className={s.value}>{dao?.members.length}</p>
+                <div className={s.valueRow}>
+                  <p className={s.value}>{dao?.members.length}</p>
+                  <SvgIcon icon="info" size={18} className={s.infoIcon} />
+                </div>
               </button>
               <div className={s.dataWrapper}>
                 <div className={s.nameWrapper}>
