@@ -87,7 +87,8 @@
   }
 }
 
-.createAccount {
+.createAccount,
+.oldLink {
   @extend %title-7;
   align-items: center;
   color: var(--theme-text-color);
@@ -98,13 +99,18 @@
   }
 }
 
-.createAccount a {
+.createAccount a,
+.oldLink a {
   color: var(--color-cyan-50);
   text-decoration: none;
 
   &:hover {
     color: var(--color-cyan-70);
   }
+}
+
+.oldLink {
+  margin-top: functions.calc-rem(16);
 }
 
 .copyright {
