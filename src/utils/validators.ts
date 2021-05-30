@@ -3,7 +3,7 @@ const validNameRegexp = /^(?=[0-9a-z])(?=.*[0-9a-z]$)(?!.*__.*)(?!.*--.*)[0-9a-z
 const targetRegExp = /^[0-9a-z][0-9_a-z]{2,}((.sputnikdao)?.near|.testnet)$/;
 
 export const validateCouncil = (value: string): boolean =>
-  !!value && value.indexOf(',') === -1;
+  !!value && value.indexOf(',') === -1 && value.indexOf(' ') === -1;
 
 export const validatePurpose = (value: string): boolean =>
   !!value && value.length >= 10 && value.length <= 280;
