@@ -98,6 +98,13 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    // clear all query params
+    if (window.location.search) {
+      window.location.search = '';
+    }
+  }, []);
+
+  useEffect(() => {
     NearService.init().then(async () => {
       if (!NearService.isAuthorized() && checkIfNearAuthKeysExist()) {
         clearNearAuth();

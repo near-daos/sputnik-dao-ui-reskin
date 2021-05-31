@@ -82,20 +82,9 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
   const accountId = useSelector(accountSelector);
 
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
-  const isNotExpired = votePeriodEnd < new Date();
+  const isExpired = votePeriodEnd < new Date();
 
   const [description, linkEl] = getDescriptionAndLink(proposal.description);
-
-  // const [description, link] = proposal.description.split('/t/');
-  // const linkEl = !!link && (
-  //   <a
-  //     target="_blank"
-  //     href={`https://gov.near.org/t/${link}`}
-  //     rel="nofollow noreferrer"
-  //   >
-  //     {`https://gov.near.org/t/${link}`}
-  //   </a>
-  // );
 
   const getVotingData = (): [boolean, boolean] => {
     let isVoted = false;
@@ -135,7 +124,9 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
       />
       <div className={s.wrapper}>
         <PixelCorner
-          color={cornerColorsMap[proposal.status]}
+          color={
+            cornerColorsMap[isExpired ? ProposalStatus.Reject : proposal.status]
+          }
           className={s.corner}
         />
         <div className={s.header}>
@@ -143,12 +134,16 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
             className={cn(s.statusText, {
               [s.approved]: proposal.status === ProposalStatus.Success,
               [s.rejected]: proposal.status === ProposalStatus.Reject,
-              [s.inProgress]: proposal.status === ProposalStatus.Vote,
+              [s.inProgress]:
+                !isExpired && proposal.status === ProposalStatus.Vote,
               [s.delayed]: proposal.status === ProposalStatus.Delay,
               [s.fail]: proposal.status === ProposalStatus.Fail,
+              [s.rejected]: isExpired,
             })}
           >
-            {proposal.status}
+            {isExpired && proposal.status === ProposalStatus.Vote
+              ? 'Expired'
+              : proposal.status}
           </p>
           <p className={s.name}>
             Proposal ID: <span className={s.value}>{proposal.id}</span>
@@ -195,9 +190,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
             className={s.button}
             onClick={onApprove}
             disabled={
-              isNotExpired ||
-              proposal.status !== ProposalStatus.Vote ||
-              !isMember
+              isExpired || proposal.status !== ProposalStatus.Vote || !isMember
             }
           >
             <>
@@ -208,7 +201,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
             </>
           </Button>
           {proposal.proposer === accountId &&
-            votePeriodEnd < new Date() &&
+            isExpired &&
             proposal.status === ProposalStatus.Vote && (
               <Button
                 size={media.mobile ? 'xs' : 'sm'}
@@ -225,9 +218,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
             variant="outline"
             className={s.button}
             disabled={
-              isNotExpired ||
-              proposal.status !== ProposalStatus.Vote ||
-              !isMember
+              isExpired || proposal.status !== ProposalStatus.Vote || !isMember
             }
             onClick={onReject}
           >

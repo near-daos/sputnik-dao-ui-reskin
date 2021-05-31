@@ -93,12 +93,6 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
     });
   };
 
-  const onSubmitFirstStep = () => {
-    if (!type) return;
-
-    setActiveStep(2);
-  };
-
   const onSubmitSecondStep = () => {
     const fsecondStepErrors = validateSecondStep(values);
 
@@ -218,13 +212,6 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                   />
                 ))}
               </ul>
-              {/* <Button */}
-              {/*  size="lg" */}
-              {/*  className={s.singleButton} */}
-              {/*  onClick={onSubmitFirstStep} */}
-              {/* > */}
-              {/*  Continue */}
-              {/* </Button> */}
             </div>
           )}
           {activeStep === 2 && (

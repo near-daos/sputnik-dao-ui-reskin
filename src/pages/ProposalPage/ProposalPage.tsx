@@ -23,7 +23,6 @@ import numberReduction from 'utils/numberReduction';
 
 import { getTitle } from 'components/ProposalCard/utils';
 import { ButtonProps } from 'components/UILib/Button/Button';
-import { MembersPopup } from 'components/MembersPopup';
 import { fetchProposals } from 'redux/actions';
 import s from './ProposalPage.module.scss';
 import { appConfig, nearConfig } from '../../config';
@@ -93,13 +92,17 @@ const Action: React.FC<ActionProps> = ({ label, count, disabled, onClick }) => {
   );
 };
 
-const getStatus = (status: ProposalStatus) => {
-  switch (status) {
+const getStatus = (proposal: Proposal) => {
+  switch (proposal.status) {
     case ProposalStatus.Success:
       return 'success';
     case ProposalStatus.Reject:
       return 'error';
     case ProposalStatus.Vote:
+      if (convertDuration(proposal.votePeriodEnd) < new Date()) {
+        return 'error';
+      }
+
       return 'inProgress';
     case ProposalStatus.Fail:
       return 'error';
@@ -109,13 +112,17 @@ const getStatus = (status: ProposalStatus) => {
   }
 };
 
-const getStatusText = (status: ProposalStatus): string => {
-  switch (status) {
+const getStatusText = (proposal: Proposal): string => {
+  switch (proposal.status) {
     case ProposalStatus.Success:
       return 'Approved';
     case ProposalStatus.Reject:
       return 'Rejected';
     case ProposalStatus.Vote:
+      if (convertDuration(proposal.votePeriodEnd) < new Date()) {
+        return 'Expired';
+      }
+
       return 'Voting is in progress';
     case ProposalStatus.Delay:
       return 'Delayed';
@@ -160,7 +167,7 @@ export const ProposalPage: React.FC = () => {
   };
 
   const handleReject = () => {
-    NearService.vote(daoId, proposalId, 'Yes');
+    NearService.vote(daoId, proposalId, 'No');
   };
 
   const handleGoBack = () => {
@@ -273,8 +280,8 @@ export const ProposalPage: React.FC = () => {
 
         <Chip
           className={s.status}
-          label={getStatusText(proposal.status)}
-          color={getStatus(proposal.status)}
+          label={getStatusText(proposal)}
+          color={getStatus(proposal)}
           active
         />
 

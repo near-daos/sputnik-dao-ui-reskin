@@ -1,5 +1,6 @@
 import { awsConfig } from 'config';
 import { awsS3 } from 'services/AwsUploader/AwsUploader';
+import { Proposal, ProposalStatus } from 'types/proposal';
 
 /* eslint-disable no-plusplus */
 export const convertDuration = (duration: number): Date => {
@@ -70,3 +71,24 @@ export const clearNearAuth = (): void => {
     }
   });
 };
+
+export const countProposalsByStatus = (
+  proposals: Proposal[],
+  status: ProposalStatus,
+): number =>
+  proposals.filter(
+    (item) =>
+      convertDuration(item.votePeriodEnd) >= new Date() &&
+      item.status === status,
+  ).length;
+
+export const countFailedProposals = (proposals: Proposal[]): number =>
+  proposals.filter(
+    (item) =>
+      convertDuration(item.votePeriodEnd) < new Date() ||
+      [
+        ProposalStatus.Delay,
+        ProposalStatus.Fail,
+        ProposalStatus.Reject,
+      ].includes(item.status),
+  ).length;

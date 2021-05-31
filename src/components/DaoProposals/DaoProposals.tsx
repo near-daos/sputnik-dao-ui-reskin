@@ -11,19 +11,19 @@ import { DaoItem } from 'types/dao';
 import { NearService } from 'services/NearService';
 import { useSelector } from 'react-redux';
 import { accountSelector, proposalsLoadingSelector } from 'redux/selectors';
+import {
+  convertDuration,
+  countFailedProposals,
+  countProposalsByStatus,
+} from 'utils';
 import s from './DaoProposals.module.scss';
 
 export type ProposalFilterOption = {
   label: string;
   color: ChipProps['color'];
   count: number;
-  value: ProposalStatus | null;
+  value: 'Voting' | 'Approved' | 'Failed' | null;
 };
-
-const countProposalsByStatus = (
-  proposals: Proposal[],
-  status: ProposalStatus,
-): number => proposals.filter((item) => item.status === status).length;
 
 const getFilterOptions = (proposals: Proposal[]): ProposalFilterOption[] => [
   {
@@ -36,31 +36,19 @@ const getFilterOptions = (proposals: Proposal[]): ProposalFilterOption[] => [
     label: 'Voting is in progress',
     color: 'inProgress',
     count: countProposalsByStatus(proposals, ProposalStatus.Vote),
-    value: ProposalStatus.Vote,
+    value: 'Voting',
   },
-  // {
-  //   label: 'Delayed',
-  //   color: 'warning',
-  //   count: countProposalsByStatus(proposals, ProposalStatus.Delay),
-  //   value: ProposalStatus.Delay,
-  // },
   {
     label: 'Approved',
     color: 'success',
     count: countProposalsByStatus(proposals, ProposalStatus.Success),
-    value: ProposalStatus.Success,
-  },
-  {
-    label: 'Rejected/expired',
-    color: 'error',
-    count: countProposalsByStatus(proposals, ProposalStatus.Reject),
-    value: ProposalStatus.Reject,
+    value: 'Approved',
   },
   {
     label: 'Failed',
     color: 'failed',
-    count: countProposalsByStatus(proposals, ProposalStatus.Fail),
-    value: ProposalStatus.Fail,
+    count: countFailedProposals(proposals),
+    value: 'Failed',
   },
 ];
 
@@ -115,7 +103,28 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
     }
 
     setFilteredProposals(
-      proposals.filter((proposal) => proposal.status === filters.value),
+      proposals.filter((proposal) => {
+        switch (filters.value) {
+          case 'Approved':
+            return proposal.status === ProposalStatus.Success;
+          case 'Voting':
+            return (
+              proposal.status === ProposalStatus.Vote &&
+              convertDuration(proposal.votePeriodEnd) >= new Date()
+            );
+          case 'Failed':
+            return (
+              convertDuration(proposal.votePeriodEnd) < new Date() ||
+              [
+                ProposalStatus.Delay,
+                ProposalStatus.Fail,
+                ProposalStatus.Reject,
+              ].includes(proposal.status)
+            );
+          default:
+            return true;
+        }
+      }),
     );
   }, [filters, proposals]);
 

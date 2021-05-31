@@ -14,11 +14,6 @@ export interface VotedMembersPopupProps {
   onClose?: () => void;
 }
 
-type Member = {
-  name: string;
-  greyscale: number;
-};
-
 const VotedMembersPopup: React.FC<VotedMembersPopupProps> = ({
   className,
   name,
