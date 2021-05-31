@@ -208,7 +208,7 @@ export const ProposalPage: React.FC = () => {
   const isVoteReject = (name: string): boolean =>
     rejectUsers.findIndex((item) => item === name) !== -1;
 
-  const isMember = dao?.members.includes(accountId || '');
+  // const isMember = dao?.members.includes(accountId || '');
 
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
   const isNotExpired = votePeriodEnd < new Date();
@@ -222,6 +222,28 @@ export const ProposalPage: React.FC = () => {
   const [description, linkEl] = getDescriptionAndLink(proposal.description);
 
   const councilMembers = dao?.members.length || 0;
+
+  const getVotingData = (): [boolean, boolean] => {
+    let isVoted = false;
+    let vote = false;
+
+    Object.keys(proposal.votes).forEach((key) => {
+      const user = key
+        .split(/(?=[A-Z])/)
+        .join('.')
+        .toLowerCase();
+
+      if (user === accountId) {
+        isVoted = true;
+      }
+
+      vote = proposal.votes[key] === 'Yes';
+    });
+
+    return [isVoted, vote];
+  };
+
+  const [isVoted, vote] = getVotingData();
 
   return (
     <section className={s.root}>
@@ -260,64 +282,157 @@ export const ProposalPage: React.FC = () => {
             <p className={s.title}>{getTitle(proposal)}</p>
 
             {/* {isMember && ( */}
-            <div className={s.actions}>
-              <Tooltip
-                className={s.action}
-                containerClassName={s.membersTooltip}
-                position="bottom"
-                triggerElem={
-                  <Action
-                    label="Approve"
-                    disabled={isActionDisabled}
-                    count={proposal.voteYes}
-                    onClick={handleApprove}
-                  />
-                }
-              >
-                {acceptUsers.length === 0 && (
-                  <p className={s.tooltipNothing}>No votes yet.</p>
-                )}
-                {acceptUsers.slice(-5).map((item) => (
-                  <p key={item} className={s.tooltipMember}>
-                    {item}
-                  </p>
-                ))}
-              </Tooltip>
 
-              <Tooltip
-                className={s.action}
-                containerClassName={s.membersTooltip}
-                position="bottom"
-                triggerElem={
-                  <Action
-                    label="Reject"
-                    disabled={isActionDisabled}
-                    count={proposal.voteNo}
-                    onClick={handleReject}
-                  />
-                }
-              >
-                {rejectUsers.length === 0 && (
-                  <p className={s.tooltipNothing}>No votes yet.</p>
-                )}
-                {rejectUsers.slice(-5).map((item) => (
-                  <p key={item} className={s.tooltipMember}>
-                    {item}
-                  </p>
-                ))}
-              </Tooltip>
+            {!isVoted && (
+              <div className={s.actions}>
+                <Tooltip
+                  className={s.action}
+                  containerClassName={s.membersTooltip}
+                  position="bottom"
+                  triggerElem={
+                    <Action
+                      label="Approve"
+                      disabled={isActionDisabled}
+                      count={proposal.voteYes}
+                      onClick={handleApprove}
+                    />
+                  }
+                >
+                  {acceptUsers.length === 0 && (
+                    <p className={s.tooltipNothing}>No votes yet.</p>
+                  )}
+                  {acceptUsers.slice(-5).map((item) => (
+                    <p key={item} className={s.tooltipMember}>
+                      {item}
+                    </p>
+                  ))}
+                </Tooltip>
 
-              <div className={s.mobileBlock}>
-                <div className={s.voteAmount}>
-                  <span className={s.green}>{proposal.voteYes}</span>
-                  &nbsp;approvals
-                </div>
-                <div className={s.voteAmount}>
-                  <span className={s.red}>{proposal.voteNo}</span>
-                  &nbsp;rejections
+                <Tooltip
+                  className={s.action}
+                  containerClassName={s.membersTooltip}
+                  position="bottom"
+                  triggerElem={
+                    <Action
+                      label="Reject"
+                      disabled={isActionDisabled}
+                      count={proposal.voteNo}
+                      onClick={handleReject}
+                    />
+                  }
+                >
+                  {rejectUsers.length === 0 && (
+                    <p className={s.tooltipNothing}>No votes yet.</p>
+                  )}
+                  {rejectUsers.slice(-5).map((item) => (
+                    <p key={item} className={s.tooltipMember}>
+                      {item}
+                    </p>
+                  ))}
+                </Tooltip>
+
+                <div className={s.mobileBlock}>
+                  <div className={s.voteAmount}>
+                    <span className={s.green}>{proposal.voteYes}</span>
+                    &nbsp;approvals
+                  </div>
+                  <div className={s.voteAmount}>
+                    <span className={s.red}>{proposal.voteNo}</span>
+                    &nbsp;rejections
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+            {isVoted && (
+              <div className={s.voteDetailsWrapper}>
+                <div className={s.voteStatusWrapper}>
+                  {vote ? (
+                    <>
+                      <p className={cn(s.voteStatus)}>
+                        You have approved this proposal
+                      </p>
+                      <SvgIcon
+                        icon="accept"
+                        size={26}
+                        className={s.bigAcceptIcon}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <p className={cn(s.voteStatus)}>
+                        You have rejected this proposal
+                      </p>
+                      <SvgIcon
+                        icon="decline"
+                        size={26}
+                        className={s.bigDeclineIcon}
+                      />
+                    </>
+                  )}
+                </div>
+                <div className={s.voteResultWrapper}>
+                  <Tooltip
+                    containerClassName={s.membersTooltip}
+                    position="bottom"
+                    triggerElem={
+                      <>
+                        <SvgIcon
+                          icon="accept"
+                          size={18}
+                          className={s.smallAcceptIcon}
+                        />
+                        {numberReduction(proposal.voteYes)}
+                      </>
+                    }
+                  >
+                    {acceptUsers.length === 0 && (
+                      <p className={s.tooltipNothing}>No votes yet.</p>
+                    )}
+                    {acceptUsers.slice(-5).map((item) => (
+                      <p key={item} className={s.tooltipMember}>
+                        {item}
+                      </p>
+                    ))}
+                  </Tooltip>
+                  <div className={s.border} />
+                  <Tooltip
+                    containerClassName={s.membersTooltip}
+                    position="bottom"
+                    triggerElem={
+                      <>
+                        <SvgIcon
+                          icon="decline"
+                          size={18}
+                          className={s.smallDeclineIcon}
+                        />
+                        {numberReduction(proposal.voteNo)}
+                      </>
+                    }
+                  >
+                    {rejectUsers.length === 0 && (
+                      <p className={s.tooltipNothing}>No votes yet.</p>
+                    )}
+                    {rejectUsers.slice(-5).map((item) => (
+                      <p key={item} className={s.tooltipMember}>
+                        {item}
+                      </p>
+                    ))}
+                  </Tooltip>
+                </div>
+
+                <div className={s.mobileResults}>
+                  <div className={s.voteAmount}>
+                    <span className={s.green}>{proposal.voteYes}</span>
+                    &nbsp;approvals
+                  </div>
+                  <div className={s.voteAmount}>
+                    <span className={s.red}>{proposal.voteNo}</span>
+                    &nbsp;rejections
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* )} */}
           </header>
           <div className={cn(s.row, s.topRow)}>
