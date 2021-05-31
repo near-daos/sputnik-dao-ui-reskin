@@ -92,13 +92,17 @@ const Action: React.FC<ActionProps> = ({ label, count, disabled, onClick }) => {
   );
 };
 
-const getStatus = (status: ProposalStatus) => {
-  switch (status) {
+const getStatus = (proposal: Proposal) => {
+  switch (proposal.status) {
     case ProposalStatus.Success:
       return 'success';
     case ProposalStatus.Reject:
       return 'error';
     case ProposalStatus.Vote:
+      if (convertDuration(proposal.votePeriodEnd) < new Date()) {
+        return 'error';
+      }
+
       return 'inProgress';
     case ProposalStatus.Fail:
       return 'error';
@@ -108,13 +112,17 @@ const getStatus = (status: ProposalStatus) => {
   }
 };
 
-const getStatusText = (status: ProposalStatus): string => {
-  switch (status) {
+const getStatusText = (proposal: Proposal): string => {
+  switch (proposal.status) {
     case ProposalStatus.Success:
       return 'Approved';
     case ProposalStatus.Reject:
       return 'Rejected';
     case ProposalStatus.Vote:
+      if (convertDuration(proposal.votePeriodEnd) < new Date()) {
+        return 'Expired';
+      }
+
       return 'Voting is in progress';
     case ProposalStatus.Delay:
       return 'Delayed';
@@ -272,8 +280,8 @@ export const ProposalPage: React.FC = () => {
 
         <Chip
           className={s.status}
-          label={getStatusText(proposal.status)}
-          color={getStatus(proposal.status)}
+          label={getStatusText(proposal)}
+          color={getStatus(proposal)}
           active
         />
 
