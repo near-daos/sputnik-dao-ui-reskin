@@ -190,7 +190,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
             className={s.button}
             onClick={onApprove}
             disabled={
-              !isExpired || proposal.status !== ProposalStatus.Vote || !isMember
+              isExpired || proposal.status !== ProposalStatus.Vote || !isMember
             }
           >
             <>
@@ -201,7 +201,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
             </>
           </Button>
           {proposal.proposer === accountId &&
-            votePeriodEnd < new Date() &&
+            isExpired &&
             proposal.status === ProposalStatus.Vote && (
               <Button
                 size={media.mobile ? 'xs' : 'sm'}
@@ -218,7 +218,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
             variant="outline"
             className={s.button}
             disabled={
-              !isExpired || proposal.status !== ProposalStatus.Vote || !isMember
+              isExpired || proposal.status !== ProposalStatus.Vote || !isMember
             }
             onClick={onReject}
           >
