@@ -18,6 +18,7 @@ import {
   ProposalType,
 } from 'types/proposal';
 import camelcaseKeys from 'camelcase-keys';
+import { isNotNull } from 'types/guards';
 import { ContractPool } from './ContractPool';
 
 export const parseForumUrl = (url: string): string => {
@@ -177,86 +178,67 @@ class NearService {
           this.getVotePeriod(daoId),
           this.getNumProposals(daoId),
           this.getCouncil(daoId),
-        ]),
+        ]).catch(() => null),
       ),
     );
 
-    return list.map(
-      (daoId, index): DaoItem => ({
-        id: daoId,
-        amount: details[index][0],
-        bond: details[index][1],
-        purpose: details[index][2],
-        votePeriod: details[index][3],
-        numberOfProposals: details[index][4],
-        numberOfMembers: details[index][5].length,
-        members: details[index][5],
-      }),
-    );
+    return list
+      .map((daoId, index): DaoItem | null => {
+        const detailsItem = details[index];
+
+        if (isNotNull(detailsItem)) {
+          return {
+            id: daoId,
+            amount: detailsItem[0],
+            bond: detailsItem[1],
+            purpose: detailsItem[2],
+            votePeriod: detailsItem[3],
+            numberOfProposals: detailsItem[4],
+            numberOfMembers: detailsItem[5].length,
+            members: detailsItem[5],
+          };
+        }
+
+        return null;
+      })
+      .filter(<(item: DaoItem | null) => item is DaoItem>(
+        ((item) => isNotNull(item))
+      ));
   }
 
   public async getDaoState(contractId: string): Promise<AccountState> {
-    try {
-      const account = await this.near.account(contractId);
+    const account = await this.near.account(contractId);
 
-      return account.state();
-    } catch (err) {
-      return {
-        amount: '0',
-        code_hash: '',
-        storage_usage: 0,
-        locked: '0',
-      };
-    }
+    return account.state();
   }
 
   public async getDaoAmount(contractId: string): Promise<string> {
-    try {
-      const state = await this.getDaoState(contractId);
-      const amountYokto = new Decimal(state.amount);
+    const state = await this.getDaoState(contractId);
+    const amountYokto = new Decimal(state.amount);
 
-      return amountYokto.div(yoktoNear).toFixed(2);
-    } catch (err) {
-      return '0';
-    }
+    return amountYokto.div(yoktoNear).toFixed(2);
   }
 
   public async getBond(contractId: string): Promise<string> {
-    try {
-      const bond = await this.contractPool.get(contractId).get_bond();
+    const bond = await this.contractPool.get(contractId).get_bond();
 
-      return new Decimal(bond.toString()).div(yoktoNear).toString();
-    } catch (err) {
-      return '0';
-    }
+    return new Decimal(bond.toString()).div(yoktoNear).toString();
   }
 
   public async getVotePeriod(contractId: string): Promise<string> {
-    try {
-      const votePeriod = await this.contractPool
-        .get(contractId)
-        .get_vote_period();
+    const votePeriod = await this.contractPool
+      .get(contractId)
+      .get_vote_period();
 
-      return timestampToReadable(votePeriod);
-    } catch (err) {
-      return '0';
-    }
+    return timestampToReadable(votePeriod);
   }
 
   public async getNumProposals(contractId: string): Promise<number> {
-    try {
-      return await this.contractPool.get(contractId).get_num_proposals();
-    } catch (err) {
-      return 0;
-    }
+    return this.contractPool.get(contractId).get_num_proposals();
   }
 
   public async getPurpose(contractId: string): Promise<string> {
-    try {
-      return await this.contractPool.get(contractId).get_purpose();
-    } catch (err) {
-      return '';
-    }
+    return this.contractPool.get(contractId).get_purpose();
   }
 
   public async getProposals(
@@ -264,57 +246,45 @@ class NearService {
     limit: number,
     index = 0,
   ): Promise<Proposal[]> {
-    try {
-      const proposals = await this.contractPool
-        .get(contractId)
-        .get_proposals({ from_index: index, limit });
+    const proposals = await this.contractPool
+      .get(contractId)
+      .get_proposals({ from_index: index, limit });
 
-      return camelcaseKeys(proposals, { deep: true }).map(
-        (item: ProposalRaw, itemIndex: number) => {
-          if (item.kind.type === ProposalType.Payout) {
-            const amountYokto = new Decimal(item.kind.amount);
+    return camelcaseKeys(proposals, { deep: true }).map(
+      (item: ProposalRaw, itemIndex: number) => {
+        if (item.kind.type === ProposalType.Payout) {
+          const amountYokto = new Decimal(item.kind.amount);
 
-            amountYokto.div(yoktoNear).toFixed(2);
-
-            return {
-              ...item,
-              kind: {
-                type: ProposalType.Payout,
-                amount: amountYokto.div(yoktoNear).toFixed(2),
-              },
-              daoId: contractId,
-              id: itemIndex,
-            };
-          }
+          amountYokto.div(yoktoNear).toFixed(2);
 
           return {
             ...item,
+            kind: {
+              type: ProposalType.Payout,
+              amount: amountYokto.div(yoktoNear).toFixed(2),
+            },
             daoId: contractId,
             id: itemIndex,
           };
-        },
-      );
-    } catch (err) {
-      return [];
-    }
+        }
+
+        return {
+          ...item,
+          daoId: contractId,
+          id: itemIndex,
+        };
+      },
+    );
   }
 
   public async getAllProposals(contractId: string): Promise<Proposal[]> {
-    try {
-      const limit = await this.getNumProposals(contractId);
+    const limit = await this.getNumProposals(contractId);
 
-      return await this.getProposals(contractId, limit);
-    } catch (err) {
-      return [];
-    }
+    return this.getProposals(contractId, limit);
   }
 
   public async getCouncil(contractId: string): Promise<string[]> {
-    try {
-      return await this.contractPool.get(contractId).get_council();
-    } catch (err) {
-      return [];
-    }
+    return this.contractPool.get(contractId).get_council();
   }
 
   public addProposal(contractId: string): Promise<void> {
