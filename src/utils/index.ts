@@ -72,20 +72,21 @@ export const clearNearAuth = (): void => {
   });
 };
 
-export const countProposalsByStatus = (
-  proposals: Proposal[],
-  status: ProposalStatus,
-): number =>
+export const countProposalsInProgress = (proposals: Proposal[]): number =>
   proposals.filter(
     (item) =>
       convertDuration(item.votePeriodEnd) >= new Date() &&
-      item.status === status,
+      item.status === ProposalStatus.Vote,
   ).length;
+
+export const countSuccessProposals = (proposals: Proposal[]): number =>
+  proposals.filter((item) => item.status === ProposalStatus.Success).length;
 
 export const countFailedProposals = (proposals: Proposal[]): number =>
   proposals.filter(
     (item) =>
-      convertDuration(item.votePeriodEnd) < new Date() ||
+      (convertDuration(item.votePeriodEnd) < new Date() &&
+        item.status === ProposalStatus.Vote) ||
       [
         ProposalStatus.Delay,
         ProposalStatus.Fail,

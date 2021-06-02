@@ -82,7 +82,8 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
   const accountId = useSelector(accountSelector);
 
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
-  const isExpired = votePeriodEnd < new Date();
+  const isExpired =
+    votePeriodEnd < new Date() && proposal.status === ProposalStatus.Vote;
 
   const [description, linkEl] = getDescriptionAndLink(proposal.description);
 
@@ -116,6 +117,8 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
     [ProposalStatus.Fail]: PixelCornerColors.Pink,
   };
 
+  console.log('proposal.status: ', proposal.id, proposal.status);
+
   return (
     <div className={cn(s.root, className)}>
       <Link
@@ -141,9 +144,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
               [s.rejected]: isExpired,
             })}
           >
-            {isExpired && proposal.status === ProposalStatus.Vote
-              ? 'Expired'
-              : proposal.status}
+            {isExpired ? 'Expired' : proposal.status}
           </p>
           <p className={s.name}>
             Proposal ID: <span className={s.value}>{proposal.id}</span>
@@ -200,18 +201,16 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
               </span>
             </>
           </Button>
-          {proposal.proposer === accountId &&
-            isExpired &&
-            proposal.status === ProposalStatus.Vote && (
-              <Button
-                size={media.mobile ? 'xs' : 'sm'}
-                variant="outline"
-                className={s.button}
-                onClick={onFinalize}
-              >
-                Finalise
-              </Button>
-            )}
+          {proposal.proposer === accountId && isExpired && (
+            <Button
+              size={media.mobile ? 'xs' : 'sm'}
+              variant="outline"
+              className={s.button}
+              onClick={onFinalize}
+            >
+              Finalise
+            </Button>
+          )}
 
           <Button
             size={media.mobile ? 'xs' : 'sm'}
