@@ -4,26 +4,29 @@ import cn from 'classnames';
 import SearchBar from 'components/SearchBar';
 import { ProposalCard } from 'components/ProposalCard';
 import { Chip, ChipProps, Loader, Select } from 'components/UILib';
-import { Proposal, ProposalStatus } from 'types/proposal';
+import { Proposal } from 'types/proposal';
 
 import { useLocation } from 'react-router-dom';
 import { DaoItem } from 'types/dao';
 import { NearService } from 'services/NearService';
 import { useSelector } from 'react-redux';
 import { accountSelector, proposalsLoadingSelector } from 'redux/selectors';
+import {
+  countFailedProposals,
+  countInVotingProposals,
+  countApprovedProposals,
+  isFailedProposal,
+  isInVotingProposal,
+  isApprovedProposal,
+} from 'utils';
 import s from './DaoProposals.module.scss';
 
 export type ProposalFilterOption = {
   label: string;
   color: ChipProps['color'];
   count: number;
-  value: ProposalStatus | null;
+  value: 'Voting' | 'Approved' | 'Failed' | null;
 };
-
-const countProposalsByStatus = (
-  proposals: Proposal[],
-  status: ProposalStatus,
-): number => proposals.filter((item) => item.status === status).length;
 
 const getFilterOptions = (proposals: Proposal[]): ProposalFilterOption[] => [
   {
@@ -35,32 +38,20 @@ const getFilterOptions = (proposals: Proposal[]): ProposalFilterOption[] => [
   {
     label: 'Voting is in progress',
     color: 'inProgress',
-    count: countProposalsByStatus(proposals, ProposalStatus.Vote),
-    value: ProposalStatus.Vote,
+    count: countInVotingProposals(proposals),
+    value: 'Voting',
   },
-  // {
-  //   label: 'Delayed',
-  //   color: 'warning',
-  //   count: countProposalsByStatus(proposals, ProposalStatus.Delay),
-  //   value: ProposalStatus.Delay,
-  // },
   {
     label: 'Approved',
     color: 'success',
-    count: countProposalsByStatus(proposals, ProposalStatus.Success),
-    value: ProposalStatus.Success,
-  },
-  {
-    label: 'Rejected/expired',
-    color: 'error',
-    count: countProposalsByStatus(proposals, ProposalStatus.Reject),
-    value: ProposalStatus.Reject,
+    count: countApprovedProposals(proposals),
+    value: 'Approved',
   },
   {
     label: 'Failed',
     color: 'failed',
-    count: countProposalsByStatus(proposals, ProposalStatus.Fail),
-    value: ProposalStatus.Fail,
+    count: countFailedProposals(proposals),
+    value: 'Failed',
   },
 ];
 
@@ -115,7 +106,18 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
     }
 
     setFilteredProposals(
-      proposals.filter((proposal) => proposal.status === filters.value),
+      proposals.filter((proposal) => {
+        switch (filters.value) {
+          case 'Approved':
+            return isApprovedProposal(proposal);
+          case 'Voting':
+            return isInVotingProposal(proposal);
+          case 'Failed':
+            return isFailedProposal(proposal);
+          default:
+            return true;
+        }
+      }),
     );
   }, [filters, proposals]);
 

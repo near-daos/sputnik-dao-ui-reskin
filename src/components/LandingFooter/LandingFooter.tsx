@@ -17,13 +17,22 @@ const LandingFooter: React.FC<LandingFooterProps> = ({ className }) => {
   return (
     <footer className={cn(s.root, className)}>
       <SocialMedias className={s.socialMedia} />
-      <p className={s.createAccount}>
-        Need a NEAR account? Create one&nbsp;
-        <a href="https://faucet.paras.id/" target="_blank" rel="noreferrer">
-          here
-        </a>
-        .
-      </p>
+      <div>
+        <p className={s.createAccount}>
+          Need a NEAR account? Create one&nbsp;
+          <a href="https://faucet.paras.id/" target="_blank" rel="noreferrer">
+            here
+          </a>
+          .
+        </p>
+        <p className={s.oldLink}>
+          Looking for the&nbsp;
+          <a href="https://old.sputnik.fund/" target="_blank" rel="noreferrer">
+            old.sputnik.fund
+          </a>
+          &nbsp; interface?
+        </p>
+      </div>
       <form
         className={s.form}
         action="https://42labs.us14.list-manage.com/subscribe/post?u=faedf5dec8739fb92e05b4131&id=14e8024c6c"

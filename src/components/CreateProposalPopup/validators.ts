@@ -1,4 +1,3 @@
-import { URLTest } from 'services/NearService/NearService';
 import { ProposalType } from 'types/proposal';
 import {
   validateDescription,
