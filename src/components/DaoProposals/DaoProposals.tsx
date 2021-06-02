@@ -14,7 +14,8 @@ import { accountSelector, proposalsLoadingSelector } from 'redux/selectors';
 import {
   convertDuration,
   countFailedProposals,
-  countProposalsByStatus,
+  countProposalsInProgress,
+  countSuccessProposals,
 } from 'utils';
 import s from './DaoProposals.module.scss';
 
@@ -35,13 +36,13 @@ const getFilterOptions = (proposals: Proposal[]): ProposalFilterOption[] => [
   {
     label: 'Voting is in progress',
     color: 'inProgress',
-    count: countProposalsByStatus(proposals, ProposalStatus.Vote),
+    count: countProposalsInProgress(proposals),
     value: 'Voting',
   },
   {
     label: 'Approved',
     color: 'success',
-    count: countProposalsByStatus(proposals, ProposalStatus.Success),
+    count: countSuccessProposals(proposals),
     value: 'Approved',
   },
   {
