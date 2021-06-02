@@ -58,6 +58,14 @@ const LandingMobileMenu: React.FC<LandingMobileMenuProps> = ({
               <span>{name}</span>
             </button>
           ))}
+          <a
+            href="https://medium.com/sputnikdao"
+            target="_blank"
+            className={s.menuLink}
+            rel="noreferrer"
+          >
+            Blog
+          </a>
         </nav>
         <Button className={s.connectButton} size="sm" onClick={handleLaunchApp}>
           Launch App
