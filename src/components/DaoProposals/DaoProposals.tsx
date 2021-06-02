@@ -4,7 +4,7 @@ import cn from 'classnames';
 import SearchBar from 'components/SearchBar';
 import { ProposalCard } from 'components/ProposalCard';
 import { Chip, ChipProps, Loader, Select } from 'components/UILib';
-import { Proposal, ProposalStatus } from 'types/proposal';
+import { Proposal } from 'types/proposal';
 
 import { useLocation } from 'react-router-dom';
 import { DaoItem } from 'types/dao';
@@ -12,10 +12,12 @@ import { NearService } from 'services/NearService';
 import { useSelector } from 'react-redux';
 import { accountSelector, proposalsLoadingSelector } from 'redux/selectors';
 import {
-  convertDuration,
   countFailedProposals,
-  countProposalsInProgress,
-  countSuccessProposals,
+  countInVotingProposals,
+  countApprovedProposals,
+  isFailedProposal,
+  isInVotingProposal,
+  isApprovedProposal,
 } from 'utils';
 import s from './DaoProposals.module.scss';
 
@@ -36,13 +38,13 @@ const getFilterOptions = (proposals: Proposal[]): ProposalFilterOption[] => [
   {
     label: 'Voting is in progress',
     color: 'inProgress',
-    count: countProposalsInProgress(proposals),
+    count: countInVotingProposals(proposals),
     value: 'Voting',
   },
   {
     label: 'Approved',
     color: 'success',
-    count: countSuccessProposals(proposals),
+    count: countApprovedProposals(proposals),
     value: 'Approved',
   },
   {
@@ -107,21 +109,11 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
       proposals.filter((proposal) => {
         switch (filters.value) {
           case 'Approved':
-            return proposal.status === ProposalStatus.Success;
+            return isApprovedProposal(proposal);
           case 'Voting':
-            return (
-              proposal.status === ProposalStatus.Vote &&
-              convertDuration(proposal.votePeriodEnd) >= new Date()
-            );
+            return isInVotingProposal(proposal);
           case 'Failed':
-            return (
-              convertDuration(proposal.votePeriodEnd) < new Date() ||
-              [
-                ProposalStatus.Delay,
-                ProposalStatus.Fail,
-                ProposalStatus.Reject,
-              ].includes(proposal.status)
-            );
+            return isFailedProposal(proposal);
           default:
             return true;
         }

@@ -72,24 +72,25 @@ export const clearNearAuth = (): void => {
   });
 };
 
-export const countProposalsInProgress = (proposals: Proposal[]): number =>
-  proposals.filter(
-    (item) =>
-      convertDuration(item.votePeriodEnd) >= new Date() &&
-      item.status === ProposalStatus.Vote,
-  ).length;
+export const isFailedProposal = (proposal: Proposal): boolean =>
+  (convertDuration(proposal.votePeriodEnd) < new Date() &&
+    proposal.status === ProposalStatus.Vote) ||
+  [ProposalStatus.Delay, ProposalStatus.Fail, ProposalStatus.Reject].includes(
+    proposal.status,
+  );
 
-export const countSuccessProposals = (proposals: Proposal[]): number =>
-  proposals.filter((item) => item.status === ProposalStatus.Success).length;
+export const isInVotingProposal = (proposal: Proposal): boolean =>
+  convertDuration(proposal.votePeriodEnd) >= new Date() &&
+  proposal.status === ProposalStatus.Vote;
+
+export const isApprovedProposal = (proposal: Proposal): boolean =>
+  proposal.status === ProposalStatus.Success;
+
+export const countInVotingProposals = (proposals: Proposal[]): number =>
+  proposals.filter(isInVotingProposal).length;
+
+export const countApprovedProposals = (proposals: Proposal[]): number =>
+  proposals.filter(isApprovedProposal).length;
 
 export const countFailedProposals = (proposals: Proposal[]): number =>
-  proposals.filter(
-    (item) =>
-      (convertDuration(item.votePeriodEnd) < new Date() &&
-        item.status === ProposalStatus.Vote) ||
-      [
-        ProposalStatus.Delay,
-        ProposalStatus.Fail,
-        ProposalStatus.Reject,
-      ].includes(item.status),
-  ).length;
+  proposals.filter(isFailedProposal).length;

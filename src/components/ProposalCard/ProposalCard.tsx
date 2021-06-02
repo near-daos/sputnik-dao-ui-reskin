@@ -117,8 +117,6 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
     [ProposalStatus.Fail]: PixelCornerColors.Pink,
   };
 
-  console.log('proposal.status: ', proposal.id, proposal.status);
-
   return (
     <div className={cn(s.root, className)}>
       <Link
