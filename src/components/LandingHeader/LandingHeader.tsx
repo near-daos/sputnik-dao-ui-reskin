@@ -60,6 +60,14 @@ const LandingHeader: React.FC<LandingHeaderProps> = ({
               <span>{name}</span>
             </button>
           ))}
+          <a
+            href="https://medium.com/sputnikdao"
+            target="_blank"
+            className={s.menuLink}
+            rel="noreferrer"
+          >
+            Blog
+          </a>
         </nav>
         <Button
           onClick={() => {
