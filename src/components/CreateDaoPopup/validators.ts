@@ -16,7 +16,7 @@ export const validateFirstStep = (
   const errors: CreateDaoErrors = {};
 
   if (!validateCouncil(values.council)) {
-    errors.council = 'Please enter correct list of accounts';
+    errors.council = 'Please enter one account per line and remove any spaces.';
   }
 
   if (!validatePurpose(values.purpose)) {
