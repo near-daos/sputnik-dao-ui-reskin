@@ -135,11 +135,15 @@ class NearService {
   public async createProposal(params: CreateProposalParams): Promise<any> {
     const data: any = {
       target: params.target,
-      description: `${params.description} ---${params.link}`.trim(),
+      description: params.description,
       kind: {
         type: params.kind.type,
       },
     };
+
+    if (params.link) {
+      data.description = `${params.description} ---${params.link}`.trim();
+    }
 
     if (params.kind.type === ProposalType.Payout) {
       const amount = new Decimal(params.kind.amount);
