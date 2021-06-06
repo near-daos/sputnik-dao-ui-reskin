@@ -38,8 +38,6 @@ export const DaoPage: React.FC = () => {
   const [isShowDaoDetailPopup, setIsShowDaoDetailPopup] = useState(false);
 
   const account = useSelector(accountSelector);
-  const daoList = useSelector(daoListSelector);
-  const reversDaoList = daoList.slice().reverse();
   const dao = useSelector<StoreState, DaoItem | undefined>((state) =>
     daoSelector(state, params.id),
   );
@@ -73,34 +71,8 @@ export const DaoPage: React.FC = () => {
     setIsShowCreateProposal(false);
   };
 
-  // const metaURL = document.querySelector('meta[property="og:url"]');
-  // const metaTitle = document.querySelector('meta[property="og:title"]');
-  // const metaDescription = document.querySelector(
-  //   'meta[property="og:description"]',
-  // );
-  // const metaImage = document.querySelector('meta[property="og:image"]');
-  //
-  // if (metaURL) {
-  //   metaURL.setAttribute('content', document.location.href);
-  // }
-  //
-  // if (metaTitle && daoName) {
-  //   metaTitle.setAttribute('content', daoName);
-  // }
-  //
-  // if (metaDescription) {
-  //   metaDescription.setAttribute('content', 'some description');
-  // }
-  //
-  // if (metaImage) {
-  //   metaImage.setAttribute('content', `${appConfig.logoPath}${dao?.id}.png`);
-  // }
-
   return (
     <section className={s.root}>
-      <section className={s.slider}>
-        <SmallDaoSlider daos={reversDaoList} activeDaoId={params.id} />
-      </section>
       <div className={s.content}>
         <section className={s.header}>
           <img
