@@ -6,12 +6,10 @@ import cn from 'classnames';
 
 import { Button, SvgIcon } from 'components/UILib';
 import { DaoProposals } from 'components/DaoProposals';
-import { SmallDaoSlider } from 'components/SmallDaoSlider';
 import { CreateProposalPopup } from 'components/CreateProposalPopup';
 
 import {
   accountSelector,
-  daoListSelector,
   daoSelector,
   proposalListSelector,
 } from 'redux/selectors';
