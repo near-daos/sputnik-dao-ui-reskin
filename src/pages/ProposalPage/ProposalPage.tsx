@@ -150,8 +150,6 @@ export const ProposalPage: React.FC = () => {
     (state) => proposalSelector(state, params.daoId, proposalId) || null,
   );
 
-  console.log(proposal);
-
   const accountId = useSelector(accountSelector);
 
   const [firstTenMembers] = useState<string[]>(
@@ -243,9 +241,8 @@ export const ProposalPage: React.FC = () => {
 
       if (user === accountId) {
         isVoted = true;
+        vote = proposal.votes[key] === 'Yes';
       }
-
-      vote = proposal.votes[key] === 'Yes';
     });
 
     return [isVoted, vote];
