@@ -19,10 +19,6 @@ export const fetchDaoList = actionCreator.async<void, DaoItem[], Error>(
   'FETCH_DAO_LIST',
 );
 
-export const fetchProposals = actionCreator.async<string, Proposal[], Error>(
-  'FETCH_PROPOSALS',
-);
-
 export const createDao = actionCreator.async<CreateDaoParams, void, Error>(
   'CREATE_DAO',
 );

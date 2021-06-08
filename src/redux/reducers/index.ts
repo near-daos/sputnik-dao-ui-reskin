@@ -1,6 +1,5 @@
 import {
   fetchDaoList,
-  fetchProposals,
   login,
   logout,
   fetchAccount,
@@ -8,13 +7,7 @@ import {
   setCreatingDaoData,
   clearCreatingDaoData,
 } from 'redux/actions';
-import {
-  AuthState,
-  CreatDaoState,
-  DaoState,
-  ProposalState,
-  RedirectState,
-} from 'types/store';
+import { AuthState, CreatDaoState, DaoState, RedirectState } from 'types/store';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 
 const initialState = {
@@ -44,18 +37,6 @@ export const daos = reducerWithInitialState<DaoState>(initialState)
     loading: true,
   }))
   .case(fetchDaoList.done, (state, { result }) => ({
-    ...state,
-    items: result,
-    loading: false,
-  }))
-  .build();
-
-export const proposals = reducerWithInitialState<ProposalState>(initialState)
-  .case(fetchProposals.started, (state) => ({
-    ...state,
-    loading: true,
-  }))
-  .case(fetchProposals.done, (state, { result }) => ({
     ...state,
     items: result,
     loading: false,

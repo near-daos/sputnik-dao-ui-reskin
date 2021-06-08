@@ -1,14 +1,11 @@
 import { createSelector } from 'reselect';
-import { AuthState, DaoState, ProposalState, StoreState } from 'types/store';
+import { AuthState, DaoState, StoreState } from 'types/store';
 import { RedirectFlow } from '../../types';
 import { CreateDaoParams } from '../../types/dao';
 
 export const authSelector = (state: StoreState): AuthState => state.auth;
 
 export const daosSelector = (state: StoreState): DaoState => state.daos;
-
-export const proposalsSelector = (state: StoreState): ProposalState =>
-  state.proposals;
 
 export const daoListSelector = createSelector(
   daosSelector,
@@ -19,23 +16,6 @@ export const daoSelector = createSelector(
   daoListSelector,
   (_: unknown, daoId: string) => daoId,
   (items, doaId) => items.find((item) => item.id === doaId),
-);
-
-export const proposalListSelector = createSelector(
-  proposalsSelector,
-  (_: unknown, daoId: string) => daoId,
-  (state, daoId) => state.items.filter((item) => item.daoId === daoId),
-);
-
-export const proposalSelector = createSelector(
-  proposalListSelector,
-  (_: unknown, _1: unknown, proposalId: number) => proposalId,
-  (proposals, proposalId) => proposals.find((item) => item.id === proposalId),
-);
-
-export const proposalsLoadingSelector = createSelector(
-  proposalsSelector,
-  (state) => state.loading,
 );
 
 export const accountSelector = createSelector(
