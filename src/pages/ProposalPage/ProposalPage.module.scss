@@ -235,6 +235,7 @@
 
 .detailsWrapper {
   flex: 1;
+  width: 100%;
 }
 
 .aboutTitle {
@@ -244,6 +245,8 @@
 .about {
   @extend %body-2;
   margin-top: functions.calc-rem(12);
+  max-width: 90%;
+  word-wrap: break-word;
 }
 
 .dataWrapper {
