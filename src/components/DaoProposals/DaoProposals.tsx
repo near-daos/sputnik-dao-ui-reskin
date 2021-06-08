@@ -1,16 +1,19 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import SearchBar from 'components/SearchBar';
 import { ProposalCard } from 'components/ProposalCard';
 import { Chip, ChipProps, Loader, Select } from 'components/UILib';
+
+import { NearService } from 'services/NearService';
+
+import { DaoItem } from 'types/dao';
 import { Proposal } from 'types/proposal';
 
-import { useLocation } from 'react-router-dom';
-import { DaoItem } from 'types/dao';
-import { NearService } from 'services/NearService';
-import { useSelector } from 'react-redux';
-import { accountSelector, proposalsLoadingSelector } from 'redux/selectors';
+import { accountSelector } from 'redux/selectors';
+
 import {
   countFailedProposals,
   countInVotingProposals,
@@ -19,6 +22,7 @@ import {
   isInVotingProposal,
   isApprovedProposal,
 } from 'utils';
+
 import s from './DaoProposals.module.scss';
 
 export type ProposalFilterOption = {
@@ -28,11 +32,14 @@ export type ProposalFilterOption = {
   value: 'Voting' | 'Approved' | 'Failed' | null;
 };
 
-const getFilterOptions = (proposals: Proposal[]): ProposalFilterOption[] => [
+const getFilterOptions = (
+  proposals: Proposal[],
+  total: number,
+): ProposalFilterOption[] => [
   {
     label: 'Show all',
     color: 'default',
-    count: proposals.length,
+    count: total,
     value: null,
   },
   {
@@ -59,6 +66,7 @@ export interface DaoProposalsProps {
   className?: string;
   proposals: Array<Proposal>;
   dao?: DaoItem;
+  loading?: boolean;
 }
 
 enum ProposalSort {
@@ -78,16 +86,18 @@ const sortOptions: ProposalSortOption[] = [
 
 const DaoProposals: React.FC<DaoProposalsProps> = ({
   className,
-  proposals,
   dao,
+  proposals,
+  loading = false,
 }) => {
   const location = useLocation();
   const [filteredProposals, setFilteredProposals] = useState<Proposal[]>([]);
   const [sortedProposals, setSortedProposals] = useState<Proposal[]>([]);
   const [resultingProposals, setResultingProposals] = useState<Proposal[]>([]);
-  const filterOptions = useMemo(() => getFilterOptions(proposals), [proposals]);
-  const loading = useSelector(proposalsLoadingSelector);
-
+  const filterOptions = useMemo(
+    () => getFilterOptions(proposals, dao?.numberOfProposals || 0),
+    [proposals, dao?.numberOfProposals],
+  );
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<ProposalSortOption>(sortOptions[0]);
   const [filters, setFilters] = useState<ProposalFilterOption>(
@@ -217,7 +227,7 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
         </div>
       )}
       <div className={s.proposalList}>
-        {loading && <Loader className={s.loader} />}
+        <Loader className={cn(s.loader, { [s.showLoader]: loading })} />
         {sortedProposals.map((proposal) => (
           <ProposalCard
             key={proposal.id}

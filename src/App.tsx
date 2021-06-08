@@ -53,10 +53,6 @@ const routes: RouteInfo[] = [
     path: '/select-proposal',
     component: SelectProposals,
   },
-  // {
-  //   path: '/proposals',
-  //   component: Proposals,
-  // },
   {
     exact: true,
     path: '/dao/:daoId/proposals/:proposalId',

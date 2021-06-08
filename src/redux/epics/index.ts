@@ -8,7 +8,6 @@ import {
   createProposal,
   fetchAccount,
   fetchDaoList,
-  fetchProposals,
   login,
   logout,
 } from 'redux/actions';
@@ -30,10 +29,6 @@ const fetchDaoListEpic = ofAsyncAction(fetchDaoList, () =>
   NearService.getDaoList(),
 );
 
-const fetchProposalsEpic = ofAsyncAction(fetchProposals, (contractId: string) =>
-  NearService.getAllProposals(contractId),
-);
-
 const createDaoEpic = ofAsyncAction(createDao, (params) =>
   NearService.createDao(params),
 );
@@ -49,5 +44,4 @@ export const sputnikEpic: Epic<AnyAction, AnyAction, StoreState> = combineEpics(
   createProposalEpic,
   fetchAccountEpic,
   fetchDaoListEpic,
-  fetchProposalsEpic,
 );
