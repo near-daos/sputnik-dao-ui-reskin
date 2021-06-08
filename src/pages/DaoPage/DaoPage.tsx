@@ -3,27 +3,27 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import cn from 'classnames';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import { Button, SvgIcon } from 'components/UILib';
 import { DaoProposals } from 'components/DaoProposals';
 import { CreateProposalPopup } from 'components/CreateProposalPopup';
+import { MembersPopup } from 'components/MembersPopup';
+import { PurposePopup } from 'components/PurposePopup';
+import { DaoDetailPopup } from 'components/DaoDetailPopup';
 
-import {
-  accountSelector,
-  daoSelector,
-  proposalListSelector,
-} from 'redux/selectors';
+import { accountSelector, daoSelector } from 'redux/selectors';
 
 import { StoreState } from 'types/store';
 import { Proposal } from 'types/proposal';
 import { DaoItem } from 'types/dao';
 
-import { fetchProposals, login } from 'redux/actions';
+import { NearService } from 'services/NearService';
+
+import { login } from 'redux/actions';
 import { appConfig, nearConfig } from 'config';
+
 import s from './DaoPage.module.scss';
-import { MembersPopup } from '../../components/MembersPopup';
-import { PurposePopup } from '../../components/PurposePopup';
-import { DaoDetailPopup } from '../../components/DaoDetailPopup';
 
 export const DaoPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -39,11 +39,12 @@ export const DaoPage: React.FC = () => {
   const dao = useSelector<StoreState, DaoItem | undefined>((state) =>
     daoSelector(state, params.id),
   );
-  const proposals = useSelector<StoreState, Proposal[]>((state) =>
-    proposalListSelector(state, params.id),
-  );
+  const [proposals, setProposals] = useState<Proposal[]>([]);
+  const [proposalsLoading, setProposalsLoading] = useState(false);
+  const [offset, setOffset] = useState(50);
 
   const daoName = dao?.id.replace(`.${nearConfig.contractName}`, '');
+  const numberOfProposals = dao?.numberOfProposals || 0;
 
   useEffect(() => {
     if (daoName) {
@@ -52,8 +53,20 @@ export const DaoPage: React.FC = () => {
   }, [daoName]);
 
   useEffect(() => {
-    dispatch(fetchProposals.started(params.id));
-  }, [dispatch, params.id]);
+    if (!numberOfProposals) return;
+
+    setProposalsLoading(true);
+
+    NearService.getProposals(params.id, Math.max(numberOfProposals - offset, 0))
+      .then((response) => {
+        setProposals((prev) => [...prev, ...response]);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setProposalsLoading(false);
+        }, 80);
+      });
+  }, [params.id, numberOfProposals, offset]);
 
   const handleShowCreateProposalPopup = () => {
     if (account) {
@@ -67,6 +80,12 @@ export const DaoPage: React.FC = () => {
 
   const handleCreateProposal = () => {
     setIsShowCreateProposal(false);
+  };
+
+  const handleLoadMore = () => {
+    if (!proposalsLoading) {
+      setOffset((prev) => prev + 50);
+    }
   };
 
   return (
@@ -145,7 +164,18 @@ export const DaoPage: React.FC = () => {
             </Button>
           </div>
         </section>
-        <DaoProposals proposals={proposals} dao={dao} />
+        <InfiniteScroll
+          loadMore={handleLoadMore}
+          threshold={1000}
+          initialLoad={false}
+          hasMore={numberOfProposals > offset}
+        >
+          <DaoProposals
+            proposals={proposals}
+            dao={dao}
+            loading={proposalsLoading}
+          />
+        </InfiniteScroll>
       </div>
 
       {isShowCreateProposal && dao && (

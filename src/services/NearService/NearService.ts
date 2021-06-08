@@ -51,7 +51,45 @@ export const URLTest = (url: string): boolean => {
 
   return regExp.test(url) && regExp2.test(url);
 };
+
 export const yoktoNear = 1000000000000000000000000;
+
+const createProposalMapper = (contractId: string) => (
+  item: ProposalRaw,
+  itemIndex: number,
+): Proposal => {
+  let proposal: Proposal;
+
+  if (item.kind.type === ProposalType.Payout) {
+    const amountYokto = new Decimal(item.kind.amount);
+
+    amountYokto.div(yoktoNear).toFixed(2);
+
+    proposal = (camelcaseKeys(
+      {
+        ...item,
+        kind: {
+          type: ProposalType.Payout,
+          amount: amountYokto.div(yoktoNear).toFixed(2),
+        },
+        daoId: contractId,
+        id: itemIndex,
+      },
+      { deep: true },
+    ) as any) as Proposal;
+  }
+
+  proposal = (camelcaseKeys(
+    {
+      ...item,
+      daoId: contractId,
+      id: itemIndex,
+    },
+    { deep: true },
+  ) as any) as Proposal;
+
+  return proposal;
+};
 
 class NearService {
   private readonly config: NearConfig;
@@ -247,44 +285,35 @@ class NearService {
 
   public async getProposals(
     contractId: string,
-    limit: number,
-    index = 0,
+    offset = 0,
+    limit = 50,
   ): Promise<Proposal[]> {
-    const proposals = await this.contractPool
-      .get(contractId)
-      .get_proposals({ from_index: index, limit });
+    try {
+      const proposals = await this.contractPool
+        .get(contractId)
+        .get_proposals({ from_index: offset, limit });
 
-    return camelcaseKeys(proposals, { deep: true }).map(
-      (item: ProposalRaw, itemIndex: number) => {
-        if (item.kind.type === ProposalType.Payout) {
-          const amountYokto = new Decimal(item.kind.amount);
+      const proposalMapper = createProposalMapper(contractId);
 
-          amountYokto.div(yoktoNear).toFixed(2);
-
-          return {
-            ...item,
-            kind: {
-              type: ProposalType.Payout,
-              amount: amountYokto.div(yoktoNear).toFixed(2),
-            },
-            daoId: contractId,
-            id: itemIndex,
-          };
-        }
-
-        return {
-          ...item,
-          daoId: contractId,
-          id: itemIndex,
-        };
-      },
-    );
+      return proposals.map((item: ProposalRaw, index: number) =>
+        proposalMapper(item, offset + index),
+      );
+    } catch (err) {
+      return [];
+    }
   }
 
-  public async getAllProposals(contractId: string): Promise<Proposal[]> {
-    const limit = await this.getNumProposals(contractId);
+  public async getProposal(
+    contractId: string,
+    index: number,
+  ): Promise<Proposal> {
+    const proposal = await this.contractPool
+      .get(contractId)
+      .get_proposal(index);
 
-    return this.getProposals(contractId, limit);
+    const proposalMapper = createProposalMapper(contractId);
+
+    return proposalMapper(proposal, index);
   }
 
   public async getCouncil(contractId: string): Promise<string[]> {

@@ -1,32 +1,29 @@
 /* eslint-disable no-param-reassign */
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import cn from 'classnames';
-import {
-  accountSelector,
-  daoSelector,
-  proposalSelector,
-} from 'redux/selectors';
+import { accountSelector, daoSelector } from 'redux/selectors';
 
 import { Button, Chip, SvgIcon, Tooltip } from 'components/UILib';
+import { getTitle } from 'components/ProposalCard/utils';
+import { ButtonProps } from 'components/UILib/Button/Button';
+import { VotedMembersPopup } from 'components/VotedMembersPopup';
 
 import useMedia from 'hooks/use-media';
 
-import { NearService } from 'services/NearService';
 import { DaoItem } from 'types/dao';
 import { StoreState } from 'types/store';
 import { Proposal, ProposalStatus, ProposalType } from 'types/proposal';
 
+import { NearService } from 'services/NearService';
+
 import { convertDuration } from 'utils';
 import numberReduction from 'utils/numberReduction';
 
-import { getTitle } from 'components/ProposalCard/utils';
-import { ButtonProps } from 'components/UILib/Button/Button';
-import { fetchProposals } from 'redux/actions';
+import { appConfig, nearConfig } from 'config';
+
 import s from './ProposalPage.module.scss';
-import { appConfig, nearConfig } from '../../config';
-import { VotedMembersPopup } from '../../components/VotedMembersPopup';
 
 const NUMBER_OF_TOP_MEMBERS = 10;
 
@@ -135,7 +132,6 @@ const getStatusText = (proposal: Proposal): string => {
 };
 
 export const ProposalPage: React.FC = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
   const media = useMedia();
   const params = useParams<{ daoId: string; proposalId: string }>();
@@ -146,12 +142,7 @@ export const ProposalPage: React.FC = () => {
   const dao = useSelector<StoreState, DaoItem | null>(
     (state) => daoSelector(state, params.daoId) || null,
   );
-  const proposal = useSelector<StoreState, Proposal | null>(
-    (state) => proposalSelector(state, params.daoId, proposalId) || null,
-  );
-
-  console.log(proposal);
-
+  const [proposal, setPropsoal] = useState<Proposal | null>(null);
   const accountId = useSelector(accountSelector);
 
   const [firstTenMembers] = useState<string[]>(
@@ -175,8 +166,8 @@ export const ProposalPage: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchProposals.started(daoId));
-  }, [dispatch, daoId]);
+    NearService.getProposal(daoId, proposalId).then(setPropsoal);
+  }, [daoId, proposalId]);
 
   useEffect(() => {
     const daoName = dao?.id.replace(`.${nearConfig.contractName}`, '');
@@ -216,8 +207,6 @@ export const ProposalPage: React.FC = () => {
   const isVoteReject = (name: string): boolean =>
     rejectUsers.findIndex((item) => item === name) !== -1;
 
-  // const isMember = dao?.members.includes(accountId || '');
-
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
   const isNotExpired = votePeriodEnd < new Date();
   const isActionDisabled =
@@ -243,9 +232,8 @@ export const ProposalPage: React.FC = () => {
 
       if (user === accountId) {
         isVoted = true;
+        vote = proposal.votes[key] === 'Yes';
       }
-
-      vote = proposal.votes[key] === 'Yes';
     });
 
     return [isVoted, vote];
@@ -444,10 +432,6 @@ export const ProposalPage: React.FC = () => {
             {/* )} */}
           </header>
           <div className={cn(s.row, s.topRow)}>
-            {/* <p className={s.target}> */}
-            {/*  <span>Target: </span> */}
-            {/*  {proposal.target} */}
-            {/* </p> */}
             <div className={s.dataWrapper}>
               <p className={s.dataTitle}>Target</p>
               <p className={s.dataValue}>{proposal.target}</p>

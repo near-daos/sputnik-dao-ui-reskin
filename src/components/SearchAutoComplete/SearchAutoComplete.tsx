@@ -57,7 +57,8 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
     setProposalsByDao({});
 
     daoResult.forEach(({ id: daoId }) => {
-      NearService.getAllProposals(daoId).then((data) => {
+      // needs refactoring
+      NearService.getProposals(daoId, 0, 50).then((data) => {
         setProposalsByDao((prevState) => ({
           ...prevState,
           [daoId]: data,

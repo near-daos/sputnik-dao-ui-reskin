@@ -99,9 +99,8 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
 
       if (user === accountId) {
         isVoted = true;
+        vote = proposal.votes[key] === 'Yes';
       }
-
-      vote = proposal.votes[key] === 'Yes';
     });
 
     return [isVoted, vote];
