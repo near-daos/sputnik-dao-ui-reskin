@@ -58,14 +58,12 @@ const createProposalMapper = (contractId: string) => (
   item: ProposalRaw,
   itemIndex: number,
 ): Proposal => {
-  let proposal: Proposal;
-
   if (item.kind.type === ProposalType.Payout) {
     const amountYokto = new Decimal(item.kind.amount);
 
     amountYokto.div(yoktoNear).toFixed(2);
 
-    proposal = (camelcaseKeys(
+    return (camelcaseKeys(
       {
         ...item,
         kind: {
@@ -79,7 +77,7 @@ const createProposalMapper = (contractId: string) => (
     ) as any) as Proposal;
   }
 
-  proposal = (camelcaseKeys(
+  return (camelcaseKeys(
     {
       ...item,
       daoId: contractId,
@@ -87,8 +85,6 @@ const createProposalMapper = (contractId: string) => (
     },
     { deep: true },
   ) as any) as Proposal;
-
-  return proposal;
 };
 
 class NearService {
