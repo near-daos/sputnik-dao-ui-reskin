@@ -18,7 +18,7 @@ import { Proposal, ProposalStatus, ProposalType } from 'types/proposal';
 
 import { NearService } from 'services/NearService';
 
-import { convertDuration } from 'utils';
+import { convertDuration, getDescriptionAndLink } from 'utils';
 import numberReduction from 'utils/numberReduction';
 
 import { appConfig, nearConfig } from 'config';
@@ -26,44 +26,6 @@ import { appConfig, nearConfig } from 'config';
 import s from './ProposalPage.module.scss';
 
 const NUMBER_OF_TOP_MEMBERS = 10;
-
-export function getDescriptionAndLink(
-  proposalDescription: string,
-): [string, JSX.Element | boolean] {
-  let linkEl: JSX.Element | boolean = false;
-  let description = '';
-  let link = '';
-
-  const test = proposalDescription.split('---');
-
-  if (test.length > 1 && test[test.length - 1] !== '') {
-    [description, link] = proposalDescription.split('---');
-    linkEl = !!link && (
-      <a
-        target="_blank"
-        className={s.proposalLink}
-        href={`${link}`}
-        rel="nofollow noreferrer"
-      >
-        {`${link}`}
-      </a>
-    );
-  } else {
-    [description, link] = proposalDescription.split('/t/');
-    linkEl = !!link && (
-      <a
-        className={s.proposalLink}
-        target="_blank"
-        href={`https://gov.near.org/t/${link}`}
-        rel="nofollow noreferrer"
-      >
-        {`https://gov.near.org/t/${link}`}
-      </a>
-    );
-  }
-
-  return [description, linkEl];
-}
 
 type ActionProps = Pick<ButtonProps, 'onClick' | 'disabled'> & {
   label: string;
@@ -216,7 +178,10 @@ export const ProposalPage: React.FC = () => {
     proposal.proposer === accountId &&
     proposal.status === ProposalStatus.Vote;
 
-  const [description, linkEl] = getDescriptionAndLink(proposal.description);
+  const [description, linkEl] = getDescriptionAndLink(
+    proposal.description,
+    s.proposalLink,
+  );
 
   const councilMembers = dao?.members.length || 0;
 

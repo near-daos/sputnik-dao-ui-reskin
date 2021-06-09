@@ -16,48 +16,14 @@ import numberReduction from 'utils/numberReduction';
 
 import { useSelector } from 'react-redux';
 import { accountSelector } from 'redux/selectors';
-import { convertDuration } from 'utils';
+import {
+  checkIfAccountVoted,
+  convertDuration,
+  getDescriptionAndLink,
+} from 'utils';
 import { Link } from 'react-router-dom';
 import s from './ProposalCard.module.scss';
 import { getTitle } from './utils';
-
-export function getDescriptionAndLink(
-  proposalDescription: string,
-): [string, JSX.Element | boolean] {
-  let linkEl: JSX.Element | boolean = false;
-  let description = '';
-  let link = '';
-
-  const test = proposalDescription.split('---');
-
-  if (test.length > 1 && test[test.length - 1] !== '') {
-    [description, link] = proposalDescription.split('---');
-    linkEl = !!link && (
-      <a
-        target="_blank"
-        className={s.proposalLink}
-        href={`${link}`}
-        rel="nofollow noreferrer"
-      >
-        {`${link}`}
-      </a>
-    );
-  } else {
-    [description, link] = proposalDescription.split('/t/');
-    linkEl = !!link && (
-      <a
-        className={s.proposalLink}
-        target="_blank"
-        href={`https://gov.near.org/t/${link}`}
-        rel="nofollow noreferrer"
-      >
-        {`https://gov.near.org/t/${link}`}
-      </a>
-    );
-  }
-
-  return [description, linkEl];
-}
 
 export interface ProposalCardProps {
   className?: string;
@@ -85,28 +51,11 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
   const isExpired =
     votePeriodEnd < new Date() && proposal.status === ProposalStatus.Vote;
 
-  const [description, linkEl] = getDescriptionAndLink(proposal.description);
-
-  const getVotingData = (): [boolean, boolean] => {
-    let isVoted = false;
-    let vote = false;
-
-    Object.keys(proposal.votes).forEach((key) => {
-      const user = key
-        .split(/(?=[A-Z])/)
-        .join('.')
-        .toLowerCase();
-
-      if (user === accountId) {
-        isVoted = true;
-        vote = proposal.votes[key] === 'Yes';
-      }
-    });
-
-    return [isVoted, vote];
-  };
-
-  const [isVoted, vote] = getVotingData();
+  const [description, linkEl] = getDescriptionAndLink(
+    proposal.description,
+    s.proposalLink,
+  );
+  const [isVoted, vote] = checkIfAccountVoted(proposal, accountId);
 
   const cornerColorsMap = {
     [ProposalStatus.Success]: PixelCornerColors.Green,
