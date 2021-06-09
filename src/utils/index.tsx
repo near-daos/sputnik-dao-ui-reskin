@@ -1,3 +1,4 @@
+import React from 'react';
 import { awsConfig } from 'config';
 import { awsS3 } from 'services/AwsUploader/AwsUploader';
 import { Proposal, ProposalStatus } from 'types/proposal';
@@ -15,7 +16,7 @@ export const convertDuration = (duration: number): Date => {
 export const getRandomIntInclusive = (min: number, max: number): number =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
-export const shuffle = <T>(array: T[]): void => {
+export const shuffle = <T,>(array: T[]): void => {
   array.sort(() => Math.random() - 0.5);
 };
 
@@ -94,3 +95,64 @@ export const countApprovedProposals = (proposals: Proposal[]): number =>
 
 export const countFailedProposals = (proposals: Proposal[]): number =>
   proposals.filter(isFailedProposal).length;
+
+export const checkIfAccountVoted = (
+  proposal: Proposal,
+  accountId: string | null,
+): [boolean, boolean] => {
+  let isVoted = false;
+  let vote = false;
+
+  Object.keys(proposal.votes).forEach((key) => {
+    const user = key
+      .split(/(?=[A-Z])/)
+      .join('.')
+      .toLowerCase();
+
+    if (user === accountId) {
+      isVoted = true;
+      vote = proposal.votes[key] === 'Yes';
+    }
+  });
+
+  return [isVoted, vote];
+};
+
+export function getDescriptionAndLink(
+  proposalDescription: string,
+  className: string,
+): [string, JSX.Element | boolean] {
+  let linkEl: JSX.Element | boolean = false;
+  let description = '';
+  let link = '';
+
+  const test = proposalDescription.split('---');
+
+  if (test.length > 1 && test[test.length - 1] !== '') {
+    [description, link] = proposalDescription.split('---');
+    linkEl = !!link && (
+      <a
+        target="_blank"
+        className={className}
+        href={`${link}`}
+        rel="nofollow noreferrer"
+      >
+        {`${link}`}
+      </a>
+    );
+  } else {
+    [description, link] = proposalDescription.split('/t/');
+    linkEl = !!link && (
+      <a
+        className={className}
+        target="_blank"
+        href={`https://gov.near.org/t/${link}`}
+        rel="nofollow noreferrer"
+      >
+        {`https://gov.near.org/t/${link}`}
+      </a>
+    );
+  }
+
+  return [description, linkEl];
+}
