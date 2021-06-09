@@ -309,7 +309,7 @@ class NearService {
   ): Promise<Proposal> {
     const proposal = await this.contractPool
       .get(contractId)
-      .get_proposal(index);
+      .get_proposal({ id: index });
 
     const proposalMapper = createProposalMapper(contractId);
 
