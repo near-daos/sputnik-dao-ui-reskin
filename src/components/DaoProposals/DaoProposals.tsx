@@ -10,7 +10,7 @@ import { Chip, ChipProps, Loader, Select } from 'components/UILib';
 import { NearService } from 'services/NearService';
 
 import { DaoItem } from 'types/dao';
-import { Proposal } from 'types/proposal';
+import { Proposal, ProposalStatus } from 'types/proposal';
 
 import { accountSelector } from 'redux/selectors';
 
@@ -21,6 +21,7 @@ import {
   isFailedProposal,
   isInVotingProposal,
   isApprovedProposal,
+  checkIfAccountVoted,
 } from 'utils';
 
 import s from './DaoProposals.module.scss';
@@ -61,6 +62,21 @@ const getFilterOptions = (
     value: 'Failed',
   },
 ];
+
+const getWeight = (proposal: Proposal, account: string | null) => {
+  let weight = 0;
+  const [isVoted] = checkIfAccountVoted(proposal, account);
+
+  if (isInVotingProposal(proposal) && isVoted) {
+    weight = 3;
+  } else if (isInVotingProposal(proposal) && !isVoted) {
+    weight = 2;
+  } else if (isApprovedProposal(proposal)) {
+    weight = 1;
+  }
+
+  return weight;
+};
 
 export interface DaoProposalsProps {
   className?: string;
@@ -129,7 +145,7 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
         }
       }),
     );
-  }, [filters, proposals]);
+  }, [account, filters, proposals]);
 
   useEffect(() => {
     if (!query) {
@@ -149,12 +165,22 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
   }, [filteredProposals, query]);
 
   useEffect(() => {
+    if (filters.value === null) {
+      const sorted = [...resultingProposals].sort(
+        (a, b) => getWeight(b, account) - getWeight(a, account),
+      );
+
+      setSortedProposals(sorted);
+
+      return;
+    }
+
     setSortedProposals(
       [...resultingProposals].sort((a, b) =>
         sort.value === ProposalSort.Oldest ? a.id - b.id : b.id - a.id,
       ),
     );
-  }, [resultingProposals, sort]);
+  }, [account, filters.value, proposals, resultingProposals, sort]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
