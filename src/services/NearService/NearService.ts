@@ -53,6 +53,7 @@ export const URLTest = (url: string): boolean => {
 };
 
 export const yoktoNear = 1000000000000000000000000;
+const gas = new Decimal('200000000000000').toString();
 
 const createProposalMapper = (contractId: string) => (
   item: ProposalRaw,
@@ -161,7 +162,7 @@ class NearService {
         name: params.name,
         args,
       },
-      new Decimal('45000000000000').toString(), // todo move to constant
+      gas,
       amountYokto.toString(),
     );
   }
