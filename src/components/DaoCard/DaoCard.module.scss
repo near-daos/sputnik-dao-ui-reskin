@@ -115,6 +115,8 @@
 
   @include desktop {
     @include heading-5;
+    line-height: 1;
+    margin-top: functions.calc-rem(5);
   }
 
   &.lg {
@@ -200,17 +202,25 @@
 }
 
 .tokenIcon {
-  color: var(--theme-dao-card-token);
+  //color: var(--theme-dao-card-token);
   margin-left: functions.calc-rem(4);
 }
 
-.numberOfProposal,
+.numberOfProposal {
+  @include desktop {
+    &.lg,
+    &.md {
+      width: 40%;
+    }
+  }
+}
+
 .bond,
 .amountOfMember {
   @include desktop {
     &.lg,
     &.md {
-      width: 33%;
+      width: 30%;
     }
   }
 }

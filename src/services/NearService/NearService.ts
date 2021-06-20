@@ -18,6 +18,7 @@ import {
   ProposalType,
 } from 'types/proposal';
 import camelcaseKeys from 'camelcase-keys';
+import { isNotNull } from 'types/guards';
 import { ContractPool } from './ContractPool';
 
 export const parseForumUrl = (url: string): string => {
@@ -46,10 +47,46 @@ export const parseForumUrl = (url: string): string => {
 
 export const URLTest = (url: string): boolean => {
   const regExp = /^(ftp|http|https):\/\/[^ "]+$/;
+  const regExp2 = /^https:\/\/gov.near.org\/[a-z0-9\\/]+$/;
 
-  return regExp.test(url);
+  return regExp.test(url) && regExp2.test(url);
 };
+
 export const yoktoNear = 1000000000000000000000000;
+const gas = new Decimal('200000000000000').toString();
+
+const createProposalMapper = (contractId: string) => (
+  item: ProposalRaw,
+  itemIndex: number,
+): Proposal => {
+  if (item.kind.type === ProposalType.Payout) {
+    const amountYokto = new Decimal(item.kind.amount);
+
+    amountYokto.div(yoktoNear).toFixed(2);
+
+    return (camelcaseKeys(
+      {
+        ...item,
+        kind: {
+          type: ProposalType.Payout,
+          amount: amountYokto.div(yoktoNear).toFixed(2),
+        },
+        daoId: contractId,
+        id: itemIndex,
+      },
+      { deep: true },
+    ) as any) as Proposal;
+  }
+
+  return (camelcaseKeys(
+    {
+      ...item,
+      daoId: contractId,
+      id: itemIndex,
+    },
+    { deep: true },
+  ) as any) as Proposal;
+};
 
 class NearService {
   private readonly config: NearConfig;
@@ -125,7 +162,7 @@ class NearService {
         name: params.name,
         args,
       },
-      new Decimal('45000000000000').toString(), // todo move to constant
+      gas,
       amountYokto.toString(),
     );
   }
@@ -133,11 +170,15 @@ class NearService {
   public async createProposal(params: CreateProposalParams): Promise<any> {
     const data: any = {
       target: params.target,
-      description: `${params.description} ${parseForumUrl(params.link)}`.trim(),
+      description: params.description,
       kind: {
         type: params.kind.type,
       },
     };
+
+    if (params.link) {
+      data.description = `${params.description} ---${params.link}`.trim();
+    }
 
     if (params.kind.type === ProposalType.Payout) {
       const amount = new Decimal(params.kind.amount);
@@ -176,144 +217,104 @@ class NearService {
           this.getVotePeriod(daoId),
           this.getNumProposals(daoId),
           this.getCouncil(daoId),
-        ]),
+        ]).catch(() => null),
       ),
     );
 
-    return list.map(
-      (daoId, index): DaoItem => ({
-        id: daoId,
-        amount: details[index][0],
-        bond: details[index][1],
-        purpose: details[index][2],
-        votePeriod: details[index][3],
-        numberOfProposals: details[index][4],
-        numberOfMembers: details[index][5].length,
-        members: details[index][5],
-      }),
-    );
+    return list
+      .map((daoId, index): DaoItem | null => {
+        const detailsItem = details[index];
+
+        if (isNotNull(detailsItem)) {
+          return {
+            id: daoId,
+            amount: detailsItem[0],
+            bond: detailsItem[1],
+            purpose: detailsItem[2],
+            votePeriod: detailsItem[3],
+            numberOfProposals: detailsItem[4],
+            numberOfMembers: detailsItem[5].length,
+            members: detailsItem[5],
+          };
+        }
+
+        return null;
+      })
+      .filter(<(item: DaoItem | null) => item is DaoItem>(
+        ((item) => isNotNull(item))
+      ));
   }
 
   public async getDaoState(contractId: string): Promise<AccountState> {
-    try {
-      const account = await this.near.account(contractId);
+    const account = await this.near.account(contractId);
 
-      return account.state();
-    } catch (err) {
-      return {
-        amount: '0',
-        code_hash: '',
-        storage_usage: 0,
-        locked: '0',
-      };
-    }
+    return account.state();
   }
 
   public async getDaoAmount(contractId: string): Promise<string> {
-    try {
-      const state = await this.getDaoState(contractId);
-      const amountYokto = new Decimal(state.amount);
+    const state = await this.getDaoState(contractId);
+    const amountYokto = new Decimal(state.amount);
 
-      return amountYokto.div(yoktoNear).toFixed(2);
-    } catch (err) {
-      return '0';
-    }
+    return amountYokto.div(yoktoNear).toFixed(2);
   }
 
   public async getBond(contractId: string): Promise<string> {
-    try {
-      const bond = await this.contractPool.get(contractId).get_bond();
+    const bond = await this.contractPool.get(contractId).get_bond();
 
-      return new Decimal(bond.toString()).div(yoktoNear).toString();
-    } catch (err) {
-      return '0';
-    }
+    return new Decimal(bond.toString()).div(yoktoNear).toString();
   }
 
   public async getVotePeriod(contractId: string): Promise<string> {
-    try {
-      const votePeriod = await this.contractPool
-        .get(contractId)
-        .get_vote_period();
+    const votePeriod = await this.contractPool
+      .get(contractId)
+      .get_vote_period();
 
-      return timestampToReadable(votePeriod);
-    } catch (err) {
-      return '0';
-    }
+    return timestampToReadable(votePeriod);
   }
 
   public async getNumProposals(contractId: string): Promise<number> {
-    try {
-      return await this.contractPool.get(contractId).get_num_proposals();
-    } catch (err) {
-      return 0;
-    }
+    return this.contractPool.get(contractId).get_num_proposals();
   }
 
   public async getPurpose(contractId: string): Promise<string> {
-    try {
-      return await this.contractPool.get(contractId).get_purpose();
-    } catch (err) {
-      return '';
-    }
+    return this.contractPool.get(contractId).get_purpose();
   }
 
   public async getProposals(
     contractId: string,
-    limit: number,
-    index = 0,
+    offset = 0,
+    limit = 50,
   ): Promise<Proposal[]> {
     try {
       const proposals = await this.contractPool
         .get(contractId)
-        .get_proposals({ from_index: index, limit });
+        .get_proposals({ from_index: offset, limit });
 
-      return camelcaseKeys(proposals, { deep: true }).map(
-        (item: ProposalRaw, itemIndex: number) => {
-          if (item.kind.type === ProposalType.Payout) {
-            const amountYokto = new Decimal(item.kind.amount);
+      const proposalMapper = createProposalMapper(contractId);
 
-            amountYokto.div(yoktoNear).toFixed(2);
-
-            return {
-              ...item,
-              kind: {
-                type: ProposalType.Payout,
-                amount: amountYokto.div(yoktoNear).toFixed(2),
-              },
-              daoId: contractId,
-              id: itemIndex,
-            };
-          }
-
-          return {
-            ...item,
-            daoId: contractId,
-            id: itemIndex,
-          };
-        },
+      return proposals.map((item: ProposalRaw, index: number) =>
+        proposalMapper(item, offset + index),
       );
     } catch (err) {
       return [];
     }
   }
 
-  public async getAllProposals(contractId: string): Promise<Proposal[]> {
-    try {
-      const limit = await this.getNumProposals(contractId);
+  public async getProposal(
+    contractId: string,
+    index: number,
+  ): Promise<Proposal> {
+    const proposal = await this.contractPool
+      .get(contractId)
+      .get_proposal({ id: index });
 
-      return await this.getProposals(contractId, limit);
-    } catch (err) {
-      return [];
-    }
+    const proposalMapper = createProposalMapper(contractId);
+
+    return proposalMapper(proposal, index);
   }
 
   public async getCouncil(contractId: string): Promise<string[]> {
-    try {
-      return await this.contractPool.get(contractId).get_council();
-    } catch (err) {
-      return [];
-    }
+    return this.contractPool.get(contractId).get_council();
   }
 
   public addProposal(contractId: string): Promise<void> {

@@ -1,4 +1,3 @@
-import { URLTest } from 'services/NearService/NearService';
 import { ProposalType } from 'types/proposal';
 import {
   validateNumber,
@@ -46,9 +45,9 @@ export const validateThirdStep = (
 ): CreateProposalErrors => {
   const errors: CreateProposalErrors = {};
 
-  if (!URLTest(values.link)) {
-    errors.link = 'Wrong format. Include a valid link including https://';
-  }
+  // if (values.link && !URLTest(values.link)) {
+  //   errors.link = 'Wrong format. Include a valid link including https://';
+  // }
 
   if (type === ProposalType.ChangePurpose) {
     const error = validateDescription(

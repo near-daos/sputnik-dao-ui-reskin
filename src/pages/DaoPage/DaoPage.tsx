@@ -3,31 +3,27 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import cn from 'classnames';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import { Button, SvgIcon } from 'components/UILib';
 import { DaoProposals } from 'components/DaoProposals';
-import { SmallDaoSlider } from 'components/SmallDaoSlider';
 import { CreateProposalPopup } from 'components/CreateProposalPopup';
+import { MembersPopup } from 'components/MembersPopup';
+import { PurposePopup } from 'components/PurposePopup';
+import { DaoDetailPopup } from 'components/DaoDetailPopup';
 
-import {
-  accountSelector,
-  daoListSelector,
-  daoSelector,
-  proposalListSelector,
-} from 'redux/selectors';
+import { accountSelector, daoSelector } from 'redux/selectors';
 
 import { StoreState } from 'types/store';
 import { Proposal } from 'types/proposal';
 import { DaoItem } from 'types/dao';
 
-import { fetchProposals, login } from 'redux/actions';
-import { appConfig, nearConfig } from 'config';
-import s from './DaoPage.module.scss';
-import { MembersPopup } from '../../components/MembersPopup';
-import { PurposePopup } from '../../components/PurposePopup';
-import { DaoDetailPopup } from '../../components/DaoDetailPopup';
+import { NearService } from 'services/NearService';
 
-// const NUMBER_OF_TOP_MEMBERS = 10;
+import { login } from 'redux/actions';
+import { appConfig, nearConfig } from 'config';
+
+import s from './DaoPage.module.scss';
 
 export const DaoPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -35,18 +31,20 @@ export const DaoPage: React.FC = () => {
   const [isShowCreateProposal, setIsShowCreateProposal] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
+  const [isShowMembersPopup, setIsShowMembersPopup] = useState(false);
+  const [isShowPurposePopup, setIsShowPurposePopup] = useState(false);
+  const [isShowDaoDetailPopup, setIsShowDaoDetailPopup] = useState(false);
+
   const account = useSelector(accountSelector);
-  const daoList = useSelector(daoListSelector);
-  const reversDaoList = daoList.slice().reverse();
-  // const [reversDaoList, setReversDaoList] = useState<DaoItem[]>([]);
   const dao = useSelector<StoreState, DaoItem | undefined>((state) =>
     daoSelector(state, params.id),
   );
-  const proposals = useSelector<StoreState, Proposal[]>((state) =>
-    proposalListSelector(state, params.id),
-  );
+  const [proposals, setProposals] = useState<Proposal[]>([]);
+  const [proposalsLoading, setProposalsLoading] = useState(false);
+  const [offset, setOffset] = useState(50);
 
   const daoName = dao?.id.replace(`.${nearConfig.contractName}`, '');
+  const numberOfProposals = dao?.numberOfProposals || 0;
 
   useEffect(() => {
     if (daoName) {
@@ -55,8 +53,20 @@ export const DaoPage: React.FC = () => {
   }, [daoName]);
 
   useEffect(() => {
-    dispatch(fetchProposals.started(params.id));
-  }, [dispatch, params.id]);
+    if (!numberOfProposals) return;
+
+    setProposalsLoading(true);
+
+    NearService.getProposals(params.id, Math.max(numberOfProposals - offset, 0))
+      .then((response) => {
+        setProposals((prev) => [...prev, ...response]);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setProposalsLoading(false);
+        }, 80);
+      });
+  }, [params.id, numberOfProposals, offset]);
 
   const handleShowCreateProposalPopup = () => {
     if (account) {
@@ -72,15 +82,14 @@ export const DaoPage: React.FC = () => {
     setIsShowCreateProposal(false);
   };
 
-  const [isShowMembersPopup, setIsShowMembersPopup] = useState(false);
-  const [isShowPurposePopup, setIsShowPurposePopup] = useState(false);
-  const [isShowDaoDetailPopup, setIsShowDaoDetailPopup] = useState(false);
+  const handleLoadMore = () => {
+    if (!proposalsLoading) {
+      setOffset((prev) => prev + 50);
+    }
+  };
 
   return (
     <section className={s.root}>
-      <section className={s.slider}>
-        <SmallDaoSlider daos={reversDaoList} activeDaoId={params.id} />
-      </section>
       <div className={s.content}>
         <section className={s.header}>
           <img
@@ -89,7 +98,6 @@ export const DaoPage: React.FC = () => {
             src={`${appConfig.logoPath}${dao?.id}.png`}
             alt="Logo"
           />
-
           <div className={s.heading}>
             <p className={s.name}>{daoName}</p>
             <p className={s.contractName}>.{nearConfig.contractName}</p>
@@ -97,7 +105,7 @@ export const DaoPage: React.FC = () => {
               <div className={s.detailWrapper}>
                 <div className={s.subTitleWrapper}>
                   <p className={s.subTitle}>DAO Funds</p>
-                  <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+                  <SvgIcon icon="token" size={12} className={s.tokenIcon} />
                 </div>
                 <p className={s.value}>{dao?.amount}</p>
               </div>
@@ -109,12 +117,15 @@ export const DaoPage: React.FC = () => {
                   }}
                 >
                   <p className={s.subTitle}>Council</p>
-                  <p className={s.value}>{dao?.members.length}</p>
+                  <p className={s.value}>
+                    {dao?.members.length}
+                    <SvgIcon icon="info" size={18} className={s.infoIcon} />
+                  </p>
                 </button>
                 <div className={s.detailWrapper}>
                   <div className={s.subTitleWrapper}>
                     <p className={s.subTitle}>Bond</p>
-                    <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+                    <SvgIcon icon="token" size={12} className={s.tokenIcon} />
                   </div>
                   <p className={s.value}>{dao?.bond}</p>
                 </div>
@@ -153,7 +164,18 @@ export const DaoPage: React.FC = () => {
             </Button>
           </div>
         </section>
-        {dao && <DaoProposals proposals={proposals} dao={dao} />}
+        <InfiniteScroll
+          loadMore={handleLoadMore}
+          threshold={1000}
+          initialLoad={false}
+          hasMore={numberOfProposals > offset}
+        >
+          <DaoProposals
+            proposals={proposals}
+            dao={dao}
+            loading={proposalsLoading}
+          />
+        </InfiniteScroll>
       </div>
 
       {isShowCreateProposal && dao && (

@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import cn from 'classnames';
 import s from './Tooltip.module.scss';
+import useMedia from '../../../hooks/use-media';
 
 export interface TooltipProps {
   className?: string;
@@ -20,11 +21,16 @@ const Tooltip: React.FC<TooltipProps> = ({
   triggerElem,
 }) => {
   const [showTooltip, setShowTooltip] = useState(false);
+  const media = useMedia();
 
   return (
     <div
       className={cn(s.root, className)}
-      onMouseEnter={() => setShowTooltip(true)}
+      onMouseEnter={() => {
+        if (!media.mobile && !media.tabletPortrait) {
+          setShowTooltip(true);
+        }
+      }}
       onMouseLeave={() => setShowTooltip(false)}
     >
       {triggerElem}

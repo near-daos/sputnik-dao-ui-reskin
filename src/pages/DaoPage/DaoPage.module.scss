@@ -5,12 +5,10 @@
 @import 'styles/helpers';
 
 .root {
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
   padding-bottom: functions.calc-rem(72);
-}
-
-.slider {
-  margin-top: functions.calc-rem(16);
-  width: 100vw;
 }
 
 .daoCard {
@@ -22,13 +20,18 @@
   column-gap: functions.calc-rem(15);
   display: grid;
   grid-template: 'picture heading heading' 'picture tabs buttons';
-  grid-template-columns: functions.calc-rem(150) calc(100% - #{functions.calc-rem(400)}) auto;
+  grid-template-columns:
+    functions.calc-rem(150) calc(100% - #{functions.calc-rem(400)})
+    auto;
   grid-template-rows: auto auto;
   margin-bottom: functions.calc-rem(48);
+  margin-top: functions.calc-rem(60);
 
   @include media.tablet-landscape {
     column-gap: functions.calc-rem(32);
-    grid-template-columns: functions.calc-rem(176) calc(100% - #{functions.calc-rem(440)}) functions.calc-rem(200);
+    grid-template-columns:
+      functions.calc-rem(176) calc(100% - #{functions.calc-rem(440)})
+      functions.calc-rem(200);
   }
 
   @include media.mobile-only {
@@ -53,12 +56,11 @@
   }
 }
 
-
 .name {
   @include heading-5;
 
   @include mixins.truncate();
-  color: var(--theme-proposal-card-dao-name);
+  //color: var(--theme-proposal-card-dao-name);
   width: 100%;
 
   @include media.tablet-portrait {
@@ -68,14 +70,16 @@
   @include media.desktop {
     @include heading-3;
   }
-}
 
+  @include media.mobile-only {
+    text-align: center;
+  }
+}
 
 .contractName {
   @extend %body-1;
   color: var(--theme-proposal-card-additional-text);
 }
-
 
 .details {
   display: none;
@@ -92,7 +96,6 @@
   @include media.tablet-portrait {
     display: none;
   }
-
 }
 
 .detailWrapper {
@@ -121,12 +124,15 @@
 }
 
 .tokenIcon {
-  color: var(--theme-dao-card-token);
+  //color: var(--theme-dao-card-token);
   margin-left: functions.calc-rem(4);
 }
 
 .value {
   @extend %title-4;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
   text-transform: capitalize;
 }
 
@@ -195,15 +201,20 @@
 
 .buttons {
   align-self: end;
-  //grid-area: buttons;
   justify-self: end;
 
   @include media.mobile-only {
-    justify-self: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     margin-top: functions.calc-rem(24);
+    width: 100%;
   }
 }
 
 .content {
   @include mixins.narrow-container;
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
 }

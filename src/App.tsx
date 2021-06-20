@@ -14,6 +14,8 @@ import { fetchAccount, fetchDaoList } from 'redux/actions';
 import LogoRegenerationPage from 'pages/LogoRegenerationPage';
 import { accountSelector } from 'redux/selectors';
 import { checkIfNearAuthKeysExist, clearNearAuth } from 'utils';
+import { Page404 } from 'pages/Page404';
+import TagManager from 'react-gtm-module';
 import { MainLayout } from './components';
 import { LandingPage } from './pages/LandingPage/LandingPage';
 import { SelectDao } from './pages/SelectDao/SelectDao';
@@ -28,6 +30,12 @@ import 'swiper/swiper.scss';
 import './styles/theme.scss';
 import './styles/main.scss';
 
+const tagManagerArgs = {
+  gtmId: 'GTM-NJ4LDQC',
+};
+
+TagManager.initialize(tagManagerArgs);
+
 interface RouteInfo extends RouteProps {
   path: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,31 +44,33 @@ interface RouteInfo extends RouteProps {
 
 const routes: RouteInfo[] = [
   {
+    exact: true,
     path: '/select-dao',
     component: SelectDao,
   },
   {
+    exact: true,
     path: '/select-proposal',
     component: SelectProposals,
   },
-  // {
-  //   path: '/proposals',
-  //   component: Proposals,
-  // },
   {
+    exact: true,
     path: '/dao/:daoId/proposals/:proposalId',
     component: ProposalPage,
   },
   {
+    exact: true,
     path: '/dao/:id',
     component: DaoPage,
   },
   {
-    path: '/search',
+    exact: true,
+    path: '/search/dao/:searchPhrase',
     component: SearchPage,
   },
   {
     // only for internal usage
+    exact: true,
     path: '/logo-regenerate-d1a6e16c',
     component: LogoRegenerationPage,
   },
@@ -68,7 +78,6 @@ const routes: RouteInfo[] = [
 
 const App: React.FC = () => {
   const [isInitialized, setIsInitialized] = useState(false);
-  const mainLayoutPaths = routes.map((route) => route.path);
   const account = useSelector(accountSelector);
   const dispatch = useDispatch();
 
@@ -86,7 +95,9 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // clear all query params
-    window.location.search = '';
+    if (window.location.search) {
+      window.location.search = '';
+    }
   }, []);
 
   useEffect(() => {
@@ -99,6 +110,17 @@ const App: React.FC = () => {
       dispatch(fetchDaoList.started());
       setIsInitialized(true);
     });
+
+    // clear non-hash routes
+    if (window.location.pathname && window.location.pathname !== '/') {
+      window.location.pathname = '';
+    }
+
+    // clear all query params
+    if (window.location.search) {
+      window.location.search = '';
+      window.location.href = window.location.href.replace('?', '');
+    }
   }, [account, dispatch]);
 
   if (!isInitialized) {
@@ -107,24 +129,27 @@ const App: React.FC = () => {
 
   return (
     <HashRouter>
-      <Route exact path="/">
-        <LandingPage />
-      </Route>
-      <Route path={[...mainLayoutPaths, '/:daoId/:proposalId', '/:daoId']}>
-        <MainLayout>
-          <Switch>
-            {routes.map((route, i) => (
-              <Route key={String(i)} {...route} />
-            ))}
-            <Redirect
-              from="/:daoId/:proposalId"
-              to="/dao/:daoId/proposals/:proposalId"
-            />
-            <Redirect from="/:daoId" to="/dao/:daoId" />
-          </Switch>
-        </MainLayout>
-      </Route>
-      <Route />
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route path="*">
+          <MainLayout>
+            <Switch>
+              {routes.map((route, i) => (
+                <Route key={String(i)} {...route} />
+              ))}
+              <Redirect exact from="/:daoId" to="/dao/:daoId" />
+              <Redirect
+                exact
+                from="/:daoId/:proposalId"
+                to="/dao/:daoId/proposals/:proposalId"
+              />
+              <Route path="*" component={Page404} />
+            </Switch>
+          </MainLayout>
+        </Route>
+      </Switch>
     </HashRouter>
   );
 };

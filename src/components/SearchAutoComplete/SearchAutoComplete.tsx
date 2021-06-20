@@ -57,7 +57,8 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
     setProposalsByDao({});
 
     daoResult.forEach(({ id: daoId }) => {
-      NearService.getAllProposals(daoId).then((data) => {
+      // needs refactoring
+      NearService.getProposals(daoId, 0, 50).then((data) => {
         setProposalsByDao((prevState) => ({
           ...prevState,
           [daoId]: data,
@@ -88,7 +89,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
   const handleSubmit = () => {
     if (daoResult.length > 0) {
       setIsShowResult(false);
-      history.push(`/search/dao/?query=${searchText}`);
+      history.push(`/search/dao/${searchText}`);
     }
   };
 
@@ -161,7 +162,7 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
         <>
           <div className={s.titleWrapper}>
             <p className={s.title}>DAOs</p>
-            <Link to={`/search/dao/?query=${searchText}`} className={s.link}>
+            <Link to={`/search/dao/${searchText}`} className={s.link}>
               See All
               <span className={s.count}>({searchResultCount})</span>
             </Link>

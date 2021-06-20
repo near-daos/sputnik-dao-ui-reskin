@@ -40,7 +40,7 @@ const initialValues: CreateProposalValues = {
   description: '',
   payout: '',
   purpose: '',
-  votePeriod: '',
+  votePeriod: '168',
   link: '',
 };
 
@@ -115,12 +115,6 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
       ...values,
       [field]: value,
     });
-  };
-
-  const onSubmitFirstStep = () => {
-    if (!type) return;
-
-    setActiveStep(2);
   };
 
   const onSubmitSecondStep = () => {
@@ -219,7 +213,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
             name="link"
             value={values.link}
             error={errors.link}
-            onChange={(val) => handleChange('link', val)}
+            onChange={(val) => handleChange('link', val.trim())}
             label="Forum link"
             className={cn(s.input, s.linkInput)}
             helperText="Please copy and paste the forum link here"
@@ -305,7 +299,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
               value={values.votePeriod}
               error={errors.votePeriod}
               onChange={(val) => handleChange('votePeriod', val)}
-              label="New Vote Period"
+              label="New Vote Period (in hours)"
               className={s.input}
             />
           )}
@@ -352,13 +346,6 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
                 />
               ))}
             </ul>
-            <Button
-              size="lg"
-              className={s.singleButton}
-              onClick={onSubmitFirstStep}
-            >
-              Continue
-            </Button>
           </div>
         );
       case 2:

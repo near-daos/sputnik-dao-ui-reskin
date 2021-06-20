@@ -23,7 +23,7 @@ export interface CreateDaoPopupProps {
   onClose?: () => void;
 }
 
-const STEPS = ['General info', 'Details', 'DAO Logo'];
+const STEPS = ['General info', 'Details'];
 
 const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
   className,
@@ -184,7 +184,9 @@ const CreateDaoPopup: React.FC<CreateDaoPopupProps> = ({
                 <TextField
                   name="council"
                   value={values.council}
-                  onChange={(value) => handleChange('council', value)}
+                  onChange={(value) =>
+                    handleChange('council', value.toLowerCase())
+                  }
                   error={errors.council}
                   multiline
                   label="Enter Council"

@@ -11,7 +11,7 @@ import storage from 'redux-persist/lib/storage';
 
 import { StoreState } from 'types/store';
 
-import { auth, daos, proposals, redirect, createDao } from './reducers';
+import { auth, daos, redirect, createDao } from './reducers';
 import { sputnikEpic } from './epics';
 
 export const epicMiddleware = createEpicMiddleware();
@@ -21,7 +21,6 @@ export const epics = [sputnikEpic];
 const rootReducer = combineReducers<StoreState>({
   auth,
   daos,
-  proposals,
   redirect,
   createDao,
 });

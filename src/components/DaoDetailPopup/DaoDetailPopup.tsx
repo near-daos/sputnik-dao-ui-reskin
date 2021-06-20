@@ -50,7 +50,7 @@ const DaoDetailPopup: React.FC<DaoDetailPopupProps> = ({
             <div className={s.dataWrapper}>
               <div className={s.nameWrapper}>
                 <p className={s.name}>DAO Funds</p>
-                <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+                <SvgIcon icon="token" size={12} className={s.tokenIcon} />
               </div>
               <p className={s.value}>{dao?.amount}</p>
             </div>
@@ -62,12 +62,15 @@ const DaoDetailPopup: React.FC<DaoDetailPopupProps> = ({
                 }}
               >
                 <p className={s.name}>Council</p>
-                <p className={s.value}>{dao?.members.length}</p>
+                <div className={s.valueRow}>
+                  <p className={s.value}>{dao?.members.length}</p>
+                  <SvgIcon icon="info" size={18} className={s.infoIcon} />
+                </div>
               </button>
               <div className={s.dataWrapper}>
                 <div className={s.nameWrapper}>
                   <p className={s.name}>Bond</p>
-                  <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+                  <SvgIcon icon="token" size={12} className={s.tokenIcon} />
                 </div>
                 <p className={s.value}>{dao?.bond}</p>
               </div>
