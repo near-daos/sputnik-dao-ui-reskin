@@ -119,8 +119,8 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
     const daoUrl = `/dao/${daoId}`;
 
     return (
-      <div>
-        <Link to={daoUrl} className={s.item} key={daoId}>
+      <div key={daoId}>
+        <Link to={daoUrl} className={s.item}>
           {renderName(daoId)}
         </Link>
         <div className={s.proposals}>
@@ -137,7 +137,11 @@ const SearchAutoComplete: React.FC<SearchAutoCompleteProps> = ({
             });
 
             return (
-              <Link to={`${daoUrl}/proposals/${proposalId}`} className={s.item}>
+              <Link
+                to={`${daoUrl}/proposals/${proposalId}`}
+                className={s.item}
+                key={proposalId}
+              >
                 <div>
                   <span className={proposalClassName}>{proposalId}</span>
                   {` ${type} `}

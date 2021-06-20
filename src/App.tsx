@@ -6,7 +6,7 @@ import {
   RouteProps,
   Switch,
 } from 'react-router-dom';
-import debounce from 'lodash.debounce';
+import { debounce } from 'lodash';
 
 import { NearService } from 'services/NearService';
 import { useDispatch, useSelector } from 'react-redux';

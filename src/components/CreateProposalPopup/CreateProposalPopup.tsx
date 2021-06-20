@@ -17,6 +17,7 @@ import { Button, IconButton, SvgIcon, TextField } from '../UILib';
 import { CreateProposalErrors, CreateProposalValues } from './types';
 import { validateSecondStep, validateThirdStep } from './validators';
 import { accountSelector } from '../../redux/selectors';
+import { getValidatorValue } from '../../utils/validators';
 
 export interface CreateProposalPopupProps {
   className?: string;
@@ -79,6 +80,29 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
   const [values, setValues] = useState<CreateProposalValues>(initialValues);
   const [errors, setErrors] = useState<CreateProposalErrors>({});
 
+  const validationConfig = React.useMemo(
+    () => ({
+      link: {
+        // Min description length should be 3 chars. Max description length is 240
+        // chars. It means that max link length is 237 chars. https://app.clickup.com/t/mf6yb4
+        maxLength: 237,
+      },
+      description: {
+        maxLength: () => {
+          const { length } = values.link;
+
+          return 240 - length;
+        },
+        minLength: 3,
+      },
+      purpose: {
+        maxLength: 240,
+        minLength: 3,
+      },
+    }),
+    [values],
+  );
+
   const handleChange = (field: keyof CreateProposalValues, value: string) => {
     if (errors[field]) {
       setErrors({
@@ -100,7 +124,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
   };
 
   const onSubmitSecondStep = () => {
-    const fsecondStepErrors = validateSecondStep(values);
+    const fsecondStepErrors = validateSecondStep(values, validationConfig);
 
     if (Object.keys(fsecondStepErrors).length) {
       setErrors({
@@ -117,7 +141,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
   const onSubmit = async () => {
     if (!type) return;
 
-    const thirdStepErrors = validateThirdStep(values, type);
+    const thirdStepErrors = validateThirdStep(values, type, validationConfig);
 
     if (Object.keys(thirdStepErrors).length) {
       setErrors({
@@ -172,6 +196,180 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
     setType(newType);
   };
 
+  function renderSecondStep() {
+    return (
+      <div className={s.form}>
+        <div>
+          <p className={s.description}>
+            Create a discussion before submitting a proposal here
+          </p>
+          <div className={s.linkWrapper}>
+            <a
+              href="https://gov.near.org/c/10"
+              target="_blank"
+              className={s.link}
+              rel="noreferrer"
+            >
+              https://gov.near.org/c/10
+              <SvgIcon icon="link" className={s.linkIcon} size={24} />
+            </a>
+            <span className={s.linkText}>and use below</span>
+          </div>
+          <TextField
+            name="link"
+            value={values.link}
+            error={errors.link}
+            onChange={(val) => handleChange('link', val)}
+            label="Forum link"
+            className={cn(s.input, s.linkInput)}
+            helperText="Please copy and paste the forum link here"
+            maxLength={getValidatorValue(validationConfig.link.maxLength)}
+          />
+          <TextField
+            name="target"
+            value={values.target}
+            error={errors.target}
+            onChange={(val) => handleChange('target', val.trim())}
+            label="Target"
+            className={s.input}
+            helperText="Recipient NEAR address. For non-payout proposals use your own address."
+          />
+          <TextField
+            name="description"
+            value={values.description}
+            error={errors.description}
+            onChange={(val) => handleChange('description', val)}
+            label="Job/proposal description"
+            multiline
+            maxLength={getValidatorValue(
+              validationConfig.description.maxLength,
+            )}
+            className={s.input}
+          />
+        </div>
+        <div className={s.buttonsWrapper}>
+          <Button
+            size="lg"
+            variant="monochrome"
+            leftElement={<SvgIcon icon="dd-arrow" className={s.arrowIcon} />}
+            className={s.button}
+            onClick={() => {
+              setType(null);
+              setActiveStep(1);
+            }}
+          >
+            Back
+          </Button>
+          <Button size="lg" className={s.button} onClick={onSubmitSecondStep}>
+            Continue
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  function renderThirdStep() {
+    return (
+      <div className={s.form}>
+        <div>
+          {type === ProposalType.Payout && (
+            <TextField
+              type="number"
+              name="payout"
+              value={values.payout}
+              error={errors.payout}
+              onChange={(val) => handleChange('payout', val)}
+              label="Payout"
+              className={s.input}
+              helperText="Show payout in NEAR"
+              rightElement={
+                <SvgIcon icon="token" size={18} className={s.bondTokenIcon} />
+              }
+            />
+          )}
+          {type === ProposalType.ChangePurpose && (
+            <TextField
+              name="purpose"
+              value={values.purpose}
+              error={errors.purpose}
+              multiline
+              onChange={(val) => handleChange('purpose', val)}
+              label="New purpose"
+              className={s.input}
+            />
+          )}
+          {type === ProposalType.ChangeVotePeriod && (
+            <TextField
+              type="number"
+              name="votePeriod"
+              value={values.votePeriod}
+              error={errors.votePeriod}
+              onChange={(val) => handleChange('votePeriod', val)}
+              label="New Vote Period"
+              className={s.input}
+            />
+          )}
+          <div className={s.bondWrapper}>
+            <p className={s.bondTitle}>Bond</p>
+            <p className={s.bondValue}>{dao.bond}</p>
+            <SvgIcon icon="token" size={18} className={s.bondTokenIcon} />
+          </div>
+          <p className={s.bondEditionText}>Amount to pay now</p>
+        </div>
+        <div className={s.buttonsWrapper}>
+          <Button
+            size="lg"
+            variant="monochrome"
+            leftElement={<SvgIcon icon="dd-arrow" className={s.arrowIcon} />}
+            className={s.button}
+            onClick={() => {
+              setActiveStep(2);
+            }}
+          >
+            Back
+          </Button>
+          <Button size="lg" className={s.button} onClick={onSubmit}>
+            Continue
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  function renderSteps() {
+    switch (activeStep) {
+      case 1:
+        return (
+          <div className={s.form}>
+            <ul className={s.list}>
+              {proposalKinds.map((item) => (
+                <ProposalTypeItem
+                  key={item}
+                  className={s.typeItem}
+                  label={item}
+                  active={item === type}
+                  onClick={() => handleSelectType(item)}
+                />
+              ))}
+            </ul>
+            <Button
+              size="lg"
+              className={s.singleButton}
+              onClick={onSubmitFirstStep}
+            >
+              Continue
+            </Button>
+          </div>
+        );
+      case 2:
+        return renderSecondStep();
+      case 3:
+        return renderThirdStep();
+      default:
+        return null;
+    }
+  }
+
   return (
     <div className={cn(s.root, className)}>
       <div className={s.wrapper}>
@@ -205,171 +403,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
             className={s.desktopClose}
             onClick={onClose}
           />
-          {activeStep === 1 && (
-            <div className={s.form}>
-              <ul className={s.list}>
-                {proposalKinds.map((item) => (
-                  <ProposalTypeItem
-                    key={item}
-                    className={s.typeItem}
-                    label={item}
-                    active={item === type}
-                    onClick={() => handleSelectType(item)}
-                  />
-                ))}
-              </ul>
-              <Button
-                size="lg"
-                className={s.singleButton}
-                onClick={onSubmitFirstStep}
-              >
-                Continue
-              </Button>
-            </div>
-          )}
-          {activeStep === 2 && (
-            <div className={s.form}>
-              <div>
-                <TextField
-                  name="target"
-                  value={values.target}
-                  error={errors.target}
-                  onChange={(val) => handleChange('target', val.trim())}
-                  label="Target"
-                  className={s.input}
-                  helperText="Recipient NEAR address. For non-payout proposals use your own address."
-                />
-                <TextField
-                  name="description"
-                  value={values.description}
-                  error={errors.description}
-                  onChange={(val) => handleChange('description', val)}
-                  label="Job/proposal description"
-                  multiline
-                  maxLength={240}
-                  className={s.input}
-                />
-              </div>
-              <div className={s.buttonsWrapper}>
-                <Button
-                  size="lg"
-                  variant="monochrome"
-                  leftElement={
-                    <SvgIcon icon="dd-arrow" className={s.arrowIcon} />
-                  }
-                  className={s.button}
-                  onClick={() => {
-                    setType(null);
-                    setActiveStep(1);
-                  }}
-                >
-                  Back
-                </Button>
-                <Button
-                  size="lg"
-                  className={s.button}
-                  onClick={onSubmitSecondStep}
-                >
-                  Continue
-                </Button>
-              </div>
-            </div>
-          )}
-          {activeStep === 3 && (
-            <div className={s.form}>
-              <div>
-                <p className={s.description}>
-                  Create a discussion before submitting a proposal here
-                </p>
-                <div className={s.linkWrapper}>
-                  <a
-                    href="https://gov.near.org/c/10"
-                    target="_blank"
-                    className={s.link}
-                    rel="noreferrer"
-                  >
-                    https://gov.near.org/c/10
-                    <SvgIcon icon="link" className={s.linkIcon} size={24} />
-                  </a>
-                  <span className={s.linkText}>and use below</span>
-                </div>
-                <TextField
-                  name="link"
-                  value={values.link}
-                  error={errors.link}
-                  onChange={(val) => handleChange('link', val)}
-                  label="Forum link"
-                  className={cn(s.input, s.linkInput)}
-                  helperText="Please copy and paste the forum link here"
-                />
-                {type === ProposalType.Payout && (
-                  <TextField
-                    type="number"
-                    name="payout"
-                    value={values.payout}
-                    error={errors.payout}
-                    onChange={(val) => handleChange('payout', val)}
-                    label="Payout"
-                    className={s.input}
-                    helperText="Show payout in NEAR"
-                    rightElement={
-                      <SvgIcon
-                        icon="token"
-                        size={18}
-                        className={s.bondTokenIcon}
-                      />
-                    }
-                  />
-                )}
-                {type === ProposalType.ChangePurpose && (
-                  <TextField
-                    name="purpose"
-                    value={values.purpose}
-                    error={errors.purpose}
-                    multiline
-                    onChange={(val) => handleChange('purpose', val)}
-                    label="New purpose"
-                    className={s.input}
-                  />
-                )}
-                {type === ProposalType.ChangeVotePeriod && (
-                  <TextField
-                    type="number"
-                    name="votePeriod"
-                    value={values.votePeriod}
-                    error={errors.votePeriod}
-                    onChange={(val) => handleChange('votePeriod', val)}
-                    label="New Vote Period"
-                    className={s.input}
-                  />
-                )}
-                <div className={s.bondWrapper}>
-                  <p className={s.bondTitle}>Bond</p>
-                  <p className={s.bondValue}>{dao.bond}</p>
-                  <SvgIcon icon="token" size={18} className={s.bondTokenIcon} />
-                </div>
-                <p className={s.bondEditionText}>Amount to pay now</p>
-              </div>
-              <div className={s.buttonsWrapper}>
-                <Button
-                  size="lg"
-                  variant="monochrome"
-                  leftElement={
-                    <SvgIcon icon="dd-arrow" className={s.arrowIcon} />
-                  }
-                  className={s.button}
-                  onClick={() => {
-                    setActiveStep(2);
-                  }}
-                >
-                  Back
-                </Button>
-                <Button size="lg" className={s.button} onClick={onSubmit}>
-                  Continue
-                </Button>
-              </div>
-            </div>
-          )}
+          {renderSteps()}
         </div>
       </div>
     </div>
