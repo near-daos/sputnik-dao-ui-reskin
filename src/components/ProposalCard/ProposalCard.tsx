@@ -16,7 +16,11 @@ import numberReduction from 'utils/numberReduction';
 
 import { useSelector } from 'react-redux';
 import { accountSelector } from 'redux/selectors';
-import { convertDuration } from 'utils';
+import {
+  checkIfAccountVoted,
+  convertDuration,
+  getDescriptionAndLink,
+} from 'utils';
 import { Link } from 'react-router-dom';
 import s from './ProposalCard.module.scss';
 import { getTitle } from './utils';
@@ -32,37 +36,33 @@ export interface ProposalCardProps {
 }
 
 const ProposalCard: React.FC<ProposalCardProps> = ({
-  className,
-  daoName,
-  proposal,
-  isMember = false,
-  onApprove,
-  onReject,
-  onFinalize,
-}) => {
+                                                     className,
+                                                     daoName,
+                                                     proposal,
+                                                     isMember = false,
+                                                     onApprove,
+                                                     onReject,
+                                                     onFinalize,
+                                                   }) => {
   const media = useMedia();
   const accountId = useSelector(accountSelector);
 
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
-  const isNotExpired = votePeriodEnd < new Date();
+  const isExpired =
+    votePeriodEnd < new Date() && proposal.status === ProposalStatus.Vote;
 
-  const [description, link] = proposal.description.split('/t/');
-  const linkEl = !!link && (
-    <a
-      target="_blank"
-      href={`https://gov.near.org/t/${link}`}
-      rel="nofollow noreferrer"
-    >
-      {`https://gov.near.org/t/${link}`}
-    </a>
+  const [description, linkEl] = getDescriptionAndLink(
+    proposal.description,
+    s.proposalLink,
   );
+  const [isVoted, vote] = checkIfAccountVoted(proposal, accountId);
 
   const cornerColorsMap = {
     [ProposalStatus.Success]: PixelCornerColors.Green,
     [ProposalStatus.Reject]: PixelCornerColors.Red,
-    [ProposalStatus.Vote]: PixelCornerColors.Pink,
+    [ProposalStatus.Vote]: PixelCornerColors.Yellow,
     [ProposalStatus.Delay]: PixelCornerColors.Yellow,
-    [ProposalStatus.Fail]: PixelCornerColors.Red,
+    [ProposalStatus.Fail]: PixelCornerColors.Pink,
   };
 
   return (
@@ -73,7 +73,9 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
       />
       <div className={s.wrapper}>
         <PixelCorner
-          color={cornerColorsMap[proposal.status]}
+          color={
+            cornerColorsMap[isExpired ? ProposalStatus.Reject : proposal.status]
+          }
           className={s.corner}
         />
         <div className={s.header}>
@@ -81,12 +83,14 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
             className={cn(s.statusText, {
               [s.approved]: proposal.status === ProposalStatus.Success,
               [s.rejected]: proposal.status === ProposalStatus.Reject,
-              [s.inProgress]: proposal.status === ProposalStatus.Vote,
+              [s.inProgress]:
+              !isExpired && proposal.status === ProposalStatus.Vote,
               [s.delayed]: proposal.status === ProposalStatus.Delay,
               [s.fail]: proposal.status === ProposalStatus.Fail,
+              [s.rejected]: isExpired,
             })}
           >
-            {proposal.status}
+            {isExpired ? 'Expired' : proposal.status}
           </p>
           <p className={s.name}>
             Proposal ID: <span className={s.value}>{proposal.id}</span>
@@ -107,28 +111,34 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
             <div className={s.payoutWrapper}>
               <div className={s.payoutName}>
                 <p className={cn(s.name, s.payoutTitle)}>Payout</p>{' '}
-                <SvgIcon icon="token" size={10} className={s.tokenIcon} />
+                <SvgIcon icon="token" size={12} className={s.tokenIcon} />
               </div>
               <p className={s.payoutValue}>{proposal.kind.amount}</p>
             </div>
           )}
-          {proposal.kind.type === ProposalType.ChangePurpose && (
-            <div className={s.proposerWrapper}>
-              <p className={s.name}>Purpose:</p>
-              <p className={s.value}>{proposal.kind.purpose}</p>
-            </div>
-          )}
+          {/* {proposal.kind.type === ProposalType.ChangePurpose && ( */}
+          <div className={s.proposerWrapper}>
+            <p className={s.name}>Purpose:</p>
+            <p className={s.value}>
+              {proposal.kind.type === ProposalType.ChangePurpose
+                ? proposal.kind.purpose
+                : proposal.proposer}
+            </p>
+          </div>
+          {/* )} */}
         </div>
       </div>
 
-      <div className={s.buttonWrapper}>
-        {isMember && (
+      {!isVoted && (
+        <div className={s.buttonWrapper}>
           <Button
             size={media.mobile ? 'xs' : 'sm'}
             variant="outline"
             className={s.button}
             onClick={onApprove}
-            disabled={isNotExpired || proposal.status !== ProposalStatus.Vote}
+            disabled={
+              isExpired || proposal.status !== ProposalStatus.Vote || !isMember
+            }
           >
             <>
               Approve{' '}
@@ -137,10 +147,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
               </span>
             </>
           </Button>
-        )}
-        {proposal.proposer === accountId &&
-          votePeriodEnd < new Date() &&
-          proposal.status === ProposalStatus.Vote && (
+          {proposal.proposer === accountId && isExpired && (
             <Button
               size={media.mobile ? 'xs' : 'sm'}
               variant="outline"
@@ -150,12 +157,14 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
               Finalise
             </Button>
           )}
-        {isMember && (
+
           <Button
             size={media.mobile ? 'xs' : 'sm'}
             variant="outline"
             className={s.button}
-            disabled={isNotExpired || proposal.status !== ProposalStatus.Vote}
+            disabled={
+              isExpired || proposal.status !== ProposalStatus.Vote || !isMember
+            }
             onClick={onReject}
           >
             <>
@@ -165,8 +174,40 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
               </span>
             </>
           </Button>
-        )}
-      </div>
+        </div>
+      )}
+      {isVoted && (
+        <div className={s.voteDetailsWrapper}>
+          <div className={s.voteStatusWrapper}>
+            {vote ? (
+              <>
+                <p className={cn(s.voteStatus, s.showDesktop)}>
+                  You have approved this proposal
+                </p>
+                <p className={cn(s.voteStatus, s.hideDesktop)}>You approved</p>
+                <SvgIcon icon="accept" size={26} className={s.bigAcceptIcon} />
+              </>
+            ) : (
+              <>
+                <p className={cn(s.voteStatus, s.showDesktop)}>
+                  You have rejected this proposal
+                </p>
+                <p className={cn(s.voteStatus, s.hideDesktop)}>You rejected</p>
+                <SvgIcon
+                  icon="decline"
+                  size={26}
+                  className={s.bigDeclineIcon}
+                />
+              </>
+            )}
+          </div>
+          <SvgIcon icon="accept" size={18} className={s.smallAcceptIcon} />
+          {numberReduction(proposal.voteYes)}
+          <div className={s.border} />
+          <SvgIcon icon="decline" size={18} className={s.smallDeclineIcon} />
+          {numberReduction(proposal.voteNo)}
+        </div>
+      )}
     </div>
   );
 };
