@@ -36,14 +36,14 @@ export interface ProposalCardProps {
 }
 
 const ProposalCard: React.FC<ProposalCardProps> = ({
-                                                     className,
-                                                     daoName,
-                                                     proposal,
-                                                     isMember = false,
-                                                     onApprove,
-                                                     onReject,
-                                                     onFinalize,
-                                                   }) => {
+  className,
+  daoName,
+  proposal,
+  isMember = false,
+  onApprove,
+  onReject,
+  onFinalize,
+}) => {
   const media = useMedia();
   const accountId = useSelector(accountSelector);
 
@@ -84,7 +84,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
               [s.approved]: proposal.status === ProposalStatus.Success,
               [s.rejected]: proposal.status === ProposalStatus.Reject,
               [s.inProgress]:
-              !isExpired && proposal.status === ProposalStatus.Vote,
+                !isExpired && proposal.status === ProposalStatus.Vote,
               [s.delayed]: proposal.status === ProposalStatus.Delay,
               [s.fail]: proposal.status === ProposalStatus.Fail,
               [s.rejected]: isExpired,
