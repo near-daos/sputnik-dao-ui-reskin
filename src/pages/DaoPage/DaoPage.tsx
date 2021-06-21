@@ -53,11 +53,16 @@ export const DaoPage: React.FC = () => {
   }, [daoName]);
 
   useEffect(() => {
+    const DEFAULT_LIMIT = 50;
+
     if (!numberOfProposals) return;
 
     setProposalsLoading(true);
 
-    NearService.getProposals(params.id, Math.max(numberOfProposals - offset, 0))
+    const newOffset = numberOfProposals - offset;
+    const limit = newOffset < 0 ? DEFAULT_LIMIT + newOffset : DEFAULT_LIMIT;
+
+    NearService.getProposals(params.id, Math.max(newOffset, 0), limit)
       .then((response) => {
         setProposals((prev) => [...prev, ...response]);
       })
