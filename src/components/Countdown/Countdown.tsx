@@ -5,12 +5,13 @@ import ReactCountdown, { zeroPad, CountdownRenderProps } from 'react-countdown';
 import s from './Countdown.module.scss';
 
 interface CountdownProps {
+  hidden?: boolean;
   className?: string;
   date: Date | number | string;
 }
 
 export const Countdown: FC<CountdownProps> = (props) => {
-  const { date, className } = props;
+  const { date, hidden, className } = props;
 
   function renderTimeSlot(slot: number, index: number, slots: number[]) {
     const delimiter = index < slots.length - 1 ? ':' : '';
@@ -30,7 +31,7 @@ export const Countdown: FC<CountdownProps> = (props) => {
   function renderer(renderProps: CountdownRenderProps) {
     const { days, hours, minutes, seconds, completed } = renderProps;
 
-    if (completed) {
+    if (completed || hidden) {
       return null;
     }
 

@@ -102,7 +102,10 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
             >
               {isExpired ? 'Expired' : proposal.status}
             </p>
-            <Countdown date={votePeriodEnd} />
+            <Countdown
+              date={votePeriodEnd}
+              hidden={proposal.status !== ProposalStatus.Vote}
+            />
           </div>
           <p className={s.name}>
             Proposal ID: <span className={s.value}>{proposal.id}</span>
