@@ -1,6 +1,7 @@
 /* eslint-disable no-bitwise */
 import React from 'react';
 import cn from 'classnames';
+import { useHistory } from 'react-router-dom';
 
 import {
   Button,
@@ -21,9 +22,10 @@ import {
   convertDuration,
   getDescriptionAndLink,
 } from 'utils';
-import { Link } from 'react-router-dom';
-import s from './ProposalCard.module.scss';
 import { getTitle } from './utils';
+import { Countdown } from '../Countdown';
+
+import s from './ProposalCard.module.scss';
 
 export interface ProposalCardProps {
   className?: string;
@@ -45,6 +47,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
   onFinalize,
 }) => {
   const media = useMedia();
+  const history = useHistory();
   const accountId = useSelector(accountSelector);
 
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
@@ -65,12 +68,18 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
     [ProposalStatus.Fail]: PixelCornerColors.Pink,
   };
 
+  function onCardClick() {
+    history.push(`/dao/${proposal.daoId}/proposals/${proposal.id}`);
+  }
+
   return (
-    <div className={cn(s.root, className)}>
-      <Link
-        className={s.link}
-        to={`/dao/${proposal.daoId}/proposals/${proposal.id}`}
-      />
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onCardClick}
+      onKeyPress={onCardClick}
+      className={cn(s.root, className)}
+    >
       <div className={s.wrapper}>
         <PixelCorner
           color={
@@ -79,19 +88,22 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
           className={s.corner}
         />
         <div className={s.header}>
-          <p
-            className={cn(s.statusText, {
-              [s.approved]: proposal.status === ProposalStatus.Success,
-              [s.rejected]: proposal.status === ProposalStatus.Reject,
-              [s.inProgress]:
-                !isExpired && proposal.status === ProposalStatus.Vote,
-              [s.delayed]: proposal.status === ProposalStatus.Delay,
-              [s.fail]: proposal.status === ProposalStatus.Fail,
-              [s.rejected]: isExpired,
-            })}
-          >
-            {isExpired ? 'Expired' : proposal.status}
-          </p>
+          <div>
+            <p
+              className={cn(s.statusText, {
+                [s.approved]: proposal.status === ProposalStatus.Success,
+                [s.rejected]: proposal.status === ProposalStatus.Reject,
+                [s.inProgress]:
+                  !isExpired && proposal.status === ProposalStatus.Vote,
+                [s.delayed]: proposal.status === ProposalStatus.Delay,
+                [s.fail]: proposal.status === ProposalStatus.Fail,
+                [s.rejected]: isExpired,
+              })}
+            >
+              {isExpired ? 'Expired' : proposal.status}
+            </p>
+            <Countdown date={votePeriodEnd} />
+          </div>
           <p className={s.name}>
             Proposal ID: <span className={s.value}>{proposal.id}</span>
           </p>

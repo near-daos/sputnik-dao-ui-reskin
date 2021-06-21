@@ -5,10 +5,11 @@ import { useHistory, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import { accountSelector, daoSelector } from 'redux/selectors';
 
-import { Button, Chip, SvgIcon, Tooltip } from 'components/UILib';
+import { Countdown } from 'components';
 import { getTitle } from 'components/ProposalCard/utils';
 import { ButtonProps } from 'components/UILib/Button/Button';
 import { VotedMembersPopup } from 'components/VotedMembersPopup';
+import { Button, Chip, SvgIcon, Tooltip } from 'components/UILib';
 
 import useMedia from 'hooks/use-media';
 
@@ -236,12 +237,15 @@ export const ProposalPage: React.FC = () => {
           </div>
         </div>
 
-        <Chip
-          className={s.status}
-          label={getStatusText(proposal)}
-          color={getStatus(proposal)}
-          active
-        />
+        <div className={s.statusContainer}>
+          <Chip
+            className={s.status}
+            label={getStatusText(proposal)}
+            color={getStatus(proposal)}
+            active
+          />
+          <Countdown date={votePeriodEnd} className={s.countdown} />
+        </div>
 
         <div className={s.content}>
           <header className={s.header}>
