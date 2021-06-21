@@ -100,10 +100,8 @@
     margin-top: functions.calc-rem(8);
   }
 
-
   @include media.desktop {
-    justify-content: flex-start;
-    //grid-column: 1/2;
+    justify-content: space-between;
   }
 }
 

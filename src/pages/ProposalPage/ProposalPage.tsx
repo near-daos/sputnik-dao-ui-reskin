@@ -171,8 +171,13 @@ export const ProposalPage: React.FC = () => {
 
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
   const isNotExpired = votePeriodEnd < new Date();
+
   const isActionDisabled =
-    isNotExpired || proposal.status !== ProposalStatus.Vote;
+    isNotExpired ||
+    proposal.status !== ProposalStatus.Vote ||
+    !accountId ||
+    !dao?.members.includes(accountId);
+
   const isShowFinalize =
     isNotExpired &&
     proposal.proposer === accountId &&
