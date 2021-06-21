@@ -1,23 +1,39 @@
 import { ProposalType } from 'types/proposal';
 import {
-  validateDescription,
   validateNumber,
   validateTarget,
+  validateForumLink,
+  validateDescription,
 } from 'utils/validators';
-import { CreateProposalValues, CreateProposalErrors } from './types';
+import {
+  CreateProposalValues,
+  CreateProposalErrors,
+  CreateProposalValidation,
+  CreateProposalFormValidation,
+} from './types';
 
 export const validateSecondStep = (
   values: CreateProposalValues,
+  validationObj: CreateProposalFormValidation,
 ): CreateProposalErrors => {
-  const errors: CreateProposalErrors = {};
+  const config: {
+    method: (val: string, validationObj: CreateProposalValidation) => string;
+    key: keyof CreateProposalValues;
+  }[] = [
+    { method: validateForumLink, key: 'link' },
+    { method: validateTarget, key: 'target' },
+    { method: validateDescription, key: 'description' },
+  ];
 
-  if (!validateTarget(values.target)) {
-    errors.target = 'User account not valid';
-  }
+  const errors: CreateProposalErrors = config.reduce((acc, { method, key }) => {
+    const errorMsg = method(values[key], validationObj[key] || {});
 
-  if (!validateDescription(values.description)) {
-    errors.description = 'Please enter between 3 and 240 chars';
-  }
+    if (errorMsg) {
+      acc[key] = errorMsg;
+    }
+
+    return acc;
+  }, {} as Record<string, string>);
 
   return errors;
 };
@@ -25,6 +41,7 @@ export const validateSecondStep = (
 export const validateThirdStep = (
   values: CreateProposalValues,
   type: ProposalType,
+  validationObj: CreateProposalFormValidation,
 ): CreateProposalErrors => {
   const errors: CreateProposalErrors = {};
 
@@ -32,11 +49,15 @@ export const validateThirdStep = (
   //   errors.link = 'Wrong format. Include a valid link including https://';
   // }
 
-  if (
-    type === ProposalType.ChangePurpose &&
-    !validateDescription(values.purpose)
-  ) {
-    errors.purpose = 'Please enter between 3 and 240 chars';
+  if (type === ProposalType.ChangePurpose) {
+    const error = validateDescription(
+      values.purpose,
+      validationObj.purpose || {},
+    );
+
+    if (error) {
+      errors.purpose = error;
+    }
   }
 
   if (
