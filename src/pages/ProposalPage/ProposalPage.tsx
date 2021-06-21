@@ -105,7 +105,7 @@ export const ProposalPage: React.FC = () => {
   const dao = useSelector<StoreState, DaoItem | null>(
     (state) => daoSelector(state, params.daoId) || null,
   );
-  const [proposal, setPropsoal] = useState<Proposal | null>(null);
+  const [proposal, setProposal] = useState<Proposal | null>(null);
   const accountId = useSelector(accountSelector);
 
   const [firstTenMembers] = useState<string[]>(
@@ -129,7 +129,7 @@ export const ProposalPage: React.FC = () => {
   };
 
   useEffect(() => {
-    NearService.getProposal(daoId, proposalId).then(setPropsoal);
+    NearService.getProposal(daoId, proposalId).then(setProposal);
   }, [daoId, proposalId]);
 
   useEffect(() => {
@@ -244,7 +244,11 @@ export const ProposalPage: React.FC = () => {
             color={getStatus(proposal)}
             active
           />
-          <Countdown date={votePeriodEnd} className={s.countdown} />
+          <Countdown
+            date={votePeriodEnd}
+            className={s.countdown}
+            hidden={proposal.status !== ProposalStatus.Vote}
+          />
         </div>
 
         <div className={s.content}>
