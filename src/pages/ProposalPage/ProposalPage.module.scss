@@ -84,8 +84,19 @@
   transition: transform 0.35s ease-in-out;
 }
 
-.status {
+.statusContainer {
+  align-items: flex-end;
+  display: flex;
+
   margin-top: functions.calc-rem(40);
+
+  .countdown {
+    margin-bottom: functions.calc-rem(3);
+    margin-left: functions.calc-rem(16);
+  }
+}
+
+.status {
   pointer-events: none;
 }
 

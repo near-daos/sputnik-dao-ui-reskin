@@ -5,6 +5,7 @@
 
 .root {
   background-color: var(--theme-proposal-card-bg);
+  cursor: pointer;
   display: flex;
   filter: var(--theme-proposal-card-filter-shadow);
   flex-direction: column;
@@ -214,14 +215,6 @@
 .buttonTextCount {
   @extend %body-1;
   color: var(--theme-proposal-card-additional-text);
-}
-
-.link {
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
 }
 
 .proposalLink {
