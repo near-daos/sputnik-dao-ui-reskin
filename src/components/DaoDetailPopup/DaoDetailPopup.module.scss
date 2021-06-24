@@ -149,6 +149,7 @@
 
 .purpose {
   @extend %body-2;
+  word-break: break-all;
 
   a {
     @include truncate();
