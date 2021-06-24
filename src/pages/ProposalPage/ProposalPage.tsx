@@ -257,6 +257,17 @@ export const ProposalPage: React.FC = () => {
 
             {/* {isMember && ( */}
 
+            {isShowFinalize && (
+              <Button
+                size="sm"
+                variant="outline"
+                className={cn(s.action, s.hideDesktop)}
+                onClick={handleFinalize}
+              >
+                Finalise
+              </Button>
+            )}
+
             {!isVoted && (
               <div className={s.actions}>
                 <Tooltip
@@ -281,6 +292,17 @@ export const ProposalPage: React.FC = () => {
                     </p>
                   ))}
                 </Tooltip>
+
+                {isShowFinalize && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className={cn(s.action, s.hideMobile)}
+                    onClick={handleFinalize}
+                  >
+                    Finalise
+                  </Button>
+                )}
 
                 <Tooltip
                   className={s.action}
