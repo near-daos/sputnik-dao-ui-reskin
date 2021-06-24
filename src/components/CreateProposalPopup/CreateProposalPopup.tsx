@@ -290,6 +290,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
               onChange={(val) => handleChange('purpose', val)}
               label="New purpose"
               className={s.input}
+              maxLength={getValidatorValue(validationConfig.purpose.maxLength)}
             />
           )}
           {type === ProposalType.ChangeVotePeriod && (
