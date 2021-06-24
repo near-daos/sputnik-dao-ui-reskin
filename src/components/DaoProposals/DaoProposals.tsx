@@ -1,16 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { isEmpty } from 'lodash';
 import cn from 'classnames';
 
 import SearchBar from 'components/SearchBar';
 import { ProposalCard } from 'components/ProposalCard';
-import { Chip, ChipProps, Loader, Select } from 'components/UILib';
+import { Loader, Select } from 'components/UILib';
 
 import { NearService } from 'services/NearService';
 
 import { DaoItem } from 'types/dao';
-import { Proposal, ProposalStatus } from 'types/proposal';
+import { Proposal } from 'types/proposal';
 
 import { accountSelector } from 'redux/selectors';
 
@@ -18,20 +19,17 @@ import {
   countFailedProposals,
   countInVotingProposals,
   countApprovedProposals,
-  isFailedProposal,
-  isInVotingProposal,
-  isApprovedProposal,
-  checkIfAccountVoted,
 } from 'utils';
 
-import s from './DaoProposals.module.scss';
+import {
+  ProposalFilterOption,
+  ProposalSort,
+  ProposalSortOption,
+} from './types';
+import { ChipFilter } from './components/ChipFilter';
+import { filterProposals, searchProposals, sortProposals } from './utils';
 
-export type ProposalFilterOption = {
-  label: string;
-  color: ChipProps['color'];
-  count: number;
-  value: 'Voting' | 'Approved' | 'Failed' | null;
-};
+import s from './DaoProposals.module.scss';
 
 const getFilterOptions = (
   proposals: Proposal[],
@@ -63,37 +61,12 @@ const getFilterOptions = (
   },
 ];
 
-const getWeight = (proposal: Proposal, account: string | null) => {
-  let weight = 0;
-  const [isVoted] = checkIfAccountVoted(proposal, account);
-
-  if (isInVotingProposal(proposal) && isVoted) {
-    weight = 3;
-  } else if (isInVotingProposal(proposal) && !isVoted) {
-    weight = 2;
-  } else if (isApprovedProposal(proposal)) {
-    weight = 1;
-  }
-
-  return weight;
-};
-
 export interface DaoProposalsProps {
   className?: string;
   proposals: Array<Proposal>;
   dao?: DaoItem;
   loading?: boolean;
 }
-
-enum ProposalSort {
-  Oldest = 'oldest',
-  Newest = 'newest',
-}
-
-type ProposalSortOption = {
-  label: string;
-  value: ProposalSort;
-};
 
 const sortOptions: ProposalSortOption[] = [
   { label: 'Newest', value: ProposalSort.Newest },
@@ -107,80 +80,18 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
   loading = false,
 }) => {
   const location = useLocation();
-  const [filteredProposals, setFilteredProposals] = useState<Proposal[]>([]);
-  const [sortedProposals, setSortedProposals] = useState<Proposal[]>([]);
-  const [resultingProposals, setResultingProposals] = useState<Proposal[]>([]);
   const filterOptions = useMemo(
     () => getFilterOptions(proposals, dao?.numberOfProposals || 0),
     [proposals, dao?.numberOfProposals],
   );
+
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<ProposalSortOption>(sortOptions[0]);
-  const [filters, setFilters] = useState<ProposalFilterOption>(
-    filterOptions[0],
-  );
+  const [filter, setFilter] = useState<ProposalFilterOption>(filterOptions[0]);
 
   const account = useSelector(accountSelector);
 
   const isMember = dao?.members.includes(account || '');
-
-  useEffect(() => {
-    if (filters.value === null) {
-      setFilteredProposals(proposals);
-
-      return;
-    }
-
-    setFilteredProposals(
-      proposals.filter((proposal) => {
-        switch (filters.value) {
-          case 'Approved':
-            return isApprovedProposal(proposal);
-          case 'Voting':
-            return isInVotingProposal(proposal);
-          case 'Failed':
-            return isFailedProposal(proposal);
-          default:
-            return true;
-        }
-      }),
-    );
-  }, [account, filters, proposals]);
-
-  useEffect(() => {
-    if (!query) {
-      setResultingProposals(filteredProposals);
-
-      return;
-    }
-
-    const searched = filteredProposals.filter(
-      (proposal) =>
-        proposal.id.toString() === query ||
-        proposal.description.indexOf(query) !== -1 ||
-        proposal.target.indexOf(query) !== -1,
-    );
-
-    setResultingProposals(searched);
-  }, [filteredProposals, query]);
-
-  useEffect(() => {
-    if (filters.value === null) {
-      const sorted = [...resultingProposals].sort(
-        (a, b) => getWeight(b, account) - getWeight(a, account),
-      );
-
-      setSortedProposals(sorted);
-
-      return;
-    }
-
-    setSortedProposals(
-      [...resultingProposals].sort((a, b) =>
-        sort.value === ProposalSort.Oldest ? a.id - b.id : b.id - a.id,
-      ),
-    );
-  }, [account, filters.value, proposals, resultingProposals, sort]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -191,27 +102,76 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
     }
   }, [location]);
 
-  const handleChangeFilters = (filterOption: ProposalFilterOption) => {
-    setFilters(filterOption);
-  };
+  const handleChangeFilters = useCallback(
+    (filterOption: ProposalFilterOption) => {
+      setFilter(filterOption);
+    },
+    [],
+  );
 
-  const handleApprove = (proposalId: number) => {
-    if (dao) {
-      NearService.vote(dao.id, proposalId, 'Yes');
-    }
-  };
+  const handleApprove = useCallback(
+    (proposalId: number) => {
+      if (dao) {
+        NearService.vote(dao.id, proposalId, 'Yes');
+      }
+    },
+    [dao],
+  );
 
-  const handleReject = (proposalId: number) => {
-    if (dao) {
-      NearService.vote(dao.id, proposalId, 'No');
-    }
-  };
+  const handleReject = useCallback(
+    (proposalId: number) => {
+      if (dao) {
+        NearService.vote(dao.id, proposalId, 'No');
+      }
+    },
+    [dao],
+  );
 
-  const handleFinalize = (proposalId: number) => {
-    if (dao) {
-      NearService.finalize(dao.id, proposalId);
+  const handleFinalize = useCallback(
+    (proposalId: number) => {
+      if (dao) {
+        NearService.finalize(dao.id, proposalId);
+      }
+    },
+    [dao],
+  );
+
+  function renderProposals(finalProposals: Proposal[]) {
+    return (
+      <div className={s.proposalList}>
+        <Loader className={cn(s.loader, { [s.showLoader]: loading })} />
+        {finalProposals.map((proposal) => (
+          <ProposalCard
+            key={proposal.id}
+            proposal={proposal}
+            isMember={isMember}
+            onApprove={handleApprove}
+            onReject={handleReject}
+            onFinalize={handleFinalize}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  function renderPageContent() {
+    let finalProposals = proposals;
+
+    finalProposals = searchProposals(finalProposals, query);
+    finalProposals = filterProposals(finalProposals, filter);
+    finalProposals = sortProposals(finalProposals, account, filter, sort);
+
+    if (!loading && isEmpty(finalProposals)) {
+      return (
+        <div className={s.emptyWrapper}>
+          <div className={s.emptyImage} />
+          <p className={s.emptyText}>No proposals here</p>
+        </div>
+      );
     }
-  };
+
+    return renderProposals(finalProposals);
+  }
 
   return (
     <section className={cn(s.root, className)}>
@@ -221,18 +181,16 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
         onChange={setQuery}
         placeholder="Search for proposal, target, ID or proposer"
         size="md"
+        debounceTime={300}
       />
       <div className={s.panel}>
         <div className={s.filters}>
           {filterOptions.map((filterOption) => (
-            <Chip
+            <ChipFilter
               key={filterOption.label}
-              size="lg"
-              active={filters.value === filterOption.value}
-              label={filterOption.label}
-              color={filterOption.color}
-              amount={filterOption.count}
-              onClick={() => handleChangeFilters(filterOption)}
+              filterOption={filterOption}
+              onClick={handleChangeFilters}
+              active={filter.value === filterOption.value}
             />
           ))}
         </div>
@@ -246,25 +204,7 @@ const DaoProposals: React.FC<DaoProposalsProps> = ({
           onChange={setSort}
         />
       </div>
-      {!loading && sortedProposals.length === 0 && (
-        <div className={s.emptyWrapper}>
-          <div className={s.emptyImage} />
-          <p className={s.emptyText}>No proposals here</p>
-        </div>
-      )}
-      <div className={s.proposalList}>
-        <Loader className={cn(s.loader, { [s.showLoader]: loading })} />
-        {sortedProposals.map((proposal) => (
-          <ProposalCard
-            key={proposal.id}
-            proposal={proposal}
-            isMember={isMember}
-            onApprove={() => handleApprove(proposal.id)}
-            onReject={() => handleReject(proposal.id)}
-            onFinalize={() => handleFinalize(proposal.id)}
-          />
-        ))}
-      </div>
+      {renderPageContent()}
     </section>
   );
 };
