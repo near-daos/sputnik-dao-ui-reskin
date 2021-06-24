@@ -94,6 +94,7 @@
 
 .value {
   @extend %title-7;
+  @include mixins.truncate;
   color: var(--theme-text-color);
 
   @include media.desktop {
