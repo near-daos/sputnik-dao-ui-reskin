@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -23,9 +23,12 @@ import { NearService } from 'services/NearService';
 import { login } from 'redux/actions';
 import { appConfig, nearConfig } from 'config';
 
+import { NOT_FOUND_PAGE } from '../../constants/routingConstants';
+
 import s from './DaoPage.module.scss';
 
 export const DaoPage: React.FC = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const params = useParams<{ id: string }>();
   const [isShowCreateProposal, setIsShowCreateProposal] = useState(false);
@@ -45,6 +48,10 @@ export const DaoPage: React.FC = () => {
 
   const daoName = dao?.id.replace(`.${nearConfig.contractName}`, '');
   const numberOfProposals = dao?.numberOfProposals || 0;
+
+  if (!dao) {
+    history.push(NOT_FOUND_PAGE);
+  }
 
   useEffect(() => {
     if (daoName) {

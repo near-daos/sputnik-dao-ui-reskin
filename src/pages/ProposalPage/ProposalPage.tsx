@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import cn from 'classnames';
@@ -23,6 +23,8 @@ import { convertDuration, getDescriptionAndLink } from 'utils';
 import numberReduction from 'utils/numberReduction';
 
 import { appConfig, nearConfig } from 'config';
+
+import { NOT_FOUND_PAGE } from '../../constants/routingConstants';
 
 import s from './ProposalPage.module.scss';
 
@@ -105,6 +107,8 @@ export const ProposalPage: React.FC = () => {
   const dao = useSelector<StoreState, DaoItem | null>(
     (state) => daoSelector(state, params.daoId) || null,
   );
+
+  const [proposalLoaded, setProposalLoaded] = useState(false);
   const [proposal, setProposal] = useState<Proposal | null>(null);
   const accountId = useSelector(accountSelector);
 
@@ -128,9 +132,24 @@ export const ProposalPage: React.FC = () => {
     history.push(`/dao/${daoId}`);
   };
 
+  const navigateToNotFoundPage = useCallback(
+    () => history.push(NOT_FOUND_PAGE),
+    [history],
+  );
+
   useEffect(() => {
-    NearService.getProposal(daoId, proposalId).then(setProposal);
-  }, [daoId, proposalId]);
+    if (proposalLoaded && !proposal) {
+      navigateToNotFoundPage();
+    }
+  }, [proposal, proposalLoaded, navigateToNotFoundPage]);
+
+  useEffect(() => {
+    NearService.getProposal(daoId, proposalId)
+      .then(setProposal)
+      .finally(() => {
+        setProposalLoaded(true);
+      });
+  }, [daoId, proposalId, navigateToNotFoundPage]);
 
   useEffect(() => {
     const daoName = dao?.id.replace(`.${nearConfig.contractName}`, '');

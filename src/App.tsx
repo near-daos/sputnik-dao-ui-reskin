@@ -24,6 +24,7 @@ import { SelectProposals } from './pages/SelectProposal/SelectProposal';
 import { DaoPage } from './pages/DaoPage/DaoPage';
 import { SearchPage } from './pages/SearchPage';
 import { ProposalPage } from './pages/ProposalPage';
+import { NOT_FOUND_PAGE } from './constants/routingConstants';
 
 import 'normalize.css/normalize.css';
 import 'swiper/swiper.scss';
@@ -139,6 +140,7 @@ const App: React.FC = () => {
               {routes.map((route, i) => (
                 <Route key={String(i)} {...route} />
               ))}
+              <Route path={NOT_FOUND_PAGE} component={Page404} />
               <Redirect exact from="/:daoId" to="/dao/:daoId" />
               <Redirect
                 exact
