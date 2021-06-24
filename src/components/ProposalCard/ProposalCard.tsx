@@ -72,6 +72,26 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
     history.push(`/dao/${proposal.daoId}/proposals/${proposal.id}`);
   }
 
+  function renderPurposeOrProposal() {
+    const {
+      proposer,
+      kind: { type },
+    } = proposal;
+
+    const label = type === ProposalType.ChangePurpose ? 'Purpose' : 'Proposer';
+    const value =
+      proposal.kind.type === ProposalType.ChangePurpose
+        ? proposal.kind.purpose
+        : proposer;
+
+    return (
+      <div className={s.proposerWrapper}>
+        <p className={s.name}>{label}:</p>
+        <p className={s.value}>{value}</p>
+      </div>
+    );
+  }
+
   return (
     <div
       role="button"
@@ -131,16 +151,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
               <p className={s.payoutValue}>{proposal.kind.amount}</p>
             </div>
           )}
-          {/* {proposal.kind.type === ProposalType.ChangePurpose && ( */}
-          <div className={s.proposerWrapper}>
-            <p className={s.name}>Purpose:</p>
-            <p className={s.value}>
-              {proposal.kind.type === ProposalType.ChangePurpose
-                ? proposal.kind.purpose
-                : proposal.proposer}
-            </p>
-          </div>
-          {/* )} */}
+          {renderPurposeOrProposal()}
         </div>
       </div>
 
