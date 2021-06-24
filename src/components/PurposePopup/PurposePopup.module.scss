@@ -93,7 +93,7 @@
 
 .purpose {
   @extend %body-2;
-  hyphens: auto;
+  word-break: break-all;
 
   a {
     @include truncate();
