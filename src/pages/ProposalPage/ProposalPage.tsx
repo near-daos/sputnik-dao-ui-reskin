@@ -212,6 +212,23 @@ export const ProposalPage: React.FC = () => {
 
   const [isVoted, vote] = getVotingData();
 
+  const finaliseButton = (className: string) => {
+    if (isShowFinalize) {
+      return (
+        <Button
+          size="sm"
+          variant="outline"
+          className={cn(s.action, className)}
+          onClick={handleFinalize}
+        >
+          Finalise
+        </Button>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <section className={s.root}>
       <div className={s.container}>
@@ -257,16 +274,7 @@ export const ProposalPage: React.FC = () => {
 
             {/* {isMember && ( */}
 
-            {isShowFinalize && (
-              <Button
-                size="sm"
-                variant="outline"
-                className={cn(s.action, s.hideDesktop)}
-                onClick={handleFinalize}
-              >
-                Finalise
-              </Button>
-            )}
+            {finaliseButton(s.hideDesktop)}
 
             {!isVoted && (
               <div className={s.actions}>
@@ -293,16 +301,7 @@ export const ProposalPage: React.FC = () => {
                   ))}
                 </Tooltip>
 
-                {isShowFinalize && (
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className={cn(s.action, s.hideMobile)}
-                    onClick={handleFinalize}
-                  >
-                    Finalise
-                  </Button>
-                )}
+                {finaliseButton(s.hideMobile)}
 
                 <Tooltip
                   className={s.action}
