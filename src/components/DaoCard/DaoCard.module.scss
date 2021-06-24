@@ -180,15 +180,7 @@
   @include desktop {
     height: functions.calc-rem(100);
   }
-
-  //a {
-  //  @include truncate();
-  //  display: block;
-  //  //max-width: 100%;
-  //
-  //
-  //}
-
+  
   a:hover {
     color: var(--theme-autocomplete-link);
   }
