@@ -93,6 +93,26 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
     }
   }, [onReject, id]);
 
+  function renderPurposeOrProposal() {
+    const {
+      proposer,
+      kind: { type },
+    } = proposal;
+
+    const label = type === ProposalType.ChangePurpose ? 'Purpose' : 'Proposer';
+    const value =
+      proposal.kind.type === ProposalType.ChangePurpose
+        ? proposal.kind.purpose
+        : proposer;
+
+    return (
+      <div className={s.proposerWrapper}>
+        <p className={s.name}>{label}:</p>
+        <p className={s.value}>{value}</p>
+      </div>
+    );
+  }
+
   function renderUserVoteResult() {
     if (vote) {
       return (
@@ -247,14 +267,7 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
               <p className={s.payoutValue}>{proposal.kind.amount}</p>
             </div>
           )}
-          <div className={s.proposerWrapper}>
-            <p className={s.name}>Purpose:</p>
-            <p className={s.value}>
-              {proposal.kind.type === ProposalType.ChangePurpose
-                ? proposal.kind.purpose
-                : proposal.proposer}
-            </p>
-          </div>
+          {renderPurposeOrProposal()}
         </div>
       </div>
 
