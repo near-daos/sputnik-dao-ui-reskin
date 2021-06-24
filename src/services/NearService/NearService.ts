@@ -313,16 +313,22 @@ class NearService {
   public async getProposal(
     contractId: string,
     index: number,
-  ): Promise<Proposal> {
-    const proposal = await this.contractPool
-      .get(contractId)
-      .get_proposal({ id: index });
+  ): Promise<Proposal | null> {
+    try {
+      const proposal = await this.contractPool
+        .get(contractId)
+        .get_proposal({ id: index });
 
-    const proposalMapper = createProposalMapper(contractId);
+      const proposalMapper = createProposalMapper(contractId);
 
-    const result = proposalMapper(proposal, index);
+      const result = proposalMapper(proposal, index);
 
-    return enrichProposalWithEndDate(result);
+      return enrichProposalWithEndDate(result);
+    } catch (e: unknown) {
+      console.log('No such proposal');
+
+      return Promise.resolve(null);
+    }
   }
 
   public async getCouncil(contractId: string): Promise<string[]> {
