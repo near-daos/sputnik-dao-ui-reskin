@@ -11,6 +11,7 @@ import {
 } from 'components/UILib';
 import { useHistory } from 'react-router-dom';
 import { appConfig, nearConfig } from 'config';
+import { renderTextWithUrl } from '../../utils/renderLinkInText';
 import s from './DaoCard.module.scss';
 
 export interface DaoCardProps {
@@ -53,7 +54,12 @@ const DaoCard: React.FC<DaoCardProps> = ({
           <span className={s.contractName}>.{nearConfig.contractName}</span>
         </p>
         <p className={s.label}>Purpose</p>
-        <p className={s.purpose}>{dao.purpose}</p>
+        <p
+          className={s.purpose}
+          dangerouslySetInnerHTML={{
+            __html: renderTextWithUrl(dao.purpose),
+          }}
+        />
         <div className={s.wrapper}>
           <div className={cn(s.container, s.numberOfProposal, s[size])}>
             <p className={s.label}>Number of proposals</p>
