@@ -138,6 +138,7 @@
 .aboutText {
   @extend %body-3;
   @include mixins.truncate-multiline(5);
+  word-break: break-all;
 
   @include media.desktop {
     @include body-2;
