@@ -74,14 +74,14 @@ export const clearNearAuth = (): void => {
 };
 
 export const isFailedProposal = (proposal: Proposal): boolean =>
-  (convertDuration(proposal.votePeriodEnd) < new Date() &&
+  (proposal.votePeriodConvertedEndDate < new Date() &&
     proposal.status === ProposalStatus.Vote) ||
   [ProposalStatus.Delay, ProposalStatus.Fail, ProposalStatus.Reject].includes(
     proposal.status,
   );
 
 export const isInVotingProposal = (proposal: Proposal): boolean =>
-  convertDuration(proposal.votePeriodEnd) >= new Date() &&
+  proposal.votePeriodConvertedEndDate >= new Date() &&
   proposal.status === ProposalStatus.Vote;
 
 export const isApprovedProposal = (proposal: Proposal): boolean =>

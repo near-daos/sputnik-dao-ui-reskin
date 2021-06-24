@@ -20,6 +20,7 @@ import {
 import camelcaseKeys from 'camelcase-keys';
 import { isNotNull } from 'types/guards';
 import { ContractPool } from './ContractPool';
+import { convertDuration } from '../../utils';
 
 export const parseForumUrl = (url: string): string => {
   // let afterSlashChars = id.match(/\/([^\/]+)\/?$/)[1];
@@ -87,6 +88,13 @@ const createProposalMapper = (contractId: string) => (
     { deep: true },
   ) as any) as Proposal;
 };
+
+function enrichProposalWithEndDate(proposal: Proposal) {
+  return {
+    ...proposal,
+    votePeriodConvertedEndDate: convertDuration(proposal.votePeriodEnd),
+  };
+}
 
 class NearService {
   private readonly config: NearConfig;
@@ -292,9 +300,11 @@ class NearService {
 
       const proposalMapper = createProposalMapper(contractId);
 
-      return proposals.map((item: ProposalRaw, index: number) =>
-        proposalMapper(item, offset + index),
-      );
+      return proposals.map((item: ProposalRaw, index: number) => {
+        const proposal = proposalMapper(item, offset + index);
+
+        return enrichProposalWithEndDate(proposal);
+      });
     } catch (err) {
       return [];
     }
@@ -310,7 +320,9 @@ class NearService {
 
     const proposalMapper = createProposalMapper(contractId);
 
-    return proposalMapper(proposal, index);
+    const result = proposalMapper(proposal, index);
+
+    return enrichProposalWithEndDate(result);
   }
 
   public async getCouncil(contractId: string): Promise<string[]> {
