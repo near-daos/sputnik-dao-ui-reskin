@@ -12,7 +12,11 @@ import { MembersPopup } from 'components/MembersPopup';
 import { PurposePopup } from 'components/PurposePopup';
 import { DaoDetailPopup } from 'components/DaoDetailPopup';
 
-import { accountSelector, daoSelector } from 'redux/selectors';
+import {
+  daoSelector,
+  accountSelector,
+  selectDaosLoading,
+} from 'redux/selectors';
 
 import { StoreState } from 'types/store';
 import { Proposal } from 'types/proposal';
@@ -39,6 +43,8 @@ export const DaoPage: React.FC = () => {
   const [isShowDaoDetailPopup, setIsShowDaoDetailPopup] = useState(false);
 
   const account = useSelector(accountSelector);
+  const daosLoading = useSelector(selectDaosLoading);
+
   const dao = useSelector<StoreState, DaoItem | undefined>((state) =>
     daoSelector(state, params.id),
   );
@@ -49,7 +55,7 @@ export const DaoPage: React.FC = () => {
   const daoName = dao?.id.replace(`.${nearConfig.contractName}`, '');
   const numberOfProposals = dao?.numberOfProposals || 0;
 
-  if (!dao) {
+  if (!daosLoading && !dao) {
     history.push(NOT_FOUND_PAGE);
   }
 
