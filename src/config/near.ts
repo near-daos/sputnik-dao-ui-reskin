@@ -1,4 +1,4 @@
-const CONTRACT_NAME = 'dev-1610115292586-3217148';
+const CONTRACT_NAME = 'sputnik-v1.testnet';
 
 export type NEAR_ENV =
   | 'production'
