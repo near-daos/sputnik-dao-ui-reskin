@@ -248,6 +248,19 @@ export const ProposalPage: React.FC = () => {
     return null;
   };
 
+  function renderPurposeIfAvailable() {
+    if (proposal?.kind.type === ProposalType.ChangePurpose) {
+      return (
+        <>
+          <p className={s.subTitle}>New Purpose</p>
+          <p className={s.description}>{proposal.kind.purpose}</p>
+        </>
+      );
+    }
+
+    return null;
+  }
+
   return (
     <section className={s.root}>
       <div className={s.container}>
@@ -477,12 +490,13 @@ export const ProposalPage: React.FC = () => {
         </div>
         <div className={s.contentWrapper}>
           <div className={s.detailsWrapper}>
-            <p className={s.aboutTitle}>About</p>
-            <p className={s.about}>
+            <p className={s.subTitle}>About</p>
+            <p className={s.description}>
               {description}
               <br />
               {linkEl}
             </p>
+            {renderPurposeIfAvailable()}
             {/* <div className={s.row}> */}
             {/*  <div className={s.dataWrapper}> */}
             {/*    <p className={s.dataTitle}>Proposer</p> */}
