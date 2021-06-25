@@ -263,15 +263,15 @@
   width: 100%;
 }
 
-.aboutTitle {
+.subTitle {
   @extend %title-3;
+
+  &:not(:first-of-type) {
+    margin-top: functions.calc-rem(18);
+  }
 }
 
-.votePeriod {
-  margin-top: functions.calc-rem(30);
-}
-
-.about {
+.description {
   @extend %body-2;
   margin-top: functions.calc-rem(12);
   max-width: 90%;
