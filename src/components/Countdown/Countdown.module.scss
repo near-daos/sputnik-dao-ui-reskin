@@ -1,0 +1,16 @@
+@use 'styles/functions';
+@import 'styles/typography';
+
+.root {
+  @include title-7;
+  color: var(--theme-countdown-color);
+}
+
+.part {
+  margin-right: functions.calc-rem(2);
+}
+
+.positive {
+  color: var(--theme-countdown-positive-color);
+}
+

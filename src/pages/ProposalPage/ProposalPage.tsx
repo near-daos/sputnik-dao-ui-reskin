@@ -1,14 +1,15 @@
 /* eslint-disable no-param-reassign */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import { accountSelector, daoSelector } from 'redux/selectors';
 
-import { Button, Chip, SvgIcon, Tooltip } from 'components/UILib';
+import { Countdown } from 'components';
 import { getTitle } from 'components/ProposalCard/utils';
 import { ButtonProps } from 'components/UILib/Button/Button';
 import { VotedMembersPopup } from 'components/VotedMembersPopup';
+import { Button, Chip, SvgIcon, Tooltip } from 'components/UILib';
 
 import useMedia from 'hooks/use-media';
 
@@ -22,6 +23,8 @@ import { convertDuration, getDescriptionAndLink } from 'utils';
 import numberReduction from 'utils/numberReduction';
 
 import { appConfig, nearConfig } from 'config';
+
+import { NOT_FOUND_PAGE } from '../../constants/routingConstants';
 
 import s from './ProposalPage.module.scss';
 
@@ -104,7 +107,9 @@ export const ProposalPage: React.FC = () => {
   const dao = useSelector<StoreState, DaoItem | null>(
     (state) => daoSelector(state, params.daoId) || null,
   );
-  const [proposal, setPropsoal] = useState<Proposal | null>(null);
+
+  const [proposalLoaded, setProposalLoaded] = useState(false);
+  const [proposal, setProposal] = useState<Proposal | null>(null);
   const accountId = useSelector(accountSelector);
 
   const [firstTenMembers] = useState<string[]>(
@@ -127,9 +132,24 @@ export const ProposalPage: React.FC = () => {
     history.push(`/dao/${daoId}`);
   };
 
+  const navigateToNotFoundPage = useCallback(
+    () => history.push(NOT_FOUND_PAGE),
+    [history],
+  );
+
   useEffect(() => {
-    NearService.getProposal(daoId, proposalId).then(setPropsoal);
-  }, [daoId, proposalId]);
+    if (proposalLoaded && !proposal) {
+      navigateToNotFoundPage();
+    }
+  }, [proposal, proposalLoaded, navigateToNotFoundPage]);
+
+  useEffect(() => {
+    NearService.getProposal(daoId, proposalId)
+      .then(setProposal)
+      .finally(() => {
+        setProposalLoaded(true);
+      });
+  }, [daoId, proposalId, navigateToNotFoundPage]);
 
   useEffect(() => {
     const daoName = dao?.id.replace(`.${nearConfig.contractName}`, '');
@@ -171,8 +191,13 @@ export const ProposalPage: React.FC = () => {
 
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
   const isNotExpired = votePeriodEnd < new Date();
+
   const isActionDisabled =
-    isNotExpired || proposal.status !== ProposalStatus.Vote;
+    isNotExpired ||
+    proposal.status !== ProposalStatus.Vote ||
+    !accountId ||
+    !dao?.members.includes(accountId);
+
   const isShowFinalize =
     isNotExpired &&
     proposal.proposer === accountId &&
@@ -206,6 +231,42 @@ export const ProposalPage: React.FC = () => {
 
   const [isVoted, vote] = getVotingData();
 
+  const finaliseButton = (className: string) => {
+    if (isShowFinalize) {
+      return (
+        <Button
+          size="sm"
+          variant="outline"
+          className={cn(s.action, className)}
+          onClick={handleFinalize}
+        >
+          Finalise
+        </Button>
+      );
+    }
+
+    return null;
+  };
+
+  let newVotePeriod = 0;
+
+  if (proposal.kind.type === ProposalType.ChangeVotePeriod) {
+    newVotePeriod = Number(proposal.kind.votePeriod) / 10e8 / 60 / 60;
+  }
+
+  function renderPurposeIfAvailable() {
+    if (proposal?.kind.type === ProposalType.ChangePurpose) {
+      return (
+        <>
+          <p className={s.subTitle}>New Purpose</p>
+          <p className={s.description}>{proposal.kind.purpose}</p>
+        </>
+      );
+    }
+
+    return null;
+  }
+
   return (
     <section className={s.root}>
       <div className={s.container}>
@@ -231,18 +292,27 @@ export const ProposalPage: React.FC = () => {
           </div>
         </div>
 
-        <Chip
-          className={s.status}
-          label={getStatusText(proposal)}
-          color={getStatus(proposal)}
-          active
-        />
+        <div className={s.statusContainer}>
+          <Chip
+            className={s.status}
+            label={getStatusText(proposal)}
+            color={getStatus(proposal)}
+            active
+          />
+          <Countdown
+            date={votePeriodEnd}
+            className={s.countdown}
+            hidden={proposal.status !== ProposalStatus.Vote}
+          />
+        </div>
 
         <div className={s.content}>
           <header className={s.header}>
             <p className={s.title}>{getTitle(proposal)}</p>
 
             {/* {isMember && ( */}
+
+            {finaliseButton(s.hideDesktop)}
 
             {!isVoted && (
               <div className={s.actions}>
@@ -268,6 +338,8 @@ export const ProposalPage: React.FC = () => {
                     </p>
                   ))}
                 </Tooltip>
+
+                {finaliseButton(s.hideMobile)}
 
                 <Tooltip
                   className={s.action}
@@ -424,12 +496,19 @@ export const ProposalPage: React.FC = () => {
         </div>
         <div className={s.contentWrapper}>
           <div className={s.detailsWrapper}>
-            <p className={s.aboutTitle}>About</p>
-            <p className={s.about}>
+            <p className={s.subTitle}>About</p>
+            <p className={s.description}>
               {description}
               <br />
               {linkEl}
             </p>
+            {renderPurposeIfAvailable()}
+            {proposal.kind.type === ProposalType.ChangeVotePeriod && (
+              <>
+                <p className={s.subTitle}>New vote period</p>
+                <p className={s.description}>{newVotePeriod} hours</p>
+              </>
+            )}
             {/* <div className={s.row}> */}
             {/*  <div className={s.dataWrapper}> */}
             {/*    <p className={s.dataTitle}>Proposer</p> */}

@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
-
 import { IconButton } from 'components/UILib';
+import { renderTextWithUrl } from '../../utils/renderLinkInText';
 import s from './PurposePopup.module.scss';
 
 export interface PurposePopupProps {
@@ -38,7 +38,12 @@ const PurposePopup: React.FC<PurposePopupProps> = ({
       <p className={s.title}>Purpose</p>
       <div className={s.border} />
       <div className={s.purposeWrapper}>
-        <p className={s.purpose}>{purpose}</p>
+        <p
+          className={s.purpose}
+          dangerouslySetInnerHTML={{
+            __html: renderTextWithUrl(purpose),
+          }}
+        />
       </div>
     </div>
   </div>

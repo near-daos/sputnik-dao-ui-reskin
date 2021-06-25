@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -12,7 +12,11 @@ import { MembersPopup } from 'components/MembersPopup';
 import { PurposePopup } from 'components/PurposePopup';
 import { DaoDetailPopup } from 'components/DaoDetailPopup';
 
-import { accountSelector, daoSelector } from 'redux/selectors';
+import {
+  daoSelector,
+  accountSelector,
+  selectDaosLoading,
+} from 'redux/selectors';
 
 import { StoreState } from 'types/store';
 import { Proposal } from 'types/proposal';
@@ -23,9 +27,12 @@ import { NearService } from 'services/NearService';
 import { login } from 'redux/actions';
 import { appConfig, nearConfig } from 'config';
 
+import { NOT_FOUND_PAGE } from '../../constants/routingConstants';
+
 import s from './DaoPage.module.scss';
 
 export const DaoPage: React.FC = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const params = useParams<{ id: string }>();
   const [isShowCreateProposal, setIsShowCreateProposal] = useState(false);
@@ -36,6 +43,8 @@ export const DaoPage: React.FC = () => {
   const [isShowDaoDetailPopup, setIsShowDaoDetailPopup] = useState(false);
 
   const account = useSelector(accountSelector);
+  const daosLoading = useSelector(selectDaosLoading);
+
   const dao = useSelector<StoreState, DaoItem | undefined>((state) =>
     daoSelector(state, params.id),
   );
@@ -46,6 +55,10 @@ export const DaoPage: React.FC = () => {
   const daoName = dao?.id.replace(`.${nearConfig.contractName}`, '');
   const numberOfProposals = dao?.numberOfProposals || 0;
 
+  if (!daosLoading && !dao) {
+    history.push(NOT_FOUND_PAGE);
+  }
+
   useEffect(() => {
     if (daoName) {
       document.title = daoName;
@@ -53,11 +66,16 @@ export const DaoPage: React.FC = () => {
   }, [daoName]);
 
   useEffect(() => {
+    const DEFAULT_LIMIT = 50;
+
     if (!numberOfProposals) return;
 
     setProposalsLoading(true);
 
-    NearService.getProposals(params.id, Math.max(numberOfProposals - offset, 0))
+    const newOffset = numberOfProposals - offset;
+    const limit = newOffset < 0 ? DEFAULT_LIMIT + newOffset : DEFAULT_LIMIT;
+
+    NearService.getProposals(params.id, Math.max(newOffset, 0), limit)
       .then((response) => {
         setProposals((prev) => [...prev, ...response]);
       })
