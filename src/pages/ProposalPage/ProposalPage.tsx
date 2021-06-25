@@ -248,6 +248,12 @@ export const ProposalPage: React.FC = () => {
     return null;
   };
 
+  let newVotePeriod = 0;
+
+  if (proposal.kind.type === ProposalType.ChangeVotePeriod) {
+    newVotePeriod = Number(proposal.kind.votePeriod) / 10e8 / 60 / 60;
+  }
+
   function renderPurposeIfAvailable() {
     if (proposal?.kind.type === ProposalType.ChangePurpose) {
       return (
@@ -497,6 +503,12 @@ export const ProposalPage: React.FC = () => {
               {linkEl}
             </p>
             {renderPurposeIfAvailable()}
+            {proposal.kind.type === ProposalType.ChangeVotePeriod && (
+              <>
+                <p className={s.subTitle}>New vote period</p>
+                <p className={s.description}>{newVotePeriod} hours</p>
+              </>
+            )}
             {/* <div className={s.row}> */}
             {/*  <div className={s.dataWrapper}> */}
             {/*    <p className={s.dataTitle}>Proposer</p> */}
