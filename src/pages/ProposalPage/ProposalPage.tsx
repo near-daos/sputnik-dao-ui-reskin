@@ -248,6 +248,12 @@ export const ProposalPage: React.FC = () => {
     return null;
   };
 
+  let newVotePeriod = 0;
+
+  if (proposal.kind.type === ProposalType.ChangeVotePeriod) {
+    newVotePeriod = Number(proposal.kind.votePeriod) / 10e8 / 60 / 60;
+  }
+
   return (
     <section className={s.root}>
       <div className={s.container}>
@@ -483,6 +489,12 @@ export const ProposalPage: React.FC = () => {
               <br />
               {linkEl}
             </p>
+            {proposal.kind.type === ProposalType.ChangeVotePeriod && (
+              <div className={s.votePeriod}>
+                <p className={s.aboutTitle}>New vote period</p>
+                <p className={s.about}>{newVotePeriod} hours</p>
+              </div>
+            )}
             {/* <div className={s.row}> */}
             {/*  <div className={s.dataWrapper}> */}
             {/*    <p className={s.dataTitle}>Proposer</p> */}

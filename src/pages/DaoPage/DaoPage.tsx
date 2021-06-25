@@ -59,6 +59,8 @@ export const DaoPage: React.FC = () => {
     history.push(NOT_FOUND_PAGE);
   }
 
+  console.log(dao);
+
   useEffect(() => {
     if (daoName) {
       document.title = daoName;

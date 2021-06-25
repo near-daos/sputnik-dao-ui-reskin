@@ -267,6 +267,10 @@
   @extend %title-3;
 }
 
+.votePeriod {
+  margin-top: functions.calc-rem(30);
+}
+
 .about {
   @extend %body-2;
   margin-top: functions.calc-rem(12);
