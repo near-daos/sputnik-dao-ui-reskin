@@ -1,6 +1,8 @@
 /* eslint-disable no-bitwise */
-import React from 'react';
 import cn from 'classnames';
+import { isFunction } from 'lodash';
+import React, { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import {
   Button,
@@ -21,18 +23,19 @@ import {
   convertDuration,
   getDescriptionAndLink,
 } from 'utils';
-import { Link } from 'react-router-dom';
-import s from './ProposalCard.module.scss';
 import { getTitle } from './utils';
+import { Countdown } from '../Countdown';
+
+import s from './ProposalCard.module.scss';
 
 export interface ProposalCardProps {
   className?: string;
   daoName?: string;
   proposal: Proposal;
   isMember?: boolean;
-  onApprove?: () => void;
-  onReject?: () => void;
-  onFinalize?: () => void;
+  onApprove?: (id: number) => void;
+  onReject?: (id: number) => void;
+  onFinalize?: (id: number) => void;
 }
 
 const ProposalCard: React.FC<ProposalCardProps> = ({
@@ -44,7 +47,10 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
   onReject,
   onFinalize,
 }) => {
+  const { id } = proposal;
+
   const media = useMedia();
+  const history = useHistory();
   const accountId = useSelector(accountSelector);
 
   const votePeriodEnd = convertDuration(proposal.votePeriodEnd);
@@ -65,12 +71,131 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
     [ProposalStatus.Fail]: PixelCornerColors.Pink,
   };
 
+  function onCardClick() {
+    history.push(`/dao/${proposal.daoId}/proposals/${proposal.id}`);
+  }
+
+  const handleApprove = useCallback(() => {
+    if (isFunction(onApprove)) {
+      onApprove(id);
+    }
+  }, [onApprove, id]);
+
+  const handleFinalize = useCallback(() => {
+    if (isFunction(onFinalize)) {
+      onFinalize(id);
+    }
+  }, [onFinalize, id]);
+
+  const handleReject = useCallback(() => {
+    if (isFunction(onReject)) {
+      onReject(id);
+    }
+  }, [onReject, id]);
+
+  function renderUserVoteResult() {
+    if (vote) {
+      return (
+        <>
+          <p className={cn(s.voteStatus, s.showDesktop)}>
+            You have approved this proposal
+          </p>
+          <p className={cn(s.voteStatus, s.hideDesktop)}>You approved</p>
+          <SvgIcon icon="accept" size={26} className={s.bigAcceptIcon} />
+        </>
+      );
+    }
+
+    return (
+      <>
+        <p className={cn(s.voteStatus, s.showDesktop)}>
+          You have rejected this proposal
+        </p>
+        <p className={cn(s.voteStatus, s.hideDesktop)}>You rejected</p>
+        <SvgIcon icon="decline" size={26} className={s.bigDeclineIcon} />
+      </>
+    );
+  }
+
+  function renderVoteButtons() {
+    if (isVoted) {
+      return (
+        <div className={s.voteDetailsWrapper}>
+          <div className={s.voteStatusWrapper}>{renderUserVoteResult()}</div>
+          <SvgIcon icon="accept" size={18} className={s.smallAcceptIcon} />
+          {numberReduction(proposal.voteYes)}
+          <div className={s.border} />
+          <SvgIcon icon="decline" size={18} className={s.smallDeclineIcon} />
+          {numberReduction(proposal.voteNo)}
+        </div>
+      );
+    }
+
+    function renderFinalizeButton() {
+      if (proposal.proposer === accountId && isExpired) {
+        return (
+          <Button
+            size={media.mobile ? 'xs' : 'sm'}
+            variant="outline"
+            className={s.button}
+            onClick={handleFinalize}
+          >
+            Finalise
+          </Button>
+        );
+      }
+
+      return null;
+    }
+
+    return (
+      <div className={s.buttonWrapper}>
+        <Button
+          size={media.mobile ? 'xs' : 'sm'}
+          variant="outline"
+          className={s.button}
+          onClick={handleApprove}
+          disabled={
+            isExpired || proposal.status !== ProposalStatus.Vote || !isMember
+          }
+        >
+          <>
+            Approve{' '}
+            <span className={s.buttonTextCount}>
+              ({numberReduction(proposal.voteYes)})
+            </span>
+          </>
+        </Button>
+        {renderFinalizeButton()}
+
+        <Button
+          size={media.mobile ? 'xs' : 'sm'}
+          variant="outline"
+          className={s.button}
+          disabled={
+            isExpired || proposal.status !== ProposalStatus.Vote || !isMember
+          }
+          onClick={handleReject}
+        >
+          <>
+            Reject{' '}
+            <span className={s.buttonTextCount}>
+              ({numberReduction(proposal.voteNo)})
+            </span>
+          </>
+        </Button>
+      </div>
+    );
+  }
+
   return (
-    <div className={cn(s.root, className)}>
-      <Link
-        className={s.link}
-        to={`/dao/${proposal.daoId}/proposals/${proposal.id}`}
-      />
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onCardClick}
+      onKeyPress={onCardClick}
+      className={cn(s.root, className)}
+    >
       <div className={s.wrapper}>
         <PixelCorner
           color={
@@ -79,19 +204,25 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
           className={s.corner}
         />
         <div className={s.header}>
-          <p
-            className={cn(s.statusText, {
-              [s.approved]: proposal.status === ProposalStatus.Success,
-              [s.rejected]: proposal.status === ProposalStatus.Reject,
-              [s.inProgress]:
-                !isExpired && proposal.status === ProposalStatus.Vote,
-              [s.delayed]: proposal.status === ProposalStatus.Delay,
-              [s.fail]: proposal.status === ProposalStatus.Fail,
-              [s.rejected]: isExpired,
-            })}
-          >
-            {isExpired ? 'Expired' : proposal.status}
-          </p>
+          <div>
+            <p
+              className={cn(s.statusText, {
+                [s.approved]: proposal.status === ProposalStatus.Success,
+                [s.rejected]: proposal.status === ProposalStatus.Reject,
+                [s.inProgress]:
+                  !isExpired && proposal.status === ProposalStatus.Vote,
+                [s.delayed]: proposal.status === ProposalStatus.Delay,
+                [s.fail]: proposal.status === ProposalStatus.Fail,
+                [s.rejected]: isExpired,
+              })}
+            >
+              {isExpired ? 'Expired' : proposal.status}
+            </p>
+            <Countdown
+              date={votePeriodEnd}
+              hidden={proposal.status !== ProposalStatus.Vote}
+            />
+          </div>
           <p className={s.name}>
             Proposal ID: <span className={s.value}>{proposal.id}</span>
           </p>
@@ -116,98 +247,14 @@ const ProposalCard: React.FC<ProposalCardProps> = ({
               <p className={s.payoutValue}>{proposal.kind.amount}</p>
             </div>
           )}
-          {/* {proposal.kind.type === ProposalType.ChangePurpose && ( */}
           <div className={s.proposerWrapper}>
-            <p className={s.name}>Purpose:</p>
-            <p className={s.value}>
-              {proposal.kind.type === ProposalType.ChangePurpose
-                ? proposal.kind.purpose
-                : proposal.proposer}
-            </p>
+            <p className={s.name}>Proposer:</p>
+            <p className={s.value}>{proposal.proposer}</p>
           </div>
-          {/* )} */}
         </div>
       </div>
 
-      {!isVoted && (
-        <div className={s.buttonWrapper}>
-          <Button
-            size={media.mobile ? 'xs' : 'sm'}
-            variant="outline"
-            className={s.button}
-            onClick={onApprove}
-            disabled={
-              isExpired || proposal.status !== ProposalStatus.Vote || !isMember
-            }
-          >
-            <>
-              Approve{' '}
-              <span className={s.buttonTextCount}>
-                ({numberReduction(proposal.voteYes)})
-              </span>
-            </>
-          </Button>
-          {proposal.proposer === accountId && isExpired && (
-            <Button
-              size={media.mobile ? 'xs' : 'sm'}
-              variant="outline"
-              className={s.button}
-              onClick={onFinalize}
-            >
-              Finalise
-            </Button>
-          )}
-
-          <Button
-            size={media.mobile ? 'xs' : 'sm'}
-            variant="outline"
-            className={s.button}
-            disabled={
-              isExpired || proposal.status !== ProposalStatus.Vote || !isMember
-            }
-            onClick={onReject}
-          >
-            <>
-              Reject{' '}
-              <span className={s.buttonTextCount}>
-                ({numberReduction(proposal.voteNo)})
-              </span>
-            </>
-          </Button>
-        </div>
-      )}
-      {isVoted && (
-        <div className={s.voteDetailsWrapper}>
-          <div className={s.voteStatusWrapper}>
-            {vote ? (
-              <>
-                <p className={cn(s.voteStatus, s.showDesktop)}>
-                  You have approved this proposal
-                </p>
-                <p className={cn(s.voteStatus, s.hideDesktop)}>You approved</p>
-                <SvgIcon icon="accept" size={26} className={s.bigAcceptIcon} />
-              </>
-            ) : (
-              <>
-                <p className={cn(s.voteStatus, s.showDesktop)}>
-                  You have rejected this proposal
-                </p>
-                <p className={cn(s.voteStatus, s.hideDesktop)}>You rejected</p>
-                <SvgIcon
-                  icon="decline"
-                  size={26}
-                  className={s.bigDeclineIcon}
-                />
-              </>
-            )}
-          </div>
-          <SvgIcon icon="accept" size={18} className={s.smallAcceptIcon} />
-          {numberReduction(proposal.voteYes)}
-          <div className={s.border} />
-          <SvgIcon icon="decline" size={18} className={s.smallDeclineIcon} />
-          {numberReduction(proposal.voteNo)}
-        </div>
-      )}
+      {renderVoteButtons()}
     </div>
   );
 };

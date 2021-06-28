@@ -5,6 +5,7 @@ import { IconButton, SvgIcon } from 'components/UILib';
 import s from './DaoDetailPopup.module.scss';
 import { DaoItem } from '../../types/dao';
 import { nearConfig } from '../../config';
+import { renderTextWithUrl } from '../../utils/renderLinkInText';
 
 export interface DaoDetailPopupProps {
   className?: string;
@@ -80,7 +81,12 @@ const DaoDetailPopup: React.FC<DaoDetailPopupProps> = ({
               </div>
             </div>
             <p className={s.purposeTitle}>Purpose</p>
-            <p className={s.purpose}>{dao.purpose}</p>
+            <p
+              className={s.purpose}
+              dangerouslySetInnerHTML={{
+                __html: renderTextWithUrl(dao.purpose),
+              }}
+            />
           </div>
         </div>
       </div>

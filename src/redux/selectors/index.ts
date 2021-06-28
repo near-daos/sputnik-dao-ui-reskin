@@ -12,6 +12,11 @@ export const daoListSelector = createSelector(
   (state) => state.items,
 );
 
+export const selectDaosLoading = createSelector(
+  daosSelector,
+  (state) => state.loading,
+);
+
 export const daoSelector = createSelector(
   daoListSelector,
   (_: unknown, daoId: string) => daoId,

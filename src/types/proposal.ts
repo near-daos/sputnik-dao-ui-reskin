@@ -88,6 +88,7 @@ export type Proposal = {
   votes: {
     [key: string]: 'Yes' | 'No';
   };
+  votePeriodConvertedEndDate: Date;
 };
 
 export type CreateProposalParams = {
