@@ -7,7 +7,7 @@ import {
 
 // eslint-disable-next-line no-useless-escape
 const validNameRegexp = /^(?=[0-9a-z])(?=.*[0-9a-z]$)(?!.*__.*)(?!.*--.*)[0-9a-z_\-]*$/;
-const targetRegExp = /^[0-9a-z][0-9_a-z]{2,}((.sputnikdao)?.near|.testnet)$/;
+const targetRegExp = /^[0-9a-z][.0-9_a-z]{2,}((.sputnikdao)?.near|.testnet)$/;
 
 export function getValidatorValue(
   validator: ValidationType,
