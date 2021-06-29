@@ -7,7 +7,9 @@ import {
 
 // eslint-disable-next-line no-useless-escape
 const validNameRegexp = /^(?=[0-9a-z])(?=.*[0-9a-z]$)(?!.*__.*)(?!.*--.*)[0-9a-z_\-]*$/;
-const targetRegExp = /^[0-9a-z][.0-9_a-z]{2,}((.sputnikdao)?.near|.testnet)$/;
+// Validation rules: https://nomicon.io/DataStructures/Account.html
+// eslint-disable-next-line no-useless-escape
+const targetRegExp = /^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$/;
 
 export function getValidatorValue(
   validator: ValidationType,
