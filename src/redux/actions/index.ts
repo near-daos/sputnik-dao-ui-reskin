@@ -1,5 +1,5 @@
 import { CreateDaoParams, DaoItem } from 'types/dao';
-import { CreateProposalParams, Proposal } from 'types/proposal';
+import { CreateProposalParams } from 'types/proposal';
 import actionCreatorFactory from 'typescript-fsa';
 import { RedirectFlow } from 'types';
 
@@ -17,6 +17,10 @@ export const fetchAccount = actionCreator.async<void, string, Error>(
 
 export const fetchDaoList = actionCreator.async<void, DaoItem[], Error>(
   'FETCH_DAO_LIST',
+);
+
+export const fetchDao = actionCreator.async<string, DaoItem | null, Error>(
+  'FETCH_DAO',
 );
 
 export const createDao = actionCreator.async<CreateDaoParams, void, Error>(

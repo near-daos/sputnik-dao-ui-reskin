@@ -17,84 +17,10 @@ import {
   ProposalRaw,
   ProposalType,
 } from 'types/proposal';
-import camelcaseKeys from 'camelcase-keys';
 import { isNotNull } from 'types/guards';
 import { ContractPool } from './ContractPool';
-import { convertDuration } from '../../utils';
-
-export const parseForumUrl = (url: string): string => {
-  // let afterSlashChars = id.match(/\/([^\/]+)\/?$/)[1];
-  const a = url.replace(/\/$/, '').split('/');
-  const last = a[a.length - 1];
-  const secondLast = a[a.length - 2];
-  let category = null;
-  let subCategory = null;
-
-  if (/^\d+$/.test(secondLast)) {
-    category = secondLast;
-    subCategory = last;
-  } else if (/^\d+$/.test(last)) {
-    category = last;
-  }
-
-  if (category === null) {
-    return '';
-  }
-
-  return subCategory === null
-    ? `/t/${category}`
-    : `/t/${category}/${subCategory}`;
-};
-
-export const URLTest = (url: string): boolean => {
-  const regExp = /^(ftp|http|https):\/\/[^ "]+$/;
-  const regExp2 = /^https:\/\/gov.near.org\/[a-z0-9\\/]+$/;
-
-  return regExp.test(url) && regExp2.test(url);
-};
-
-export const yoktoNear = 1000000000000000000000000;
-const gas = new Decimal('200000000000000').toString();
-
-const createProposalMapper = (contractId: string) => (
-  item: ProposalRaw,
-  itemIndex: number,
-): Proposal => {
-  if (item.kind.type === ProposalType.Payout) {
-    const amountYokto = new Decimal(item.kind.amount);
-
-    amountYokto.div(yoktoNear).toFixed(2);
-
-    return (camelcaseKeys(
-      {
-        ...item,
-        kind: {
-          type: ProposalType.Payout,
-          amount: amountYokto.div(yoktoNear).toFixed(2),
-        },
-        daoId: contractId,
-        id: itemIndex,
-      },
-      { deep: true },
-    ) as any) as Proposal;
-  }
-
-  return (camelcaseKeys(
-    {
-      ...item,
-      daoId: contractId,
-      id: itemIndex,
-    },
-    { deep: true },
-  ) as any) as Proposal;
-};
-
-function enrichProposalWithEndDate(proposal: Proposal) {
-  return {
-    ...proposal,
-    votePeriodConvertedEndDate: convertDuration(proposal.votePeriodEnd),
-  };
-}
+import { yoktoNear, gas } from './constants';
+import { mapProposalRawToProposal } from './utils';
 
 class NearService {
   private readonly config: NearConfig;
@@ -113,8 +39,6 @@ class NearService {
   }
 
   public async init(): Promise<void> {
-    // eslint-disable-next-line no-console
-    // console.log('NearService: init');
     this.near = await connect({
       deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() },
       ...this.config,
@@ -132,6 +56,14 @@ class NearService {
     this.contractPool = new ContractPool(account);
   }
 
+  public isInitialized(): boolean {
+    return !!this.near && !!this.walletConnection && !!this.factoryContract;
+  }
+
+  public isAuthorized(): boolean {
+    return this.walletConnection.isSignedIn();
+  }
+
   public login(): Promise<void> {
     return this.walletConnection.requestSignIn(
       this.config.contractName,
@@ -141,10 +73,6 @@ class NearService {
 
   public async logout(): Promise<void> {
     this.walletConnection.signOut();
-  }
-
-  public isAuthorized(): boolean {
-    return this.walletConnection.isSignedIn();
   }
 
   public async getAccount() {
@@ -216,41 +144,40 @@ class NearService {
 
   public async getDaoList(): Promise<DaoItem[]> {
     const list: string[] = await this.factoryContract.get_dao_list();
-    const details = await Promise.all(
-      list.map((daoId: string) =>
-        Promise.all([
-          this.getDaoAmount(daoId),
-          this.getBond(daoId),
-          this.getPurpose(daoId),
-          this.getVotePeriod(daoId),
-          this.getNumProposals(daoId),
-          this.getCouncil(daoId),
-        ]).catch(() => null),
-      ),
+
+    const daos = await Promise.all(
+      list.map((daoId: string) => this.getDaoById(daoId)),
     );
 
-    return list
-      .map((daoId, index): DaoItem | null => {
-        const detailsItem = details[index];
+    return daos.filter(<(item: DaoItem | null) => item is DaoItem>(
+      ((item) => isNotNull(item))
+    ));
+  }
 
-        if (isNotNull(detailsItem)) {
-          return {
-            id: daoId,
-            amount: detailsItem[0],
-            bond: detailsItem[1],
-            purpose: detailsItem[2],
-            votePeriod: detailsItem[3],
-            numberOfProposals: detailsItem[4],
-            numberOfMembers: detailsItem[5].length,
-            members: detailsItem[5],
-          };
-        }
+  public async getDaoById(daoId: string): Promise<DaoItem | null> {
+    const daoDetails = await Promise.all([
+      this.getDaoAmount(daoId),
+      this.getBond(daoId),
+      this.getPurpose(daoId),
+      this.getVotePeriod(daoId),
+      this.getNumProposals(daoId),
+      this.getCouncil(daoId),
+    ]).catch(() => null);
 
-        return null;
-      })
-      .filter(<(item: DaoItem | null) => item is DaoItem>(
-        ((item) => isNotNull(item))
-      ));
+    if (isNotNull(daoDetails)) {
+      return {
+        id: daoId,
+        amount: daoDetails[0],
+        bond: daoDetails[1],
+        purpose: daoDetails[2],
+        votePeriod: daoDetails[3],
+        numberOfProposals: daoDetails[4],
+        numberOfMembers: daoDetails[5].length,
+        members: daoDetails[5],
+      };
+    }
+
+    return null;
   }
 
   public async getDaoState(contractId: string): Promise<AccountState> {
@@ -294,17 +221,26 @@ class NearService {
     limit = 50,
   ): Promise<Proposal[]> {
     try {
-      const proposals = await this.contractPool
-        .get(contractId)
-        .get_proposals({ from_index: offset, limit });
+      const numProposals = await this.getNumProposals(contractId);
+      const newOffset = numProposals - (offset + limit);
+      const newLimit = newOffset < 0 ? limit + newOffset : limit;
+      const fromIndex = Math.max(newOffset, 0);
 
-      const proposalMapper = createProposalMapper(contractId);
-
-      return proposals.map((item: ProposalRaw, index: number) => {
-        const proposal = proposalMapper(item, offset + index);
-
-        return enrichProposalWithEndDate(proposal);
+      console.log('info: ', {
+        from_index: fromIndex,
+        limit: newLimit,
       });
+
+      const proposals = await this.contractPool.get(contractId).get_proposals({
+        from_index: fromIndex,
+        limit: newLimit,
+      });
+
+      console.log('proposals: ', proposals.length);
+
+      return proposals.map((item: ProposalRaw, index: number) =>
+        mapProposalRawToProposal(contractId, item, fromIndex + index),
+      );
     } catch (err) {
       return [];
     }
@@ -319,12 +255,9 @@ class NearService {
         .get(contractId)
         .get_proposal({ id: index });
 
-      const proposalMapper = createProposalMapper(contractId);
-
-      const result = proposalMapper(proposal, index);
-
-      return enrichProposalWithEndDate(result);
+      return mapProposalRawToProposal(contractId, proposal, index);
     } catch (e: unknown) {
+      // eslint-disable-next-line no-console
       console.log('No such proposal');
 
       return Promise.resolve(null);

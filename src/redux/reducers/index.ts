@@ -1,4 +1,6 @@
+import { isNull } from 'lodash';
 import {
+  fetchDao,
   fetchDaoList,
   login,
   logout,
@@ -7,6 +9,7 @@ import {
   setCreatingDaoData,
   clearCreatingDaoData,
 } from 'redux/actions';
+import { isNotNull } from 'types/guards';
 import { AuthState, CreatDaoState, DaoState, RedirectState } from 'types/store';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 
@@ -32,10 +35,25 @@ export const auth = reducerWithInitialState<AuthState>({ accountId: null })
   .build();
 
 export const daos = reducerWithInitialState<DaoState>(initialState)
+  .case(fetchDao.started, (state) => ({
+    ...state,
+    loading: true,
+  }))
   .case(fetchDaoList.started, (state) => ({
     ...state,
     loading: true,
   }))
+  .case(fetchDao.done, (state, { result }) => {
+    if (isNull(result)) return state;
+
+    return {
+      ...state,
+      items: state.items.length
+        ? state.items.map((item) => (item.id === result?.id ? result : item))
+        : [result],
+      loading: false,
+    };
+  })
   .case(fetchDaoList.done, (state, { result }) => ({
     ...state,
     items: result,
