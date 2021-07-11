@@ -102,15 +102,17 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    NearService.init().then(async () => {
-      if (!NearService.isAuthorized() && checkIfNearAuthKeysExist()) {
-        clearNearAuth();
-      }
+    if (!NearService.isInitialized()) {
+      NearService.init().then(async () => {
+        if (!NearService.isAuthorized() && checkIfNearAuthKeysExist()) {
+          clearNearAuth();
+        }
 
-      dispatch(fetchAccount.started());
-      dispatch(fetchDaoList.started());
-      setIsInitialized(true);
-    });
+        dispatch(fetchAccount.started());
+        dispatch(fetchDaoList.started());
+        setIsInitialized(true);
+      });
+    }
 
     // clear non-hash routes
     if (window.location.pathname && window.location.pathname !== '/') {

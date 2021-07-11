@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import cn from 'classnames';
-import InfiniteScroll from 'react-infinite-scroller';
 
 import { Button, SvgIcon } from 'components/UILib';
 import { DaoProposals } from 'components/DaoProposals';
@@ -23,8 +22,9 @@ import { Proposal } from 'types/proposal';
 import { DaoItem } from 'types/dao';
 
 import { NearService } from 'services/NearService';
+import useInfiniteScroll from 'hooks/use-infinite-scroll';
 
-import { login } from 'redux/actions';
+import { fetchDao, login } from 'redux/actions';
 import { appConfig, nearConfig } from 'config';
 
 import { NOT_FOUND_PAGE } from '../../constants/routingConstants';
@@ -35,29 +35,24 @@ export const DaoPage: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const params = useParams<{ id: string }>();
-  const [isShowCreateProposal, setIsShowCreateProposal] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
   const [isShowMembersPopup, setIsShowMembersPopup] = useState(false);
   const [isShowPurposePopup, setIsShowPurposePopup] = useState(false);
   const [isShowDaoDetailPopup, setIsShowDaoDetailPopup] = useState(false);
+  const [isShowCreateProposal, setIsShowCreateProposal] = useState(false);
 
   const account = useSelector(accountSelector);
   const daosLoading = useSelector(selectDaosLoading);
 
-  const dao = useSelector<StoreState, DaoItem | undefined>((state) =>
-    daoSelector(state, params.id),
-  );
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [proposalsLoading, setProposalsLoading] = useState(false);
-  const [offset, setOffset] = useState(50);
 
+  const dao = useSelector<StoreState, DaoItem | null>((state) =>
+    daoSelector(state, params.id),
+  );
   const daoName = dao?.id.replace(`.${nearConfig.contractName}`, '');
   const numberOfProposals = dao?.numberOfProposals || 0;
-
-  if (!daosLoading && !dao) {
-    history.push(NOT_FOUND_PAGE);
-  }
 
   useEffect(() => {
     if (daoName) {
@@ -66,25 +61,25 @@ export const DaoPage: React.FC = () => {
   }, [daoName]);
 
   useEffect(() => {
-    const DEFAULT_LIMIT = 50;
+    setProposals([]);
+    dispatch(fetchDao.started(params.id));
+  }, [params.id, dispatch]);
 
-    if (!numberOfProposals) return;
+  useEffect(() => {
+    if (!daosLoading && !dao) {
+      history.push(NOT_FOUND_PAGE);
+    }
+  });
 
+  const handleLoadMore = () => {
     setProposalsLoading(true);
 
-    const newOffset = numberOfProposals - offset;
-    const limit = newOffset < 0 ? DEFAULT_LIMIT + newOffset : DEFAULT_LIMIT;
-
-    NearService.getProposals(params.id, Math.max(newOffset, 0), limit)
-      .then((response) => {
-        setProposals((prev) => [...prev, ...response]);
-      })
+    NearService.getProposals(params.id, proposals.length)
+      .then((response) => setProposals((prev) => [...prev, ...response]))
       .finally(() => {
-        setTimeout(() => {
-          setProposalsLoading(false);
-        }, 80);
+        setProposalsLoading(false);
       });
-  }, [params.id, numberOfProposals, offset]);
+  };
 
   const handleShowCreateProposalPopup = () => {
     if (account) {
@@ -100,11 +95,13 @@ export const DaoPage: React.FC = () => {
     setIsShowCreateProposal(false);
   };
 
-  const handleLoadMore = () => {
-    if (!proposalsLoading) {
-      setOffset((prev) => prev + 50);
-    }
-  };
+  const { infiniteScrollAnchor } = useInfiniteScroll({
+    initialLoad: true,
+    isLoading: proposalsLoading,
+    hasMore: !proposalsLoading && numberOfProposals > proposals.length,
+    onLoadMore: handleLoadMore,
+    threshold: 500,
+  });
 
   return (
     <section className={s.root}>
@@ -182,18 +179,12 @@ export const DaoPage: React.FC = () => {
             </Button>
           </div>
         </section>
-        <InfiniteScroll
-          loadMore={handleLoadMore}
-          threshold={1000}
-          initialLoad={false}
-          hasMore={numberOfProposals > offset}
-        >
-          <DaoProposals
-            proposals={proposals}
-            dao={dao}
-            loading={proposalsLoading}
-          />
-        </InfiniteScroll>
+        <DaoProposals
+          proposals={proposals}
+          dao={dao}
+          loading={proposalsLoading}
+        />
+        {infiniteScrollAnchor}
       </div>
 
       {isShowCreateProposal && dao && (

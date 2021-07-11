@@ -20,7 +20,7 @@ export const selectDaosLoading = createSelector(
 export const daoSelector = createSelector(
   daoListSelector,
   (_: unknown, daoId: string) => daoId,
-  (items, doaId) => items.find((item) => item.id === doaId),
+  (items, doaId) => items.find((item) => item.id === doaId) || null,
 );
 
 export const accountSelector = createSelector(

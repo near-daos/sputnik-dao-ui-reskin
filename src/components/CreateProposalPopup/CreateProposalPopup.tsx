@@ -6,9 +6,9 @@ import useMedia from 'hooks/use-media';
 import { StepProgressBar } from 'components/StepProgressBar';
 import { ProposalKind, ProposalType } from 'types/proposal';
 import { ProposalTypeItem } from 'components/ProposalTypeItem';
-import { NearService } from 'services/NearService';
+import { NearService, yoktoNear } from 'services/NearService';
 import { DaoItem } from 'types/dao';
-import { yoktoNear } from 'services/NearService/NearService';
+
 import Decimal from 'decimal.js';
 import { useSelector } from 'react-redux';
 import s from './CreateProposalPopup.module.scss';

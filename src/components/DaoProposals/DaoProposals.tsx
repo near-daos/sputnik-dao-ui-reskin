@@ -64,7 +64,7 @@ const getFilterOptions = (
 export interface DaoProposalsProps {
   className?: string;
   proposals: Array<Proposal>;
-  dao?: DaoItem;
+  dao: DaoItem | null;
   loading?: boolean;
 }
 
