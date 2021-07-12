@@ -1,4 +1,4 @@
-import { Proposal } from '../../types/proposal';
+import { Proposal, ProposalStatus } from '../../types/proposal';
 import {
   checkIfAccountVoted,
   isApprovedProposal,
@@ -15,9 +15,9 @@ const getWeight = (proposal: Proposal, account: string | null) => {
   let weight = 0;
   const [isVoted] = checkIfAccountVoted(proposal, account);
 
-  if (isInVotingProposal(proposal) && isVoted) {
+  if (isInVotingProposal(proposal) && !isVoted) {
     weight = 3;
-  } else if (isInVotingProposal(proposal) && !isVoted) {
+  } else if (isInVotingProposal(proposal) && isVoted) {
     weight = 2;
   } else if (isApprovedProposal(proposal)) {
     weight = 1;
@@ -26,7 +26,10 @@ const getWeight = (proposal: Proposal, account: string | null) => {
   return weight;
 };
 
-export function searchProposals(proposalsToSearch: Proposal[], query: string) {
+export function searchProposals(
+  proposalsToSearch: Proposal[],
+  query: string,
+): Proposal[] {
   if (!query) {
     return proposalsToSearch;
   }
@@ -44,11 +47,11 @@ export function sortProposals(
   account: string | null,
   filter: ProposalFilterOption,
   sort: ProposalSortOption,
-) {
-  if (filter.value === null) {
-    return proposalsToSort.sort(
-      (a, b) => getWeight(b, account) - getWeight(a, account),
-    );
+): Proposal[] {
+  if (filter.value === null || filter.value === 'Voting') {
+    return proposalsToSort
+      .sort((a, b) => b.id - a.id)
+      .sort((a, b) => getWeight(b, account) - getWeight(a, account));
   }
 
   return proposalsToSort.sort((a, b) =>
@@ -59,7 +62,7 @@ export function sortProposals(
 export function filterProposals(
   proposalsToFilter: Proposal[],
   filter: ProposalFilterOption,
-) {
+): Proposal[] {
   if (filter.value === null) {
     return proposalsToFilter;
   }

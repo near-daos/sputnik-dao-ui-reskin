@@ -26,6 +26,7 @@ export type NearConfig = {
 export const getNearConfig = (env: NEAR_ENV): NearConfig => {
   switch (env) {
     case 'production':
+    case 'development':
     case 'mainnet':
       return {
         walletFormat: '.near',
@@ -36,7 +37,6 @@ export const getNearConfig = (env: NEAR_ENV): NearConfig => {
         helperUrl: 'https://helper.mainnet.near.org',
         explorerUrl: 'https://explorer.mainnet.near.org',
       };
-    case 'development':
     case 'testnet':
       return {
         walletFormat: '.testnet',
