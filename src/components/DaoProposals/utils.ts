@@ -1,4 +1,4 @@
-import { Proposal } from '../../types/proposal';
+import { Proposal, ProposalStatus } from '../../types/proposal';
 import {
   checkIfAccountVoted,
   isApprovedProposal,
@@ -48,10 +48,10 @@ export function sortProposals(
   filter: ProposalFilterOption,
   sort: ProposalSortOption,
 ): Proposal[] {
-  if (filter.value === null) {
-    return proposalsToSort.sort(
-      (a, b) => getWeight(b, account) - getWeight(a, account),
-    );
+  if (filter.value === null || filter.value === 'Voting') {
+    return proposalsToSort
+      .sort((a, b) => b.id - a.id)
+      .sort((a, b) => getWeight(b, account) - getWeight(a, account));
   }
 
   return proposalsToSort.sort((a, b) =>
