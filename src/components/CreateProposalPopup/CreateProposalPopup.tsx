@@ -11,13 +11,15 @@ import { DaoItem } from 'types/dao';
 
 import Decimal from 'decimal.js';
 import { useSelector } from 'react-redux';
-import s from './CreateProposalPopup.module.scss';
 import { Button, IconButton, SvgIcon, TextField } from '../UILib';
 
 import { CreateProposalErrors, CreateProposalValues } from './types';
 import { validateSecondStep, validateThirdStep } from './validators';
 import { accountSelector } from '../../redux/selectors';
 import { getValidatorValue } from '../../utils/validators';
+import { getStringSizeInBytes } from '../../utils/getStringSizeInBytes';
+
+import s from './CreateProposalPopup.module.scss';
 
 export interface CreateProposalPopupProps {
   className?: string;
@@ -86,13 +88,15 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
         // Min description length should be 3 chars. Max description length is 240
         // chars. It means that max link length is 237 chars. https://app.clickup.com/t/mf6yb4
         maxLength: 237,
+        maxLengthInBytes: true,
       },
       description: {
         maxLength: () => {
-          const { length } = values.link;
+          const length = getStringSizeInBytes(values.link);
 
           return 240 - length;
         },
+        maxLengthInBytes: true,
         minLength: 3,
       },
       purpose: {
@@ -218,6 +222,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
             className={cn(s.input, s.linkInput)}
             helperText="Please copy and paste the forum link here"
             maxLength={getValidatorValue(validationConfig.link.maxLength)}
+            maxLengthIsInBytes
           />
           <TextField
             name="target"
@@ -239,6 +244,7 @@ const CreateProposalPopup: React.FC<CreateProposalPopupProps> = ({
               validationConfig.description.maxLength,
             )}
             className={s.input}
+            maxLengthIsInBytes
           />
         </div>
         <div className={s.buttonsWrapper}>

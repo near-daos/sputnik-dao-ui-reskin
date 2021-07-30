@@ -4,6 +4,7 @@ import {
   CreateProposalValidation,
   ValidationType,
 } from '../components/CreateProposalPopup/types';
+import { getStringSizeInBytes } from './getStringSizeInBytes';
 
 // eslint-disable-next-line no-useless-escape
 const validNameRegexp = /^(?=[0-9a-z])(?=.*[0-9a-z]$)(?!.*__.*)(?!.*--.*)[0-9a-z_\-]*$/;
@@ -26,12 +27,18 @@ function validateMinLength(value: string, minLength: ValidationType) {
   };
 }
 
-function validateMaxLength(value: string, maxLength: ValidationType) {
+function validateMaxLength(
+  value: string,
+  maxLength: ValidationType,
+  maxLengthInBytes?: boolean,
+) {
   const maxLen = getValidatorValue(maxLength) as number;
+
+  const length = maxLengthInBytes ? getStringSizeInBytes(value) : value.length;
 
   return {
     maxLen,
-    valid: isFinite(maxLen) ? value.length <= maxLen : true,
+    valid: isFinite(maxLen) ? length <= maxLen : true,
   };
 }
 
@@ -43,11 +50,18 @@ function validateMinLengthMessage(value: string, minLength: ValidationType) {
 
 function validateMaxLengthMessage(
   value: string,
-  maxLength: ValidationType,
+  validationObj: CreateProposalValidation,
 ): string {
-  const { valid, maxLen } = validateMaxLength(value, maxLength);
+  const { maxLength, maxLengthInBytes } = validationObj;
+  const { valid, maxLen } = validateMaxLength(
+    value,
+    maxLength,
+    maxLengthInBytes,
+  );
 
-  return valid ? '' : `Can not be more than ${maxLen} chars.`;
+  return valid
+    ? ''
+    : `Can not be more than ${maxLen} chars. Some chars are more "expensive" and available string length might decrease.`;
 }
 
 export const validateCouncil = (value: string): boolean =>
@@ -84,7 +98,7 @@ export function validateDescription(
     return '';
   }
 
-  const maxLenError = validateMaxLengthMessage(value, validationObj.maxLength);
+  const maxLenError = validateMaxLengthMessage(value, validationObj);
   const minLenError = validateMinLengthMessage(value, validationObj.minLength);
 
   return compact([minLenError, maxLenError]).join(' ').trim();
@@ -94,7 +108,5 @@ export function validateForumLink(
   value: string,
   validationObj: CreateProposalValidation,
 ): string {
-  return validationObj
-    ? validateMaxLengthMessage(value, validationObj.maxLength)
-    : '';
+  return validationObj ? validateMaxLengthMessage(value, validationObj) : '';
 }

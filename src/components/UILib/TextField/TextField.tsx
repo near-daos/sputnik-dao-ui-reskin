@@ -1,6 +1,9 @@
-import React, { InputHTMLAttributes, useState } from 'react';
 import cn from 'classnames';
-import SvgIcon from '../SvgIcon/SvgIcon';
+import { isNumber } from 'lodash';
+import React, { InputHTMLAttributes, useState } from 'react';
+
+import { SvgIcon } from '../SvgIcon';
+import { getStringSizeInBytes } from '../../../utils/getStringSizeInBytes';
 
 import styles from './TextField.module.scss';
 
@@ -28,7 +31,9 @@ export interface TextFieldProps
   maxLength?: number;
   onChange: (value: string, name: string) => void;
   id?: string;
+  maxLengthIsInBytes?: boolean;
 }
+
 const validChars = /[0-9,]/;
 
 const TextField: React.FC<TextFieldProps> = ({
@@ -54,8 +59,58 @@ const TextField: React.FC<TextFieldProps> = ({
   helperText,
   onChange,
   id = `input-${name}`,
+  maxLengthIsInBytes,
 }: TextFieldProps) => {
   const [focus, setFocus] = useState<boolean>(false);
+
+  function getCharsUsed() {
+    return maxLengthIsInBytes ? getStringSizeInBytes(value) : value.length;
+  }
+
+  function renderError() {
+    if (error) {
+      return (
+        <p className={styles.error}>
+          <SvgIcon className={styles.errorIcon} size={18} icon="circle-close" />
+          <span className={styles.errorMessage}>{error}</span>
+        </p>
+      );
+    }
+
+    return null;
+  }
+
+  function renderMaxLengthInfo() {
+    if (isNumber(maxLength)) {
+      // stub is needed to properly place length info
+      const stub = !error && !helperText ? <div /> : null;
+
+      return (
+        <>
+          {stub}
+          <p className={styles.length}>{`${getCharsUsed()}/${maxLength}`}</p>
+        </>
+      );
+    }
+
+    return null;
+  }
+
+  function renderHelperText() {
+    if (!error && helperText) {
+      return (
+        <p
+          className={cn(styles.helperText, {
+            [styles.short]: multiline && maxLength,
+          })}
+        >
+          {helperText}
+        </p>
+      );
+    }
+
+    return null;
+  }
 
   return (
     <div className={cn(styles.root, className)}>
@@ -130,25 +185,11 @@ const TextField: React.FC<TextFieldProps> = ({
           )}
         </div>
       </div>
-
-      {!error && helperText && (
-        <p
-          className={cn(styles.helperText, {
-            [styles.short]: multiline && maxLength,
-          })}
-        >
-          {helperText}
-        </p>
-      )}
-      {error && (
-        <p className={styles.error}>
-          <SvgIcon className={styles.errorIcon} size={18} icon="circle-close" />
-          <span className={styles.errorMessage}>{error}</span>
-        </p>
-      )}
-      {maxLength && (
-        <p className={styles.length}>{`${value.length}/${maxLength}`}</p>
-      )}
+      <div className={styles.infoSection}>
+        {renderHelperText()}
+        {renderError()}
+        {renderMaxLengthInfo()}
+      </div>
     </div>
   );
 };

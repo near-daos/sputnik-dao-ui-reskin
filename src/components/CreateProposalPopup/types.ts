@@ -18,6 +18,7 @@ export type ValidationType = number | (() => number) | undefined;
 export type CreateProposalValidation = {
   maxLength?: ValidationType;
   minLength?: ValidationType;
+  maxLengthInBytes?: boolean;
 };
 
 export type CreateProposalFormValidation = Partial<
