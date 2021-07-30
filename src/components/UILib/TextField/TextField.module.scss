@@ -162,10 +162,7 @@
   align-items: center;
   color: var(--theme-input-error-border);
   display: flex;
-  left: 0;
   margin: functions.calc-rem(8) 0 0;
-  position: absolute;
-  top: 100%;
 }
 
 .errorIcon {
@@ -210,10 +207,7 @@
 .helperText {
   @extend %caption-1;
   color: var(--theme-input-helper-text);
-  left: 0;
   margin-top: functions.calc-rem(8);
-  position: absolute;
-  top: 100%;
 
   &.short {
     width: 90%;
@@ -223,8 +217,11 @@
 .length {
   @extend %caption-1;
   color: var(--input-border-color);
+  margin-left: functions.calc-rem(8);
   margin-top: functions.calc-rem(8);
-  position: absolute;
-  right: 0;
-  top: 100%;
+}
+
+.infoSection {
+  display: flex;
+  justify-content: space-between;
 }
